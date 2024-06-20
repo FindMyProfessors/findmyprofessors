@@ -5,16 +5,9 @@
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"image": "mcr.microsoft.com/devcontainers/base:bullseye",
 	"features": {
-		"ghcr.io/devcontainers/features/docker-in-docker:2": {
-			"version": "20.10",
-			"enableNonRootDocker": "true",
-			"moby": "true"
-		},
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
 		"ghcr.io/devcontainers/features/node:1": {},
-		"ghcr.io/devcontainers/features/python:1": {
-			"installTools": true,
-			"version": "3.12"
-		}
+		"ghcr.io/devcontainers/features/rust:1": {}
 	},
 	"customizations": {
 		"vscode": {
@@ -22,7 +15,10 @@
 				"tomoki1207.pdf",
 				"inferrinizzard.prettier-sql-vscode",
 				"redhat.vscode-yaml",
-				"yzhang.markdown-all-in-one"
+				"yzhang.markdown-all-in-one",
+				"1YiB.rust-bundle",
+				"esbenp.prettier-vscode",
+				"antfu.vite"
 			]
 		}
 	}
