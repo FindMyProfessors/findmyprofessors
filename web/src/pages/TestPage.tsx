@@ -201,7 +201,6 @@ export function DataTableDemo() {
 
   return (
     <div className="w-full">
-      <MyButton text="sjk"></MyButton>
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter emails..."
