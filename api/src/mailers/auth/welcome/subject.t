@@ -1,1 +1,1 @@
-Welcome {{username}}
+Welcome {{username}} to FindMyProfessors
