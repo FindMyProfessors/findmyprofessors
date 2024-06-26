@@ -1,14 +1,12 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import express from "express";
 
-const prisma = new PrismaClient();
 const app = express();
 
 app.use(express.json());
 
 app.post(`/signup`, async (req, res) => {
   const { name, email, posts } = req.body;
-
 
   res.json(result);
 });
