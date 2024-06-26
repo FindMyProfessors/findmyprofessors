@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int      @id @default(autoincrement())
+  email            String   @unique
+  username         String   @unique
+  signup_time      DateTime @default(now())
+  last_login_time  DateTime @default(now())
+  account_verified Boolean  @default(false)
+  password         String
+}
+
+model School {
+  id         Int         @id @default(autoincrement())
+  name       String
+  courses    Course[]
+  professors Professor[]
+}
+
+model Professor {
+  id Int @id @default(autoincrement())
+
+  first_name String
+  last_name  String
+  rmp_id     String?
+
+  school    School @relation(fields: [school_id], references: [id])
+  school_id Int
+
+  courses ProfessorCourse[]
+  reviews Review[]
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  quality   Float
+  difficult Float?
+  time      DateTime
+  tags      String[]
+  grade     String?
+
+  professor    Professor @relation(fields: [professor_id], references: [id])
+  professor_id Int
+}
+
+model Course {
+  id        Int    @id @default(autoincrement())
+  name      String
+  code      String
+  school    School @relation(fields: [school_id], references: [id])
+  school_id Int
+
+  professors ProfessorCourse[]
+}
+
+model ProfessorCourse {
+  id Int @id @default(autoincrement())
+
+  professor    Professor @relation(fields: [professor_id], references: [id])
+  professor_id Int
+  course       Course    @relation(fields: [course_id], references: [id])
+  course_id    Int
+
+  year     Int
+  semester Semester
+}
+
+enum Semester {
+  SPRING
+  SUMMER
+  FALL
+}
