@@ -16,24 +16,30 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
-  redis:
-    image: redis:latest
-    restart: unless-stopped
-    ports:
-      - 6379:6379
+  # redis:
+  #   image: redis:latest
+  #   restart: unless-stopped
+  #   ports:
+  #     - 6379:6379
   mailer:
     image: mailtutan/mailtutan:latest
     restart: unless-stopped
     ports:
       - 1080:1080
       - 1025:1025
-  api:
-    build:
-      context: ./api
-      dockerfile: Dockerfile
+  # api:
+  #   build:
+  #     context: ./api
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - 8080:8080
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - db
+  swagger:
+    image: swaggerapi/swagger-ui
+    environment:
+      SWAGGER_JSON_URL: http://localhost:8080/api-docs/openapi.json
     ports:
-      - 8080:8080
-    env_file:
-      - .env
-    depends_on:
-      - db
+      - 8081:8080
