@@ -27,7 +27,8 @@
         "yzhang.markdown-all-in-one",
         "1YiB.rust-bundle",
         "esbenp.prettier-vscode",
-        "antfu.vite"
+        "antfu.vite",
+        "Prisma.prisma"
       ],
       "settings": {
         "rust-analyzer.linkedProjects": ["api/Cargo.toml"]
