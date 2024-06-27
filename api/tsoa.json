@@ -1,12 +1,20 @@
 {
-    "entryFile": "src/index.ts",
-    "noImplicitAdditionalProperties": "throw-on-extras",
-    "controllerPathGlobs": ["src/controllers/*.ts"],
-    "spec": {
-      "outputDirectory": "build",
-      "specVersion": 3
-    },
-    "routes": {
-      "routesDir": "build"
+  "entryFile": "src/index.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": ["src/controllers/*.ts"],
+  "spec": {
+    "outputDirectory": "build",
+    "specVersion": 3,
+    "securityDefinitions": {
+      "jwt": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
     }
+  },
+  "routes": {
+    "routesDir": "build",
+    "authenticationModule": "./src/middleware/auth.ts"
   }
+}

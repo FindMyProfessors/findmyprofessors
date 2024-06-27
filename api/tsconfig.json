@@ -6,6 +6,9 @@
     "module": "commonjs",
     "outDir": "build",
 
+    "lib": ["es2021"],
+
+
     /* Strict Type-Checking Options */
     "strict": true,
     "noImplicitAny": true,

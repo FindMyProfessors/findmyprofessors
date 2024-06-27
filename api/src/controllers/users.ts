@@ -9,6 +9,7 @@ import {
   Route,
   SuccessResponse,
   Example,
+  Security,
 } from "tsoa";
 import { UserResponse } from "../models/users";
 import { prisma } from "../database/database";
@@ -23,6 +24,7 @@ export class UsersController extends Controller {
     last_login_time: new Date("2021-03-26"),
     account_verified: true,
   })
+  @Security('jwt')
   @Get("{user_id}")
   public async getUser(@Path() user_id: number): Promise<UserResponse> {
     const user = await prisma.user.findUnique({
