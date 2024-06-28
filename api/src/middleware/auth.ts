@@ -1,59 +1,43 @@
-/*
-import { Request, Response, NextFunction } from "express";
-import jwt, { Secret } from "jsonwebtoken";
-
-const jwtMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res
-      .status(401)
-      .send({ error: "Authorization header missing or malformed" });
-  }
-
-  const token = authHeader.split(" ")[1];
-  const secret: Secret = process.env.JWT_SECRET as Secret;
-
-  jwt.verify(token, secret, (err, decoded) => {
-    if (err) {
-      return res.status(401).send({ error: "Failed to authenticate token" });
-    }
-    req.user = decoded;
-    next();
-  });
-};
-
-export default jwtMiddleware;
-*/
-
 import * as express from "express";
 import * as jwt from "jsonwebtoken";
 import { Secret } from "jsonwebtoken";
+import { logger } from "../utils/logger";
+import { InvalidTokenError, AuthErrorType } from "../models/auth";
+import { config } from "../config";
+
+const invalidTokenError: InvalidTokenError = {
+  message: "The token provided is invalid.",
+  type: AuthErrorType.INVALID_TOKEN,
+};
 
 export function expressAuthentication(
   request: express.Request,
   securityName: string,
   scopes?: string[]
 ): Promise<any> {
+  const childLogger = logger.child({ requestId: request });
   if (securityName === "jwt") {
     return new Promise((resolve, reject) => {
       const authHeader = request.headers.authorization;
       if (!authHeader || !authHeader.startsWith("Bearer ")) {
-        reject(new Error("No token provided"));
+        childLogger.warn("No token provided");
+        reject(invalidTokenError);
         return;
       }
 
       const token = authHeader.split(" ")[1];
 
       if (!token) {
-        reject(new Error("No token provided"));
+        childLogger.warn("No token provided");
+        reject(invalidTokenError);
         return;
       }
 
-      const secret: Secret = process.env.JWT_SECRET as Secret;
 
-      jwt.verify(token, secret, function (err: any, decoded: any) {
+      jwt.verify(token, config.JWT_SECRET, function (err: any, decoded: any) {
         if (err) {
-          reject(err);
+          childLogger.warn("Rejected token", { error: err, decoded: decoded });
+          reject(invalidTokenError);
         } else {
           resolve(decoded);
         }

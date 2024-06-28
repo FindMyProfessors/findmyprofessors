@@ -11,7 +11,7 @@ import {
   Example,
   Security,
   Tags,
-  Request
+  Request,
 } from "tsoa";
 import { UserResponse, UpdateUserParams } from "../models/users";
 import { prisma } from "../database/database";
@@ -63,11 +63,10 @@ export class UsersController extends Controller {
     @Path() user_id: number,
     @Body() body: UpdateUserParams
   ): Promise<void> {
-
     if (request.user_id != user_id) {
       throw new Error("You can only update your own user");
     }
-    
+
     const updateData = Object.fromEntries(
       Object.entries(body).filter(([_, v]) => v !== undefined)
     );

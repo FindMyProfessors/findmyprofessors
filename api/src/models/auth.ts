@@ -18,8 +18,22 @@ export enum AuthErrorType {
   USER_NOT_FOUND = "USER_NOT_FOUND",
   USER_ALREADY_EXISTS = "USER_ALREADY_EXISTS",
   INVALID_USERNAME = "INVALID_USERNAME",
+  INVALID_TOKEN = "INVALID_TOKEN", // Added invalid token error type
   UNKNOWN_ERROR = "UNKNOWN_ERROR",
 }
+
+export const AuthErrorHttpStatus = {
+  [AuthErrorType.INVALID_PASSWORD]: 401,
+  [AuthErrorType.PASSWORD_TOO_SHORT]: 400,
+  [AuthErrorType.PASSWORD_TOO_LONG]: 400,
+  [AuthErrorType.PASSWORD_MISSING_UPPERCASE]: 400,
+  [AuthErrorType.PASSWORD_MISSING_NUMBER]: 400,
+  [AuthErrorType.USER_NOT_FOUND]: 404,
+  [AuthErrorType.USER_ALREADY_EXISTS]: 409,
+  [AuthErrorType.INVALID_USERNAME]: 400,
+  [AuthErrorType.INVALID_TOKEN]: 401,
+  [AuthErrorType.UNKNOWN_ERROR]: 500,
+};
 
 export type AuthError = {
   message: string | { [key: string]: string };
@@ -48,7 +62,10 @@ export type PasswordTooLongError = Pick<AuthError, "message" | "type"> & {
   type: AuthErrorType.PASSWORD_TOO_LONG;
 };
 
-export type PasswordMissingUppercaseError = Pick<AuthError, "message" | "type"> & {
+export type PasswordMissingUppercaseError = Pick<
+  AuthError,
+  "message" | "type"
+> & {
   type: AuthErrorType.PASSWORD_MISSING_UPPERCASE;
 };
 
@@ -66,6 +83,11 @@ export type UserAlreadyExistsError = Pick<AuthError, "message" | "type"> & {
 
 export type InvalidUsernameError = Pick<AuthError, "message" | "type"> & {
   type: AuthErrorType.INVALID_USERNAME;
+};
+
+export type InvalidTokenError = Pick<AuthError, "message" | "type"> & {
+  // Added invalid token error type
+  type: AuthErrorType.INVALID_TOKEN;
 };
 
 export type UnknownAuthError = Pick<AuthError, "message" | "type"> & {

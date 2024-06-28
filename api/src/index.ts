@@ -7,22 +7,15 @@ import express, {
 } from "express";
 import { RegisterRoutes } from "../build/routes";
 // Add winston configuration and express middleware for it
-import winston from "winston";
 import expressWinston from "express-winston";
 
-// Configure winston logger
-const logger = winston.createLogger({
-  level: "info",
-  format: winston.format.combine(winston.format.json()),
-  transports: [
-    new winston.transports.Console(),
-    //new winston.transports.File({ filename: "logfile.log" }),
-  ],
-});
 import swaggerUi from "swagger-ui-express";
 import { ValidateError } from "tsoa";
 
-import { AuthError, isAuthError } from "./models/auth";
+import { AuthErrorHttpStatus, isAuthError } from "./models/auth";
+import { logger } from "./utils/logger";
+import requestIdMiddleware from "./middleware/request_id";
+import { config } from "./config";
 
 export const app = express();
 
@@ -33,15 +26,21 @@ app.use(
   })
 );
 app.use(json());
+app.use(requestIdMiddleware());
 
 // Add expressWinston middleware to log HTTP requests
 app.use(
   expressWinston.logger({
     winstonInstance: logger,
-    meta: true, // optional: control whether you want to log the meta data about the request (default to true)
     msg: "HTTP {{req.method}} {{req.url}}", // optional: customize the default logging message.
     expressFormat: true,
     colorize: false,
+    meta: true, // optional: control whether you want to log the meta data about the request (default to true)
+    dynamicMeta: function (req: any, res: any) {
+      return {
+        request_id: req.request_id,
+      };
+    },
   })
 );
 
@@ -68,12 +67,13 @@ app.use(function errorHandler(
   logger.warn(err);
 
   if (isAuthError(err)) {
-    return res.status(401).json({
+    const statusCode = AuthErrorHttpStatus[err.type];
+    return res.status(statusCode).json({
       message: err.message,
       type: err.type,
     });
   }
-  
+
   if (err instanceof ValidateError) {
     logger.warn(`Caught Validation Error for ${req.path}:`, err.fields);
     return res.status(422).json({
@@ -91,8 +91,7 @@ app.use(function errorHandler(
   next();
 });
 
-const port = process.env.PORT || 8080;
 
-app.listen(port, () =>
-  console.log(`App listening at http://localhost:${port}`)
+app.listen(config.PORT, () =>
+  console.log(`App listening at http://localhost:${config.PORT}`)
 );

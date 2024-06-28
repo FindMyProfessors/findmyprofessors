@@ -25,10 +25,57 @@ import {
   PasswordMissingUppercaseError,
   PasswordTooLongError,
   PasswordTooShortError,
+  AuthError,
 } from "../models/auth";
+
+import { logger } from "../utils/logger";
 
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
+import { config } from "../config";
+
+function validateUsername(username: string): InvalidUsernameError | null {
+  if (!usernameRegex.test(username)) {
+    return {
+      message:
+        "Username must be between 5 and 16 characters, all lowercase, no special characters other than underscores, and no spaces.",
+      type: AuthErrorType.INVALID_USERNAME,
+    } as InvalidUsernameError;
+  }
+  return null;
+}
+
+function validatePassword(password: string): AuthError | null {
+  if (password.length < 8) {
+    return {
+      message: "Password must be at least 8 characters long.",
+      type: AuthErrorType.PASSWORD_TOO_SHORT,
+    } as PasswordTooShortError;
+  }
+
+  if (password.length > 50) {
+    return {
+      message: "Password must not exceed 50 characters.",
+      type: AuthErrorType.PASSWORD_TOO_LONG,
+    } as PasswordTooLongError;
+  }
+
+  if (!/[A-Z]/.test(password)) {
+    return {
+      message: "Password must contain at least one uppercase letter.",
+      type: AuthErrorType.PASSWORD_MISSING_UPPERCASE,
+    } as PasswordMissingUppercaseError;
+  }
+
+  if (!/\d/.test(password)) {
+    return {
+      message: "Password must contain at least one number.",
+      type: AuthErrorType.PASSWORD_MISSING_NUMBER,
+    } as PasswordMissingNumberError;
+  }
+
+  return null;
+}
 
 @Route("auth")
 @Tags("Authentication")
@@ -44,51 +91,14 @@ export class AuthController extends Controller {
   public async register(
     @Body() body: RegistrationParams
   ): Promise<UserResponse> {
-    if (!usernameRegex.test(body.username)) {
-      this.setStatus(400);
-      const error: InvalidUsernameError = {
-        message:
-          "Username must be between 5 and 16 characters, all lowercase, no special characters other than underscores, and no spaces.",
-        type: AuthErrorType.INVALID_USERNAME,
-      };
-      return Promise.reject(error);
+    const usernameError = validateUsername(body.username);
+    if (usernameError) {
+      return Promise.reject(usernameError);
     }
 
-    const password = body.password;
-    if (password.length < 8) {
-      this.setStatus(400);
-      const error: PasswordTooShortError = {
-        message: "Password must be at least 8 characters long.",
-        type: AuthErrorType.PASSWORD_TOO_SHORT,
-      };
-      return Promise.reject(error);
-    }
-
-    if (password.length > 50) {
-      this.setStatus(400);
-      const error: PasswordTooLongError = {
-        message: "Password must not exceed 50 characters.",
-        type: AuthErrorType.PASSWORD_TOO_LONG,
-      };
-      return Promise.reject(error);
-    }
-
-    if (!/[A-Z]/.test(password)) {
-      this.setStatus(400);
-      const error: PasswordMissingUppercaseError = {
-        message: "Password must contain at least one uppercase letter.",
-        type: AuthErrorType.PASSWORD_MISSING_UPPERCASE,
-      };
-      return Promise.reject(error);
-    }
-
-    if (!/\d/.test(password)) {
-      this.setStatus(400);
-      const error: PasswordMissingNumberError = {
-        message: "Password must contain at least one number.",
-        type: AuthErrorType.PASSWORD_MISSING_NUMBER,
-      };
-      return Promise.reject(error);
+    const passwordError = validatePassword(body.password);
+    if (passwordError) {
+      return Promise.reject(passwordError);
     }
 
     const user_lookup = await prisma.user.findFirst({
@@ -98,7 +108,6 @@ export class AuthController extends Controller {
     });
 
     if (user_lookup) {
-      this.setStatus(409);
       const error: UserAlreadyExistsError = {
         message: "User already exists",
         type: AuthErrorType.USER_ALREADY_EXISTS,
@@ -110,13 +119,19 @@ export class AuthController extends Controller {
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(body.password, salt);
 
-    const user = await prisma.user.create({
-      data: {
-        email: body.email,
-        username: body.username,
-        password: hashedPassword,
-      },
-    });
+    let user;
+    try {
+      user = await prisma.user.create({
+        data: {
+          email: body.email,
+          username: body.username,
+          password: hashedPassword,
+        },
+      });
+    } catch (error: any) {
+      logger.error("Failed to create user", error);
+      throw new Error("Failed to create user: " + error.message);
+    }
 
     const userResponse: UserResponse = {
       id: user.id,
@@ -139,14 +154,9 @@ export class AuthController extends Controller {
   })
   @Post("login")
   public async login(@Body() body: LoginParams): Promise<LoginResponse> {
-    if (!usernameRegex.test(body.username)) {
-      this.setStatus(400);
-      const error: InvalidUsernameError = {
-        message:
-          "Username must be between 5 and 16 characters, all lowercase, no special characters other than underscores, and no spaces.",
-        type: AuthErrorType.INVALID_USERNAME,
-      };
-      return Promise.reject(error);
+    const usernameError = validateUsername(body.username);
+    if (usernameError) {
+      return Promise.reject(usernameError);
     }
 
     const user = await prisma.user.findFirst({
@@ -156,7 +166,6 @@ export class AuthController extends Controller {
     });
 
     if (!user) {
-      this.setStatus(404);
       const error: UserNotFoundError = {
         message: "User does not exist",
         type: AuthErrorType.USER_NOT_FOUND,
@@ -167,7 +176,6 @@ export class AuthController extends Controller {
     const passwordMatch = await bcrypt.compare(body.password, user.password);
 
     if (!passwordMatch) {
-      this.setStatus(401);
       const error: InvalidPasswordError = {
         message: "Invalid password",
         type: AuthErrorType.INVALID_PASSWORD,
@@ -184,14 +192,9 @@ export class AuthController extends Controller {
       account_verified: user.account_verified,
     };
 
-    const jwt_secret = process.env.JWT_SECRET;
-    if (!jwt_secret) {
-      throw new Error("JWT secret not found");
-    }
-
     let token: string;
     try {
-      token = jwt.sign({ user_id: user.id }, jwt_secret);
+      token = jwt.sign({ user_id: user.id }, config.JWT_SECRET);
     } catch (error) {
       throw new Error("Error creating JWT");
     }
