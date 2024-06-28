@@ -8,6 +8,7 @@ import {
   SuccessResponse,
   Example,
   Response,
+  Tags,
 } from "tsoa";
 import { UserResponse } from "../models/users";
 import { prisma } from "../database/database";
@@ -30,6 +31,7 @@ import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 
 @Route("auth")
+@Tags("Authentication")
 export class AuthController extends Controller {
   @SuccessResponse("201", "User Created Successfully")
   @Response<UserAlreadyExistsError>("409", "User already exists")
@@ -189,7 +191,7 @@ export class AuthController extends Controller {
 
     let token: string;
     try {
-      token = jwt.sign({ userId: user.id }, jwt_secret);
+      token = jwt.sign({ user_id: user.id }, jwt_secret);
     } catch (error) {
       throw new Error("Error creating JWT");
     }
