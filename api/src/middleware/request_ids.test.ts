@@ -1,4 +1,4 @@
-import requestIdMiddleware from "../../middleware/request_id";
+import requestIdMiddleware from "./request_id";
 import { Request, Response, NextFunction } from "express";
 
 describe("requestIdMiddleware", () => {

@@ -115,9 +115,7 @@ export class AuthController extends Controller {
       return Promise.reject(error);
     }
 
-    const saltRounds = 10;
-    const salt = await bcrypt.genSalt(saltRounds);
-    const hashedPassword = await bcrypt.hash(body.password, salt);
+    const hashedPassword = await hashPassword(body);
 
     let user;
     try {
@@ -191,12 +189,15 @@ export class AuthController extends Controller {
       last_login_time: user.last_login_time,
       account_verified: user.account_verified,
     };
-
     let token: string;
     try {
       token = jwt.sign({ user_id: user.id }, config.JWT_SECRET);
-    } catch (error) {
-      throw new Error("Error creating JWT");
+    } catch (originalError) {
+      const error: InvalidPasswordError = {
+        message: `Error creating JWT: ${originalError}`,
+        type: AuthErrorType.INVALID_PASSWORD,
+      };
+      return Promise.reject(error);
     }
 
     const loginResponse: LoginResponse = { token, user: userResponse };
@@ -212,4 +213,11 @@ export class AuthController extends Controller {
 
     return loginResponse;
   }
+}
+
+export async function hashPassword(body: RegistrationParams) {
+  const saltRounds = 10;
+  const salt = await bcrypt.genSalt(saltRounds);
+  const hashedPassword = await bcrypt.hash(body.password, salt);
+  return hashedPassword;
 }

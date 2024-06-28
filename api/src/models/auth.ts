@@ -18,8 +18,9 @@ export enum AuthErrorType {
   USER_NOT_FOUND = "USER_NOT_FOUND",
   USER_ALREADY_EXISTS = "USER_ALREADY_EXISTS",
   INVALID_USERNAME = "INVALID_USERNAME",
-  INVALID_TOKEN = "INVALID_TOKEN", // Added invalid token error type
-  UNKNOWN_ERROR = "UNKNOWN_ERROR",
+  INVALID_TOKEN = "INVALID_TOKEN",
+  UNABLE_TO_CREATE_JWT = "UNABLE_TO_CREATE_JWT", // Added unable to create JWT error type
+  UNKNOWN_ERROR = "UNKNOWN_ ERROR",
 }
 
 export const AuthErrorHttpStatus = {
@@ -32,6 +33,7 @@ export const AuthErrorHttpStatus = {
   [AuthErrorType.USER_ALREADY_EXISTS]: 409,
   [AuthErrorType.INVALID_USERNAME]: 400,
   [AuthErrorType.INVALID_TOKEN]: 401,
+  [AuthErrorType.UNABLE_TO_CREATE_JWT]: 500, // HTTP status for unable to create JWT
   [AuthErrorType.UNKNOWN_ERROR]: 500,
 };
 
@@ -86,8 +88,11 @@ export type InvalidUsernameError = Pick<AuthError, "message" | "type"> & {
 };
 
 export type InvalidTokenError = Pick<AuthError, "message" | "type"> & {
-  // Added invalid token error type
   type: AuthErrorType.INVALID_TOKEN;
+};
+
+export type UnableToCreateJwtError = Pick<AuthError, "message" | "type"> & {
+  type: AuthErrorType.UNABLE_TO_CREATE_JWT; // Added unable to create JWT error type
 };
 
 export type UnknownAuthError = Pick<AuthError, "message" | "type"> & {
