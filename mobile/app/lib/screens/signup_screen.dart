@@ -1,3 +1,4 @@
+import 'package:app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/signin_screen.dart';
 import 'package:app/widgets/custom_scaffold.dart';
@@ -15,6 +16,51 @@ class _SignInScreenState extends State<SignUpScreen> {
 
   final _formSignUpKey = GlobalKey<FormState>();
   bool agreePersonalData = false;
+
+  bool validateEmail(String email) {
+  // Regular expression for a basic email validation
+  final RegExp emailRegex = RegExp(
+    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+  );
+
+  // Check if the email matches the regular expression
+  return emailRegex.hasMatch(email);
+}
+  String validatePassword(String password) {
+  // Regular expressions for different requirements
+  final RegExp hasUppercase = RegExp(r'(?=.*[A-Z])');
+  final RegExp hasLowercase = RegExp(r'(?=.*[a-z])');
+  final RegExp hasDigit = RegExp(r'(?=.*\d)');
+  final RegExp hasSpecialChar = RegExp(r'(?=.*[@$!%*?&])');
+  final RegExp hasMinLength = RegExp(r'.{8,}');
+
+  // List to collect missing requirements
+  List<String> missingRequirements = [];
+
+  // Check each requirement and add to the list if missing
+  if (!hasUppercase.hasMatch(password)) {
+    missingRequirements.add('\n\t\t\t\t\t\tan uppercase letter');
+  }
+  if (!hasLowercase.hasMatch(password)) {
+    missingRequirements.add('\n\t\t\t\t\t\ta lowercase letter');
+  }
+  if (!hasDigit.hasMatch(password)) {
+    missingRequirements.add('\n\t\t\t\t\t\ta digit');
+  }
+  if (!hasSpecialChar.hasMatch(password)) {
+    missingRequirements.add('\n\t\t\t\t\t\tspecial character');
+  }
+  if (!hasMinLength.hasMatch(password)) {
+    missingRequirements.add('\n\t\t\t\t\t\tat least 8 characters');
+  }
+
+  // Return the missing requirements or a success message
+  if (missingRequirements.isEmpty) {
+    return '';
+  } else {
+    return missingRequirements.join();
+  }
+}
 
   //our privacy policy
   void _showPrivacyPolicyDialog(BuildContext context) {
@@ -116,8 +162,8 @@ class _SignInScreenState extends State<SignUpScreen> {
 
                     TextFormField(
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter Email';
+                          if (!validateEmail(value!)) {
+                            return 'Please enter a valid Email';
                           }
                           return null;
                         },
@@ -148,12 +194,16 @@ class _SignInScreenState extends State<SignUpScreen> {
                     TextFormField(
                         obscureText: true,
                         obscuringCharacter: '*',
-              
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter Password';
                           }
-                          return null;
+
+                          String validationResult = validatePassword(value);
+                          if (validationResult != '') {
+                            return 'Password must contain: ${validationResult}';
+                          }  
+                            return null;
                         },
               
                         decoration: InputDecoration(
@@ -224,11 +274,15 @@ class _SignInScreenState extends State<SignUpScreen> {
               
                     SizedBox(
                       width: double.infinity,
-                      //height: 50,
+                      height: 50,
                       child: ElevatedButton(
                         onPressed: () {
+                          if(!agreePersonalData) {
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please agree to the Privacy Policy to proceed.')));
+                          }
                           if (_formSignUpKey.currentState!.validate()) {
-                            Navigator.pushNamed(context, '/home');
+                            //update database
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen()));
                           }
                         },
                         child: const Text('Sign Up'),
