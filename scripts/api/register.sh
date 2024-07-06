@@ -13,9 +13,9 @@ echo $1 $2 $3
 
 
 
-curl --location 'localhost:8080/api/auth/register' \
-     --header 'Content-Type: application/json' \
-     --data-raw "{
+curl -X POST 'http://localhost:8080/auth/register' \
+    -H 'accept: application/json' \
+    -H 'Content-Type: application/json' \
          \"username\": \"$username\",
          \"email\": \"$email\",
          \"password\": \"$password\"
