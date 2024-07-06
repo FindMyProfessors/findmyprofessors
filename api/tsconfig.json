@@ -1,6 +1,7 @@
 {
   "include": ["src/**/*.ts", "src/types/**/*.d.ts"],
   "compilerOptions": {
+    "skipLibCheck": true,
     "typeRoots": ["./node_modules/@types", "./src/types"],
 
     /* Basic Options */

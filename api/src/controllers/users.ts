@@ -1,10 +1,8 @@
-import { User } from "@prisma/client";
 import {
   Body,
   Controller,
   Get,
   Path,
-  Post,
   Put,
   Route,
   SuccessResponse,
