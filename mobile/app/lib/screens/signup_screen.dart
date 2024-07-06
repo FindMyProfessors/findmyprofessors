@@ -1,4 +1,4 @@
-import 'package:app/screens/home_screen.dart';
+import 'package:app/screens/test1.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/signin_screen.dart';
 import 'package:app/widgets/custom_scaffold.dart';
@@ -282,7 +282,7 @@ class _SignInScreenState extends State<SignUpScreen> {
                           }
                           if (_formSignUpKey.currentState!.validate()) {
                             //update database
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen()));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyHomePage()));
                           }
                         },
                         child: const Text('Sign Up'),
