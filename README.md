@@ -20,7 +20,9 @@ When the docker compose is running, you are able to access the database using pg
    Password: admin
    ```
 3. Select the servers tab
+
    ![servers tab](docs/database_1.png)
 4. Use the password `test` to access the FindMyProfessors Database
 5. Use the `findmyprofessors_api_development` table for development
+   
    ![correct table](docs/database_2.png)
