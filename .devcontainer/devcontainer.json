@@ -7,7 +7,6 @@
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {},
     "ghcr.io/devcontainers/features/node:1": {},
-    "ghcr.io/devcontainers/features/rust:1": {},
     "ghcr.io/devcontainers-contrib/features/bash-command:1": {
       "command": "cargo install loco-cli sea-orm-cli"
     }
@@ -15,7 +14,6 @@
   "overrideFeatureInstallOrder": [
     "ghcr.io/devcontainers/features/docker-in-docker",
     "ghcr.io/devcontainers/features/node",
-    "ghcr.io/devcontainers/features/rust",
     "ghcr.io/devcontainers-contrib/features/bash-command"
   ],
   "customizations": {
@@ -25,14 +23,10 @@
         "inferrinizzard.prettier-sql-vscode",
         "redhat.vscode-yaml",
         "yzhang.markdown-all-in-one",
-        "1YiB.rust-bundle",
         "esbenp.prettier-vscode",
         "antfu.vite",
         "Prisma.prisma"
-      ],
-      "settings": {
-        "rust-analyzer.linkedProjects": ["api/Cargo.toml"]
-      }
+      ]
     }
   }
 }
