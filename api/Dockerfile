@@ -21,4 +21,4 @@ RUN npm run build
 # Expose port 80
 EXPOSE 8080
 
-CMD [ "npm", "run", "start"]
+CMD [ "sh", "-c", "npx prisma migrate deploy && npm run start"]
