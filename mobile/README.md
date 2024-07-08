@@ -5,6 +5,7 @@ naviaget to app directory:  C:...findmyprofessors\mobile\app
 
 in terminal run:  
 - flutter pub get
+- flutter pub run flutter_native_splash:create
 - flutter run
 
 ## setting up app to use local host
