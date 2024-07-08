@@ -4,6 +4,8 @@ import 'package:app/screens/signin_screen.dart';
 import 'package:app/widgets/custom_scaffold.dart';
 import 'package:app/themes/theme.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -16,6 +18,49 @@ class _SignInScreenState extends State<SignUpScreen> {
 
   final _formSignUpKey = GlobalKey<FormState>();
   bool agreePersonalData = false;
+  final TextEditingController _nameController = TextEditingController(); // Added controller for username
+  final TextEditingController _emailController = TextEditingController(); // Added controller for email
+  final TextEditingController _passwordController = TextEditingController(); // Added controller for password
+  
+   Future<void> _registerUser() async {
+   print('Registering new user... ' + _emailController.text + ' ' + _nameController.text + ' ' + _passwordController.text);
+    
+  try {
+    var response = await http.post(
+      Uri.parse('http://localhost:8080/auth/register'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'email': _emailController.text,
+        'username': _nameController.text,
+        'password': _passwordController.text,
+      }),
+    );
+
+    print("Response status: ${response.statusCode}");
+    print("Response headers: ${response.headers}");
+    print("Response body: ${response.body}");
+
+    final responseData = json.decode(response.body);
+
+    if (response.statusCode == 201) {
+      print('User registered: ${responseData['user']}');
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyHomePage()));
+    } 
+    else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(responseData['message']),
+        ),
+      );
+      print('Failed to register user: ${response.body[0]}');
+    }
+  } 
+  catch (e) {
+    print('ERROR occurred: $e');
+  }
+  }
 
   bool validateEmail(String email) {
   // Regular expression for a basic email validation
@@ -27,41 +72,73 @@ class _SignInScreenState extends State<SignUpScreen> {
   return emailRegex.hasMatch(email);
 }
   String validatePassword(String password) {
-  // Regular expressions for different requirements
-  final RegExp hasUppercase = RegExp(r'(?=.*[A-Z])');
-  final RegExp hasLowercase = RegExp(r'(?=.*[a-z])');
-  final RegExp hasDigit = RegExp(r'(?=.*\d)');
-  final RegExp hasSpecialChar = RegExp(r'(?=.*[@$!%*?&])');
-  final RegExp hasMinLength = RegExp(r'.{8,}');
+    // Regular expressions for different requirements
+    final RegExp hasUppercase = RegExp(r'(?=.*[A-Z])');
+    final RegExp hasLowercase = RegExp(r'(?=.*[a-z])');
+    final RegExp hasDigit = RegExp(r'(?=.*\d)');
+    final RegExp hasSpecialChar = RegExp(r'(?=.*[@$!%*?&])');
+    final RegExp hasMinLength = RegExp(r'.{8,}');
 
-  // List to collect missing requirements
-  List<String> missingRequirements = [];
 
-  // Check each requirement and add to the list if missing
-  if (!hasUppercase.hasMatch(password)) {
-    missingRequirements.add('\n\t\t\t\t\t\tan uppercase letter');
-  }
-  if (!hasLowercase.hasMatch(password)) {
-    missingRequirements.add('\n\t\t\t\t\t\ta lowercase letter');
-  }
-  if (!hasDigit.hasMatch(password)) {
-    missingRequirements.add('\n\t\t\t\t\t\ta digit');
-  }
-  if (!hasSpecialChar.hasMatch(password)) {
-    missingRequirements.add('\n\t\t\t\t\t\tspecial character');
-  }
-  if (!hasMinLength.hasMatch(password)) {
-    missingRequirements.add('\n\t\t\t\t\t\tat least 8 characters');
-  }
+    // List to collect missing requirements
+    List<String> missingRequirements = [];
 
-  // Return the missing requirements or a success message
-  if (missingRequirements.isEmpty) {
-    return '';
-  } else {
-    return missingRequirements.join();
-  }
+    // Check each requirement and add to the list if missing
+    if (password.length < 8) {
+      missingRequirements.add('\n\t\t\t\t\t\tat least 8 characters long');
+    }
+    if (password.length >= 50) {
+      missingRequirements.add('\n\t\t\t\t\t\tat most 50 characters long');
+    }
+    if (!hasUppercase.hasMatch(password)) {
+      missingRequirements.add('\n\t\t\t\t\t\tmust contain an uppercase letter');
+    }
+    if (!hasLowercase.hasMatch(password)) {
+      missingRequirements.add('\n\t\t\t\t\t\tmust contain a lowercase letter');
+    }
+    if (!hasDigit.hasMatch(password)) {
+      missingRequirements.add('\n\t\t\t\t\t\tmust contain a digit');
+    }
+    if (!hasSpecialChar.hasMatch(password)) {
+      missingRequirements.add('\n\t\t\t\t\t\tmust contain a special character');
+    }
+
+    // Return the missing requirements or a success message
+    if (missingRequirements.isEmpty) {
+      return '';
+    } else {
+      return missingRequirements.join();
+    }
 }
 
+  String validateUsername(String username) {
+
+    List<String> missingRequirements = [];
+    if (username.length < 5 || username.length > 16) {
+      missingRequirements.add("\n\t\t\t\t\t\tMust be between 5 and 16 characters");
+    }
+
+    final regex = RegExp(r'^[a-z0-9_]+$');
+    if (!regex.hasMatch(username)) {
+      missingRequirements.add("\n\t\t\t\t\t\tOnly contain letters, digits, and underscores");
+    }
+
+    //NO uppercase
+    if (username.contains(RegExp(r'[A-Z]'))) {
+      missingRequirements.add("\n\t\t\t\t\t\tUsername cannot contain uppercase letters");
+    }
+
+    if (username.contains(' ')) {
+      missingRequirements.add("\n\t\t\t\t\t\tUsername cannot contain spaces.");
+    }
+
+    if (missingRequirements.isEmpty) {
+      return '';
+    } 
+    else {
+    return missingRequirements.join();
+    }
+  }
   //our privacy policy
   void _showPrivacyPolicyDialog(BuildContext context) {
     showDialog(
@@ -130,10 +207,17 @@ class _SignInScreenState extends State<SignUpScreen> {
                     const SizedBox(height: 30), 
                     
                     TextFormField(
+                        controller: _nameController, // Assigning controller
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter Username';
                           }
+
+                          String validationResult = validateUsername(value);
+                          if (validationResult != '') {
+                            return 'Username requirements:${validationResult}';
+                          }  
+
                           return null;
                         },
                         decoration: InputDecoration(
@@ -161,6 +245,7 @@ class _SignInScreenState extends State<SignUpScreen> {
                     const SizedBox(height: 20),
 
                     TextFormField(
+                        controller: _emailController, // Assigning controller
                         validator: (value) {
                           if (!validateEmail(value!)) {
                             return 'Please enter a valid Email';
@@ -192,6 +277,7 @@ class _SignInScreenState extends State<SignUpScreen> {
                     const SizedBox(height: 20), 
               
                     TextFormField(
+                        controller: _passwordController, // Assigning controller
                         obscureText: true,
                         obscuringCharacter: '*',
                         validator: (value) {
@@ -201,7 +287,7 @@ class _SignInScreenState extends State<SignUpScreen> {
 
                           String validationResult = validatePassword(value);
                           if (validationResult != '') {
-                            return 'Password must contain: ${validationResult}';
+                            return 'Password requirements: ${validationResult}';
                           }  
                             return null;
                         },
@@ -277,12 +363,12 @@ class _SignInScreenState extends State<SignUpScreen> {
                       height: 50,
                       child: ElevatedButton(
                         onPressed: () {
+                          
                           if(!agreePersonalData) {
                             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please agree to the Privacy Policy to proceed.')));
                           }
                           if (_formSignUpKey.currentState!.validate()) {
-                            //update database
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyHomePage()));
+                            _registerUser();
                           }
                         },
                         child: const Text('Sign Up'),

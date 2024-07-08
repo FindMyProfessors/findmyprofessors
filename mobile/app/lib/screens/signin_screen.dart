@@ -3,6 +3,9 @@ import 'package:app/themes/theme.dart';
 import 'package:app/widgets/custom_scaffold.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:app/screens/signup_screen.dart';
+import 'package:app/screens/test1.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -15,6 +18,48 @@ class _SignInScreenState extends State<SignInScreen> {
 
   final _formSignInKey = GlobalKey<FormState>();
   bool rememberPassword = true;
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+
+  Future<void> _signInUser() async {
+   print('Registering new user... ' + _nameController.text + ' ' + _passwordController.text);
+    
+  try {
+    var response = await http.post(
+      Uri.parse('http://localhost:8080/auth/login'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'username': _nameController.text,
+        'password': _passwordController.text,
+      }),
+    );
+
+    print("Response status: ${response.statusCode}");
+    print("Response headers: ${response.headers}");
+    print("Response body: ${response.body}");
+
+    final responseData = json.decode(response.body);
+
+    if (response.statusCode == 200) {
+      print('User registered: ${responseData['user']}');
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyHomePage()));
+    } 
+    else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(responseData['message']),
+        ),
+      );
+      print('Failed to Sign user: ${response.body[0]}');
+    }
+  } 
+  catch (e) {
+    print('ERROR occurred: $e');
+  }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,16 +102,17 @@ class _SignInScreenState extends State<SignInScreen> {
                     const SizedBox(height: 30), 
                     
                     TextFormField(
+                        controller: _nameController,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter Email';
+                            return 'Please enter Username';
                           }
                           return null;
                         },
                         decoration: InputDecoration(
                           
-                          label: const Text('Email'), 
-                          hintText: 'Email',
+                          label: const Text('Username'), 
+                          hintText: 'Username',
                           hintStyle: const TextStyle(color: Colors.grey),
               
                           border: OutlineInputBorder(
@@ -88,9 +134,9 @@ class _SignInScreenState extends State<SignInScreen> {
                     const SizedBox(height: 20), 
               
                     TextFormField(
+                        controller: _passwordController,
                         obscureText: true,
                         obscuringCharacter: '*',
-              
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter Password';
@@ -165,7 +211,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formSignInKey.currentState!.validate()) {
-                            Navigator.pushNamed(context, '/home');
+                            _signInUser();
                           }
                         },
                         child: const Text('Sign In'),
