@@ -21,6 +21,7 @@ JWT_SECRET=RANDOM_TEXT_HERE
 Make sure the database is running. See `../README.md` for instructions.
 
 ```bash
+npm run build # first time only
 npm run dev
 ```
 

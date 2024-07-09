@@ -26,3 +26,21 @@ When the docker compose is running, you are able to access the database using pg
 5. Use the `findmyprofessors_api_development` table for development
    
    ![correct table](docs/database_2.png)
+
+## FAQ
+
+### File permissions problems
+Run the following command
+```bash
+ls -alh
+```
+
+```bash
+sudo chown -R vscode:vscode * .*
+```
+
+```bash
+ls -alh
+```
+
+Notice the difference?
