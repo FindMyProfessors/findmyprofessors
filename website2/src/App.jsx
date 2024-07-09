@@ -1,0 +1,49 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"; 
+
+import {
+  MDBBtn,
+  MDBContainer,
+  MDBCard,
+  MDBCardBody,
+  MDBCardImage,
+  MDBRow,
+  MDBCol,
+  MDBIcon,
+  MDBInput,
+  MDBNavbar,
+  MDBNavbarBrand,
+  MDBNavbarNav,
+  MDBNavbarItem,
+  MDBNavbarLink,
+  MDBCollapse,
+} from 'mdb-react-ui-kit';
+
+import About from './components/About';
+import ContactUs from './components/ContactUs';
+import Login from './components/Login';
+import Register from './components/Register';
+import ForgotPassword from './components/ForgotPassword';
+import PasswordReset from './components/PasswordReset';
+
+import logoBlack from './Logo-Black.JPG'; // Adjust path as necessary
+
+function App() {
+  return (
+    <>
+        <Router>
+                <Routes>
+                    <Route exact path="/" element={<Login />} />
+                    <Route path="/About" element={<About />} />
+                    <Route path="/ContactUs" element={<ContactUs />} />
+                    <Route path="/ForgotPassword" element={<ForgotPassword />} />
+                    <Route path="/PasswordReset" element={<PasswordReset />} />
+                    <Route path="/Register" element={<Register />} />
+                    <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
+            </Router>
+      </>
+  );
+}
+
+export default App;

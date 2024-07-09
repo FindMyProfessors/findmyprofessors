@@ -1,0 +1,11 @@
+body{
+  background-color: #b10101; /* Light grey background */
+}
+
+.center {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
