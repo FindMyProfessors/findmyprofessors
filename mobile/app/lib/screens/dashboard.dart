@@ -115,17 +115,11 @@ class _DashboardState extends State<Dashboard> {
           SizedBox(height: 5.0),
         ]
       )
-
-
-
-
-
-
     );
   }
 
   _professors() {
-  // Generate a list of 10 items (you can replace this with your actual data)
+
   List<String> professors = List.generate(10, (index) => 'Professor ${index + 1}');
 
   return Expanded(
@@ -147,33 +141,6 @@ class _DashboardState extends State<Dashboard> {
       },
     ),
   );
-  
-  //  SingleChildScrollView(
-  //   child: Column(
-  //     crossAxisAlignment: CrossAxisAlignment.stretch,
-  //     children: <Widget>[
-  //       ListView.builder(
-  //         shrinkWrap: true,
-  //         physics: NeverScrollableScrollPhysics(),
-  //         itemCount: professors.length,
-  //         itemBuilder: (context, index) {
-  //           return Container(
-  //             margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
-  //             padding: EdgeInsets.all(16.0),
-  //             decoration: BoxDecoration(
-  //               color: Colors.blue,
-  //               borderRadius: BorderRadius.circular(10.0),
-  //             ),
-  //             child: Text(
-  //               professors[index],
-  //               style: TextStyle(color: Colors.white, fontSize: 18.0),
-  //             ),
-  //           );
-  //         },
-  //       ),
-  //     ],
-  //   ),
-  // );
 }
   
 }
