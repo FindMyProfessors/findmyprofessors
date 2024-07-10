@@ -9,6 +9,127 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+
+String schoolName = "School Name";
+String semester = 'Semester';
+DateTime now = DateTime.now();
+String year = "2024";
+
+void _showFilter() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Enter School Info'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 10.0),
+
+                TextFormField(
+                  decoration: InputDecoration(                    
+                    labelText: "School Name",
+                    hintText: schoolName,
+                    //hintStyle: const TextStyle(color: Colors.grey),
+        
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.black
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+        
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.black
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    )
+                  ),
+
+                  onChanged: (value) {
+                    schoolName = value;
+                  },
+                ),
+
+                SizedBox(height: 15.0),
+
+                TextFormField(
+                  decoration: InputDecoration(                    
+                    labelText: "Semester",
+                    hintText: semester,
+                    //hintStyle: const TextStyle(color: Colors.grey),
+        
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.black
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+        
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.black
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    )
+                  ),
+                  onChanged: (value) {
+                    semester = value;
+                  },
+                ),
+
+                SizedBox(height: 15.0),
+                
+                TextFormField(
+                  decoration: InputDecoration(                    
+                    labelText: "Year",
+                    hintText: year,
+                    //hintStyle: const TextStyle(color: Colors.grey),
+        
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.black
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+        
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.black
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    )
+                  ),
+                  onChanged: (value) {
+                    year = value;
+                  },
+                ),
+
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            ElevatedButton(
+              child: Text('Save'),
+              onPressed: () {
+                // Process the input here (e.g., save to database)
+                print('School Name: $schoolName, Semester: $semester');
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+          ],
+        );
+      }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,13 +154,6 @@ class _DashboardState extends State<Dashboard> {
                    fontSize: 20.0),
                 ),
 
-                Text(
-                  "View All", 
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 10.0
-                  ),
-                ),
               ]
             ),
           ),
@@ -102,7 +216,12 @@ class _DashboardState extends State<Dashboard> {
               hintText: "Search Course",
               fillColor: Colors.white,
               filled: true,
-              suffixIcon: Icon(Icons.filter_list),
+              suffixIcon: IconButton(
+                onPressed: _showFilter, 
+                icon: Icon(
+                  Icons.filter_list,
+                  )
+                ),
               enabledBorder: OutlineInputBorder(
                  borderRadius: BorderRadius.circular(25.0),
                  borderSide: BorderSide(color: Colors.transparent),
@@ -117,6 +236,59 @@ class _DashboardState extends State<Dashboard> {
       )
     );
   }
+
+  // Future<void> _showSchoolInfoDialog(BuildContext context) async {
+
+  //   return showDialog<void>(
+  //     context: context,
+  //     barrierDismissible: true, // Allow user to dismiss the dialog
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text('Enter School Info'),
+  //         content: SingleChildScrollView(
+  //           child: Column(
+  //             children: <Widget>[
+  //               TextFormField(
+  //                 decoration: InputDecoration(
+  //                   labelText: 'School Name',
+  //                   hintText: 'Enter school name',
+  //                 ),
+  //                 onChanged: (value) {
+  //                   schoolName = value;
+  //                 },
+  //               ),
+  //               TextFormField(
+  //                 decoration: InputDecoration(
+  //                   labelText: 'Semester',
+  //                   hintText: 'Enter semester',
+  //                 ),
+  //                 onChanged: (value) {
+  //                   semester = value;
+  //                 },
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             child: Text('Cancel'),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //           ElevatedButton(
+  //             child: Text('Save'),
+  //             onPressed: () {
+  //               // Process the input here (e.g., save to database)
+  //               print('School Name: $schoolName, Semester: $semester');
+  //               Navigator.of(context).pop(); // Close the dialog
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   _professors() {
 
