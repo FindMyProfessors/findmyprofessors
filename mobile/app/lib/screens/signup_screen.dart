@@ -1,4 +1,4 @@
-import 'package:app/screens/test1.dart';
+import 'package:app/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/signin_screen.dart';
 import 'package:app/widgets/custom_scaffold.dart';
@@ -46,7 +46,7 @@ class _SignInScreenState extends State<SignUpScreen> {
 
     if (response.statusCode == 201) {
       print('User registered: ${responseData['user']}');
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyHomePage()));
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Dashboard()));
     } 
     else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -77,8 +77,6 @@ class _SignInScreenState extends State<SignUpScreen> {
     final RegExp hasLowercase = RegExp(r'(?=.*[a-z])');
     final RegExp hasDigit = RegExp(r'(?=.*\d)');
     final RegExp hasSpecialChar = RegExp(r'(?=.*[@$!%*?&])');
-    final RegExp hasMinLength = RegExp(r'.{8,}');
-
 
     // List to collect missing requirements
     List<String> missingRequirements = [];

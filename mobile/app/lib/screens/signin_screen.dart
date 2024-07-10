@@ -3,7 +3,7 @@ import 'package:app/themes/theme.dart';
 import 'package:app/widgets/custom_scaffold.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:app/screens/signup_screen.dart';
-import 'package:app/screens/test1.dart';
+import 'package:app/screens/dashboard.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -45,7 +45,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
     if (response.statusCode == 200) {
       print('User registered: ${responseData['user']}');
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyHomePage()));
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Dashboard()));
     } 
     else {
       ScaffoldMessenger.of(context).showSnackBar(
