@@ -1,4 +1,5 @@
 
+import 'package:app/widgets/sideMenu.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatefulWidget {
@@ -10,6 +11,7 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
 
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 String schoolName = "School Name";
 String semester = 'Semester';
 DateTime now = DateTime.now();
@@ -133,6 +135,8 @@ void _showFilter() {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: SideMenu(),
       body: Column(
         // crossAxisAlignment: CrossAxisAlignment.start,
         // mainAxisAlignment: MainAxisAlignment.start,
@@ -185,7 +189,9 @@ void _showFilter() {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget> [
               IconButton(
-                onPressed: null, 
+                onPressed: () {
+                _scaffoldKey.currentState?.openDrawer();
+                }, 
                 icon: Icon(
                   size: 33.0,
                   Icons.menu, 
