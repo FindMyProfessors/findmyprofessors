@@ -69,7 +69,7 @@ class Professor extends StatelessWidget {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 40.0),
+                      SizedBox(height: 20.0),
                       Text(
                         'Parameters: ',
                         style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
