@@ -3,16 +3,18 @@
 {
   "name": "Docker in Docker",
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
+  "build": { "dockerfile": "Dockerfile" },
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {},
-    "ghcr.io/devcontainers/features/node:1": {}
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers-contrib/features/bash-command:1": {
+      "command": "cargo install loco-cli sea-orm-cli"
+    }
   },
   "overrideFeatureInstallOrder": [
     "ghcr.io/devcontainers/features/docker-in-docker",
-    "ghcr.io/devcontainers/features/node"
+    "ghcr.io/devcontainers/features/node",
+    "ghcr.io/devcontainers-contrib/features/bash-command"
   ],
   "customizations": {
     "vscode": {
