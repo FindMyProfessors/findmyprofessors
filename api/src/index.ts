@@ -17,6 +17,8 @@ import { logger } from "./utils/logger";
 import requestIdMiddleware from "./middleware/request_id";
 import { config } from "./config";
 
+import cors from 'cors';
+
 export const app = express();
 
 // Use body parser to read sent json payloads
@@ -27,6 +29,14 @@ app.use(
 );
 app.use(json());
 app.use(requestIdMiddleware());
+
+// Add support for cors
+app.use(cors({
+  credentials: true,
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  origin: config.CORS_ALLOWED_ORIGINS
+}));
 
 // Add expressWinston middleware to log HTTP requests
 app.use(
