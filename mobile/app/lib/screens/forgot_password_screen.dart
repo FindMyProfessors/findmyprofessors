@@ -125,6 +125,11 @@ class _SignInScreenState extends State<ForgotPasswordScreen> {
                               if (_formSignUpKey.currentState!.validate()) {
                                 // Send email to user
                                 print("Email: " + _emailController.text);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Email sent'),
+                                  ),
+                                );
                               } else {
                                 print("Email not valid");
                               }
