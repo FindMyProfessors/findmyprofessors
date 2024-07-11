@@ -74,7 +74,17 @@ class _SideMenuState extends State<SideMenu> {
           ListTile(
             leading: Icon(Icons.exit_to_app , color: Colors.white),
             title: Text('Logout' , style: TextStyle(color: Colors.white)),
-            onTap: () => {Navigator.of(context).push(MaterialPageRoute(builder: (context) => WelcomeScreen()))},
+            onTap: () async => {
+              //delete user info
+              await storage.deleteAll(),
+
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => WelcomeScreen()),
+                (Route<dynamic> route) => false,
+              ),
+              //print("Token "+ (await storage.read(key: 'JWT')).toString())
+
+              },
           ),
         ],
       ),

@@ -46,7 +46,7 @@ class _SignInScreenState extends State<SignUpScreen> {
 
     if (response.statusCode == 201) {
       print('User registered: ${responseData['user']}');
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Dashboard()));
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignInScreen()));
     } 
     else {
       ScaffoldMessenger.of(context).showSnackBar(

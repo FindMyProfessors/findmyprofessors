@@ -6,6 +6,9 @@ import 'package:app/screens/signup_screen.dart';
 import 'package:app/screens/dashboard.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+final storage = new FlutterSecureStorage();
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -44,7 +47,16 @@ class _SignInScreenState extends State<SignInScreen> {
     final responseData = json.decode(response.body);
 
     if (response.statusCode == 200) {
-      print('User registered: ${responseData['user']}');
+
+      final String username = responseData['user']['username'];
+      final int id = responseData['user']['id'];
+
+      await storage.write(key: 'JWT', value: responseData['token']);
+      await storage.write(key: 'userName', value: username);
+      await storage.write(key: 'id', value: id.toString());  //gets saved as a string NOT an int
+
+      print('User registered: '+ username + ' ID: ' + id.toString());
+
       Navigator.of(context).push(MaterialPageRoute(builder: (context) => Dashboard()));
     } 
     else {
