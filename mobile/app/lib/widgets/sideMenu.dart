@@ -1,6 +1,9 @@
 import 'package:app/screens/dashboard.dart';
 import 'package:app/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+final storage = new FlutterSecureStorage();
 
 class SideMenu extends StatefulWidget {
   const SideMenu({ Key? key }) : super(key: key);
@@ -10,6 +13,23 @@ class SideMenu extends StatefulWidget {
 }
 
 class _SideMenuState extends State<SideMenu> {
+  String? userName;
+
+  void initState() {
+    super.initState();
+    //_loadUserName();
+    _loadUserValues();
+  }
+
+  final storage = FlutterSecureStorage();
+
+Future<void> _loadUserValues() async {
+  String? name = await storage.read(key: 'userName');
+  setState(() {
+      userName = name;
+    });
+  //print(' Side Menu Username: $name');
+}
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -27,7 +47,7 @@ class _SideMenuState extends State<SideMenu> {
 
                 SizedBox(width: 10.0),
 
-                Text("UserName", style: TextStyle(color: Colors.white, fontSize: 20.0)),
+                Text(userName ?? 'User', style: TextStyle(color: Colors.white, fontSize: 20.0)),
                 
               ],
             ),
