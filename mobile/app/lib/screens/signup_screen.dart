@@ -45,7 +45,7 @@ class _SignInScreenState extends State<SignUpScreen> {
     final responseData = json.decode(response.body);
 
     if (response.statusCode == 201) {
-      print('User registered: ${responseData['user']}');
+      //print('User registered: ${responseData['user']}');
       Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignInScreen()));
     } 
     else {
@@ -70,7 +70,7 @@ class _SignInScreenState extends State<SignUpScreen> {
 
   // Check if the email matches the regular expression
   return emailRegex.hasMatch(email);
-}
+  }
   String validatePassword(String password) {
     // Regular expressions for different requirements
     final RegExp hasUppercase = RegExp(r'(?=.*[A-Z])');

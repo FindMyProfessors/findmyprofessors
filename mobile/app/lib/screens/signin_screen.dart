@@ -3,6 +3,7 @@ import 'package:app/themes/theme.dart';
 import 'package:app/widgets/custom_scaffold.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:app/screens/signup_screen.dart';
+import 'package:app/screens/forgot_password_screen.dart';
 import 'package:app/screens/dashboard.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -204,6 +205,14 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
               
                         GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (e) => const ForgotPasswordScreen(),
+                              ),
+                              );
+                            },
                           child: Text(
                             'Forgot Password?',
                             style: TextStyle(
