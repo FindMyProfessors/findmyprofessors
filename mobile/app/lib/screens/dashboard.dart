@@ -1,4 +1,5 @@
 
+import 'package:app/screens/Professor.dart';
 import 'package:app/widgets/sideMenu.dart';
 import 'package:flutter/material.dart';
 
@@ -146,7 +147,7 @@ void _showFilter() {
           SizedBox(height: 20.0),
 
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.only(bottom: 15.0, left: 16.0, right: 16.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,7 +161,10 @@ void _showFilter() {
 
               ]
             ),
+
           ),
+
+          Divider(color: Colors.black, thickness: 1.0, indent: 16.0, endIndent: 16.0,),
 
           _professors(),
 
@@ -175,15 +179,16 @@ void _showFilter() {
     return Container(
       padding: EdgeInsets.all(16.0),
       decoration: BoxDecoration( 
-        color: Colors.blue, 
+        color: Color(0xff17203a), 
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(30.0),
            bottomRight: Radius.circular(30.0))
       ),
 
       child: Column(
+        
         children: <Widget>[
-          SizedBox(height: 20.0),
+          SizedBox(height: 25.0),
           //top row
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -243,78 +248,30 @@ void _showFilter() {
     );
   }
 
-  // Future<void> _showSchoolInfoDialog(BuildContext context) async {
-
-  //   return showDialog<void>(
-  //     context: context,
-  //     barrierDismissible: true, // Allow user to dismiss the dialog
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text('Enter School Info'),
-  //         content: SingleChildScrollView(
-  //           child: Column(
-  //             children: <Widget>[
-  //               TextFormField(
-  //                 decoration: InputDecoration(
-  //                   labelText: 'School Name',
-  //                   hintText: 'Enter school name',
-  //                 ),
-  //                 onChanged: (value) {
-  //                   schoolName = value;
-  //                 },
-  //               ),
-  //               TextFormField(
-  //                 decoration: InputDecoration(
-  //                   labelText: 'Semester',
-  //                   hintText: 'Enter semester',
-  //                 ),
-  //                 onChanged: (value) {
-  //                   semester = value;
-  //                 },
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             child: Text('Cancel'),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //           ElevatedButton(
-  //             child: Text('Save'),
-  //             onPressed: () {
-  //               // Process the input here (e.g., save to database)
-  //               print('School Name: $schoolName, Semester: $semester');
-  //               Navigator.of(context).pop(); // Close the dialog
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
-  _professors() {
-
   List<String> professors = List.generate(10, (index) => 'Professor ${index + 1}');
+  
+  _professors() {
 
   return Expanded(
     child: ListView.builder(
       itemCount: professors.length,
       itemBuilder: (context, index) {
-        return Container(
-          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
-          padding: EdgeInsets.all(16.0),
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Text(
-            professors[index],
-            style: TextStyle(color: Colors.white, fontSize: 18.0),
-          ),
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Professor(item: "Professor ${index + 1}")));
+          },
+          child: Container(
+            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+            padding: EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: Color(0xff17203a),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Text(
+              professors[index],
+              style: TextStyle(color: Colors.white, fontSize: 18.0),
+            ),
+          )
         );
       },
     ),

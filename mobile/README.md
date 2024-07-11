@@ -4,6 +4,7 @@
 naviaget to app directory:  C:...findmyprofessors\mobile\app
 
 in terminal run:  
+- flutter clean
 - flutter pub get
 - flutter pub run flutter_native_splash:create
 - flutter run

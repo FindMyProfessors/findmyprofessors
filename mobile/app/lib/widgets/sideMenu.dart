@@ -13,43 +13,67 @@ class _SideMenuState extends State<SideMenu> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Color(0xff17203a),
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: Text(
-              'Side menu',
-              style: TextStyle(color: Colors.white, fontSize: 25),
+            child: Row(
+              children: <Widget>[
+                CircleAvatar(
+                  backgroundImage: AssetImage('assets/images/splash_icon.png'),
+                  radius: 25.0,
+                ),
+
+                SizedBox(width: 10.0),
+
+                Text("UserName", style: TextStyle(color: Colors.white, fontSize: 20.0)),
+                
+              ],
             ),
+            
             decoration: BoxDecoration(
-                color: Colors.blue,
-                image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage('assets/images/cover.jpg'))),
+                //borderRadius: BorderRadius.circular(30.0),
+                color:Color(0xff17203a),
+            ),
           ),
+
+          
           ListTile(
-            leading: Icon(Icons.dashboard_customize_rounded),
-            title: Text('DashBoard'),
+            leading: Icon(Icons.dashboard_customize_rounded, color: Colors.white,),
+            title: Text('DashBoard', style: TextStyle(color: Colors.white),),
             onTap: () =>  {Navigator.of(context).push(MaterialPageRoute(builder: (context) => Dashboard()))},
           ),
+
+          Divider(color: Colors.black, thickness: 1.0),
+
           ListTile(
-            leading: Icon(Icons.shopping_cart),
-            title: Text('Course Cart'),
+            leading: Icon(Icons.shopping_cart, color: Colors.white),
+            title: Text('Course Cart' , style: TextStyle(color: Colors.white)),
             onTap: () => {Navigator.of(context).pop()},
           ),
+
+          Divider(color: Colors.black, thickness: 1.0),
+
           ListTile(
-            leading: Icon(Icons.person),
-            title: Text('Profile'),
+            leading: Icon(Icons.person, color: Colors.white),
+            title: Text('Profile' , style: TextStyle(color: Colors.white)),
             onTap: () => {Navigator.of(context).pop()},
           ),
+
+          Divider(color: Colors.black, thickness: 1.0),
+
           ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
+            leading: Icon(Icons.settings , color: Colors.white),
+            title: Text('Settings' , style: TextStyle(color: Colors.white)),
             onTap: () => {Navigator.of(context).pop()},
           ),
+
+          Divider(color: Colors.black, thickness: 1.0),
+
           ListTile(
-            leading: Icon(Icons.exit_to_app),
-            title: Text('Logout'),
+            leading: Icon(Icons.exit_to_app , color: Colors.white),
+            title: Text('Logout' , style: TextStyle(color: Colors.white)),
             onTap: () => {Navigator.of(context).push(MaterialPageRoute(builder: (context) => WelcomeScreen()))},
           ),
         ],
