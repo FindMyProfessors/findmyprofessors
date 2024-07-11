@@ -27,7 +27,6 @@ services:
       - 1080:1080
       - 1025:1025
   api:
-    restart: always
     build:
       context: ./api
       dockerfile: Dockerfile
