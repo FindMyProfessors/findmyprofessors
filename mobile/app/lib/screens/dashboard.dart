@@ -258,7 +258,7 @@ void _showFilter() {
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Professor(item: "Professor ${index + 1}")));
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Professor(item: "${index + 1}", rating: (index+1)%5,)));
           },
           child: Container(
             margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),

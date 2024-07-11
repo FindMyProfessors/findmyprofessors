@@ -244,11 +244,27 @@ class _SignInScreenState extends State<SignInScreen> {
 
                     const SizedBox(height: 30),   
                     
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                          //Icon(Bootstrap.google,size: 35,),
-                          Icon(Bootstrap.github,size: 35,),
+                          
+                        //bypass log in by clicking on github
+                          IconButton(
+                            icon: Icon(
+                              Bootstrap.github, // Replace with Bootstrap GitHub icon
+                              size: 35, // Adjust size as needed
+                            ),
+                            onPressed: () {
+                              // Navigate to another screen
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Dashboard()),
+                              );
+                            },
+                          ),
+
+
+                          //Icon(Bootstrap.github,size: 35,),
                           Icon(Bootstrap.facebook,size: 35, color: Color.fromRGBO(66, 103, 178, 1.0),),
                           Icon(Bootstrap.twitter,size: 35, color: Color.fromRGBO(29, 161, 242, 1.0),),
                           Icon(Bootstrap.instagram,size: 35, color: Colors.pink,),

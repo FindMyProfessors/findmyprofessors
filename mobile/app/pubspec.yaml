@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  icons_plus: ^1.0.2
+  icons_plus: ^5.0.0
   flutter_launcher_icons: ^0.13.1
   
   # The following adds the Cupertino Icons font to your application.
@@ -40,13 +40,14 @@ dependencies:
   jwt_decoder: ^2.0.1
   postgres: ^3.2.1
   fl_chart: ^0.68.0
+  flutter_rating_bar: ^4.0.1
   #icons_plus: ^5.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_native_splash: ^2.4.0
-  http: ^0.13.3
+  http: ^1.2.1
 
 #run: flutter clean
 #run: flutter pub get
