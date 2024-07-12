@@ -26,7 +26,7 @@ class WelcomeScreen extends StatelessWidget {
                   text: const TextSpan(
                     children: [
                       TextSpan(text: 'Find My ', style: TextStyle(color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold)),
-                      TextSpan(text: 'Profesors\n', style: TextStyle(color: Color.fromARGB(255, 65, 68, 232), fontSize: 35, fontWeight: FontWeight.bold)),
+                      TextSpan(text: 'Professors\n', style: TextStyle(color: Color.fromARGB(255, 65, 68, 232), fontSize: 35, fontWeight: FontWeight.bold)),
                       TextSpan(text: '\nBuild your perfect college schedule',style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.normal)),
                     ]
                   ),

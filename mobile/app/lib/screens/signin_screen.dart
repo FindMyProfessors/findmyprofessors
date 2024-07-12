@@ -54,7 +54,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
       await storage.write(key: 'JWT', value: responseData['token']);
       await storage.write(key: 'userName', value: username);
-      await storage.write(key: 'id', value: id.toString());  //gets saved as a string NOT an int
+      await storage.write(key: 'id', value: id.toString());  //saved as a string NOT an int
 
       print('User registered: '+ username + ' ID: ' + id.toString());
 
