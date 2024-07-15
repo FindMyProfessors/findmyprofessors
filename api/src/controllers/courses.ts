@@ -155,23 +155,37 @@ export class CoursesController extends Controller {
 
   @SuccessResponse("200", "Courses Retrieved Successfully")
   @Security("jwt")
-  @Get("search/{name}")
+  @Get("search/{query}")
   public async searchCourses(
-    name: string,
+    query: string,
     @Query() cursor?: string,
     @Query() pageSize: number = COURSE_SEARCH_PAGE_SIZE
   ): Promise<CourseSearchResult> {
     const take = pageSize;
     const skip = cursor ? 1 : 0;
 
-    const result = await prisma.$transaction(async (prisma) => {
-      const courses = await prisma.course.findMany({
+    let searchClause = {
         where: {
+OR: [
+          {
           name: {
-            contains: name,
+            contains: query,
+            mode: "insensitive",
+},
+          },
+{
+code: {
+            contains: query,
             mode: "insensitive",
           },
         },
+],
+      },
+    };
+
+    const result = await prisma.$transaction(async (prisma) => {
+      const courses = await prisma.course.findMany({
+        where: searchClause.where as any,
         orderBy: {
           id: "asc",
         },
@@ -200,12 +214,7 @@ export class CoursesController extends Controller {
       }
 
       const total = await prisma.course.count({
-        where: {
-          name: {
-            contains: name,
-            mode: "insensitive",
-          },
-        },
+        where: searchClause.where as any,
       });
 
       return {
