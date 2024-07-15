@@ -26,8 +26,14 @@ import {
 } from "../models/professors";
 import { logger } from "../utils/logger";
 import { AuthErrorType, JWTBody, UnauthorizedError } from "../models/auth";
-import { Professor, Semester, UserRole } from "@prisma/client";
+import { Professor, Review, Semester, UserRole } from "@prisma/client";
 import { SchoolErrorType, SchoolNotFoundError } from "../models/schools";
+import {
+  NewReview,
+  ReviewErrorType,
+  ReviewNotFoundError,
+  UpdatedReview,
+} from "../models/reviews";
 
 const PROFESSOR_SEARCH_PAGE_SIZE = 10;
 
@@ -140,8 +146,8 @@ export class ProfessorsController extends Controller {
     }
 
     let a = {
-        courses: profesor?.courses,
-        total: profesor?._count.courses,
+      courses: profesor?.courses,
+      total: profesor?._count.courses,
     } as ProfessorCourses;
 
     return a;
@@ -286,6 +292,37 @@ export class ProfessorsController extends Controller {
 
     return result;
   }
+
+  @SuccessResponse("201", "Review Created Successfully")
+  @Security("jwt")
+  @Post("{id}/reviews")
+  public async createReview(
+    @Request() request: any,
+    id: number,
+    @Body() body: NewReview
+  ): Promise<Review> {
+    const jwt_body = request.user as JWTBody;
+
+    if (jwt_body.user_role !== UserRole.ADMIN) {
+      const error: UnauthorizedError = {
+        message: "You must be an admin to create a review!",
+        type: AuthErrorType.UNAUTHORIZED,
+      };
+      return Promise.reject(error);
+    }
+
+    await getProfessorById(id);
+
+    const review = await prisma.review.create({
+      data: {
+        ...body,
+        professor_id: id,
+      },
+    });
+
+    return review;
+  }
+
 }
 
 type ORQuery = {
