@@ -11,6 +11,7 @@ export type UpdateUserParams = Omit<
   | "id"
   | "last_login_time"
   | "email"
+  | "role"
 >;
 
 // New types for delete user operation
