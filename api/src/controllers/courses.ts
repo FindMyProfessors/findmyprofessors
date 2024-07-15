@@ -165,21 +165,21 @@ export class CoursesController extends Controller {
     const skip = cursor ? 1 : 0;
 
     let searchClause = {
-        where: {
-OR: [
+      where: {
+        OR: [
           {
-          name: {
-            contains: query,
-            mode: "insensitive",
-},
+            name: {
+              contains: query,
+              mode: "insensitive",
+            },
           },
-{
-code: {
-            contains: query,
-            mode: "insensitive",
+          {
+            code: {
+              contains: query,
+              mode: "insensitive",
+            },
           },
-        },
-],
+        ],
       },
     };
 
@@ -239,15 +239,7 @@ code: {
     @Query() year: number,
     @Query() semester: Semester
   ): Promise<CourseProfessors> {
-    const course = await getCourseById(id);
-
-    if (!course) {
-      const error: CourseNotFoundError = {
-        message: "Course not found",
-        type: CourseErrorType.COURSE_NOT_FOUND,
-      };
-      return Promise.reject(error);
-    }
+    await getCourseById(id);
 
     const professors = await prisma.professorCourse.findMany({
       where: {
