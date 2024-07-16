@@ -6,6 +6,9 @@ import 'package:app/themes/theme.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+final storage = new FlutterSecureStorage();
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -45,8 +48,16 @@ class _SignInScreenState extends State<SignUpScreen> {
     final responseData = json.decode(response.body);
 
     if (response.statusCode == 201) {
-      //print('User registered: ${responseData['user']}');
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignInScreen()));
+      final String username = responseData['user']['username'];
+      final int id = responseData['user']['id'];
+
+      await storage.write(key: 'JWT', value: responseData['token']);
+      await storage.write(key: 'userName', value: username);
+      await storage.write(key: 'id', value: id.toString());  //saved as a string NOT an int
+
+      print('User registered: '+ username + ' ID: ' + id.toString());
+
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Dashboard()));
     } 
     else {
       ScaffoldMessenger.of(context).showSnackBar(
