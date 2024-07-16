@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
 }
 
 datasource db {
@@ -15,6 +16,12 @@ model User {
   last_login_time  DateTime @default(now())
   account_verified Boolean  @default(false)
   password         String
+  role             UserRole @default(NORMAL)
+}
+
+enum UserRole {
+  ADMIN
+  NORMAL
 }
 
 model School {

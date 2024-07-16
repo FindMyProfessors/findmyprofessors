@@ -26,6 +26,8 @@ import {
   PasswordTooLongError,
   PasswordTooShortError,
   AuthError,
+  InvalidTokenError,
+  JWTBody,
 } from "../models/auth";
 
 import { logger } from "../utils/logger";
@@ -33,6 +35,7 @@ import { logger } from "../utils/logger";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import { config } from "../config";
+import { User } from "@prisma/client";
 
 function validateUsername(username: string): InvalidUsernameError | null {
   if (!usernameRegex.test(username)) {
@@ -90,7 +93,7 @@ export class AuthController extends Controller {
   @Post("register")
   public async register(
     @Body() body: RegistrationParams
-  ): Promise<UserResponse> {
+  ): Promise<LoginResponse> {
     const usernameError = validateUsername(body.username);
     if (usernameError) {
       return Promise.reject(usernameError);
@@ -138,9 +141,22 @@ export class AuthController extends Controller {
       signup_time: user.signup_time,
       last_login_time: user.last_login_time,
       account_verified: user.account_verified,
+      role: user.role,
     };
+    let token = await createJwt(user);
 
-    return userResponse;
+    const loginResponse: LoginResponse = { token, user: userResponse };
+
+    await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        last_login_time: new Date(),
+      },
+    });
+
+    return loginResponse;
   }
 
   @SuccessResponse("200", "Login Successful")
@@ -188,17 +204,10 @@ export class AuthController extends Controller {
       signup_time: user.signup_time,
       last_login_time: user.last_login_time,
       account_verified: user.account_verified,
+      role: user.role,
     };
-    let token: string;
-    try {
-      token = jwt.sign({ user_id: user.id }, config.JWT_SECRET);
-    } catch (originalError) {
-      const error: InvalidPasswordError = {
-        message: `Error creating JWT: ${originalError}`,
-        type: AuthErrorType.INVALID_PASSWORD,
-      };
-      return Promise.reject(error);
-    }
+
+    let token = await createJwt(user);
 
     const loginResponse: LoginResponse = { token, user: userResponse };
 
@@ -220,4 +229,20 @@ export async function hashPassword(body: RegistrationParams) {
   const salt = await bcrypt.genSalt(saltRounds);
   const hashedPassword = await bcrypt.hash(body.password, salt);
   return hashedPassword;
+}
+
+async function createJwt(user: User): Promise<string> {
+  let token: string;
+  let body = { user_id: user.id, user_role: user.role } as JWTBody;
+
+  try {
+    token = jwt.sign(body, config.JWT_SECRET);
+  } catch (originalError) {
+    const error: InvalidTokenError = {
+      message: `Error creating JWT: ${originalError}`,
+      type: AuthErrorType.INVALID_TOKEN,
+    };
+    return Promise.reject(error);
+  }
+  return token;
 }

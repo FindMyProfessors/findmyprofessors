@@ -24,6 +24,7 @@ export class UsersController extends Controller {
     signup_time: new Date("2021-03-25"),
     last_login_time: new Date("2021-03-26"),
     account_verified: true,
+    role: "NORMAL",
   })
   @Security("jwt")
   @Get("{user_id}")
@@ -45,6 +46,7 @@ export class UsersController extends Controller {
       signup_time: user.signup_time,
       last_login_time: user.last_login_time,
       account_verified: user.account_verified,
+      role: user.role,
     };
 
     return userResponse;
