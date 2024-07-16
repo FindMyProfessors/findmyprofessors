@@ -4,6 +4,8 @@ import 'package:app/widgets/sideMenu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 
 final storage = new FlutterSecureStorage();
@@ -19,21 +21,70 @@ class _DashboardState extends State<Dashboard> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-
   String schoolName = "School Name";
   String semester = 'Semester';
   DateTime now = DateTime.now();
   String year = "2024";
-
-  String? JWT;
   String? userName;
-  String? id;
+  String? userID;
+
+  List<String>? schoolNames= [];
+
+  Future<void> _getSchools() async {
+    print("Loading User SCHOOLS to Dashboard...");
+    String? JWT = await storage.read(key: 'JWT');
+    try {
+      var response = await http.get(
+        //currently searching for school with name "u" must change 
+        Uri.parse('http://localhost:8080/schools/search/u?pageSize=10'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + JWT.toString(),
+        },
+      );
+
+      print("Response status: ${response.statusCode}");
+      print("Response headers: ${response.headers}");
+      print("Response body: ${response.body}");
+
+      final responseData = json.decode(response.body);
+
+      if (response.statusCode == 200) {
+        print("successfull school search");
+        final List<dynamic> Schools = responseData['edges'];
+        //itterate through edges
+        for (var school in Schools) {
+          final String schoolName = school['node']['name'];
+          schoolNames?.add(schoolName);
+        }
+
+        if (schoolNames != null) {
+        for (String schoolName in schoolNames!) {
+          print('School: $schoolName');
+        }
+        } else {
+          print('No school names found.');
+        }
+      } 
+      else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(responseData['message']),
+          ),
+        );
+        print('Failed to Load Schools: ${response.body[0]}');
+      }
+    } 
+    catch (e) {
+      print('ERROR occurred: $e');
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    //_loadUserName();
     _loadUserValues();
+    _getSchools();
   }
 
   final storage = FlutterSecureStorage();
@@ -44,24 +95,16 @@ Future<void> _loadUserValues() async {
   String? name = await storage.read(key: 'userName');
   String? id = await storage.read(key: 'id');
   setState(() {
-      JWT = token;
-      userName = name;
-      id= id;
-    });
+    userName = name;
+    userID= id;
+  });
+
   print('JWT Token: $token');
   print('Username: $name');
   print('ID: $id');
 }
 
-  // Future<void> _loadUserName() async {
-  //   String? storedUserName = await storage.read(key: 'userName');
-  //   setState(() {
-  //     userName = storedUserName;
-  //   });
-  //   print(storedUserName);
-  // }
-
-  void _showFilter() {
+    void _showFilter() {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -72,29 +115,35 @@ Future<void> _loadUserValues() async {
                 children: <Widget>[
                   SizedBox(height: 10.0),
 
-                  TextFormField(
-                    decoration: InputDecoration(                    
-                      labelText: "School Name",
-                      hintText: schoolName,
-                      //hintStyle: const TextStyle(color: Colors.grey),
-          
-                      border: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors.black
+                  Autocomplete<String>(
+                    optionsBuilder: (TextEditingValue textEditingValue) {
+                      if (textEditingValue.text.isEmpty) {
+                        return const Iterable<String>.empty();
+                      }
+                      return schoolNames!.where((String option) {
+                        return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
+                      });
+                    },
+                    fieldViewBuilder: (BuildContext context, TextEditingController textEditingController, FocusNode focusNode, VoidCallback onFieldSubmitted) {
+                      return TextFormField(
+                        controller: textEditingController,
+                        focusNode: focusNode,
+                        decoration: InputDecoration(
+                          labelText: "School Name",
+                          hintText: "Enter school name",
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-          
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors.black
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      )
-                    ),
-
-                    onChanged: (value) {
-                      schoolName = value;
+                      );
+                    },
+                    onSelected: (String selection) {
+                      print('You just selected $selection');
                     },
                   ),
 
@@ -361,9 +410,6 @@ Future<void> _loadUserValues() async {
                 
 
               ),
-              
-              
-              
               
             )
           );
