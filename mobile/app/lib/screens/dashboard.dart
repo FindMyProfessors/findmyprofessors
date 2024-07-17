@@ -21,13 +21,13 @@ class _DashboardState extends State<Dashboard> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  String schoolSelection = "School Name";
-  String semesterSelection = 'Semester';
-  DateTime now = DateTime.now();
-  String year = "2024";
   String? userName;
   String? userID;
 
+  String schoolSelection = '';
+  String semesterSelection = '';
+  String year = '';
+ 
   List<String>? schoolNames= [];
   final List<String>? semesterNames= ['fall','spring','summer'];
 
