@@ -10,6 +10,13 @@ import 'dart:convert';
 
 final storage = new FlutterSecureStorage();
 
+class SchoolNameID<int, String> {
+  int ID;
+  String schoolName;
+
+  SchoolNameID(this.ID, this.schoolName);
+}
+
 class Dashboard extends StatefulWidget {
   const Dashboard({ Key? key }) : super(key: key);
 
@@ -24,11 +31,12 @@ class _DashboardState extends State<Dashboard> {
   String? userName;
   String? userID;
 
-  String schoolSelection = '';
+  late SchoolNameID schoolSelection;
+  String schoolID = '';
   String semesterSelection = '';
   String year = '';
  
-  List<String>? schoolNames= [];
+  List<SchoolNameID>? schoolNames= [];
   final List<String>? semesterNames= ['fall','spring','summer'];
 
   Future<void> _getSchools() async {
@@ -56,12 +64,13 @@ class _DashboardState extends State<Dashboard> {
         //itterate through edges
         for (var school in Schools) {
           final String schoolName = school['node']['name'];
-          schoolNames?.add(schoolName);
+          final int schoolID = school['node']['id'];
+          schoolNames?.add(new SchoolNameID(schoolID, schoolName));
         }
 
         if (schoolNames != null) {
-        for (String schoolName in schoolNames!) {
-          print('School: $schoolName');
+        for (var schoolName in schoolNames!) {
+          print('School: ${schoolName.schoolName}, ID: ${schoolName.ID}');
         }
         } else {
           print('No school names found.');
@@ -118,15 +127,16 @@ class _DashboardState extends State<Dashboard> {
               children: <Widget>[
                 SizedBox(height: 10.0),
 
-                Autocomplete<String>(
+                Autocomplete<SchoolNameID>(
                   optionsBuilder: (TextEditingValue textEditingValue) {
                     if (textEditingValue.text.isEmpty) {
-                      return const Iterable<String>.empty();
+                      return const Iterable<SchoolNameID>.empty();
                     }
-                    return schoolNames!.where((String option) {
-                      return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
+                    return schoolNames!.where((SchoolNameID pair) {
+                      return pair.schoolName.toLowerCase().contains(textEditingValue.text.toLowerCase());
                     });
                   },
+                  displayStringForOption: (SchoolNameID option) => option.schoolName,
                   fieldViewBuilder: (BuildContext context, TextEditingController textEditingController, FocusNode focusNode, VoidCallback onFieldSubmitted) {
                     return TextFormField(
                       controller: textEditingController,
@@ -145,10 +155,11 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     );
                   },
-                  onSelected: (String selection) {
-                    print('You just selected $selection');
-                    schoolSelection = selection;
-                    //Navigator.of(context).pop();
+                  onSelected: (SchoolNameID selection) {
+                    setState(() {
+                      schoolSelection = selection;
+                    });
+                    print('You just selected ${selection.schoolName} with ID ${selection.ID}');
                   },
                 ),
 
