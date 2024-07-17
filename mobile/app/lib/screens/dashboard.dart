@@ -21,14 +21,15 @@ class _DashboardState extends State<Dashboard> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  String schoolName = "School Name";
-  String semester = 'Semester';
+  String schoolSelection = "School Name";
+  String semesterSelection = 'Semester';
   DateTime now = DateTime.now();
   String year = "2024";
   String? userName;
   String? userID;
 
   List<String>? schoolNames= [];
+  final List<String>? semesterNames= ['fall','spring','summer'];
 
   Future<void> _getSchools() async {
     print("Loading User SCHOOLS to Dashboard...");
@@ -89,141 +90,164 @@ class _DashboardState extends State<Dashboard> {
 
   final storage = FlutterSecureStorage();
 
-Future<void> _loadUserValues() async {
-  print("Loading User Values on Dashboard...");
-  String? token = await storage.read(key: 'JWT');
-  String? name = await storage.read(key: 'userName');
-  String? id = await storage.read(key: 'id');
-  setState(() {
-    userName = name;
-    userID= id;
-  });
+  Future<void> _loadUserValues() async {
+    print("Loading User Values on Dashboard...");
+    String? token = await storage.read(key: 'JWT');
+    String? name = await storage.read(key: 'userName');
+    String? id = await storage.read(key: 'id');
+    setState(() {
+      userName = name;
+      userID= id;
+    });
 
-  print('JWT Token: $token');
-  print('Username: $name');
-  print('ID: $id');
-}
+    print('JWT Token: $token');
+    print('Username: $name');
+    print('ID: $id');
+  }
 
-    void _showFilter() {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Enter School Info'),
-            content: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(height: 10.0),
+  void _showFilter() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shadowColor: Colors.black,
+          scrollable: true,
+          title: Text('Enter School Info'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 10.0),
 
-                  Autocomplete<String>(
-                    optionsBuilder: (TextEditingValue textEditingValue) {
-                      if (textEditingValue.text.isEmpty) {
-                        return const Iterable<String>.empty();
-                      }
-                      return schoolNames!.where((String option) {
-                        return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
-                      });
-                    },
-                    fieldViewBuilder: (BuildContext context, TextEditingController textEditingController, FocusNode focusNode, VoidCallback onFieldSubmitted) {
-                      return TextFormField(
-                        controller: textEditingController,
-                        focusNode: focusNode,
-                        decoration: InputDecoration(
-                          labelText: "School Name",
-                          hintText: "Enter school name",
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                Autocomplete<String>(
+                  optionsBuilder: (TextEditingValue textEditingValue) {
+                    if (textEditingValue.text.isEmpty) {
+                      return const Iterable<String>.empty();
+                    }
+                    return schoolNames!.where((String option) {
+                      return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
+                    });
+                  },
+                  fieldViewBuilder: (BuildContext context, TextEditingController textEditingController, FocusNode focusNode, VoidCallback onFieldSubmitted) {
+                    return TextFormField(
+                      controller: textEditingController,
+                      focusNode: focusNode,
+                      decoration: InputDecoration(
+                        labelText: "School Name",
+                        hintText: "Enter school name",
+                        border: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                      );
-                    },
-                    onSelected: (String selection) {
-                      print('You just selected $selection');
-                    },
-                  ),
-
-                  SizedBox(height: 15.0),
-
-                  TextFormField(
-                    decoration: InputDecoration(                    
-                      labelText: "Semester",
-                      hintText: semester,
-                      //hintStyle: const TextStyle(color: Colors.grey),
-          
-                      border: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors.black
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        borderRadius: BorderRadius.circular(10),
                       ),
-          
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors.black
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      )
-                    ),
-                    onChanged: (value) {
-                      semester = value;
-                    },
-                  ),
+                    );
+                  },
+                  onSelected: (String selection) {
+                    print('You just selected $selection');
+                    schoolSelection = selection;
+                    //Navigator.of(context).pop();
+                  },
+                ),
 
-                  SizedBox(height: 15.0),
-                  
-                  TextFormField(
-                    decoration: InputDecoration(                    
-                      labelText: "Year",
-                      hintText: year,
-                      //hintStyle: const TextStyle(color: Colors.grey),
-          
-                      border: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors.black
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-          
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors.black
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      )
-                    ),
-                    onChanged: (value) {
-                      year = value;
-                    },
-                  ),
+                SizedBox(height: 15.0),
 
-                ],
-              ),
+                DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    labelText: "Semester",
+                    hintText: "Select Semester",
+                    isDense: true,
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                
+                  items: [
+                    DropdownMenuItem<String>(
+                      child:
+                      Text("spring"),
+                      value: "spring",
+                    ),
+                    DropdownMenuItem<String>(
+                      child:Text("summer"),
+                      value: "summer",
+                    ),
+                    DropdownMenuItem<String>(
+                      child:Text("fall"),
+                      value: "fall",
+                    ),
+                  ].toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      semesterSelection = newValue!;
+                    });
+                  },
+                ),
+
+                SizedBox(height: 15.0),
+                
+                DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    labelText: "Year",
+                    hintText: "Select Year",
+                    isDense: true,
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  items: [
+                    DropdownMenuItem<String>(
+                      child:
+                      Text("2024"),
+                      value: "2024",
+                    ),
+                    DropdownMenuItem<String>(
+                      child:Text("2025"),
+                      value: "2025",
+                    ),
+                  ].toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      year = newValue!;
+                    });
+                  },
+                ),
+              ],
             ),
-            actions: <Widget>[
-              TextButton(
-                child: Text('Cancel'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              ElevatedButton(
-                child: Text('Save'),
-                onPressed: () {
-                  // Process the input here (e.g., save to database)
-                  print('School Name: $schoolName, Semester: $semester');
-                  Navigator.of(context).pop(); // Close the dialog
-                },
-              ),
-            ],
-          );
-        }
-      );
-    }
+          ),
+
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            ElevatedButton(
+              child: Text('Save'),
+              onPressed: () {
+                // Process the input here (e.g., save to database)
+                print('School Name: $schoolSelection, Semester: $semesterSelection, Year: $year');
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+          ],
+        );
+      }
+    );
+  }
 
     @override
     Widget build(BuildContext context) {
