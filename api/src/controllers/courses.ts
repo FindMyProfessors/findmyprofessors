@@ -157,7 +157,10 @@ export class CoursesController extends Controller {
   @Security("jwt")
   @Get("search/{query}")
   public async searchCourses(
-    query: string,
+    query: string = "",
+    @Query() school_id: number,
+    @Query() semester: Semester,
+    @Query() year: number,
     @Query() cursor?: string,
     @Query() pageSize: number = COURSE_SEARCH_PAGE_SIZE
   ): Promise<CourseSearchResult> {
@@ -165,29 +168,65 @@ export class CoursesController extends Controller {
     const skip = cursor ? 1 : 0;
 
     let searchClause = {
-      where: {
-        OR: [
-          {
+      OR: [
+        {
+          course: {
             name: {
               contains: query,
               mode: "insensitive",
             },
           },
-          {
+        },
+        {
+          course: {
             code: {
               contains: query,
               mode: "insensitive",
             },
           },
-        ],
-      },
+        },
+      ],
+      AND: [
+        { course: { school_id: school_id } },
+        { semester: semester },
+        { year: year },
+      ],
     };
 
     const result = await prisma.$transaction(async (prisma) => {
-      const courses = await prisma.course.findMany({
-        where: searchClause.where as any,
+      const courses = await prisma.professorCourse.findMany({
+        where: {
+          OR: [
+            {
+              course: {
+                name: {
+                  contains: query,
+                  mode: "insensitive",
+                },
+              },
+            },
+            {
+              course: {
+                code: {
+                  contains: query,
+                  mode: "insensitive",
+                },
+              },
+            },
+          ],
+          AND: [
+            { course: { school_id: school_id } },
+            { semester: semester },
+            { year: year },
+          ],
+        },
+        include: {
+          course: true,
+        },
         orderBy: {
-          id: "asc",
+          course: {
+            id: "asc",
+          },
         },
         take: take,
         skip: skip,
@@ -195,8 +234,8 @@ export class CoursesController extends Controller {
       });
 
       const edges = courses.map((course) => ({
-        cursor: course.id.toString(),
-        node: course,
+        cursor: course.course.id.toString(),
+        node: course.course,
       }));
 
       const endCursor =
@@ -213,8 +252,32 @@ export class CoursesController extends Controller {
         }
       }
 
-      const total = await prisma.course.count({
-        where: searchClause.where as any,
+      const total = await prisma.professorCourse.count({
+        where: {
+          OR: [
+            {
+              course: {
+                name: {
+                  contains: query,
+                  mode: "insensitive",
+                },
+              },
+            },
+            {
+              course: {
+                code: {
+                  contains: query,
+                  mode: "insensitive",
+                },
+              },
+            },
+          ],
+          AND: [
+            { course: { school_id: school_id } },
+            { semester: semester },
+            { year: year },
+          ],
+        },
       });
 
       return {
