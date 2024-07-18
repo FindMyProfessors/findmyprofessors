@@ -10,11 +10,11 @@ import 'dart:convert';
 
 final storage = new FlutterSecureStorage();
 
-class SchoolNameID<int, String> {
+class Name_ID<int, String> {
   int ID;
-  String schoolName;
+  String Name;
 
-  SchoolNameID(this.ID, this.schoolName);
+  Name_ID(this.ID, this.Name);
 }
 
 class Dashboard extends StatefulWidget {
@@ -31,14 +31,73 @@ class _DashboardState extends State<Dashboard> {
   String? userName;
   String? userID;
 
-  late SchoolNameID schoolSelection;
+  late Name_ID schoolSelection;
+  late Name_ID courseSelection;
   String schoolID = '';
   String semesterSelection = '';
   String year = '';
  
-  List<SchoolNameID>? schoolNames= [];
+  //each list has both the name and the ID
+  List<Name_ID>? schoolNames= [];
+  List<Name_ID>? courseCodes= [];
+
   final List<String>? semesterNames= ['fall','spring','summer'];
 
+  //NEEDS TO BE CHANGED
+  Future<void> _getCourses() async {
+
+    print("Loading Courses...");
+
+    String? JWT = await storage.read(key: 'JWT');
+    try {
+      var response = await http.get(
+        //CHANGE THE SEARCH STRING FROM 'c' to '' WHEN WARREN IMPLEMENTS THAT ENPOINT APPROPRIARTLY
+        Uri.parse('http://localhost:8080/courses/search/c?pageSize=10'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + JWT.toString(),
+        },
+      );
+
+      // print("Response status: ${response.statusCode}");
+      // print("Response headers: ${response.headers}");
+      // print("Response body: ${response.body}");
+
+      final responseData = json.decode(response.body);
+
+      if (response.statusCode == 200) {
+        print("successfull school search");
+        final List<dynamic> Courses = responseData['edges'];
+        //itterate through edges
+        for (var course in Courses) {
+          final String courseCode = course['node']['code'];
+          final int courseID = course['node']['id'];
+          courseCodes?.add(new Name_ID(courseID, courseCode));
+        }
+
+        if (courseCodes != null) {
+        for (var courseCode in courseCodes!) {
+          print('Course Code: ${courseCode.Name}, ID: ${courseCode.ID}');
+        }
+        } else {
+          print('No school names found.');
+        }
+      } 
+      else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(responseData['message']),
+          ),
+        );
+        print('Failed to Load Courses: ${response.body[0]}');
+      }
+    } 
+    catch (e) {
+      print('ERROR occurred: $e');
+    }
+  }
+
+  //NEEDS TO BE CHANGED
   Future<void> _getSchools() async {
     print("Loading User SCHOOLS to Dashboard...");
     String? JWT = await storage.read(key: 'JWT');
@@ -65,12 +124,12 @@ class _DashboardState extends State<Dashboard> {
         for (var school in Schools) {
           final String schoolName = school['node']['name'];
           final int schoolID = school['node']['id'];
-          schoolNames?.add(new SchoolNameID(schoolID, schoolName));
+          schoolNames?.add(new Name_ID(schoolID, schoolName));
         }
 
         if (schoolNames != null) {
         for (var schoolName in schoolNames!) {
-          print('School: ${schoolName.schoolName}, ID: ${schoolName.ID}');
+          print('School: ${schoolName.Name}, ID: ${schoolName.ID}');
         }
         } else {
           print('No school names found.');
@@ -127,16 +186,16 @@ class _DashboardState extends State<Dashboard> {
               children: <Widget>[
                 SizedBox(height: 10.0),
 
-                Autocomplete<SchoolNameID>(
+                Autocomplete<Name_ID>(
                   optionsBuilder: (TextEditingValue textEditingValue) {
                     if (textEditingValue.text.isEmpty) {
-                      return const Iterable<SchoolNameID>.empty();
+                      return const Iterable<Name_ID>.empty();
                     }
-                    return schoolNames!.where((SchoolNameID pair) {
-                      return pair.schoolName.toLowerCase().contains(textEditingValue.text.toLowerCase());
+                    return schoolNames!.where((Name_ID pair) {
+                      return pair.Name.toLowerCase().contains(textEditingValue.text.toLowerCase());
                     });
                   },
-                  displayStringForOption: (SchoolNameID option) => option.schoolName,
+                  displayStringForOption: (Name_ID option) => option.Name,
                   fieldViewBuilder: (BuildContext context, TextEditingController textEditingController, FocusNode focusNode, VoidCallback onFieldSubmitted) {
                     return TextFormField(
                       controller: textEditingController,
@@ -155,11 +214,11 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     );
                   },
-                  onSelected: (SchoolNameID selection) {
+                  onSelected: (Name_ID selection) {
                     setState(() {
                       schoolSelection = selection;
                     });
-                    print('You just selected ${selection.schoolName} with ID ${selection.ID}');
+                    print('You just selected ${selection.Name} with ID ${selection.ID}');
                   },
                 ),
 
@@ -249,6 +308,7 @@ class _DashboardState extends State<Dashboard> {
             ElevatedButton(
               child: Text('Save'),
               onPressed: () {
+                _getCourses();
                 // Process the input here (e.g., save to database)
                 print('School Name: $schoolSelection, Semester: $semesterSelection, Year: $year');
                 Navigator.of(context).pop(); // Close the dialog
@@ -348,27 +408,48 @@ class _DashboardState extends State<Dashboard> {
             ),
 
             SizedBox(height: 15.0),
-            //search box
-            TextField(
-              decoration: InputDecoration(
-                hintText: "Search Course",
-                fillColor: Colors.white,
-                filled: true,
-                suffixIcon: IconButton(
-                  onPressed: _showFilter, 
-                  icon: Icon(
-                    Icons.filter_list,
-                    )
-                  ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                  borderSide: BorderSide(color: Colors.transparent),
-                ),
 
-                contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-                
-              )
+            //search box
+            Autocomplete<Name_ID>(
+              optionsBuilder: (TextEditingValue textEditingValue) {
+                if (textEditingValue.text.isEmpty) {
+                  return const Iterable<Name_ID>.empty();
+                }
+                return courseCodes!.where((Name_ID pair) {
+                  return pair.Name.toLowerCase().contains(textEditingValue.text.toLowerCase());
+                });
+              },
+              displayStringForOption: (Name_ID option) => option.Name,
+              fieldViewBuilder: (BuildContext context, TextEditingController textEditingController, FocusNode focusNode, VoidCallback onFieldSubmitted) {
+                return TextFormField(
+                  controller: textEditingController,
+                  focusNode: focusNode,
+                  decoration: InputDecoration(
+                    hintText: "Search Course",
+                    fillColor: Colors.white,
+                    filled: true,
+                    suffixIcon: IconButton(
+                      onPressed: _showFilter, 
+                      icon: Icon(
+                        Icons.filter_list,
+                        )
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.transparent),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                  )
+                );
+              },
+              onSelected: (Name_ID selection) {
+                setState(() {
+                  schoolSelection = selection;
+                });
+                print('You just selected ${selection.Name} with ID ${selection.ID}');
+              },
             ),
+            
             SizedBox(height: 5.0),
           ]
         )
