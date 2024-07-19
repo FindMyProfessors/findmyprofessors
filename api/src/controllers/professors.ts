@@ -221,7 +221,8 @@ export class ProfessorsController extends Controller {
   @Security("jwt")
   @Get("search/{name}")
   public async searchProfessors(
-    name: string,
+    name: string = "",
+    @Query() school_id?: number,
     @Query() cursor?: string,
     @Query() pageSize: number = PROFESSOR_SEARCH_PAGE_SIZE
   ): Promise<ProfessorSearchResult> {
@@ -229,11 +230,12 @@ export class ProfessorsController extends Controller {
     logger.info(`name=${name}`);
     logger.info(`cursor=${cursor}`);
     logger.info(`pageSize=${pageSize}`);
+    logger.info(`school_id=${school_id}`);
 
     const take = pageSize;
     const skip = cursor ? 1 : 0;
 
-    let searchQuery: SearchQuery = getSearchQuery(name);
+    let searchQuery: SearchQuery = getSearchQuery(name, school_id);
     logger.info("searchQuery=", searchQuery);
 
     const result = await prisma.$transaction(async (prisma) => {
@@ -363,6 +365,7 @@ type ORQuery = {
   last_name?: {
     contains: string;
   };
+  school_id?: number;
 };
 
 type ANDQuery = {
@@ -372,7 +375,8 @@ type ANDQuery = {
   last_name?: {
     contains: string;
   };
-  OR: ORQuery[];
+  school_id?: number;
+  OR?: ORQuery[];
 };
 
 type SearchQuery = {
@@ -382,7 +386,7 @@ type SearchQuery = {
   };
 };
 
-function getSearchQuery(input: string): SearchQuery {
+function getSearchQuery(input: string, school_id?: number): SearchQuery {
   const splitQuery = input.split(" ");
 
   let query: SearchQuery = { where: {} };
@@ -393,13 +397,18 @@ function getSearchQuery(input: string): SearchQuery {
         { last_name: { contains: word } },
       ],
     }));
+    if (school_id) {
+      query.where!.AND.push({ school_id: school_id });
+    }
   } else {
     query.where!.OR = [
       { first_name: { contains: input } },
       { last_name: { contains: input } },
     ];
+    query.where!.AND = [{ school_id: school_id }];
   }
-  return query;
+
+  AND: return query;
 }
 
 async function getProfessorById(id: number): Promise<Professor> {
