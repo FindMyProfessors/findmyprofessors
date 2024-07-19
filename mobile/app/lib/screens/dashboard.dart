@@ -370,7 +370,22 @@ class _DashboardState extends State<Dashboard> {
 
             Divider(color: Colors.black, thickness: 1.0, indent: 16.0, endIndent: 16.0,),
 
-            _professors(), // Conditionally render _professors
+            if(professors.isNotEmpty)
+              _professors()
+            else
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:
+                [
+                  SizedBox(height: 30.0),
+                  Icon( Icons.search_off_sharp, size: 60.0, color: Colors.black,),
+                  SizedBox(height: 30.0),
+                  Container(
+                    child: Text("No professors found, try changing filters.", style: TextStyle(color: Colors.black),),
+                  ),
+                ]
+              )
+              
 
           ],
         ),
