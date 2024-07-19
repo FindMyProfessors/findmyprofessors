@@ -20,6 +20,11 @@ export type ProfessorCourses = {
   total: number;
 };
 
+export type CourseEnrollment = Omit<ProfessorCourse, "professor_id" | "id">;
+
+
+export type CourseEnrollmentResult = ProfessorCourse;
+
 export enum ProfessorErrorType {
   PROFESSOR_NOT_FOUND = "PROFESSOR_NOT_FOUND",
   PROFESSOR_ALREADY_EXISTS = "PROFESSOR_ALREADY_EXISTS",
