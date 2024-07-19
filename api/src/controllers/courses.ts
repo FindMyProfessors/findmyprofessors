@@ -76,7 +76,7 @@ export class CoursesController extends Controller {
       if (hasNextPage) {
         const lastCourse = await prisma.course.findFirst({
           orderBy: {
-            id: "desc",
+            id: "asc",
           },
         });
         if (lastCourse && lastCourse.id == courses[courses.length - 1].id) {

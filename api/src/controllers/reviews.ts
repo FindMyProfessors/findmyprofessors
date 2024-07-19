@@ -1,6 +1,7 @@
 import { Review, UserRole } from "@prisma/client";
 import { prisma } from "../database/database";
 import {
+  NewReview,
   ReviewErrorType,
   ReviewNotFoundError,
   UpdatedReview,
@@ -22,10 +23,36 @@ import {
   Query,
 } from "tsoa";
 import { AuthErrorType, JWTBody, UnauthorizedError } from "../models/auth";
+import { getProfessorById } from "./professors";
 
 @Route("reviews")
 @Tags("Reviews")
 export class ReviewsController extends Controller {
+  @SuccessResponse("201", "Review Created Successfully")
+  @Security("jwt")
+  @Post("create")
+  public async createReview(
+    @Request() request: any,
+    @Body() body: NewReview
+  ): Promise<Review> {
+    const jwt_body = request.user as JWTBody;
+
+    if (jwt_body.user_role !== UserRole.ADMIN) {
+      const error: UnauthorizedError = {
+        message: "You must be an admin to create a review!",
+        type: AuthErrorType.UNAUTHORIZED,
+      };
+      return Promise.reject(error);
+    }
+
+    await getProfessorById(body.professor_id);
+
+    const review = await prisma.review.create({
+      data: body,
+    });
+
+    return review;
+  }
   @SuccessResponse("200", "Review Retrieved Successfully")
   @Response<ReviewNotFoundError>("404", "Review not found")
   @Security("jwt")

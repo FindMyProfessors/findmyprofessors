@@ -34,10 +34,12 @@ import {
   NewReview,
   ReviewErrorType,
   ReviewNotFoundError,
+  ReviewsSearchResult,
   UpdatedReview,
 } from "../models/reviews";
 
 const PROFESSOR_SEARCH_PAGE_SIZE = 10;
+const REVIEW_SEARCH_PAGE_SIZE = 25;
 
 @Route("professors")
 @Tags("Professors")
@@ -91,7 +93,7 @@ export class ProfessorsController extends Controller {
         const lastProfessor = await prisma.professor.findFirst({
           where: searchQuery.where as any,
           orderBy: {
-            id: "desc",
+            id: "asc",
           },
         });
         if (
@@ -297,34 +299,88 @@ export class ProfessorsController extends Controller {
     });
   }
 
-  @SuccessResponse("201", "Review Created Successfully")
+  @SuccessResponse("200", "Reviews Retrieved Successfully")
   @Security("jwt")
-  @Post("{id}/reviews")
-  public async createReview(
+  @Get("{id}/reviews")
+  public async getReviews(
     @Request() request: any,
     id: number,
-    @Body() body: NewReview
-  ): Promise<Review> {
-    const jwt_body = request.user as JWTBody;
+    @Query() cursor?: string,
+    @Query() pageSize: number = REVIEW_SEARCH_PAGE_SIZE
+  ): Promise<ReviewsSearchResult> {
+    // print this
+    logger.info(`cursor=${cursor}`);
+    logger.info(`pageSize=${pageSize}`);
 
-    if (jwt_body.user_role !== UserRole.ADMIN) {
-      const error: UnauthorizedError = {
-        message: "You must be an admin to create a review!",
-        type: AuthErrorType.UNAUTHORIZED,
+    const take = pageSize;
+    const skip = cursor ? 1 : 0;
+
+    const result = await prisma.$transaction(async (prisma) => {
+      const professor = await getProfessorById(id);
+
+      const reviews = await prisma.review.findMany({
+        where: {
+          professor_id: id,
+        },
+        orderBy: {
+          time: "desc",
+        },
+        take: take,
+        skip: skip,
+
+        cursor: cursor ? { id: parseInt(cursor) } : undefined,
+      });
+
+      // Print professors
+      logger.info("reviews=", reviews);
+
+      const edges = reviews.map((review) => ({
+        cursor: review.id.toString(),
+        node: review,
+      }));
+      logger.info("edges=", edges);
+
+      const endCursor =
+        edges.length > 0 ? edges[edges.length - 1].cursor : null;
+      let hasNextPage = reviews.length === take;
+      if (hasNextPage) {
+        // Check that last professor is not the same as the last professor in the database
+        const lastReview = await prisma.review.findFirst({
+          where: {
+            professor_id: id
+          },
+          orderBy: {
+            time: "asc",
+          },
+        });
+        if (
+          lastReview &&
+          lastReview.id == reviews[reviews.length - 1].id
+        ) {
+          hasNextPage = false;
+        }
+      }
+      logger.info("hasNextPage=", hasNextPage);
+
+      // get total with filter
+      const total = await prisma.review.count({
+        where: {
+          professor_id: id,
+        },
+      });
+      logger.info("total=", total);
+
+      return {
+        edges: edges,
+        pageInfo: {
+          hasNextPage: hasNextPage,
+          endCursor: endCursor,
+          total: total,
+        },
       };
-      return Promise.reject(error);
-    }
-
-    await getProfessorById(id);
-
-    const review = await prisma.review.create({
-      data: {
-        ...body,
-        professor_id: id,
-      },
     });
 
-    return review;
+    return result;
   }
 
   @SuccessResponse("201", "Review Created Successfully")
@@ -416,7 +472,7 @@ function getSearchQuery(input?: string, school_id?: number): SearchQuery {
   return query;
 }
 
-async function getProfessorById(id: number): Promise<Professor> {
+export async function getProfessorById(id: number): Promise<Professor> {
   const professor = await prisma.professor.findUnique({ where: { id } });
   if (!professor) {
     const error: ProfessorNotFoundError = {

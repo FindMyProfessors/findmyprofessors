@@ -17,6 +17,15 @@ model User {
   account_verified Boolean  @default(false)
   password         String
   role             UserRole @default(NORMAL)
+  Cart             UserCart[]
+}
+
+model UserCart {
+  id        Int    @id @default(autoincrement())
+  user_id   Int
+  user      User   @relation(fields: [user_id], references: [id])
+  course_id Int
+  course    Course @relation(fields: [course_id], references: [id])
 }
 
 enum UserRole {
@@ -60,6 +69,7 @@ model Course {
   school_id  Int
   school     School            @relation(fields: [school_id], references: [id])
   professors ProfessorCourse[]
+  UserCart UserCart[]
 }
 
 model ProfessorCourse {
