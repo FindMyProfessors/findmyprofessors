@@ -11,8 +11,15 @@ import {
   Tags,
   Request,
 } from "tsoa";
-import { UserResponse, UpdateUserParams } from "../models/users";
+import {
+  UserResponse,
+  UpdateUserParams,
+  UserErrorType,
+  UserNotFoundError,
+} from "../models/users";
 import { prisma } from "../database/database";
+import { User, UserRole } from "@prisma/client";
+import { AuthErrorType, JWTBody, UnauthorizedError } from "../models/auth";
 
 @Route("users")
 @Tags("Users")
@@ -24,19 +31,12 @@ export class UsersController extends Controller {
     signup_time: new Date("2021-03-25"),
     last_login_time: new Date("2021-03-26"),
     account_verified: true,
+    role: "NORMAL",
   })
   @Security("jwt")
-  @Get("{user_id}")
-  public async getUser(@Path() user_id: number): Promise<UserResponse> {
-    const user = await prisma.user.findUnique({
-      where: {
-        id: user_id,
-      },
-    });
-
-    if (!user) {
-      throw new Error("User not found");
-    }
+  @Get("{id}")
+  public async getUser(@Path() id: number): Promise<UserResponse> {
+    const user = await getUserById(id);
 
     const userResponse: UserResponse = {
       id: user.id,
@@ -45,6 +45,7 @@ export class UsersController extends Controller {
       signup_time: user.signup_time,
       last_login_time: user.last_login_time,
       account_verified: user.account_verified,
+      role: user.role,
     };
 
     return userResponse;
@@ -55,15 +56,31 @@ export class UsersController extends Controller {
   })
   @Security("jwt")
   @SuccessResponse("204", "User Updated Successfully")
-  @Put("{user_id}")
+  @Put("{id}")
   public async updateUser(
     @Request() request: any,
-    @Path() user_id: number,
+    @Path() id: number,
     @Body() body: UpdateUserParams
   ): Promise<void> {
-    if (request.user_id != user_id) {
-      throw new Error("You can only update your own user");
+    const jwt_body = request.user as JWTBody;
+
+    if (jwt_body.user_role !== UserRole.ADMIN) {
+      const error: UnauthorizedError = {
+        message: "You must be an admin to create a school!",
+        type: AuthErrorType.UNAUTHORIZED,
+      };
+      return Promise.reject(error);
     }
+
+    if (jwt_body.user_id != id && jwt_body.user_role != UserRole.ADMIN) {
+      const error: UnauthorizedError = {
+        message: "You can only update your own user",
+        type: AuthErrorType.UNAUTHORIZED,
+      };
+      return Promise.reject(error);
+    }
+
+    await getUserById(id);
 
     const updateData = Object.fromEntries(
       Object.entries(body).filter(([_, v]) => v !== undefined)
@@ -71,7 +88,7 @@ export class UsersController extends Controller {
 
     const user = await prisma.user.update({
       where: {
-        id: user_id,
+        id: id,
       },
       data: updateData,
     });
@@ -82,4 +99,34 @@ export class UsersController extends Controller {
 
     this.setStatus(204);
   }
+
+  @Security("jwt")
+  @Get("{id}/cart")
+  public async getUserCart(@Path() id: number): Promise<UserResponse> {
+    const user = await getUserById(id);
+
+    const userResponse: UserResponse = {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      signup_time: user.signup_time,
+      last_login_time: user.last_login_time,
+      account_verified: user.account_verified,
+      role: user.role,
+    };
+
+    return userResponse;
+  }
+}
+
+async function getUserById(id: number): Promise<User> {
+  const user = await prisma.user.findUnique({ where: { id } });
+  if (!user) {
+    const error: UserNotFoundError = {
+      message: "User not found",
+      type: UserErrorType.USER_NOT_FOUND,
+    };
+    return Promise.reject(error);
+  }
+  return user;
 }

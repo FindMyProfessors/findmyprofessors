@@ -29,6 +29,13 @@ When the docker compose is running, you are able to access the database using pg
 
 ## FAQ
 
+### Setting a user to admin
+
+Either you can use pgadmin to update the user, or you can use the following command
+```bash
+./scripts/api/set_admin.sh <user_id>
+```
+
 ### File permissions problems
 Run the following command
 ```bash

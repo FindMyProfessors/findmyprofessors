@@ -1,3 +1,4 @@
+
 import express, {
   json,
   urlencoded,
@@ -18,6 +19,7 @@ import requestIdMiddleware from "./middleware/request_id";
 import { config } from "./config";
 
 import cors from 'cors';
+import { SchoolErrorHttpStatus, isSchoolError } from "./models/schools";
 
 export const app = express();
 
@@ -62,12 +64,6 @@ app.use("/docs", swaggerUi.serve, async (_req: ExRequest, res: ExResponse) => {
   );
 });
 
-app.use(function notFoundHandler(_req, res: ExResponse) {
-  res.status(404).send({
-    message: "Not Found",
-  });
-});
-
 app.use(function errorHandler(
   err: unknown,
   req: ExRequest,
@@ -78,6 +74,14 @@ app.use(function errorHandler(
 
   if (isAuthError(err)) {
     const statusCode = AuthErrorHttpStatus[err.type];
+    return res.status(statusCode).json({
+      message: err.message,
+      type: err.type,
+    });
+  }
+
+  if (isSchoolError(err)) {
+    const statusCode = SchoolErrorHttpStatus[err.type];
     return res.status(statusCode).json({
       message: err.message,
       type: err.type,
@@ -98,7 +102,15 @@ app.use(function errorHandler(
     });
   }
 
+  logger.warn("Unhandled error", err);
+
   next();
+});
+
+app.use(function notFoundHandler(_req, res: ExResponse) {
+  res.status(404).send({
+    message: "Not Found",
+  });
 });
 
 

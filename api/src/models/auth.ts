@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { User, UserRole } from "@prisma/client";
 import { UserResponse } from "./users";
 
 export type RegistrationParams = Pick<User, "email" | "username" | "password">;
@@ -6,6 +6,11 @@ export type RegistrationParams = Pick<User, "email" | "username" | "password">;
 export type LoginParams = Pick<User, "username" | "password">;
 
 export type LoginResponse = { token: string; user: UserResponse };
+
+export type JWTBody = {
+  user_id: number;
+  user_role: UserRole;
+};
 
 // Create types for error handling, invalid password, user does not exist, user already exists, etc
 
@@ -17,6 +22,7 @@ export enum AuthErrorType {
   PASSWORD_MISSING_NUMBER = "PASSWORD_MISSING_NUMBER",
   USER_NOT_FOUND = "USER_NOT_FOUND",
   USER_ALREADY_EXISTS = "USER_ALREADY_EXISTS",
+  UNAUTHORIZED = "UNAUTHORIZED",
   INVALID_USERNAME = "INVALID_USERNAME",
   INVALID_TOKEN = "INVALID_TOKEN",
   UNABLE_TO_CREATE_JWT = "UNABLE_TO_CREATE_JWT", // Added unable to create JWT error type
@@ -32,6 +38,7 @@ export const AuthErrorHttpStatus = {
   [AuthErrorType.USER_NOT_FOUND]: 404,
   [AuthErrorType.USER_ALREADY_EXISTS]: 409,
   [AuthErrorType.INVALID_USERNAME]: 400,
+  [AuthErrorType.UNAUTHORIZED]: 401,
   [AuthErrorType.INVALID_TOKEN]: 401,
   [AuthErrorType.UNABLE_TO_CREATE_JWT]: 500, // HTTP status for unable to create JWT
   [AuthErrorType.UNKNOWN_ERROR]: 500,
@@ -97,4 +104,8 @@ export type UnableToCreateJwtError = Pick<AuthError, "message" | "type"> & {
 
 export type UnknownAuthError = Pick<AuthError, "message" | "type"> & {
   type: AuthErrorType.UNKNOWN_ERROR;
+};
+
+export type UnauthorizedError = Pick<AuthError, "message"> & {
+  type: AuthErrorType.UNAUTHORIZED;
 };
