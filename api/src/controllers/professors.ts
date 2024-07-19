@@ -230,7 +230,11 @@ export class ProfessorsController extends Controller {
     }
 
     let a = {
-      courses: profesor?.courses,
+      courses: profesor?.courses.map((pc) => ({
+        ...pc.course,
+        year: pc.year,
+        semester: pc.semester,
+      })),
       total: profesor?._count.courses,
     } as ProfessorCourses;
 
