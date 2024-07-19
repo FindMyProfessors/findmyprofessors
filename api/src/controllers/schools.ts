@@ -151,7 +151,7 @@ export class SchoolsController extends Controller {
   @Security("jwt")
   @Get("search/{name}")
   public async searchSchools(
-    name: string,
+    name: string = "",
     @Query() cursor?: string,
     @Query() pageSize: number = SCHOOL_SEARCH_PAGE_SIZE
   ): Promise<SchoolSearchResult> {
