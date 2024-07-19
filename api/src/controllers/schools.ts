@@ -69,7 +69,7 @@ export class SchoolsController extends Controller {
         // Check that last school is not the same as the last school in the database
         const lastSchool = await prisma.school.findFirst({
           orderBy: {
-            id: "desc",
+            id: "asc",
           },
         });
         if (lastSchool && lastSchool.id == schools[schools.length - 1].id) {
