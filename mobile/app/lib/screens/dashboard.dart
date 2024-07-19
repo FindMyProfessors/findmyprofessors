@@ -112,7 +112,7 @@ class _DashboardState extends State<Dashboard> {
     try {
       var response = await http.get(
         //currently searching for school with name "u" must change 
-        Uri.parse('http://localhost:8080/schools/search/u?pageSize=10'),
+        Uri.parse('http://localhost:8080/schools/search?pageSize=2000'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + JWT.toString(),
