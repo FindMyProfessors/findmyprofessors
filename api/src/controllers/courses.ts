@@ -159,8 +159,8 @@ export class CoursesController extends Controller {
   public async searchCourses(
     query: string = "",
     @Query() school_id: number,
-    @Query() semester: Semester,
-    @Query() year: number,
+    @Query() semester?: Semester,
+    @Query() year?: number,
     @Query() cursor?: string,
     @Query() pageSize: number = COURSE_SEARCH_PAGE_SIZE
   ): Promise<CourseSearchResult> {
