@@ -16,6 +16,8 @@ import {
 } from "tsoa";
 import { prisma } from "../database/database";
 import {
+  CourseEnrollment,
+  CourseEnrollmentResult,
   NewProfessor,
   ProfessorAlreadyExistsError,
   ProfessorCourses,
@@ -323,6 +325,35 @@ export class ProfessorsController extends Controller {
     return review;
   }
 
+  @SuccessResponse("201", "Review Created Successfully")
+  @Security("jwt")
+  @Post("{id}/enroll")
+  public async enroll(
+    @Request() request: any,
+    id: number,
+    @Body() body: CourseEnrollment
+  ): Promise<CourseEnrollmentResult> {
+    const jwt_body = request.user as JWTBody;
+
+    if (jwt_body.user_role !== UserRole.ADMIN) {
+      const error: UnauthorizedError = {
+        message: "You must be an admin to create a review!",
+        type: AuthErrorType.UNAUTHORIZED,
+      };
+      return Promise.reject(error);
+    }
+
+    let professor = await getProfessorById(id);
+
+    const enrollment = await prisma.professorCourse.create({
+      data: {
+        ...body,
+        professor_id: id,
+      },
+    });
+
+    return enrollment as CourseEnrollmentResult;
+  }
 }
 
 type ORQuery = {
