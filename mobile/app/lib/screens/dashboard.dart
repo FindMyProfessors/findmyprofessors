@@ -1,6 +1,4 @@
-
 import 'dart:math';
-
 import 'package:app/screens/Professor.dart';
 import 'package:app/widgets/sideMenu.dart';
 import 'package:flutter/material.dart';
@@ -9,14 +7,25 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-
-final storage = new FlutterSecureStorage();
+//final storage = new FlutterSecureStorage();
 
 class Name_ID<int, String> {
   int ID;
   String Name;
 
   Name_ID(this.ID, this.Name);
+}
+
+class professorObject {
+  int id;
+  String name;
+  double rating;
+
+  professorObject({
+    required this.id,
+    required this.name,
+    required this.rating,
+  });
 }
 
 class Dashboard extends StatefulWidget {
@@ -29,38 +38,48 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final storage = FlutterSecureStorage();
 
   String? userName;
   String? userID;
   bool showProfessors = false;
 
-  late Name_ID schoolSelection;
-  late Name_ID courseSelection;
+  
   String schoolID = '';
   String semesterSelection = '';
   String year = '';
+
+  late Name_ID schoolSelection;
+  late Name_ID courseSelection;
+
+  List<String> professors= [];     
  
   //each list has both the name and the ID
   List<Name_ID>? schoolNames= [];
-  List<Name_ID>? courseCodes= [];
-
+  List<Name_ID> courseCodes = [];
   final List<String>? semesterNames= ['fall','spring','summer'];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserValues();
+    _getSchools();
+  }
 
   void _refreshProfessors() {
   setState(() {
     _professors();
   });
 }
-  //NEEDS TO BE CHANGED
+  
   Future<void> _getCourses() async {
 
     print("Loading Courses...");
-
+    
     String? JWT = await storage.read(key: 'JWT');
     try {
       var response = await http.get(
-        //CHANGE THE SEARCH STRING FROM 'c' to '' WHEN WARREN IMPLEMENTS THAT ENPOINT APPROPRIARTLY
-        Uri.parse('http://localhost:8080/courses/search/c?pageSize=10'),
+        Uri.parse('http://localhost:8080/courses/search?school_id='+schoolSelection.ID.toString()+'&semester='+semesterSelection.toString().toUpperCase()+'&year='+year.toString()+'&pageSize=5000'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + JWT.toString(),
@@ -75,6 +94,7 @@ class _DashboardState extends State<Dashboard> {
 
       if (response.statusCode == 200) {
         print("successfull school search");
+        courseCodes = [];
         final List<dynamic> Courses = responseData['edges'];
         //itterate through edges
         for (var course in Courses) {
@@ -88,7 +108,7 @@ class _DashboardState extends State<Dashboard> {
           print('Course Code: ${courseCode.Name}, ID: ${courseCode.ID}');
         }
         } else {
-          print('No school names found.');
+          print('No course names found.');
         }
       } 
       else {
@@ -105,13 +125,11 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
-  //NEEDS TO BE CHANGED
   Future<void> _getSchools() async {
     print("Loading User SCHOOLS to Dashboard...");
     String? JWT = await storage.read(key: 'JWT');
     try {
       var response = await http.get(
-        //currently searching for school with name "u" must change 
         Uri.parse('http://localhost:8080/schools/search?pageSize=2000'),
         headers: {
           'Content-Type': 'application/json',
@@ -156,15 +174,6 @@ class _DashboardState extends State<Dashboard> {
       print('ERROR occurred: $e');
     }
   }
-
-  @override
-  void initState() {
-    super.initState();
-    _loadUserValues();
-    _getSchools();
-  }
-
-  final storage = FlutterSecureStorage();
 
   Future<void> _loadUserValues() async {
     print("Loading User Values on Dashboard...");
@@ -318,7 +327,7 @@ class _DashboardState extends State<Dashboard> {
               onPressed: () {
                 _getCourses();
                 // Process the input here (e.g., save to database)
-                print('School Name: $schoolSelection, Semester: $semesterSelection, Year: $year');
+                print('SELECTED FILTERS: School Name: $schoolSelection, Semester: $semesterSelection, Year: $year');
                 Navigator.of(context).pop(); // Close the dialog
               },
             ),
@@ -368,7 +377,8 @@ class _DashboardState extends State<Dashboard> {
       );
     }
 
-    //top bar
+    //top bar (search, filter, menu)
+    //incomlete
     _top() {
       return Container(
         padding: EdgeInsets.all(16.0),
@@ -453,7 +463,11 @@ class _DashboardState extends State<Dashboard> {
                 setState(() {
                   schoolSelection = selection;
                 });
+                //set professors with random vals
+                var random = new Random();
+                professors = List.generate(10, (index) => 'Professor ${random.nextInt(100)}');
                 _refreshProfessors();
+                //
                 print('You just selected ${selection.Name} with ID ${selection.ID}');
               },
             ),
@@ -466,10 +480,6 @@ class _DashboardState extends State<Dashboard> {
 
     
     _professors() {
-
-    var random = new Random();
-    List<String> professors = List.generate(10, (index) => 'Professor ${random.nextInt(100)}');
-    
     return Expanded(
       child: ListView.builder(
         itemCount: professors.length,
