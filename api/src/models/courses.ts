@@ -10,7 +10,7 @@ export type CourseSearchResult = {
 };
 
 export type CourseProfessors = {
-  professors: (ProfessorCourse & { professor: Professor })[];
+  professors: Professor[];
   total: number;
 };
 

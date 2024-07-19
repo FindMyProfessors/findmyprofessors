@@ -15,8 +15,9 @@ export type ProfessorSearchResult = {
   pageInfo: { hasNextPage: boolean; endCursor: string | null; total: number };
 };
 
+
 export type ProfessorCourses = {
-  courses: (ProfessorCourse & { course: Course })[];
+  courses: (Omit<ProfessorCourse, "professor_id" | "id" | "course_id"> & Course)[];
   total: number;
 };
 

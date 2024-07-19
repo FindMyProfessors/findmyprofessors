@@ -37,6 +37,8 @@ import {
   ReviewsSearchResult,
   UpdatedReview,
 } from "../models/reviews";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { CourseError, CourseErrorType } from "../models/courses";
 
 const PROFESSOR_SEARCH_PAGE_SIZE = 10;
 const REVIEW_SEARCH_PAGE_SIZE = 25;
@@ -198,19 +200,20 @@ export class ProfessorsController extends Controller {
     @Query() year?: number,
     @Query() semester?: Semester
   ): Promise<ProfessorCourses> {
-    //let professor = await getProfessorById(id);
+    await getProfessorById(id);
 
-    const profesor = await prisma.professor.findFirst({
-      relationLoadStrategy: "join", // or 'query'
+    const profesor = await prisma.professor.findUnique({
       where: {
         id: id,
-      },
-      include: {
         courses: {
-          where: {
+          every: {
             year: year,
             semester: semester,
           },
+        },
+      },
+      include: {
+        courses: {
           include: {
             course: true,
           },
@@ -230,7 +233,11 @@ export class ProfessorsController extends Controller {
     }
 
     let a = {
-      courses: profesor?.courses,
+      courses: profesor?.courses.map((pc) => ({
+        ...pc.course,
+        year: pc.year,
+        semester: pc.semester,
+      })),
       total: profesor?._count.courses,
     } as ProfessorCourses;
 
@@ -347,16 +354,13 @@ export class ProfessorsController extends Controller {
         // Check that last professor is not the same as the last professor in the database
         const lastReview = await prisma.review.findFirst({
           where: {
-            professor_id: id
+            professor_id: id,
           },
           orderBy: {
             time: "asc",
           },
         });
-        if (
-          lastReview &&
-          lastReview.id == reviews[reviews.length - 1].id
-        ) {
+        if (lastReview && lastReview.id == reviews[reviews.length - 1].id) {
           hasNextPage = false;
         }
       }
@@ -401,14 +405,29 @@ export class ProfessorsController extends Controller {
       return Promise.reject(error);
     }
 
-    let professor = await getProfessorById(id);
+    await getProfessorById(id);
 
-    const enrollment = await prisma.professorCourse.create({
+    let enrollment;
+    try {
+      enrollment = await prisma.professorCourse.create({
       data: {
         ...body,
         professor_id: id,
       },
     });
+    } catch (error: any) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === "P2002") {
+          const error: CourseError = {
+            message: "Course enrollment already exists",
+            type: CourseErrorType.COURSE_ALREADY_EXISTS,
+          };
+          return Promise.reject(error);
+        }
+      }
+      logger.error("Failed to create enrollment", error);
+      throw new Error("Failed to create enrollment: " + error.message);
+    }
 
     return enrollment as CourseEnrollmentResult;
   }

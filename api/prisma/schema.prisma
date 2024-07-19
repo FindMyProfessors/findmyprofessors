@@ -80,6 +80,8 @@ model ProfessorCourse {
   semester     Semester
   course       Course    @relation(fields: [course_id], references: [id])
   professor    Professor @relation(fields: [professor_id], references: [id])
+
+  @@unique([professor_id, course_id, year, semester])
 }
 
 enum Semester {
