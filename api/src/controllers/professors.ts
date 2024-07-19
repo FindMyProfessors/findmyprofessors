@@ -37,6 +37,8 @@ import {
   ReviewsSearchResult,
   UpdatedReview,
 } from "../models/reviews";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { CourseError, CourseErrorType } from "../models/courses";
 
 const PROFESSOR_SEARCH_PAGE_SIZE = 10;
 const REVIEW_SEARCH_PAGE_SIZE = 25;
@@ -403,14 +405,29 @@ export class ProfessorsController extends Controller {
       return Promise.reject(error);
     }
 
-    let professor = await getProfessorById(id);
+    await getProfessorById(id);
 
-    const enrollment = await prisma.professorCourse.create({
+    let enrollment;
+    try {
+      enrollment = await prisma.professorCourse.create({
       data: {
         ...body,
         professor_id: id,
       },
     });
+    } catch (error: any) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === "P2002") {
+          const error: CourseError = {
+            message: "Course enrollment already exists",
+            type: CourseErrorType.COURSE_ALREADY_EXISTS,
+          };
+          return Promise.reject(error);
+        }
+      }
+      logger.error("Failed to create enrollment", error);
+      throw new Error("Failed to create enrollment: " + error.message);
+    }
 
     return enrollment as CourseEnrollmentResult;
   }
