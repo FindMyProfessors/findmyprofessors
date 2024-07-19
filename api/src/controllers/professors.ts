@@ -198,19 +198,20 @@ export class ProfessorsController extends Controller {
     @Query() year?: number,
     @Query() semester?: Semester
   ): Promise<ProfessorCourses> {
-    //let professor = await getProfessorById(id);
+    await getProfessorById(id);
 
-    const profesor = await prisma.professor.findFirst({
-      relationLoadStrategy: "join", // or 'query'
+    const profesor = await prisma.professor.findUnique({
       where: {
         id: id,
-      },
-      include: {
         courses: {
-          where: {
+          every: {
             year: year,
             semester: semester,
           },
+        },
+      },
+      include: {
+        courses: {
           include: {
             course: true,
           },
@@ -351,16 +352,13 @@ export class ProfessorsController extends Controller {
         // Check that last professor is not the same as the last professor in the database
         const lastReview = await prisma.review.findFirst({
           where: {
-            professor_id: id
+            professor_id: id,
           },
           orderBy: {
             time: "asc",
           },
         });
-        if (
-          lastReview &&
-          lastReview.id == reviews[reviews.length - 1].id
-        ) {
+        if (lastReview && lastReview.id == reviews[reviews.length - 1].id) {
           hasNextPage = false;
         }
       }

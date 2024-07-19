@@ -232,33 +232,35 @@ export class CoursesController extends Controller {
   ): Promise<CourseProfessors> {
     await getCourseById(id);
 
-    const professors = await prisma.professorCourse.findMany({
+    let professors = await prisma.course.findUnique({
       where: {
         id: id,
-        year: year,
-        semester: semester,
+        professors: {
+          every: {
+            year: year,
+            semester: semester,
+          },
+        },
       },
       include: {
-        professor: true,
+        professors: {
+          include: {
+            professor: true,
+          },
+        },
       },
     });
 
+    if (!professors) {
+      return {
+        professors: [],
+        total: 0,
+      };
+    }
+
     const result: CourseProfessors = {
-      professors: professors.map((pc) => ({
-        id: pc.id,
-        professor_id: pc.professor.id,
-        course_id: pc.course_id,
-        year: year,
-        semester: semester,
-        professor: {
-          id: pc.professor.id,
-          first_name: pc.professor.first_name,
-          last_name: pc.professor.last_name,
-          rmp_id: pc.professor.rmp_id,
-          school_id: pc.professor.school_id,
-        },
-      })),
-      total: professors.length,
+      professors: professors.professors.map((pc) => pc.professor),
+      total: professors.professors.length,
     };
 
     return result;
