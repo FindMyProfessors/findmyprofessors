@@ -26,13 +26,81 @@ import {
 } from "../models/courses";
 import { logger } from "../utils/logger";
 import { AuthErrorType, JWTBody, UnauthorizedError } from "../models/auth";
-import { Course, Professor, Semester, UserRole } from "@prisma/client";
+import { Course, Prisma, Professor, Semester, UserRole } from "@prisma/client";
 
 const COURSE_SEARCH_PAGE_SIZE = 10;
 
 @Route("courses")
 @Tags("Courses")
 export class CoursesController extends Controller {
+  @SuccessResponse("200", "Courses Retrieved Successfully")
+  @Security("jwt")
+  @Get("search")
+  public async searchCourses(
+    @Query() school_id: number,
+    @Query() query?: string,
+    @Query() semester?: Semester,
+    @Query() year?: number,
+    @Query() cursor?: string,
+    @Query() pageSize: number = COURSE_SEARCH_PAGE_SIZE
+  ): Promise<CourseSearchResult> {
+    const take = pageSize;
+    const skip = cursor ? 1 : 0;
+
+    let searchClause = getSearchQuery(school_id, query, semester, year);
+
+    const result = await prisma.$transaction(async (prisma) => {
+      const courses = await prisma.professorCourse.findMany({
+        where: searchClause,
+        include: {
+          course: true,
+        },
+        orderBy: {
+          course: {
+            id: "asc",
+          },
+        },
+        take: take,
+        skip: skip,
+        cursor: cursor ? { id: parseInt(cursor) } : undefined,
+      });
+
+      const edges = courses.map((course) => ({
+        cursor: course.course.id.toString(),
+        node: course.course,
+      }));
+
+      const endCursor =
+        edges.length > 0 ? edges[edges.length - 1].cursor : null;
+      let hasNextPage = courses.length === take;
+      if (hasNextPage) {
+        const lastCourse = await prisma.course.findFirst({
+          orderBy: {
+            id: "desc",
+          },
+        });
+        if (lastCourse && lastCourse.id == courses[courses.length - 1].id) {
+          hasNextPage = false;
+        }
+      }
+
+      const total = await prisma.professorCourse.count({
+        where: searchClause,
+      });
+
+      return {
+        edges: edges,
+        pageInfo: {
+          hasNextPage: hasNextPage,
+          endCursor: endCursor,
+          total: total,
+        },
+      };
+    });
+
+    return result;
+  }
+
   @SuccessResponse("201", "Course Created Successfully")
   @Response<CourseAlreadyExistsError>("409", "Course already exists")
   @Example<Course>({
@@ -153,146 +221,6 @@ export class CoursesController extends Controller {
     });
   }
 
-  @SuccessResponse("200", "Courses Retrieved Successfully")
-  @Security("jwt")
-  @Get("search/{query}")
-  public async searchCourses(
-    query: string = "",
-    @Query() school_id: number,
-    @Query() semester?: Semester,
-    @Query() year?: number,
-    @Query() cursor?: string,
-    @Query() pageSize: number = COURSE_SEARCH_PAGE_SIZE
-  ): Promise<CourseSearchResult> {
-    const take = pageSize;
-    const skip = cursor ? 1 : 0;
-
-    let searchClause = {
-      OR: [
-        {
-          course: {
-            name: {
-              contains: query,
-              mode: "insensitive",
-            },
-          },
-        },
-        {
-          course: {
-            code: {
-              contains: query,
-              mode: "insensitive",
-            },
-          },
-        },
-      ],
-      AND: [
-        { course: { school_id: school_id } },
-        { semester: semester },
-        { year: year },
-      ],
-    };
-
-    const result = await prisma.$transaction(async (prisma) => {
-      const courses = await prisma.professorCourse.findMany({
-        where: {
-          OR: [
-            {
-              course: {
-                name: {
-                  contains: query,
-                  mode: "insensitive",
-                },
-              },
-            },
-            {
-              course: {
-                code: {
-                  contains: query,
-                  mode: "insensitive",
-                },
-              },
-            },
-          ],
-          AND: [
-            { course: { school_id: school_id } },
-            { semester: semester },
-            { year: year },
-          ],
-        },
-        include: {
-          course: true,
-        },
-        orderBy: {
-          course: {
-            id: "asc",
-          },
-        },
-        take: take,
-        skip: skip,
-        cursor: cursor ? { id: parseInt(cursor) } : undefined,
-      });
-
-      const edges = courses.map((course) => ({
-        cursor: course.course.id.toString(),
-        node: course.course,
-      }));
-
-      const endCursor =
-        edges.length > 0 ? edges[edges.length - 1].cursor : null;
-      let hasNextPage = courses.length === take;
-      if (hasNextPage) {
-        const lastCourse = await prisma.course.findFirst({
-          orderBy: {
-            id: "desc",
-          },
-        });
-        if (lastCourse && lastCourse.id == courses[courses.length - 1].id) {
-          hasNextPage = false;
-        }
-      }
-
-      const total = await prisma.professorCourse.count({
-        where: {
-          OR: [
-            {
-              course: {
-                name: {
-                  contains: query,
-                  mode: "insensitive",
-                },
-              },
-            },
-            {
-              course: {
-                code: {
-                  contains: query,
-                  mode: "insensitive",
-                },
-              },
-            },
-          ],
-          AND: [
-            { course: { school_id: school_id } },
-            { semester: semester },
-            { year: year },
-          ],
-        },
-      });
-
-      return {
-        edges: edges,
-        pageInfo: {
-          hasNextPage: hasNextPage,
-          endCursor: endCursor,
-          total: total,
-        },
-      };
-    });
-
-    return result;
-  }
-
   @SuccessResponse("200", "Professors Retrieved Successfully")
   @Response<CourseNotFoundError>("404", "Course not found")
   @Security("jwt")
@@ -347,4 +275,36 @@ async function getCourseById(id: number): Promise<Course> {
     return Promise.reject(error);
   }
   return course;
+}
+
+function getSearchQuery(
+  school_id: number,
+  query?: string,
+  semester?: Semester,
+  year?: number
+): Prisma.ProfessorCourseFindManyArgs["where"] {
+  let where: Prisma.ProfessorCourseFindManyArgs["where"] = {
+    course: {
+      school_id: school_id,
+    },
+  };
+
+  if (semester) {
+    where.semester = semester;
+  }
+
+  if (year) {
+    where.year = year;
+  }
+
+  if (query) {
+    where.AND = {
+      OR: [
+        { course: { name: { contains: query, mode: "insensitive" } } },
+        { course: { code: { contains: query, mode: "insensitive" } } },
+      ],
+    };
+  }
+
+  return where;
 }

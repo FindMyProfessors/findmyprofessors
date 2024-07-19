@@ -13,6 +13,7 @@ import {
   Request,
   Security,
   Query,
+  Path,
 } from "tsoa";
 import { prisma } from "../database/database";
 import {
@@ -32,6 +33,68 @@ const SCHOOL_SEARCH_PAGE_SIZE = 10;
 @Route("schools")
 @Tags("Schools")
 export class SchoolsController extends Controller {
+  @SuccessResponse("200", "Schools Retrieved Successfully")
+  @Security("jwt")
+  @Get("search")
+  public async searchSchools(
+    @Query() name?: string,
+    @Query() cursor?: string,
+    @Query() pageSize: number = SCHOOL_SEARCH_PAGE_SIZE
+  ): Promise<SchoolSearchResult> {
+    const take = pageSize;
+    const skip = cursor ? 1 : 0;
+
+    let searchQuery = getSearchQuery(name);
+
+    const result = await prisma.$transaction(async (prisma) => {
+      const schools = await prisma.school.findMany({
+        where: searchQuery.where! as any,
+        orderBy: {
+          id: "asc",
+        },
+        take: take,
+        skip: skip,
+        cursor: cursor ? { id: parseInt(cursor) } : undefined,
+      });
+
+      const edges = schools.map((school) => ({
+        cursor: school.id.toString(),
+        node: school,
+      }));
+
+      const endCursor =
+        edges.length > 0 ? edges[edges.length - 1].cursor : null;
+      let hasNextPage = schools.length === take;
+      if (hasNextPage) {
+        // Check that last school is not the same as the last school in the database
+        const lastSchool = await prisma.school.findFirst({
+          orderBy: {
+            id: "desc",
+          },
+        });
+        if (lastSchool && lastSchool.id == schools[schools.length - 1].id) {
+          hasNextPage = false;
+        }
+      }
+
+      // get total with filter
+      const total = await prisma.school.count({
+        where: searchQuery.where! as any,
+      });
+
+      return {
+        edges: edges,
+        pageInfo: {
+          hasNextPage: hasNextPage,
+          endCursor: endCursor,
+          total: total,
+        },
+      };
+    });
+
+    return result;
+  }
+
   @SuccessResponse("201", "School Created Successfully")
   @Response<SchoolAlreadyExistsError>("409", "School already exists")
   @Example<School>({
@@ -85,7 +148,7 @@ export class SchoolsController extends Controller {
   @Response<SchoolNotFoundError>("404", "School not found")
   @Security("jwt")
   @Get("{id}")
-  public async getSchool(id: number): Promise<School> {
+  public async getSchool(@Path() id: number): Promise<School> {
     let school = await getSchoolById(id);
 
     return school;
@@ -97,7 +160,7 @@ export class SchoolsController extends Controller {
   @Put("{id}")
   public async updateSchool(
     @Request() request: any,
-    id: number,
+    @Path() id: number,
     @Body() body: UpdatedSchool
   ): Promise<School> {
     const jwt_body = request.user as JWTBody;
@@ -128,7 +191,7 @@ export class SchoolsController extends Controller {
   @Delete("{id}")
   public async deleteSchool(
     @Request() request: any,
-    id: number
+    @Path() id: number
   ): Promise<void> {
     const jwt_body = request.user as JWTBody;
 
@@ -146,76 +209,47 @@ export class SchoolsController extends Controller {
       where: { id },
     });
   }
+}
 
-  @SuccessResponse("200", "Schools Retrieved Successfully")
-  @Security("jwt")
-  @Get("search/{name}")
-  public async searchSchools(
-    name: string = "",
-    @Query() cursor?: string,
-    @Query() pageSize: number = SCHOOL_SEARCH_PAGE_SIZE
-  ): Promise<SchoolSearchResult> {
-    const take = pageSize;
-    const skip = cursor ? 1 : 0;
+type SchoolORQuery = {
+  name?: {
+    contains: string;
+    mode: string;
+  };
+};
 
-    const result = await prisma.$transaction(async (prisma) => {
-      const schools = await prisma.school.findMany({
-        where: {
-          name: {
-            contains: name,
-            mode: "insensitive",
-          },
-        },
-        orderBy: {
-          id: "asc",
-        },
-        take: take,
-        skip: skip,
-        cursor: cursor ? { id: parseInt(cursor) } : undefined,
-      });
+type SchoolANDQuery = {
+  name?: {
+    contains: string;
+    mode: string;
+  };
+  OR?: SchoolORQuery[];
+};
 
-      const edges = schools.map((school) => ({
-        cursor: school.id.toString(),
-        node: school,
-      }));
+type SchoolSearchQuery = {
+  where?: {
+    OR?: SchoolORQuery[];
+    AND?: SchoolANDQuery[];
+    name?: {
+      contains: string;
+      mode: string;
+    };
+  };
+};
 
-      const endCursor =
-        edges.length > 0 ? edges[edges.length - 1].cursor : null;
-      let hasNextPage = schools.length === take;
-      if (hasNextPage) {
-        // Check that last school is not the same as the last school in the database
-        const lastSchool = await prisma.school.findFirst({
-          orderBy: {
-            id: "desc",
-          },
-        });
-        if (lastSchool && lastSchool.id == schools[schools.length - 1].id) {
-          hasNextPage = false;
-        }
-      }
+function getSearchQuery(input?: string): SchoolSearchQuery {
+  let query: SchoolSearchQuery = {
+    where: {},
+  };
 
-      // get total with filter
-      const total = await prisma.school.count({
-        where: {
-          name: {
-            contains: name,
-            mode: "insensitive",
-          },
-        },
-      });
-
-      return {
-        edges: edges,
-        pageInfo: {
-          hasNextPage: hasNextPage,
-          endCursor: endCursor,
-          total: total,
-        },
-      };
-    });
-
-    return result;
+  if (input) {
+    query.where!.name = {
+      contains: input,
+      mode: "insensitive",
+    };
   }
+
+  return query;
 }
 
 async function getSchoolById(id: number): Promise<School> {

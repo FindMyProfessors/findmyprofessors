@@ -42,6 +42,86 @@ const PROFESSOR_SEARCH_PAGE_SIZE = 10;
 @Route("professors")
 @Tags("Professors")
 export class ProfessorsController extends Controller {
+  @SuccessResponse("200", "Professors Retrieved Successfully")
+  @Security("jwt")
+  @Get("search")
+  public async searchProfessors(
+    @Query() name?: string,
+    @Query() school_id?: number,
+    @Query() cursor?: string,
+    @Query() pageSize: number = PROFESSOR_SEARCH_PAGE_SIZE
+  ): Promise<ProfessorSearchResult> {
+    // print this
+    logger.info(`name=${name}`);
+    logger.info(`cursor=${cursor}`);
+    logger.info(`pageSize=${pageSize}`);
+    logger.info(`school_id=${school_id}`);
+
+    const take = pageSize;
+    const skip = cursor ? 1 : 0;
+
+    let searchQuery: SearchQuery = getSearchQuery(name, school_id);
+    logger.info("searchQuery=", searchQuery);
+
+    const result = await prisma.$transaction(async (prisma) => {
+      const professors = await prisma.professor.findMany({
+        where: searchQuery.where as any,
+        orderBy: {
+          id: "asc",
+        },
+        take: take,
+        skip: skip,
+        cursor: cursor ? { id: parseInt(cursor) } : undefined,
+      });
+
+      // Print professors
+      logger.info("professors=", professors);
+
+      const edges = professors.map((professor) => ({
+        cursor: professor.id.toString(),
+        node: professor,
+      }));
+      logger.info("edges=", edges);
+
+      const endCursor =
+        edges.length > 0 ? edges[edges.length - 1].cursor : null;
+      let hasNextPage = professors.length === take;
+      if (hasNextPage) {
+        // Check that last professor is not the same as the last professor in the database
+        const lastProfessor = await prisma.professor.findFirst({
+          where: searchQuery.where as any,
+          orderBy: {
+            id: "desc",
+          },
+        });
+        if (
+          lastProfessor &&
+          lastProfessor.id == professors[professors.length - 1].id
+        ) {
+          hasNextPage = false;
+        }
+      }
+      logger.info("hasNextPage=", hasNextPage);
+
+      // get total with filter
+      const total = await prisma.professor.count({
+        where: searchQuery.where as any,
+      });
+      logger.info("total=", total);
+
+      return {
+        edges: edges,
+        pageInfo: {
+          hasNextPage: hasNextPage,
+          endCursor: endCursor,
+          total: total,
+        },
+      };
+    });
+
+    return result;
+  }
+
   @SuccessResponse("201", "Professor Created Successfully")
   @Response<ProfessorAlreadyExistsError>("409", "Professor already exists")
   @Example<Professor>({
@@ -217,86 +297,6 @@ export class ProfessorsController extends Controller {
     });
   }
 
-  @SuccessResponse("200", "Professors Retrieved Successfully")
-  @Security("jwt")
-  @Get("search/{name}")
-  public async searchProfessors(
-    name: string = "",
-    @Query() school_id?: number,
-    @Query() cursor?: string,
-    @Query() pageSize: number = PROFESSOR_SEARCH_PAGE_SIZE
-  ): Promise<ProfessorSearchResult> {
-    // print this
-    logger.info(`name=${name}`);
-    logger.info(`cursor=${cursor}`);
-    logger.info(`pageSize=${pageSize}`);
-    logger.info(`school_id=${school_id}`);
-
-    const take = pageSize;
-    const skip = cursor ? 1 : 0;
-
-    let searchQuery: SearchQuery = getSearchQuery(name, school_id);
-    logger.info("searchQuery=", searchQuery);
-
-    const result = await prisma.$transaction(async (prisma) => {
-      const professors = await prisma.professor.findMany({
-        where: searchQuery.where as any,
-        orderBy: {
-          id: "asc",
-        },
-        take: take,
-        skip: skip,
-        cursor: cursor ? { id: parseInt(cursor) } : undefined,
-      });
-
-      // Print professors
-      logger.info("professors=", professors);
-
-      const edges = professors.map((professor) => ({
-        cursor: professor.id.toString(),
-        node: professor,
-      }));
-      logger.info("edges=", edges);
-
-      const endCursor =
-        edges.length > 0 ? edges[edges.length - 1].cursor : null;
-      let hasNextPage = professors.length === take;
-      if (hasNextPage) {
-        // Check that last professor is not the same as the last professor in the database
-        const lastProfessor = await prisma.professor.findFirst({
-          where: searchQuery.where as any,
-          orderBy: {
-            id: "desc",
-          },
-        });
-        if (
-          lastProfessor &&
-          lastProfessor.id == professors[professors.length - 1].id
-        ) {
-          hasNextPage = false;
-        }
-      }
-      logger.info("hasNextPage=", hasNextPage);
-
-      // get total with filter
-      const total = await prisma.professor.count({
-        where: searchQuery.where as any,
-      });
-      logger.info("total=", total);
-
-      return {
-        edges: edges,
-        pageInfo: {
-          hasNextPage: hasNextPage,
-          endCursor: endCursor,
-          total: total,
-        },
-      };
-    });
-
-    return result;
-  }
-
   @SuccessResponse("201", "Review Created Successfully")
   @Security("jwt")
   @Post("{id}/reviews")
@@ -375,7 +375,6 @@ type ANDQuery = {
   last_name?: {
     contains: string;
   };
-  school_id?: number;
   OR?: ORQuery[];
 };
 
@@ -383,32 +382,38 @@ type SearchQuery = {
   where?: {
     OR?: ORQuery[];
     AND?: ANDQuery[];
+    school_id?: number;
   };
 };
 
-function getSearchQuery(input: string, school_id?: number): SearchQuery {
-  const splitQuery = input.split(" ");
+function getSearchQuery(input?: string, school_id?: number): SearchQuery {
+  let query: SearchQuery = {
+    where: {},
+  };
 
-  let query: SearchQuery = { where: {} };
-  if (splitQuery.length > 1) {
-    query.where!.AND = splitQuery.map((word) => ({
-      OR: [
-        { first_name: { contains: word } },
-        { last_name: { contains: word } },
-      ],
-    }));
-    if (school_id) {
-      query.where!.AND.push({ school_id: school_id });
+  if (input) {
+    const splitQuery = input.split(" ");
+    if (splitQuery.length > 1) {
+      let ors = splitQuery.map((word) => ({
+        OR: [
+          { first_name: { contains: word } },
+          { last_name: { contains: word } },
+        ],
+      }));
+      query.where!.AND! = ors;
+    } else {
+      query.where!.OR = [
+        { first_name: { contains: input } },
+        { last_name: { contains: input } },
+      ];
     }
-  } else {
-    query.where!.OR = [
-      { first_name: { contains: input } },
-      { last_name: { contains: input } },
-    ];
-    query.where!.AND = [{ school_id: school_id }];
   }
 
-  AND: return query;
+  if (school_id) {
+    query.where!.school_id = school_id;
+  }
+
+  return query;
 }
 
 async function getProfessorById(id: number): Promise<Professor> {
