@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:app/screens/Professor.dart';
 import 'package:app/widgets/sideMenu.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +32,7 @@ class _DashboardState extends State<Dashboard> {
 
   String? userName;
   String? userID;
+  bool showProfessors = false;
 
   late Name_ID schoolSelection;
   late Name_ID courseSelection;
@@ -43,6 +46,11 @@ class _DashboardState extends State<Dashboard> {
 
   final List<String>? semesterNames= ['fall','spring','summer'];
 
+  void _refreshProfessors() {
+  setState(() {
+    _professors();
+  });
+}
   //NEEDS TO BE CHANGED
   Future<void> _getCourses() async {
 
@@ -59,9 +67,9 @@ class _DashboardState extends State<Dashboard> {
         },
       );
 
-      // print("Response status: ${response.statusCode}");
-      // print("Response headers: ${response.headers}");
-      // print("Response body: ${response.body}");
+      print("Response status: ${response.statusCode}");
+      print("Response headers: ${response.headers}");
+      print("Response body: ${response.body}");
 
       final responseData = json.decode(response.body);
 
@@ -353,8 +361,7 @@ class _DashboardState extends State<Dashboard> {
 
             Divider(color: Colors.black, thickness: 1.0, indent: 16.0, endIndent: 16.0,),
 
-            _professors(),
-
+            _professors(), // Conditionally render _professors
 
           ],
         ),
@@ -446,6 +453,7 @@ class _DashboardState extends State<Dashboard> {
                 setState(() {
                   schoolSelection = selection;
                 });
+                _refreshProfessors();
                 print('You just selected ${selection.Name} with ID ${selection.ID}');
               },
             ),
@@ -456,10 +464,12 @@ class _DashboardState extends State<Dashboard> {
       );
     }
 
-    List<String> professors = List.generate(10, (index) => 'Professor ${index + 1}');
     
     _professors() {
 
+    var random = new Random();
+    List<String> professors = List.generate(10, (index) => 'Professor ${random.nextInt(100)}');
+    
     return Expanded(
       child: ListView.builder(
         itemCount: professors.length,
