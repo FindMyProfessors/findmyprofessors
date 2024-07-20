@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -8,9 +7,12 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 class Professor extends StatelessWidget {
   final String item;
   final int rating;
-  Random random = Random();
+  final int id;
 
-  Professor({required this.item, required this.rating});
+  final Random random = Random();
+
+  //name, rating, id
+  Professor({required this.item, required this.rating, required this.id});
 
   @override
   Widget build(BuildContext context) {
