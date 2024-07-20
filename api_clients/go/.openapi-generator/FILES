@@ -10,10 +10,10 @@ api_schools.go
 api_users.go
 client.go
 configuration.go
-docs/EnumsGrade.md
-docs/EnumsReviewTag.md
-docs/EnumsSemester.md
-docs/EnumsUserRole.md
+docs/36EnumsGrade.md
+docs/36EnumsReviewTag.md
+docs/36EnumsSemester.md
+docs/36EnumsUserRole.md
 docs/AuthErrorType.md
 docs/AuthErrorTypeINVALIDPASSWORD.md
 docs/AuthErrorTypeUSERALREADYEXISTS.md
@@ -41,7 +41,6 @@ docs/PickCourseErrorMessageOrType.md
 docs/PickCourseNameOrCode.md
 docs/PickCourseNameOrCodeOrSchoolId.md
 docs/PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId.md
-docs/PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId.md
 docs/PickProfessorErrorMessageOrType.md
 docs/PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId.md
 docs/PickReviewErrorMessageOrType.md
@@ -55,6 +54,7 @@ docs/PickUserUsernameOrPassword.md
 docs/ProfessorAlreadyExistsError.md
 docs/ProfessorAnalysis.md
 docs/ProfessorCourses.md
+docs/ProfessorCoursesCoursesInner.md
 docs/ProfessorErrorType.md
 docs/ProfessorErrorTypePROFESSORALREADYEXISTS.md
 docs/ProfessorErrorTypePROFESSORNOTFOUND.md
@@ -117,7 +117,6 @@ model_pick_course_error_message_or_type_.go
 model_pick_course_name_or_code_.go
 model_pick_course_name_or_code_or_school_id_.go
 model_pick_professor_course_exclude_keyof_professor_course_professor_id_or_id__.go
-model_pick_professor_course_exclude_keyof_professor_course_professor_id_or_id_or_course_id__.go
 model_pick_professor_error_message_or_type_.go
 model_pick_professor_first_name_or_last_name_or_rmp_id_or_school_id_.go
 model_pick_review_error_message_or_type_.go
@@ -131,6 +130,7 @@ model_pick_user_username_or_password_.go
 model_professor_already_exists_error.go
 model_professor_analysis.go
 model_professor_courses.go
+model_professor_courses_courses_inner.go
 model_professor_error_type.go
 model_professor_error_type_professor_already_exists.go
 model_professor_error_type_professor_not_found.go

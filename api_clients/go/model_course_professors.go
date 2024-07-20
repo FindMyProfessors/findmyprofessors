@@ -21,8 +21,8 @@ var _ MappedNullable = &CourseProfessors{}
 
 // CourseProfessors struct for CourseProfessors
 type CourseProfessors struct {
-	Total      int32                                      `json:"total"`
-	Professors []DefaultSelectionPrisma36ProfessorPayload `json:"professors"`
+	Total      int32                                    `json:"total"`
+	Professors []DefaultSelectionPrismaProfessorPayload `json:"professors"`
 }
 
 type _CourseProfessors CourseProfessors
@@ -31,7 +31,7 @@ type _CourseProfessors CourseProfessors
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCourseProfessors(total int32, professors []DefaultSelectionPrisma36ProfessorPayload) *CourseProfessors {
+func NewCourseProfessors(total int32, professors []DefaultSelectionPrismaProfessorPayload) *CourseProfessors {
 	this := CourseProfessors{}
 	this.Total = total
 	this.Professors = professors
@@ -71,9 +71,9 @@ func (o *CourseProfessors) SetTotal(v int32) {
 }
 
 // GetProfessors returns the Professors field value
-func (o *CourseProfessors) GetProfessors() []DefaultSelectionPrisma36ProfessorPayload {
+func (o *CourseProfessors) GetProfessors() []DefaultSelectionPrismaProfessorPayload {
 	if o == nil {
-		var ret []DefaultSelectionPrisma36ProfessorPayload
+		var ret []DefaultSelectionPrismaProfessorPayload
 		return ret
 	}
 
@@ -82,7 +82,7 @@ func (o *CourseProfessors) GetProfessors() []DefaultSelectionPrisma36ProfessorPa
 
 // GetProfessorsOk returns a tuple with the Professors field value
 // and a boolean to check if the value has been set.
-func (o *CourseProfessors) GetProfessorsOk() ([]DefaultSelectionPrisma36ProfessorPayload, bool) {
+func (o *CourseProfessors) GetProfessorsOk() ([]DefaultSelectionPrismaProfessorPayload, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -90,7 +90,7 @@ func (o *CourseProfessors) GetProfessorsOk() ([]DefaultSelectionPrisma36Professo
 }
 
 // SetProfessors sets field value
-func (o *CourseProfessors) SetProfessors(v []DefaultSelectionPrisma36ProfessorPayload) {
+func (o *CourseProfessors) SetProfessors(v []DefaultSelectionPrismaProfessorPayload) {
 	o.Professors = v
 }
 

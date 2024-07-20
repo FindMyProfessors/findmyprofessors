@@ -232,7 +232,7 @@ import (
 func main() {
 	id := int32(56) // int32 | 
 	year := int32(56) // int32 | 
-	semester := openapiclient._36_Enums.Semester("SPRING") // EnumsSemester | 
+	semester := openapiclient._36_Enums.Semester("SPRING") // 36EnumsSemester | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -263,7 +263,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **year** | **int32** |  | 
- **semester** | [**EnumsSemester**](EnumsSemester.md) |  | 
+ **semester** | [**36EnumsSemester**](36EnumsSemester.md) |  | 
 
 ### Return type
 
@@ -304,7 +304,7 @@ import (
 func main() {
 	schoolId := int32(56) // int32 | 
 	query := "query_example" // string |  (optional)
-	semester := openapiclient._36_Enums.Semester("SPRING") // EnumsSemester |  (optional)
+	semester := openapiclient._36_Enums.Semester("SPRING") // 36EnumsSemester |  (optional)
 	year := int32(56) // int32 |  (optional)
 	cursor := "cursor_example" // string |  (optional)
 	pageSize := int32(56) // int32 |  (optional) (default to 10)
@@ -334,7 +334,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **schoolId** | **int32** |  | 
  **query** | **string** |  | 
- **semester** | [**EnumsSemester**](EnumsSemester.md) |  | 
+ **semester** | [**36EnumsSemester**](36EnumsSemester.md) |  | 
  **year** | **int32** |  | 
  **cursor** | **string** |  | 
  **pageSize** | **int32** |  | [default to 10]

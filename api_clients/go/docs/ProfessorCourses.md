@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Total** | **int32** |  | 
-**Courses** | [**[]PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId**](PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId.md) |  | 
+**Courses** | [**[]ProfessorCoursesCoursesInner**](ProfessorCoursesCoursesInner.md) |  | 
 
 ## Methods
 
 ### NewProfessorCourses
 
-`func NewProfessorCourses(total int32, courses []PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId, ) *ProfessorCourses`
+`func NewProfessorCourses(total int32, courses []ProfessorCoursesCoursesInner, ) *ProfessorCourses`
 
 NewProfessorCourses instantiates a new ProfessorCourses object
 This constructor will assign default values to properties that have it defined,
@@ -48,20 +48,20 @@ SetTotal sets Total field to given value.
 
 ### GetCourses
 
-`func (o *ProfessorCourses) GetCourses() []PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId`
+`func (o *ProfessorCourses) GetCourses() []ProfessorCoursesCoursesInner`
 
 GetCourses returns the Courses field if non-nil, zero value otherwise.
 
 ### GetCoursesOk
 
-`func (o *ProfessorCourses) GetCoursesOk() (*[]PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId, bool)`
+`func (o *ProfessorCourses) GetCoursesOk() (*[]ProfessorCoursesCoursesInner, bool)`
 
 GetCoursesOk returns a tuple with the Courses field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCourses
 
-`func (o *ProfessorCourses) SetCourses(v []PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId)`
+`func (o *ProfessorCourses) SetCourses(v []ProfessorCoursesCoursesInner)`
 
 SetCourses sets Courses field to given value.
 

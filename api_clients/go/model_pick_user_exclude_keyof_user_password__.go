@@ -22,13 +22,13 @@ var _ MappedNullable = &PickUserExcludeKeyofUserPassword{}
 
 // PickUserExcludeKeyofUserPassword From T, pick a set of properties whose keys are in the union K
 type PickUserExcludeKeyofUserPassword struct {
-	Id              int32              `json:"id"`
-	Email           string             `json:"email"`
-	Username        string             `json:"username"`
-	SignupTime      time.Time          `json:"signup_time"`
-	LastLoginTime   time.Time          `json:"last_login_time"`
-	AccountVerified bool               `json:"account_verified"`
-	Role            ModelEnumsUserRole `json:"role"`
+	Id              int32                `json:"id"`
+	Email           string               `json:"email"`
+	Username        string               `json:"username"`
+	SignupTime      time.Time            `json:"signup_time"`
+	LastLoginTime   time.Time            `json:"last_login_time"`
+	AccountVerified bool                 `json:"account_verified"`
+	Role            Model36EnumsUserRole `json:"role"`
 }
 
 type _PickUserExcludeKeyofUserPassword PickUserExcludeKeyofUserPassword

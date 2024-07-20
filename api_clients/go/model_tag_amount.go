@@ -22,7 +22,7 @@ var _ MappedNullable = &TagAmount{}
 // TagAmount struct for TagAmount
 type TagAmount struct {
 	Amount int32               `json:"amount"`
-	Tag    ModelEnumsReviewTag `json:"tag"`
+	Tag    Mol36EnumsReviewTag `json:"tag"`
 }
 
 type _TagAmount TagAmount

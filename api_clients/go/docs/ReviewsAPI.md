@@ -31,7 +31,7 @@ import (
 )
 
 func main() {
-	newReview := *openapiclient.NewNewReview(float32(123), float32(123), time.Now(), []ModelEnumsReviewTag{"TODO"}, "TODO", int32(123)) // NewReview | 
+	newReview := *openapiclient.NewNewReview(float32(123), float32(123), time.Now(), []Model36EnumsReviewTag{"TODO"}, "TODO", int32(123)) // NewReview | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

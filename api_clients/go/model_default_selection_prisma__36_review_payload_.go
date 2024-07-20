@@ -17,11 +17,11 @@ import (
 	"time"
 )
 
-// checks if the DefaultSelectionPrisma36ReviewPayload type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &DefaultSelectionPrisma36ReviewPayload{}
+// checks if the DefaultSelectionPrismaReviewPayload type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DefaultSelectionPrismaReviewPayload{}
 
-// DefaultSelectionPrisma36ReviewPayload struct for DefaultSelectionPrisma36ReviewPayload
-type DefaultSelectionPrisma36ReviewPayload struct {
+// DefaultSelectionPrismaReviewPayload struct for DefaultSelectionPrismaReviewPayload
+type DefaultSelectionPrismaReviewPayload struct {
 	ProfessorId int32                 `json:"professor_id"`
 	Grade       ModelEnumsGrade       `json:"grade"`
 	Tags        []ModelEnumsReviewTag `json:"tags"`
@@ -31,14 +31,14 @@ type DefaultSelectionPrisma36ReviewPayload struct {
 	Id          int32                 `json:"id"`
 }
 
-type _DefaultSelectionPrisma36ReviewPayload DefaultSelectionPrisma36ReviewPayload
+type _DefaultSelectionPrismaReviewPayload DefaultSelectionPrismaReviewPayload
 
-// NewDefaultSelectionPrisma36ReviewPayload instantiates a new DefaultSelectionPrisma36ReviewPayload object
+// NewDefaultSelectionPrismaReviewPayload instantiates a new DefaultSelectionPrismaReviewPayload object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDefaultSelectionPrisma36ReviewPayload(professorId int32, grade ModelEnumsGrade, tags []ModelEnumsReviewTag, time time.Time, difficulty int32, quality int32, id int32) *DefaultSelectionPrisma36ReviewPayload {
-	this := DefaultSelectionPrisma36ReviewPayload{}
+func NewDefaultSelectionPrismaReviewPayload(professorId int32, grade ModelEnumsGrade, tags []ModelEnumsReviewTag, time time.Time, difficulty int32, quality int32, id int32) *DefaultSelectionPrismaReviewPayload {
+	this := DefaultSelectionPrismaReviewPayload{}
 	this.ProfessorId = professorId
 	this.Grade = grade
 	this.Tags = tags
@@ -49,16 +49,16 @@ func NewDefaultSelectionPrisma36ReviewPayload(professorId int32, grade ModelEnum
 	return &this
 }
 
-// NewDefaultSelectionPrisma36ReviewPayloadWithDefaults instantiates a new DefaultSelectionPrisma36ReviewPayload object
+// NewDefaultSelectionPrismaReviewPayloadWithDefaults instantiates a new DefaultSelectionPrismaReviewPayload object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewDefaultSelectionPrisma36ReviewPayloadWithDefaults() *DefaultSelectionPrisma36ReviewPayload {
-	this := DefaultSelectionPrisma36ReviewPayload{}
+func NewDefaultSelectionPrismaReviewPayloadWithDefaults() *DefaultSelectionPrismaReviewPayload {
+	this := DefaultSelectionPrismaReviewPayload{}
 	return &this
 }
 
 // GetProfessorId returns the ProfessorId field value
-func (o *DefaultSelectionPrisma36ReviewPayload) GetProfessorId() int32 {
+func (o *DefaultSelectionPrismaReviewPayload) GetProfessorId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -69,7 +69,7 @@ func (o *DefaultSelectionPrisma36ReviewPayload) GetProfessorId() int32 {
 
 // GetProfessorIdOk returns a tuple with the ProfessorId field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ReviewPayload) GetProfessorIdOk() (*int32, bool) {
+func (o *DefaultSelectionPrismaReviewPayload) GetProfessorIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -77,12 +77,12 @@ func (o *DefaultSelectionPrisma36ReviewPayload) GetProfessorIdOk() (*int32, bool
 }
 
 // SetProfessorId sets field value
-func (o *DefaultSelectionPrisma36ReviewPayload) SetProfessorId(v int32) {
+func (o *DefaultSelectionPrismaReviewPayload) SetProfessorId(v int32) {
 	o.ProfessorId = v
 }
 
 // GetGrade returns the Grade field value
-func (o *DefaultSelectionPrisma36ReviewPayload) GetGrade() ModelEnumsGrade {
+func (o *DefaultSelectionPrismaReviewPayload) GetGrade() ModelEnumsGrade {
 	if o == nil {
 		var ret ModelEnumsGrade
 		return ret
@@ -93,7 +93,7 @@ func (o *DefaultSelectionPrisma36ReviewPayload) GetGrade() ModelEnumsGrade {
 
 // GetGradeOk returns a tuple with the Grade field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ReviewPayload) GetGradeOk() (*ModelEnumsGrade, bool) {
+func (o *DefaultSelectionPrismaReviewPayload) GetGradeOk() (*ModelEnumsGrade, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -101,12 +101,12 @@ func (o *DefaultSelectionPrisma36ReviewPayload) GetGradeOk() (*ModelEnumsGrade, 
 }
 
 // SetGrade sets field value
-func (o *DefaultSelectionPrisma36ReviewPayload) SetGrade(v ModelEnumsGrade) {
+func (o *DefaultSelectionPrismaReviewPayload) SetGrade(v ModelEnumsGrade) {
 	o.Grade = v
 }
 
 // GetTags returns the Tags field value
-func (o *DefaultSelectionPrisma36ReviewPayload) GetTags() []ModelEnumsReviewTag {
+func (o *DefaultSelectionPrismaReviewPayload) GetTags() []ModelEnumsReviewTag {
 	if o == nil {
 		var ret []ModelEnumsReviewTag
 		return ret
@@ -117,7 +117,7 @@ func (o *DefaultSelectionPrisma36ReviewPayload) GetTags() []ModelEnumsReviewTag 
 
 // GetTagsOk returns a tuple with the Tags field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ReviewPayload) GetTagsOk() ([]ModelEnumsReviewTag, bool) {
+func (o *DefaultSelectionPrismaReviewPayload) GetTagsOk() ([]ModelEnumsReviewTag, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -125,12 +125,12 @@ func (o *DefaultSelectionPrisma36ReviewPayload) GetTagsOk() ([]ModelEnumsReviewT
 }
 
 // SetTags sets field value
-func (o *DefaultSelectionPrisma36ReviewPayload) SetTags(v []ModelEnumsReviewTag) {
+func (o *DefaultSelectionPrismaReviewPayload) SetTags(v []ModelEnumsReviewTag) {
 	o.Tags = v
 }
 
 // GetTime returns the Time field value
-func (o *DefaultSelectionPrisma36ReviewPayload) GetTime() time.Time {
+func (o *DefaultSelectionPrismaReviewPayload) GetTime() time.Time {
 	if o == nil {
 		var ret time.Time
 		return ret
@@ -141,7 +141,7 @@ func (o *DefaultSelectionPrisma36ReviewPayload) GetTime() time.Time {
 
 // GetTimeOk returns a tuple with the Time field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ReviewPayload) GetTimeOk() (*time.Time, bool) {
+func (o *DefaultSelectionPrismaReviewPayload) GetTimeOk() (*time.Time, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -149,12 +149,12 @@ func (o *DefaultSelectionPrisma36ReviewPayload) GetTimeOk() (*time.Time, bool) {
 }
 
 // SetTime sets field value
-func (o *DefaultSelectionPrisma36ReviewPayload) SetTime(v time.Time) {
+func (o *DefaultSelectionPrismaReviewPayload) SetTime(v time.Time) {
 	o.Time = v
 }
 
 // GetDifficulty returns the Difficulty field value
-func (o *DefaultSelectionPrisma36ReviewPayload) GetDifficulty() int32 {
+func (o *DefaultSelectionPrismaReviewPayload) GetDifficulty() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -165,7 +165,7 @@ func (o *DefaultSelectionPrisma36ReviewPayload) GetDifficulty() int32 {
 
 // GetDifficultyOk returns a tuple with the Difficulty field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ReviewPayload) GetDifficultyOk() (*int32, bool) {
+func (o *DefaultSelectionPrismaReviewPayload) GetDifficultyOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -173,12 +173,12 @@ func (o *DefaultSelectionPrisma36ReviewPayload) GetDifficultyOk() (*int32, bool)
 }
 
 // SetDifficulty sets field value
-func (o *DefaultSelectionPrisma36ReviewPayload) SetDifficulty(v int32) {
+func (o *DefaultSelectionPrismaReviewPayload) SetDifficulty(v int32) {
 	o.Difficulty = v
 }
 
 // GetQuality returns the Quality field value
-func (o *DefaultSelectionPrisma36ReviewPayload) GetQuality() int32 {
+func (o *DefaultSelectionPrismaReviewPayload) GetQuality() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -189,7 +189,7 @@ func (o *DefaultSelectionPrisma36ReviewPayload) GetQuality() int32 {
 
 // GetQualityOk returns a tuple with the Quality field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ReviewPayload) GetQualityOk() (*int32, bool) {
+func (o *DefaultSelectionPrismaReviewPayload) GetQualityOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -197,12 +197,12 @@ func (o *DefaultSelectionPrisma36ReviewPayload) GetQualityOk() (*int32, bool) {
 }
 
 // SetQuality sets field value
-func (o *DefaultSelectionPrisma36ReviewPayload) SetQuality(v int32) {
+func (o *DefaultSelectionPrismaReviewPayload) SetQuality(v int32) {
 	o.Quality = v
 }
 
 // GetId returns the Id field value
-func (o *DefaultSelectionPrisma36ReviewPayload) GetId() int32 {
+func (o *DefaultSelectionPrismaReviewPayload) GetId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -213,7 +213,7 @@ func (o *DefaultSelectionPrisma36ReviewPayload) GetId() int32 {
 
 // GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ReviewPayload) GetIdOk() (*int32, bool) {
+func (o *DefaultSelectionPrismaReviewPayload) GetIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -221,11 +221,11 @@ func (o *DefaultSelectionPrisma36ReviewPayload) GetIdOk() (*int32, bool) {
 }
 
 // SetId sets field value
-func (o *DefaultSelectionPrisma36ReviewPayload) SetId(v int32) {
+func (o *DefaultSelectionPrismaReviewPayload) SetId(v int32) {
 	o.Id = v
 }
 
-func (o DefaultSelectionPrisma36ReviewPayload) MarshalJSON() ([]byte, error) {
+func (o DefaultSelectionPrismaReviewPayload) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -233,7 +233,7 @@ func (o DefaultSelectionPrisma36ReviewPayload) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o DefaultSelectionPrisma36ReviewPayload) ToMap() (map[string]interface{}, error) {
+func (o DefaultSelectionPrismaReviewPayload) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["professor_id"] = o.ProfessorId
 	toSerialize["grade"] = o.Grade
@@ -245,7 +245,7 @@ func (o DefaultSelectionPrisma36ReviewPayload) ToMap() (map[string]interface{}, 
 	return toSerialize, nil
 }
 
-func (o *DefaultSelectionPrisma36ReviewPayload) UnmarshalJSON(data []byte) (err error) {
+func (o *DefaultSelectionPrismaReviewPayload) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -273,53 +273,53 @@ func (o *DefaultSelectionPrisma36ReviewPayload) UnmarshalJSON(data []byte) (err 
 		}
 	}
 
-	varDefaultSelectionPrisma36ReviewPayload := _DefaultSelectionPrisma36ReviewPayload{}
+	varDefaultSelectionPrismaReviewPayload := _DefaultSelectionPrismaReviewPayload{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varDefaultSelectionPrisma36ReviewPayload)
+	err = decoder.Decode(&varDefaultSelectionPrismaReviewPayload)
 
 	if err != nil {
 		return err
 	}
 
-	*o = DefaultSelectionPrisma36ReviewPayload(varDefaultSelectionPrisma36ReviewPayload)
+	*o = DefaultSelectionPrismaReviewPayload(varDefaultSelectionPrismaReviewPayload)
 
 	return err
 }
 
-type NullableDefaultSelectionPrisma36ReviewPayload struct {
-	value *DefaultSelectionPrisma36ReviewPayload
+type NullableDefaultSelectionPrismaReviewPayload struct {
+	value *DefaultSelectionPrismaReviewPayload
 	isSet bool
 }
 
-func (v NullableDefaultSelectionPrisma36ReviewPayload) Get() *DefaultSelectionPrisma36ReviewPayload {
+func (v NullableDefaultSelectionPrismaReviewPayload) Get() *DefaultSelectionPrismaReviewPayload {
 	return v.value
 }
 
-func (v *NullableDefaultSelectionPrisma36ReviewPayload) Set(val *DefaultSelectionPrisma36ReviewPayload) {
+func (v *NullableDefaultSelectionPrismaReviewPayload) Set(val *DefaultSelectionPrismaReviewPayload) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableDefaultSelectionPrisma36ReviewPayload) IsSet() bool {
+func (v NullableDefaultSelectionPrismaReviewPayload) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableDefaultSelectionPrisma36ReviewPayload) Unset() {
+func (v *NullableDefaultSelectionPrismaReviewPayload) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableDefaultSelectionPrisma36ReviewPayload(val *DefaultSelectionPrisma36ReviewPayload) *NullableDefaultSelectionPrisma36ReviewPayload {
-	return &NullableDefaultSelectionPrisma36ReviewPayload{value: val, isSet: true}
+func NewNullableDefaultSelectionPrismaReviewPayload(val *DefaultSelectionPrismaReviewPayload) *NullableDefaultSelectionPrismaReviewPayload {
+	return &NullableDefaultSelectionPrismaReviewPayload{value: val, isSet: true}
 }
 
-func (v NullableDefaultSelectionPrisma36ReviewPayload) MarshalJSON() ([]byte, error) {
+func (v NullableDefaultSelectionPrismaReviewPayload) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableDefaultSelectionPrisma36ReviewPayload) UnmarshalJSON(src []byte) error {
+func (v *NullableDefaultSelectionPrismaReviewPayload) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

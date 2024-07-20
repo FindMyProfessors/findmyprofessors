@@ -36,6 +36,7 @@ import { SchoolErrorType, SchoolNotFoundError } from "../models/schools";
 import {
   ProfessorAnalysis,
   Rating,
+  ReviewResponse,
   ReviewsSearchResult,
 } from "../models/reviews";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
@@ -455,7 +456,7 @@ export class ProfessorsController extends Controller {
 
       const edges = reviews.map((review) => ({
         cursor: review.id.toString(),
-        node: review,
+        node: review as ReviewResponse,
       }));
       logger.info("edges=", edges);
 

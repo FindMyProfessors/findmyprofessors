@@ -8,15 +8,15 @@ Name | Type | Description | Notes
 **Quality** | **float32** |  | 
 **Difficulty** | **float32** |  | 
 **Time** | **time.Time** |  | 
-**Tags** | [**[]ModelEnumsReviewTag**](ModelEnumsReviewTag.md) |  | 
-**Grade** | [**ModelEnumsGrade**](EnumsGrade.md) |  | 
+**Tags** | [**[]Model36EnumsReviewTag**](Model36EnumsReviewTag.md) |  | 
+**Grade** | [**Model36EnumsGrade**](36EnumsGrade.md) |  | 
 **ProfessorId** | **int32** |  | 
 
 ## Methods
 
 ### NewReviewResponse
 
-`func NewReviewResponse(id int32, quality float32, difficulty float32, time time.Time, tags []ModelEnumsReviewTag, grade ModelEnumsGrade, professorId int32, ) *ReviewResponse`
+`func NewReviewResponse(id int32, quality float32, difficulty float32, time time.Time, tags []Model36EnumsReviewTag, grade Model36EnumsGrade, professorId int32, ) *ReviewResponse`
 
 NewReviewResponse instantiates a new ReviewResponse object
 This constructor will assign default values to properties that have it defined,
@@ -113,40 +113,40 @@ SetTime sets Time field to given value.
 
 ### GetTags
 
-`func (o *ReviewResponse) GetTags() []ModelEnumsReviewTag`
+`func (o *ReviewResponse) GetTags() []Model36EnumsReviewTag`
 
 GetTags returns the Tags field if non-nil, zero value otherwise.
 
 ### GetTagsOk
 
-`func (o *ReviewResponse) GetTagsOk() (*[]ModelEnumsReviewTag, bool)`
+`func (o *ReviewResponse) GetTagsOk() (*[]Model36EnumsReviewTag, bool)`
 
 GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTags
 
-`func (o *ReviewResponse) SetTags(v []ModelEnumsReviewTag)`
+`func (o *ReviewResponse) SetTags(v []Model36EnumsReviewTag)`
 
 SetTags sets Tags field to given value.
 
 
 ### GetGrade
 
-`func (o *ReviewResponse) GetGrade() ModelEnumsGrade`
+`func (o *ReviewResponse) GetGrade() Model36EnumsGrade`
 
 GetGrade returns the Grade field if non-nil, zero value otherwise.
 
 ### GetGradeOk
 
-`func (o *ReviewResponse) GetGradeOk() (*ModelEnumsGrade, bool)`
+`func (o *ReviewResponse) GetGradeOk() (*Model36EnumsGrade, bool)`
 
 GetGradeOk returns a tuple with the Grade field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetGrade
 
-`func (o *ReviewResponse) SetGrade(v ModelEnumsGrade)`
+`func (o *ReviewResponse) SetGrade(v Model36EnumsGrade)`
 
 SetGrade sets Grade field to given value.
 

@@ -52,13 +52,13 @@ func (a *SchoolsAPIService) CreateSchool(ctx context.Context) ApiCreateSchoolReq
 
 // Execute executes the request
 //
-//	@return DefaultSelectionPrisma36SchoolPayload
-func (a *SchoolsAPIService) CreateSchoolExecute(r ApiCreateSchoolRequest) (*DefaultSelectionPrisma36SchoolPayload, *http.Response, error) {
+//	@return DefaultSelectionPrisma3choolPayload
+func (a *SchoolsAPIService) CreateSchoolExecute(r ApiCreateSchoolRequest) (*DefaultSelectionPrismaSchoolPayload, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *DefaultSelectionPrisma36SchoolPayload
+		localVarReturnValue *DefaultSelectionPrisma3choolPayload
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SchoolsAPIService.CreateSchool")
@@ -247,7 +247,7 @@ type ApiGetSchoolRequest struct {
 	id         int32
 }
 
-func (r ApiGetSchoolRequest) Execute() (*DefaultSelectionPrisma36SchoolPayload, *http.Response, error) {
+func (r ApiGetSchoolRequest) Execute() (*DefaultSelectionPrismaSchoolPayload, *http.Response, error) {
 	return r.ApiService.GetSchoolExecute(r)
 }
 

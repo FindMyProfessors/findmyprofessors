@@ -18,7 +18,7 @@ import (
 // EnumsUserRole the model 'EnumsUserRole'
 type EnumsUserRole string
 
-// List of _36_Enums.UserRole
+// List of __Enums.UserRole
 const (
 	ADMIN  EnumsUserRole = "ADMIN"
 	NORMAL EnumsUserRole = "NORMAL"
@@ -68,7 +68,7 @@ func (v EnumsUserRole) IsValid() bool {
 	return false
 }
 
-// Ptr returns reference to _36_Enums.UserRole value
+// Ptr returns reference to __Enums.UserRole value
 func (v EnumsUserRole) Ptr() *EnumsUserRole {
 	return &v
 }

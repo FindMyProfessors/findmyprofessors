@@ -7,15 +7,15 @@ Name | Type | Description | Notes
 **Quality** | **float32** |  | 
 **Difficulty** | **float32** |  | 
 **Time** | **time.Time** |  | 
-**Tags** | [**[]ModelEnumsReviewTag**](ModelEnumsReviewTag.md) |  | 
-**Grade** | [**ModelEnumsGrade**](EnumsGrade.md) |  | 
+**Tags** | [**[]Model36EnumsReviewTag**](Model36EnumsReviewTag.md) |  | 
+**Grade** | [**Model36EnumsGrade**](36EnumsGrade.md) |  | 
 **ProfessorId** | **int32** |  | 
 
 ## Methods
 
 ### NewNewReview
 
-`func NewNewReview(quality float32, difficulty float32, time time.Time, tags []ModelEnumsReviewTag, grade ModelEnumsGrade, professorId int32, ) *NewReview`
+`func NewNewReview(quality float32, difficulty float32, time time.Time, tags []Model36EnumsReviewTag, grade Model36EnumsGrade, professorId int32, ) *NewReview`
 
 NewNewReview instantiates a new NewReview object
 This constructor will assign default values to properties that have it defined,
@@ -92,40 +92,40 @@ SetTime sets Time field to given value.
 
 ### GetTags
 
-`func (o *NewReview) GetTags() []ModelEnumsReviewTag`
+`func (o *NewReview) GetTags() []Model36EnumsReviewTag`
 
 GetTags returns the Tags field if non-nil, zero value otherwise.
 
 ### GetTagsOk
 
-`func (o *NewReview) GetTagsOk() (*[]ModelEnumsReviewTag, bool)`
+`func (o *NewReview) GetTagsOk() (*[]Model36EnumsReviewTag, bool)`
 
 GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTags
 
-`func (o *NewReview) SetTags(v []ModelEnumsReviewTag)`
+`func (o *NewReview) SetTags(v []Model36EnumsReviewTag)`
 
 SetTags sets Tags field to given value.
 
 
 ### GetGrade
 
-`func (o *NewReview) GetGrade() ModelEnumsGrade`
+`func (o *NewReview) GetGrade() Model36EnumsGrade`
 
 GetGrade returns the Grade field if non-nil, zero value otherwise.
 
 ### GetGradeOk
 
-`func (o *NewReview) GetGradeOk() (*ModelEnumsGrade, bool)`
+`func (o *NewReview) GetGradeOk() (*Model36EnumsGrade, bool)`
 
 GetGradeOk returns a tuple with the Grade field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetGrade
 
-`func (o *NewReview) SetGrade(v ModelEnumsGrade)`
+`func (o *NewReview) SetGrade(v Model36EnumsGrade)`
 
 SetGrade sets Grade field to given value.
 

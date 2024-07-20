@@ -21,8 +21,8 @@ var _ MappedNullable = &CourseSearchResultEdgesInner{}
 
 // CourseSearchResultEdgesInner struct for CourseSearchResultEdgesInner
 type CourseSearchResultEdgesInner struct {
-	Node   DefaultSelectionPrisma36CoursePayload `json:"node"`
-	Cursor string                                `json:"cursor"`
+	Node   DefaultSelectionPris36CoursePayload `json:"node"`
+	Cursor string                              `json:"cursor"`
 }
 
 type _CourseSearchResultEdgesInner CourseSearchResultEdgesInner
@@ -31,7 +31,7 @@ type _CourseSearchResultEdgesInner CourseSearchResultEdgesInner
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCourseSearchResultEdgesInner(node DefaultSelectionPrisma36CoursePayload, cursor string) *CourseSearchResultEdgesInner {
+func NewCourseSearchResultEdgesInner(node DefaultSelectionPrismaCoursePayload, cursor string) *CourseSearchResultEdgesInner {
 	this := CourseSearchResultEdgesInner{}
 	this.Node = node
 	this.Cursor = cursor
@@ -47,9 +47,9 @@ func NewCourseSearchResultEdgesInnerWithDefaults() *CourseSearchResultEdgesInner
 }
 
 // GetNode returns the Node field value
-func (o *CourseSearchResultEdgesInner) GetNode() DefaultSelectionPrisma36CoursePayload {
+func (o *CourseSearchResultEdgesInner) GetNode() DefaultSelectionPrismaCoursePayload {
 	if o == nil {
-		var ret DefaultSelectionPrisma36CoursePayload
+		var ret DefaultSelectionPrismaCoursePayload
 		return ret
 	}
 
@@ -58,7 +58,7 @@ func (o *CourseSearchResultEdgesInner) GetNode() DefaultSelectionPrisma36CourseP
 
 // GetNodeOk returns a tuple with the Node field value
 // and a boolean to check if the value has been set.
-func (o *CourseSearchResultEdgesInner) GetNodeOk() (*DefaultSelectionPrisma36CoursePayload, bool) {
+func (o *CourseSearchResultEdgesInner) GetNodeOk() (*DefaultSelectionPrismaCoursePayload, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -66,7 +66,7 @@ func (o *CourseSearchResultEdgesInner) GetNodeOk() (*DefaultSelectionPrisma36Cou
 }
 
 // SetNode sets field value
-func (o *CourseSearchResultEdgesInner) SetNode(v DefaultSelectionPrisma36CoursePayload) {
+func (o *CourseSearchResultEdgesInner) SetNode(v DefaultSelectionPrismaCoursePayload) {
 	o.Node = v
 }
 

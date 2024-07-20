@@ -26,8 +26,8 @@ type ReviewResponse struct {
 	Quality     float32               `json:"quality"`
 	Difficulty  float32               `json:"difficulty"`
 	Time        time.Time             `json:"time"`
-	Tags        []ModelEnumsReviewTag `json:"tags"`
-	Grade       ModelEnumsGrade       `json:"grade"`
+	Tags        Model36EnumsReviewTag `json:"tags"`
+	Grade       odel36EnumsGrade      `json:"grade"`
 	ProfessorId int32                 `json:"professor_id"`
 }
 

@@ -93,12 +93,8 @@ func NewConfiguration() *Configuration {
 		Debug:         false,
 		Servers: ServerConfigurations{
 			{
-				URL:         "http://localhost:8080",
-				Description: "Local endpoint",
-			},
-			{
-				URL:         "https://findmyprofessors.warrensnipes.dev/api",
-				Description: "Production endpoint",
+				URL:         "",
+				Description: "No description provided",
 			},
 		},
 		OperationServers: map[string]ServerConfigurations{},

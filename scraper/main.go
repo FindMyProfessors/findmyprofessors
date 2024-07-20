@@ -5,6 +5,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"os"
+	"path/filepath"
+	"strconv"
+	"strings"
+
 	"github.com/FindMyProfessors/scraper/fmp"
 	"github.com/FindMyProfessors/scraper/model"
 	"github.com/FindMyProfessors/scraper/schools"
@@ -12,10 +17,6 @@ import (
 	"github.com/FindMyProfessors/scraper/schools/valencia"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
-	"os"
-	"path/filepath"
-	"strconv"
-	"strings"
 )
 
 var (
@@ -36,8 +37,11 @@ func main() {
 				term := GetTerm(scraper)
 				scraper.SetTerm(term)
 				if ShouldSendToFMP() {
-					api := fmp.NewApi("http://localhost:8080/query")
-					err = api.UpsertSchool(context.Background(), school, &term)
+					ctx, api, err := fmp.NewApi(context.Background(), "joedoe", "Password123!")
+					if err != nil {
+						panic(err)
+					}
+					err = api.UpsertSchool(ctx, school, &term)
 					if err != nil {
 						panic(err)
 					}
@@ -76,8 +80,11 @@ func main() {
 	}
 
 	if ShouldSendToFMP() {
-		api := fmp.NewApi("http://localhost:8080/query")
-		err = api.UpsertSchool(context.Background(), school, &term)
+		ctx, api, err := fmp.NewApi(context.Background(), "joedoe", "Password123!")
+		if err != nil {
+			panic(err)
+		}
+		err = api.UpsertSchool(ctx, school, &term)
 		if err != nil {
 			panic(err)
 		}

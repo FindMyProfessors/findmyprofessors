@@ -112,10 +112,10 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
- - [EnumsGrade](docs/EnumsGrade.md)
- - [EnumsReviewTag](docs/EnumsReviewTag.md)
- - [EnumsSemester](docs/EnumsSemester.md)
- - [EnumsUserRole](docs/EnumsUserRole.md)
+ - [36EnumsGrade](docs/36EnumsGrade.md)
+ - [36EnumsReviewTag](docs/36EnumsReviewTag.md)
+ - [36EnumsSemester](docs/36EnumsSemester.md)
+ - [36EnumsUserRole](docs/36EnumsUserRole.md)
  - [AuthErrorType](docs/AuthErrorType.md)
  - [AuthErrorTypeINVALIDPASSWORD](docs/AuthErrorTypeINVALIDPASSWORD.md)
  - [AuthErrorTypeUSERALREADYEXISTS](docs/AuthErrorTypeUSERALREADYEXISTS.md)
@@ -141,7 +141,6 @@ Class | Method | HTTP request | Description
  - [PickCourseNameOrCode](docs/PickCourseNameOrCode.md)
  - [PickCourseNameOrCodeOrSchoolId](docs/PickCourseNameOrCodeOrSchoolId.md)
  - [PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId](docs/PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId.md)
- - [PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId](docs/PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId.md)
  - [PickProfessorErrorMessageOrType](docs/PickProfessorErrorMessageOrType.md)
  - [PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId](docs/PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId.md)
  - [PickReviewErrorMessageOrType](docs/PickReviewErrorMessageOrType.md)
@@ -155,6 +154,7 @@ Class | Method | HTTP request | Description
  - [ProfessorAlreadyExistsError](docs/ProfessorAlreadyExistsError.md)
  - [ProfessorAnalysis](docs/ProfessorAnalysis.md)
  - [ProfessorCourses](docs/ProfessorCourses.md)
+ - [ProfessorCoursesCoursesInner](docs/ProfessorCoursesCoursesInner.md)
  - [ProfessorErrorType](docs/ProfessorErrorType.md)
  - [ProfessorErrorTypePROFESSORALREADYEXISTS](docs/ProfessorErrorTypePROFESSORALREADYEXISTS.md)
  - [ProfessorErrorTypePROFESSORNOTFOUND](docs/ProfessorErrorTypePROFESSORNOTFOUND.md)

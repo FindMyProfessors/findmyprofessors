@@ -18,7 +18,7 @@ import (
 // EnumsGrade the model 'EnumsGrade'
 type EnumsGrade string
 
-// List of _36_Enums.Grade
+// List of __Enums.Grade
 const (
 	A_PLUS     EnumsGrade = "A_PLUS"
 	A          EnumsGrade = "A"
@@ -102,7 +102,7 @@ func (v EnumsGrade) IsValid() bool {
 	return false
 }
 
-// Ptr returns reference to _36_Enums.Grade value
+// Ptr returns reference to __Enums.Grade value
 func (v EnumsGrade) Ptr() *EnumsGrade {
 	return &v
 }

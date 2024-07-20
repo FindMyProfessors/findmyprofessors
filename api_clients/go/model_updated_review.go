@@ -141,9 +141,9 @@ func (o *UpdatedReview) SetTime(v time.Time) {
 }
 
 // GetTags returns the Tags field value if set, zero value otherwise.
-func (o *UpdatedReview) GetTags() []ModelEnumsReviewTag {
+func (o *UpdatedReview) GetTags() []Model36EnumsReviewTag {
 	if o == nil || IsNil(o.Tags) {
-		var ret []ModelEnumsReviewTag
+		var ret []Model36EnumsReviewTag
 		return ret
 	}
 	return o.Tags
@@ -151,7 +151,7 @@ func (o *UpdatedReview) GetTags() []ModelEnumsReviewTag {
 
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdatedReview) GetTagsOk() ([]ModelEnumsReviewTag, bool) {
+func (o *UpdatedReview) GetTagsOk() ([]Model36EnumsReviewTag, bool) {
 	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
@@ -167,15 +167,15 @@ func (o *UpdatedReview) HasTags() bool {
 	return false
 }
 
-// SetTags gets a reference to the given []ModelEnumsReviewTag and assigns it to the Tags field.
-func (o *UpdatedReview) SetTags(v []ModelEnumsReviewTag) {
+// SetTags gets a reference to the given []Model36EnumsReviewTag and assigns it to the Tags field.
+func (o *UpdatedReview) SetTags(v []Model36EnumsReviewTag) {
 	o.Tags = v
 }
 
 // GetGrade returns the Grade field value if set, zero value otherwise.
-func (o *UpdatedReview) GetGrade() ModelEnumsGrade {
+func (o *UpdatedReview) GetGrade() Model36EnumsGrade {
 	if o == nil || IsNil(o.Grade) {
-		var ret ModelEnumsGrade
+		var ret Model36EnumsGrade
 		return ret
 	}
 	return *o.Grade
@@ -183,7 +183,7 @@ func (o *UpdatedReview) GetGrade() ModelEnumsGrade {
 
 // GetGradeOk returns a tuple with the Grade field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdatedReview) GetGradeOk() (*ModelEnumsGrade, bool) {
+func (o *UpdatedReview) GetGradeOk() (*Model36EnumsGrade, bool) {
 	if o == nil || IsNil(o.Grade) {
 		return nil, false
 	}
@@ -199,8 +199,8 @@ func (o *UpdatedReview) HasGrade() bool {
 	return false
 }
 
-// SetGrade gets a reference to the given ModelEnumsGrade and assigns it to the Grade field.
-func (o *UpdatedReview) SetGrade(v ModelEnumsGrade) {
+// SetGrade gets a reference to the given Model36EnumsGrade and assigns it to the Grade field.
+func (o *UpdatedReview) SetGrade(v Model36EnumsGrade) {
 	o.Grade = &v
 }
 

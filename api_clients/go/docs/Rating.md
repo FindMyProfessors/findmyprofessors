@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AverageGrade** | [**ModelEnumsGrade**](EnumsGrade.md) |  | 
+**AverageGrade** | [**Model36EnumsGrade**](36EnumsGrade.md) |  | 
 **TopKMostRecentDifficultyAverage** | **float32** |  | 
 **TotalDifficultyAverage** | **float32** |  | 
 **TopKMostRecentQualityAverage** | **float32** |  | 
@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewRating
 
-`func NewRating(averageGrade ModelEnumsGrade, topKMostRecentDifficultyAverage float32, totalDifficultyAverage float32, topKMostRecentQualityAverage float32, totalQualityAverage float32, ratingAmount int32, ) *Rating`
+`func NewRating(averageGrade Model36EnumsGrade, topKMostRecentDifficultyAverage float32, totalDifficultyAverage float32, topKMostRecentQualityAverage float32, totalQualityAverage float32, ratingAmount int32, ) *Rating`
 
 NewRating instantiates a new Rating object
 This constructor will assign default values to properties that have it defined,
@@ -32,20 +32,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetAverageGrade
 
-`func (o *Rating) GetAverageGrade() ModelEnumsGrade`
+`func (o *Rating) GetAverageGrade() Model36EnumsGrade`
 
 GetAverageGrade returns the AverageGrade field if non-nil, zero value otherwise.
 
 ### GetAverageGradeOk
 
-`func (o *Rating) GetAverageGradeOk() (*ModelEnumsGrade, bool)`
+`func (o *Rating) GetAverageGradeOk() (*Model36EnumsGrade, bool)`
 
 GetAverageGradeOk returns a tuple with the AverageGrade field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAverageGrade
 
-`func (o *Rating) SetAverageGrade(v ModelEnumsGrade)`
+`func (o *Rating) SetAverageGrade(v Model36EnumsGrade)`
 
 SetAverageGrade sets AverageGrade field to given value.
 

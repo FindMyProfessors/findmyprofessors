@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Amount** | **int32** |  | 
-**Tag** | [**ModelEnumsReviewTag**](EnumsReviewTag.md) |  | 
+**Tag** | [**Model36EnumsReviewTag**](36EnumsReviewTag.md) |  | 
 
 ## Methods
 
 ### NewTagAmount
 
-`func NewTagAmount(amount int32, tag ModelEnumsReviewTag, ) *TagAmount`
+`func NewTagAmount(amount int32, tag Model36EnumsReviewTag, ) *TagAmount`
 
 NewTagAmount instantiates a new TagAmount object
 This constructor will assign default values to properties that have it defined,
@@ -48,20 +48,20 @@ SetAmount sets Amount field to given value.
 
 ### GetTag
 
-`func (o *TagAmount) GetTag() ModelEnumsReviewTag`
+`func (o *TagAmount) GetTag() Model36EnumsReviewTag`
 
 GetTag returns the Tag field if non-nil, zero value otherwise.
 
 ### GetTagOk
 
-`func (o *TagAmount) GetTagOk() (*ModelEnumsReviewTag, bool)`
+`func (o *TagAmount) GetTagOk() (*Model36EnumsReviewTag, bool)`
 
 GetTagOk returns a tuple with the Tag field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTag
 
-`func (o *TagAmount) SetTag(v ModelEnumsReviewTag)`
+`func (o *TagAmount) SetTag(v Model36EnumsReviewTag)`
 
 SetTag sets Tag field to given value.
 

@@ -374,7 +374,7 @@ import (
 func main() {
 	id := int32(56) // int32 | 
 	year := int32(56) // int32 |  (optional)
-	semester := openapiclient._36_Enums.Semester("SPRING") // EnumsSemester |  (optional)
+	semester := openapiclient._36_Enums.Semester("SPRING") // 36EnumsSemester |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -405,7 +405,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **year** | **int32** |  | 
- **semester** | [**EnumsSemester**](EnumsSemester.md) |  | 
+ **semester** | [**36EnumsSemester**](36EnumsSemester.md) |  | 
 
 ### Return type
 

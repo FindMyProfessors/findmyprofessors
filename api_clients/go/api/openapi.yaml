@@ -1481,26 +1481,6 @@ components:
       - totalDifficultyAverage
       - totalQualityAverage
       type: object
-    _36_Enums.Semester:
-      enum:
-      - SPRING
-      - SUMMER
-      - FALL
-      type: string
-    Pick_ProfessorCourse.Exclude_keyofProfessorCourse.professor_id-or-id-or-course_id__:
-      description: "From T, pick a set of properties whose keys are in the union K"
-      properties:
-        year:
-          format: int32
-          type: integer
-        semester:
-          $ref: '#/components/schemas/_36_Enums.Semester'
-      required:
-      - semester
-      - year
-      type: object
-    Omit_ProfessorCourse.professor_id-or-id-or-course_id_:
-      $ref: '#/components/schemas/Pick_ProfessorCourse.Exclude_keyofProfessorCourse.professor_id-or-id-or-course_id__'
     DefaultSelection_Prisma._36_CoursePayload_:
       example:
         code: code
@@ -1526,11 +1506,21 @@ components:
       type: object
     Course:
       $ref: '#/components/schemas/DefaultSelection_Prisma._36_CoursePayload_'
+    _36_Enums.Semester:
+      enum:
+      - SPRING
+      - SUMMER
+      - FALL
+      type: string
+    Semester:
+      $ref: '#/components/schemas/_36_Enums.Semester'
     ProfessorCourses:
       example:
         courses:
-        - ""
-        - ""
+        - year: 6
+          semester: null
+        - year: 6
+          semester: null
         total: 0
       properties:
         total:
@@ -1538,16 +1528,12 @@ components:
           type: integer
         courses:
           items:
-            allOf:
-            - $ref: '#/components/schemas/Omit_ProfessorCourse.professor_id-or-id-or-course_id_'
-            - $ref: '#/components/schemas/Course'
+            $ref: '#/components/schemas/ProfessorCourses_courses_inner'
           type: array
       required:
       - courses
       - total
       type: object
-    Semester:
-      $ref: '#/components/schemas/_36_Enums.Semester'
     UpdatedProfessor:
       example:
         last_name: last_name
@@ -2100,6 +2086,22 @@ components:
       - cursor
       - node
       type: object
+    ProfessorCourses_courses_inner:
+      allOf:
+      - $ref: '#/components/schemas/Course'
+      - properties:
+          year:
+            format: int32
+            type: integer
+          semester:
+            $ref: '#/components/schemas/Semester'
+        required:
+        - semester
+        - year
+        type: object
+      example:
+        year: 6
+        semester: null
     ReviewsSearchResult_edges_inner:
       example:
         cursor: cursor

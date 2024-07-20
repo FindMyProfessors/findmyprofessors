@@ -21,8 +21,8 @@ var _ MappedNullable = &ProfessorCourses{}
 
 // ProfessorCourses struct for ProfessorCourses
 type ProfessorCourses struct {
-	Total   int32                                                                     `json:"total"`
-	Courses []PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId `json:"courses"`
+	Total   int32                          `json:"total"`
+	Courses []ProfessorCoursesCoursesInner `json:"courses"`
 }
 
 type _ProfessorCourses ProfessorCourses
@@ -31,7 +31,7 @@ type _ProfessorCourses ProfessorCourses
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewProfessorCourses(total int32, courses []PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) *ProfessorCourses {
+func NewProfessorCourses(total int32, courses []ProfessorCoursesCoursesInner) *ProfessorCourses {
 	this := ProfessorCourses{}
 	this.Total = total
 	this.Courses = courses
@@ -71,9 +71,9 @@ func (o *ProfessorCourses) SetTotal(v int32) {
 }
 
 // GetCourses returns the Courses field value
-func (o *ProfessorCourses) GetCourses() []PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId {
+func (o *ProfessorCourses) GetCourses() []ProfessorCoursesCoursesInner {
 	if o == nil {
-		var ret []PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId
+		var ret []ProfessorCoursesCoursesInner
 		return ret
 	}
 
@@ -82,7 +82,7 @@ func (o *ProfessorCourses) GetCourses() []PickProfessorCourseExcludeKeyofProfess
 
 // GetCoursesOk returns a tuple with the Courses field value
 // and a boolean to check if the value has been set.
-func (o *ProfessorCourses) GetCoursesOk() ([]PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId, bool) {
+func (o *ProfessorCourses) GetCoursesOk() ([]ProfessorCoursesCoursesInner, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -90,7 +90,7 @@ func (o *ProfessorCourses) GetCoursesOk() ([]PickProfessorCourseExcludeKeyofProf
 }
 
 // SetCourses sets field value
-func (o *ProfessorCourses) SetCourses(v []PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) {
+func (o *ProfessorCourses) SetCourses(v []ProfessorCoursesCoursesInner) {
 	o.Courses = v
 }
 

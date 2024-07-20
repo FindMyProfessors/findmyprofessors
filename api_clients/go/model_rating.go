@@ -21,12 +21,12 @@ var _ MappedNullable = &Rating{}
 
 // Rating struct for Rating
 type Rating struct {
-	AverageGrade                    ModelEnumsGrade `json:"averageGrade"`
-	TopKMostRecentDifficultyAverage float32         `json:"topKMostRecentDifficultyAverage"`
-	TotalDifficultyAverage          float32         `json:"totalDifficultyAverage"`
-	TopKMostRecentQualityAverage    float32         `json:"topKMostRecentQualityAverage"`
-	TotalQualityAverage             float32         `json:"totalQualityAverage"`
-	RatingAmount                    int32           `json:"ratingAmount"`
+	AverageGrade                    Model36EnumsGrade `json:"averageGrade"`
+	TopKMostRecentDifficultyAverage float32           `json:"topKMostRecentDifficultyAverage"`
+	TotalDifficultyAverage          float32           `json:"totalDifficultyAverage"`
+	TopKMostRecentQualityAverage    float32           `json:"topKMostRecentQualityAverage"`
+	TotalQualityAverage             float32           `json:"totalQualityAverage"`
+	RatingAmount                    int32             `json:"ratingAmount"`
 }
 
 type _Rating Rating

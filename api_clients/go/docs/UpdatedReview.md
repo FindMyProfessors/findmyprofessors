@@ -7,8 +7,8 @@ Name | Type | Description | Notes
 **Quality** | Pointer to **float32** |  | [optional] 
 **Difficulty** | Pointer to **float32** |  | [optional] 
 **Time** | Pointer to **time.Time** |  | [optional] 
-**Tags** | Pointer to [**[]ModelEnumsReviewTag**](ModelEnumsReviewTag.md) |  | [optional] 
-**Grade** | Pointer to [**ModelEnumsGrade**](EnumsGrade.md) |  | [optional] 
+**Tags** | Pointer to [**[]Model36EnumsReviewTag**](Model36EnumsReviewTag.md) |  | [optional] 
+**Grade** | Pointer to [**Model36EnumsGrade**](36EnumsGrade.md) |  | [optional] 
 
 ## Methods
 
@@ -106,20 +106,20 @@ HasTime returns a boolean if a field has been set.
 
 ### GetTags
 
-`func (o *UpdatedReview) GetTags() []ModelEnumsReviewTag`
+`func (o *UpdatedReview) GetTags() []Model36EnumsReviewTag`
 
 GetTags returns the Tags field if non-nil, zero value otherwise.
 
 ### GetTagsOk
 
-`func (o *UpdatedReview) GetTagsOk() (*[]ModelEnumsReviewTag, bool)`
+`func (o *UpdatedReview) GetTagsOk() (*[]Model36EnumsReviewTag, bool)`
 
 GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTags
 
-`func (o *UpdatedReview) SetTags(v []ModelEnumsReviewTag)`
+`func (o *UpdatedReview) SetTags(v []Model36EnumsReviewTag)`
 
 SetTags sets Tags field to given value.
 
@@ -131,20 +131,20 @@ HasTags returns a boolean if a field has been set.
 
 ### GetGrade
 
-`func (o *UpdatedReview) GetGrade() ModelEnumsGrade`
+`func (o *UpdatedReview) GetGrade() Model36EnumsGrade`
 
 GetGrade returns the Grade field if non-nil, zero value otherwise.
 
 ### GetGradeOk
 
-`func (o *UpdatedReview) GetGradeOk() (*ModelEnumsGrade, bool)`
+`func (o *UpdatedReview) GetGradeOk() (*Model36EnumsGrade, bool)`
 
 GetGradeOk returns a tuple with the Grade field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetGrade
 
-`func (o *UpdatedReview) SetGrade(v ModelEnumsGrade)`
+`func (o *UpdatedReview) SetGrade(v Model36EnumsGrade)`
 
 SetGrade sets Grade field to given value.
 

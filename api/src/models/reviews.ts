@@ -1,14 +1,36 @@
-import { Professor, Review, ReviewTag } from "@prisma/client";
+import { Grade, Review, ReviewTag } from "@prisma/client";
 
-export type NewReview = Pick<
-  Review,
-  "quality" | "difficulty" | "time" | "tags" | "grade" | "professor_id"
->;
+export interface NewReview {
+  /**
+   * @isFloat
+   */
+  quality: number;
+  /**
+   * @isFloat
+   */
+  difficulty: number;
+  time: Date;
+  tags: ReviewTag[];
+  grade: Grade;
+  /**
+   * @isInt
+   */
+  professor_id: number;
+}
 
-export type UpdatedReview = Pick<
-  Review,
-  "quality" | "difficulty" | "time" | "tags" | "grade"
->;
+export interface UpdatedReview {
+  /**
+   * @isFloat
+   */
+  quality?: number;
+  /**
+   * @isFloat
+   */
+  difficulty?: number;
+  time?: Date;
+  tags?: ReviewTag[];
+  grade?: Grade;
+}
 
 export type ReviewError = {
   message: string | { [key: string]: string };
@@ -24,7 +46,7 @@ export enum ReviewErrorType {
 }
 
 export type ReviewsSearchResult = {
-  edges: { cursor: string; node: Review }[];
+  edges: { cursor: string; node: ReviewResponse }[];
   pageInfo: { hasNextPage: boolean; endCursor: string | null; total: number };
 };
 
@@ -42,36 +64,55 @@ export function isReviewError(error: any): error is ReviewError {
   );
 }
 
-export enum Grade {
-  A_PLUS,
-  A,
-  A_MINUS,
-  B_PLUS,
-  B,
-  B_MINUS,
-  C_PLUS,
-  C,
-  C_MINUS,
-  D_PLUS,
-  D,
-  D_MINUS,
-  F_PLUS,
-  F,
-  F_MINUS,
-  INCOMPLETE,
-  WITHDRAWN,
-  NOT_SURE,
-  OTHER,
+export type Rating = {
+  /**
+   * @isInt
+   */
+  ratingAmount: number;
+  /**
+   * @isFloat
+   */
+  totalQualityAverage: number;
+  /**
+   * @isFloat
+   */
+  topKMostRecentQualityAverage: number;
+  /**
+   * @isFloat
+   */
+  totalDifficultyAverage: number;
+  /**
+   * @isFloat
+   */
+  topKMostRecentDifficultyAverage: number;
+  /**
+   * @isString
+   */
+  averageGrade: Grade; // Assuming Grade is a string, adjust if it's an enum or another type
+};
+
+export interface ReviewResponse  {
+  /**
+   * @isInt
+   */
+  id: number;
+  /**
+   * @isFloat
+   */
+  quality: number;
+  /**
+   * @isFloat
+   */
+  difficulty: number;
+  time: Date;
+  tags: ReviewTag[];
+  grade: Grade;
+  /**
+   * @isInt
+   */
+  professor_id: number;
 }
 
-export type Rating = {
-  ratingAmount: number;
-  totalQualityAverage: number;
-  topKMostRecentQualityAverage: number;
-  totalDifficultyAverage: number;
-  topKMostRecentDifficultyAverage: number;
-  averageGrade: string; // Assuming Grade is a string, adjust if it's an enum or another type
-};
 
 export type TagAmount = {
   tag: ReviewTag;

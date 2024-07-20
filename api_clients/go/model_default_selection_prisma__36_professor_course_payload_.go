@@ -16,26 +16,26 @@ import (
 	"fmt"
 )
 
-// checks if the DefaultSelectionPrisma36ProfessorCoursePayload type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &DefaultSelectionPrisma36ProfessorCoursePayload{}
+// checks if the DefaultSelectionPrismaProfessorCoursePayload type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DefaultSelectionPrismaProfessorCoursePayload{}
 
-// DefaultSelectionPrisma36ProfessorCoursePayload struct for DefaultSelectionPrisma36ProfessorCoursePayload
-type DefaultSelectionPrisma36ProfessorCoursePayload struct {
-	Semester    ModelEnumsSemester `json:"semester"`
+// DefaultSelectionPrismaProfessorCoursePayload struct for DefaultSelectionPrismaProfessorCoursePayload
+type DefaultSelectionPrismaProfessorCoursePayload struct {
+	Semester    Mol36EnumsSemester `json:"semester"`
 	Year        int32              `json:"year"`
 	CourseId    int32              `json:"course_id"`
 	ProfessorId int32              `json:"professor_id"`
 	Id          int32              `json:"id"`
 }
 
-type _DefaultSelectionPrisma36ProfessorCoursePayload DefaultSelectionPrisma36ProfessorCoursePayload
+type _DefaultSelectionPrismaProfessorCoursePayload DefaultSelectionPrismaProfessorCoursePayload
 
-// NewDefaultSelectionPrisma36ProfessorCoursePayload instantiates a new DefaultSelectionPrisma36ProfessorCoursePayload object
+// NewDefaultSelectionPrismaProfessorCoursePayload instantiates a new DefaultSelectionPrismaProfessorCoursePayload object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDefaultSelectionPrisma36ProfessorCoursePayload(semester ModelEnumsSemester, year int32, courseId int32, professorId int32, id int32) *DefaultSelectionPrisma36ProfessorCoursePayload {
-	this := DefaultSelectionPrisma36ProfessorCoursePayload{}
+func NewDefaultSelectionPrismaProfessorCoursePayload(semester ModelEnumsSemester, year int32, courseId int32, professorId int32, id int32) *DefaultSelectionPrismaProfessorCoursePayload {
+	this := DefaultSelectionPrismaProfessorCoursePayload{}
 	this.Semester = semester
 	this.Year = year
 	this.CourseId = courseId
@@ -44,16 +44,16 @@ func NewDefaultSelectionPrisma36ProfessorCoursePayload(semester ModelEnumsSemest
 	return &this
 }
 
-// NewDefaultSelectionPrisma36ProfessorCoursePayloadWithDefaults instantiates a new DefaultSelectionPrisma36ProfessorCoursePayload object
+// NewDefaultSelectionPrismaProfessorCoursePayloadWithDefaults instantiates a new DefaultSelectionPrismaProfessorCoursePayload object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewDefaultSelectionPrisma36ProfessorCoursePayloadWithDefaults() *DefaultSelectionPrisma36ProfessorCoursePayload {
-	this := DefaultSelectionPrisma36ProfessorCoursePayload{}
+func NewDefaultSelectionPrismaProfessorCoursePayloadWithDefaults() *DefaultSelectionPrismaProfessorCoursePayload {
+	this := DefaultSelectionPrismaProfessorCoursePayload{}
 	return &this
 }
 
 // GetSemester returns the Semester field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetSemester() ModelEnumsSemester {
+func (o *DefaultSelectionPrismaProfessorCoursePayload) GetSemester() ModelEnumsSemester {
 	if o == nil {
 		var ret ModelEnumsSemester
 		return ret
@@ -64,7 +64,7 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetSemester() ModelEnum
 
 // GetSemesterOk returns a tuple with the Semester field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetSemesterOk() (*ModelEnumsSemester, bool) {
+func (o *DefaultSelectionPrismaProfessorCoursePayload) GetSemesterOk() (*ModelEnumsSemester, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -72,12 +72,12 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetSemesterOk() (*Model
 }
 
 // SetSemester sets field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) SetSemester(v ModelEnumsSemester) {
+func (o *DefaultSelectionPrismaProfessorCoursePayload) SetSemester(v ModelEnumsSemester) {
 	o.Semester = v
 }
 
 // GetYear returns the Year field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetYear() int32 {
+func (o *DefaultSelectionPrismaProfessorCoursePayload) GetYear() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -88,7 +88,7 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetYear() int32 {
 
 // GetYearOk returns a tuple with the Year field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetYearOk() (*int32, bool) {
+func (o *DefaultSelectionPrismaProfessorCoursePayload) GetYearOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -96,12 +96,12 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetYearOk() (*int32, bo
 }
 
 // SetYear sets field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) SetYear(v int32) {
+func (o *DefaultSelectionPrismaProfessorCoursePayload) SetYear(v int32) {
 	o.Year = v
 }
 
 // GetCourseId returns the CourseId field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetCourseId() int32 {
+func (o *DefaultSelectionPrismaProfessorCoursePayload) GetCourseId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -112,7 +112,7 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetCourseId() int32 {
 
 // GetCourseIdOk returns a tuple with the CourseId field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetCourseIdOk() (*int32, bool) {
+func (o *DefaultSelectionPrismaProfessorCoursePayload) GetCourseIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -120,12 +120,12 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetCourseIdOk() (*int32
 }
 
 // SetCourseId sets field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) SetCourseId(v int32) {
+func (o *DefaultSelectionPrismaProfessorCoursePayload) SetCourseId(v int32) {
 	o.CourseId = v
 }
 
 // GetProfessorId returns the ProfessorId field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetProfessorId() int32 {
+func (o *DefaultSelectionPrismaProfessorCoursePayload) GetProfessorId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -136,7 +136,7 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetProfessorId() int32 
 
 // GetProfessorIdOk returns a tuple with the ProfessorId field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetProfessorIdOk() (*int32, bool) {
+func (o *DefaultSelectionPrismaProfessorCoursePayload) GetProfessorIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -144,12 +144,12 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetProfessorIdOk() (*in
 }
 
 // SetProfessorId sets field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) SetProfessorId(v int32) {
+func (o *DefaultSelectionPrismaProfessorCoursePayload) SetProfessorId(v int32) {
 	o.ProfessorId = v
 }
 
 // GetId returns the Id field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetId() int32 {
+func (o *DefaultSelectionPrismaProfessorCoursePayload) GetId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -160,7 +160,7 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetId() int32 {
 
 // GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetIdOk() (*int32, bool) {
+func (o *DefaultSelectionPrismaProfessorCoursePayload) GetIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -168,11 +168,11 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetIdOk() (*int32, bool
 }
 
 // SetId sets field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) SetId(v int32) {
+func (o *DefaultSelectionPrismaProfessorCoursePayload) SetId(v int32) {
 	o.Id = v
 }
 
-func (o DefaultSelectionPrisma36ProfessorCoursePayload) MarshalJSON() ([]byte, error) {
+func (o DefaultSelectionPrismaProfessorCoursePayload) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -180,7 +180,7 @@ func (o DefaultSelectionPrisma36ProfessorCoursePayload) MarshalJSON() ([]byte, e
 	return json.Marshal(toSerialize)
 }
 
-func (o DefaultSelectionPrisma36ProfessorCoursePayload) ToMap() (map[string]interface{}, error) {
+func (o DefaultSelectionPrismaProfessorCoursePayload) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["semester"] = o.Semester
 	toSerialize["year"] = o.Year
@@ -190,7 +190,7 @@ func (o DefaultSelectionPrisma36ProfessorCoursePayload) ToMap() (map[string]inte
 	return toSerialize, nil
 }
 
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) UnmarshalJSON(data []byte) (err error) {
+func (o *DefaultSelectionPrismaProfessorCoursePayload) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -216,53 +216,53 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) UnmarshalJSON(data []by
 		}
 	}
 
-	varDefaultSelectionPrisma36ProfessorCoursePayload := _DefaultSelectionPrisma36ProfessorCoursePayload{}
+	varDefaultSelectionPrismaProfessorCoursePayload := _DefaultSelectionPrismaProfessorCoursePayload{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varDefaultSelectionPrisma36ProfessorCoursePayload)
+	err = decoder.Decode(&varDefaultSelectionPrismaProfessorCoursePayload)
 
 	if err != nil {
 		return err
 	}
 
-	*o = DefaultSelectionPrisma36ProfessorCoursePayload(varDefaultSelectionPrisma36ProfessorCoursePayload)
+	*o = DefaultSelectionPrismaProfessorCoursePayload(varDefaultSelectionPrismaProfessorCoursePayload)
 
 	return err
 }
 
-type NullableDefaultSelectionPrisma36ProfessorCoursePayload struct {
-	value *DefaultSelectionPrisma36ProfessorCoursePayload
+type NullableDefaultSelectionPrismaProfessorCoursePayload struct {
+	value *DefaultSelectionPrismaProfessorCoursePayload
 	isSet bool
 }
 
-func (v NullableDefaultSelectionPrisma36ProfessorCoursePayload) Get() *DefaultSelectionPrisma36ProfessorCoursePayload {
+func (v NullableDefaultSelectionPrismaProfessorCoursePayload) Get() *DefaultSelectionPrismaProfessorCoursePayload {
 	return v.value
 }
 
-func (v *NullableDefaultSelectionPrisma36ProfessorCoursePayload) Set(val *DefaultSelectionPrisma36ProfessorCoursePayload) {
+func (v *NullableDefaultSelectionPrismaProfessorCoursePayload) Set(val *DefaultSelectionPrismaProfessorCoursePayload) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableDefaultSelectionPrisma36ProfessorCoursePayload) IsSet() bool {
+func (v NullableDefaultSelectionPrismaProfessorCoursePayload) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableDefaultSelectionPrisma36ProfessorCoursePayload) Unset() {
+func (v *NullableDefaultSelectionPrismaProfessorCoursePayload) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableDefaultSelectionPrisma36ProfessorCoursePayload(val *DefaultSelectionPrisma36ProfessorCoursePayload) *NullableDefaultSelectionPrisma36ProfessorCoursePayload {
-	return &NullableDefaultSelectionPrisma36ProfessorCoursePayload{value: val, isSet: true}
+func NewNullableDefaultSelectionPrismaProfessorCoursePayload(val *DefaultSelectionPrismaProfessorCoursePayload) *NullableDefaultSelectionPrismaProfessorCoursePayload {
+	return &NullableDefaultSelectionPrismaProfessorCoursePayload{value: val, isSet: true}
 }
 
-func (v NullableDefaultSelectionPrisma36ProfessorCoursePayload) MarshalJSON() ([]byte, error) {
+func (v NullableDefaultSelectionPrismaProfessorCoursePayload) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableDefaultSelectionPrisma36ProfessorCoursePayload) UnmarshalJSON(src []byte) error {
+func (v *NullableDefaultSelectionPrismaProfessorCoursePayload) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

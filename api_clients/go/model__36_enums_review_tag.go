@@ -18,7 +18,7 @@ import (
 // EnumsReviewTag the model 'EnumsReviewTag'
 type EnumsReviewTag string
 
-// List of _36_Enums.ReviewTag
+// List of __Enums.ReviewTag
 const (
 	TOUGH_GRADER             EnumsReviewTag = "TOUGH_GRADER"
 	GET_READY_TO_READ        EnumsReviewTag = "GET_READY_TO_READ"
@@ -118,7 +118,7 @@ func (v EnumsReviewTag) IsValid() bool {
 	return false
 }
 
-// Ptr returns reference to _36_Enums.ReviewTag value
+// Ptr returns reference to __Enums.ReviewTag value
 func (v EnumsReviewTag) Ptr() *EnumsReviewTag {
 	return &v
 }

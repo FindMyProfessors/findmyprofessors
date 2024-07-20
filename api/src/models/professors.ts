@@ -1,4 +1,10 @@
-import { Course, Grade, Professor, ProfessorCourse } from "@prisma/client";
+import {
+  Course,
+  Grade,
+  Professor,
+  ProfessorCourse,
+  Semester,
+} from "@prisma/client";
 
 export type NewProfessor = Pick<
   Professor,
@@ -16,8 +22,7 @@ export type ProfessorSearchResult = {
 };
 
 export type ProfessorCourses = {
-  courses: (Omit<ProfessorCourse, "professor_id" | "id" | "course_id"> &
-    Course)[];
+  courses: (Course & { semester: Semester; year: number })[];
   total: number;
 };
 

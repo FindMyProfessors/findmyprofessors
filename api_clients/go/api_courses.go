@@ -33,7 +33,7 @@ func (r ApiCreateCourseRequest) Body(body PickCourseNameOrCodeOrSchoolId) ApiCre
 	return r
 }
 
-func (r ApiCreateCourseRequest) Execute() (*DefaultSelectionPrisma36CoursePayload, *http.Response, error) {
+func (r ApiCreateCourseRequest) Execute() (*DefaultSelectionPrismaCoursePayload, *http.Response, error) {
 	return r.ApiService.CreateCourseExecute(r)
 }
 
@@ -52,13 +52,13 @@ func (a *CoursesAPIService) CreateCourse(ctx context.Context) ApiCreateCourseReq
 
 // Execute executes the request
 //
-//	@return DefaultSelectionPrisma36CoursePayload
-func (a *CoursesAPIService) CreateCourseExecute(r ApiCreateCourseRequest) (*DefaultSelectionPrisma36CoursePayload, *http.Response, error) {
+//	@return DefaultSelectionPrismaCoursePayload
+func (a *CoursesAPIService) CreateCourseExecute(r ApiCreateCourseRequest) (*DefaultSelectionPrismaCoursePayload, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *DefaultSelectionPrisma36CoursePayload
+		localVarReturnValue *DefaultSelectionPrismaCoursePayload
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CoursesAPIService.CreateCourse")
@@ -247,7 +247,7 @@ type ApiGetCourseRequest struct {
 	id         int32
 }
 
-func (r ApiGetCourseRequest) Execute() (*DefaultSelectionPrisma36CoursePayload, *http.Response, error) {
+func (r ApiGetCourseRequest) Execute() (*DefaultSelectionPrismaCoursePayload, *http.Response, error) {
 	return r.ApiService.GetCourseExecute(r)
 }
 
@@ -268,13 +268,13 @@ func (a *CoursesAPIService) GetCourse(ctx context.Context, id int32) ApiGetCours
 
 // Execute executes the request
 //
-//	@return DefaultSelectionPrisma36CoursePayload
-func (a *CoursesAPIService) GetCourseExecute(r ApiGetCourseRequest) (*DefaultSelectionPrisma36CoursePayload, *http.Response, error) {
+//	@return DefaultSelectionPrismaCoursePayload
+func (a *CoursesAPIService) GetCourseExecute(r ApiGetCourseRequest) (*DefaultSelectionPrismaCoursePayload, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *DefaultSelectionPrisma36CoursePayload
+		localVarReturnValue *DefaultSelectionPrismaCoursePayload
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CoursesAPIService.GetCourse")
@@ -653,7 +653,7 @@ func (r ApiUpdateCourseRequest) Body(body PickCourseNameOrCode) ApiUpdateCourseR
 	return r
 }
 
-func (r ApiUpdateCourseRequest) Execute() (*DefaultSelectionPrisma36CoursePayload, *http.Response, error) {
+func (r ApiUpdateCourseRequest) Execute() (*DefaultSelectionPrismaCoursePayload, *http.Response, error) {
 	return r.ApiService.UpdateCourseExecute(r)
 }
 
@@ -674,13 +674,13 @@ func (a *CoursesAPIService) UpdateCourse(ctx context.Context, id int32) ApiUpdat
 
 // Execute executes the request
 //
-//	@return DefaultSelectionPrisma36CoursePayload
-func (a *CoursesAPIService) UpdateCourseExecute(r ApiUpdateCourseRequest) (*DefaultSelectionPrisma36CoursePayload, *http.Response, error) {
+//	@return DefaultSelectionPrismaCoursePayload
+func (a *CoursesAPIService) UpdateCourseExecute(r ApiUpdateCourseRequest) (*DefaultSelectionPrismaCoursePayload, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *DefaultSelectionPrisma36CoursePayload
+		localVarReturnValue *DefaultSelectionPrismaCoursePayload
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CoursesAPIService.UpdateCourse")

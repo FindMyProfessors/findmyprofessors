@@ -6,8 +6,6 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"github.com/FindMyProfessors/scraper/model"
-	"github.com/Khan/genqlient/graphql"
 	"io"
 	"log"
 	"net/http"
@@ -16,6 +14,9 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/FindMyProfessors/scraper/model"
+	"github.com/Khan/genqlient/graphql"
 )
 
 type Api struct {

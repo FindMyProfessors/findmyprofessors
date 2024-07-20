@@ -18,7 +18,7 @@ import (
 // EnumsSemester the model 'EnumsSemester'
 type EnumsSemester string
 
-// List of _36_Enums.Semester
+// List of __Enums.Semester
 const (
 	SPRING EnumsSemester = "SPRING"
 	SUMMER EnumsSemester = "SUMMER"
@@ -70,7 +70,7 @@ func (v EnumsSemester) IsValid() bool {
 	return false
 }
 
-// Ptr returns reference to _36_Enums.Semester value
+// Ptr returns reference to __Enums.Semester value
 func (v EnumsSemester) Ptr() *EnumsSemester {
 	return &v
 }

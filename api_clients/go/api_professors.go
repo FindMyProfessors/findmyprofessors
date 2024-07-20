@@ -33,7 +33,7 @@ func (r ApiCreateProfessorRequest) Body(body PickProfessorFirstNameOrLastNameOrR
 	return r
 }
 
-func (r ApiCreateProfessorRequest) Execute() (*DefaultSelectionPrisma36ProfessorPayload, *http.Response, error) {
+func (r ApiCreateProfessorRequest) Execute() (*DefaultSelectionPrismaProfessorPayload, *http.Response, error) {
 	return r.ApiService.CreateProfessorExecute(r)
 }
 
@@ -52,13 +52,13 @@ func (a *ProfessorsAPIService) CreateProfessor(ctx context.Context) ApiCreatePro
 
 // Execute executes the request
 //
-//	@return DefaultSelectionPrisma36ProfessorPayload
-func (a *ProfessorsAPIService) CreateProfessorExecute(r ApiCreateProfessorRequest) (*DefaultSelectionPrisma36ProfessorPayload, *http.Response, error) {
+//	@return DefaultSelectionPrismaProfessorPayload
+func (a *ProfessorsAPIService) CreateProfessorExecute(r ApiCreateProfessorRequest) (*DefaultSelectionPrismaProfessorPayload, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *DefaultSelectionPrisma36ProfessorPayload
+		localVarReturnValue *DefaultSelectionPrismaProfessorPayload
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProfessorsAPIService.CreateProfessor")
@@ -253,7 +253,7 @@ func (r ApiEnrollRequest) Body(body PickProfessorCourseExcludeKeyofProfessorCour
 	return r
 }
 
-func (r ApiEnrollRequest) Execute() (*DefaultSelectionPrisma36ProfessorCoursePayload, *http.Response, error) {
+func (r ApiEnrollRequest) Execute() (*DefaultSelectionPrismaProfessorCoursePayload, *http.Response, error) {
 	return r.ApiService.EnrollExecute(r)
 }
 
@@ -274,13 +274,13 @@ func (a *ProfessorsAPIService) Enroll(ctx context.Context, id int32) ApiEnrollRe
 
 // Execute executes the request
 //
-//	@return DefaultSelectionPrisma36ProfessorCoursePayload
-func (a *ProfessorsAPIService) EnrollExecute(r ApiEnrollRequest) (*DefaultSelectionPrisma36ProfessorCoursePayload, *http.Response, error) {
+//	@return DefaultSelectionPrismaProfessorCoursePayload
+func (a *ProfessorsAPIService) EnrollExecute(r ApiEnrollRequest) (*DefaultSelectionPrismaProfessorCoursePayload, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *DefaultSelectionPrisma36ProfessorCoursePayload
+		localVarReturnValue *DefaultSelectionPrismaProfessorCoursePayload
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProfessorsAPIService.Enroll")
@@ -360,7 +360,7 @@ type ApiGetProfessorRequest struct {
 	id         int32
 }
 
-func (r ApiGetProfessorRequest) Execute() (*DefaultSelectionPrisma36ProfessorPayload, *http.Response, error) {
+func (r ApiGetProfessorRequest) Execute() (*DefaultSelectionPrismaProfessorPayload, *http.Response, error) {
 	return r.ApiService.GetProfessorExecute(r)
 }
 
@@ -381,13 +381,13 @@ func (a *ProfessorsAPIService) GetProfessor(ctx context.Context, id int32) ApiGe
 
 // Execute executes the request
 //
-//	@return DefaultSelectionPrisma36ProfessorPayload
-func (a *ProfessorsAPIService) GetProfessorExecute(r ApiGetProfessorRequest) (*DefaultSelectionPrisma36ProfessorPayload, *http.Response, error) {
+//	@return DefaultSelectionPrismaProfessorPayload
+func (a *ProfessorsAPIService) GetProfessorExecute(r ApiGetProfessorRequest) (*DefaultSelectionPrismaProfessorPayload, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *DefaultSelectionPrisma36ProfessorPayload
+		localVarReturnValue *DefaultSelectionPrismaProfessorPayload
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProfessorsAPIService.GetProfessor")
@@ -1101,7 +1101,7 @@ func (r ApiUpdateProfessorRequest) UpdatedProfessor(updatedProfessor UpdatedProf
 	return r
 }
 
-func (r ApiUpdateProfessorRequest) Execute() (*DefaultSelectionPrisma36ProfessorPayload, *http.Response, error) {
+func (r ApiUpdateProfessorRequest) Execute() (*DefaultSelectionPrismaProfessorPayload, *http.Response, error) {
 	return r.ApiService.UpdateProfessorExecute(r)
 }
 
@@ -1122,13 +1122,13 @@ func (a *ProfessorsAPIService) UpdateProfessor(ctx context.Context, id int32) Ap
 
 // Execute executes the request
 //
-//	@return DefaultSelectionPrisma36ProfessorPayload
-func (a *ProfessorsAPIService) UpdateProfessorExecute(r ApiUpdateProfessorRequest) (*DefaultSelectionPrisma36ProfessorPayload, *http.Response, error) {
+//	@return DefaultSelectionPrismaProfessorPayload
+func (a *ProfessorsAPIService) UpdateProfessorExecute(r ApiUpdateProfessorRequest) (*DefaultSelectionPrismaProfessorPayload, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *DefaultSelectionPrisma36ProfessorPayload
+		localVarReturnValue *DefaultSelectionPrismaProfessorPayload
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProfessorsAPIService.UpdateProfessor")

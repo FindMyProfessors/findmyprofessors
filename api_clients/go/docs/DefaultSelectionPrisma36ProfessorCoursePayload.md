@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Semester** | [**ModelEnumsSemester**](EnumsSemester.md) |  | 
+**Semester** | [**Model36EnumsSemester**](36EnumsSemester.md) |  | 
 **Year** | **int32** |  | 
 **CourseId** | **int32** |  | 
 **ProfessorId** | **int32** |  | 
@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewDefaultSelectionPrisma36ProfessorCoursePayload
 
-`func NewDefaultSelectionPrisma36ProfessorCoursePayload(semester ModelEnumsSemester, year int32, courseId int32, professorId int32, id int32, ) *DefaultSelectionPrisma36ProfessorCoursePayload`
+`func NewDefaultSelectionPrisma36ProfessorCoursePayload(semester Model36EnumsSemester, year int32, courseId int32, professorId int32, id int32, ) *DefaultSelectionPrisma36ProfessorCoursePayload`
 
 NewDefaultSelectionPrisma36ProfessorCoursePayload instantiates a new DefaultSelectionPrisma36ProfessorCoursePayload object
 This constructor will assign default values to properties that have it defined,
@@ -31,20 +31,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetSemester
 
-`func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetSemester() ModelEnumsSemester`
+`func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetSemester() Model36EnumsSemester`
 
 GetSemester returns the Semester field if non-nil, zero value otherwise.
 
 ### GetSemesterOk
 
-`func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetSemesterOk() (*ModelEnumsSemester, bool)`
+`func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetSemesterOk() (*Model36EnumsSemester, bool)`
 
 GetSemesterOk returns a tuple with the Semester field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSemester
 
-`func (o *DefaultSelectionPrisma36ProfessorCoursePayload) SetSemester(v ModelEnumsSemester)`
+`func (o *DefaultSelectionPrisma36ProfessorCoursePayload) SetSemester(v Model36EnumsSemester)`
 
 SetSemester sets Semester field to given value.
 
