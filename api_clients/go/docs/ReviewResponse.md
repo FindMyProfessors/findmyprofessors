@@ -1,132 +1,174 @@
-# PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade
+# ReviewResponse
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Quality** | **int32** |  | 
-**Difficulty** | **int32** |  | 
+**Id** | **int32** |  | 
+**Quality** | **float32** |  | 
+**Difficulty** | **float32** |  | 
 **Time** | **time.Time** |  | 
 **Tags** | [**[]ModelEnumsReviewTag**](ModelEnumsReviewTag.md) |  | 
 **Grade** | [**ModelEnumsGrade**](EnumsGrade.md) |  | 
+**ProfessorId** | **int32** |  | 
 
 ## Methods
 
-### NewPickReviewQualityOrDifficultyOrTimeOrTagsOrGrade
+### NewReviewResponse
 
-`func NewPickReviewQualityOrDifficultyOrTimeOrTagsOrGrade(quality int32, difficulty int32, time time.Time, tags []ModelEnumsReviewTag, grade ModelEnumsGrade, ) *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade`
+`func NewReviewResponse(id int32, quality float32, difficulty float32, time time.Time, tags []ModelEnumsReviewTag, grade ModelEnumsGrade, professorId int32, ) *ReviewResponse`
 
-NewPickReviewQualityOrDifficultyOrTimeOrTagsOrGrade instantiates a new PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade object
+NewReviewResponse instantiates a new ReviewResponse object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewPickReviewQualityOrDifficultyOrTimeOrTagsOrGradeWithDefaults
+### NewReviewResponseWithDefaults
 
-`func NewPickReviewQualityOrDifficultyOrTimeOrTagsOrGradeWithDefaults() *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade`
+`func NewReviewResponseWithDefaults() *ReviewResponse`
 
-NewPickReviewQualityOrDifficultyOrTimeOrTagsOrGradeWithDefaults instantiates a new PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade object
+NewReviewResponseWithDefaults instantiates a new ReviewResponse object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
+### GetId
+
+`func (o *ReviewResponse) GetId() int32`
+
+GetId returns the Id field if non-nil, zero value otherwise.
+
+### GetIdOk
+
+`func (o *ReviewResponse) GetIdOk() (*int32, bool)`
+
+GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetId
+
+`func (o *ReviewResponse) SetId(v int32)`
+
+SetId sets Id field to given value.
+
+
 ### GetQuality
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetQuality() int32`
+`func (o *ReviewResponse) GetQuality() float32`
 
 GetQuality returns the Quality field if non-nil, zero value otherwise.
 
 ### GetQualityOk
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetQualityOk() (*int32, bool)`
+`func (o *ReviewResponse) GetQualityOk() (*float32, bool)`
 
 GetQualityOk returns a tuple with the Quality field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetQuality
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) SetQuality(v int32)`
+`func (o *ReviewResponse) SetQuality(v float32)`
 
 SetQuality sets Quality field to given value.
 
 
 ### GetDifficulty
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetDifficulty() int32`
+`func (o *ReviewResponse) GetDifficulty() float32`
 
 GetDifficulty returns the Difficulty field if non-nil, zero value otherwise.
 
 ### GetDifficultyOk
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetDifficultyOk() (*int32, bool)`
+`func (o *ReviewResponse) GetDifficultyOk() (*float32, bool)`
 
 GetDifficultyOk returns a tuple with the Difficulty field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDifficulty
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) SetDifficulty(v int32)`
+`func (o *ReviewResponse) SetDifficulty(v float32)`
 
 SetDifficulty sets Difficulty field to given value.
 
 
 ### GetTime
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetTime() time.Time`
+`func (o *ReviewResponse) GetTime() time.Time`
 
 GetTime returns the Time field if non-nil, zero value otherwise.
 
 ### GetTimeOk
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetTimeOk() (*time.Time, bool)`
+`func (o *ReviewResponse) GetTimeOk() (*time.Time, bool)`
 
 GetTimeOk returns a tuple with the Time field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTime
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) SetTime(v time.Time)`
+`func (o *ReviewResponse) SetTime(v time.Time)`
 
 SetTime sets Time field to given value.
 
 
 ### GetTags
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetTags() []ModelEnumsReviewTag`
+`func (o *ReviewResponse) GetTags() []ModelEnumsReviewTag`
 
 GetTags returns the Tags field if non-nil, zero value otherwise.
 
 ### GetTagsOk
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetTagsOk() (*[]ModelEnumsReviewTag, bool)`
+`func (o *ReviewResponse) GetTagsOk() (*[]ModelEnumsReviewTag, bool)`
 
 GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTags
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) SetTags(v []ModelEnumsReviewTag)`
+`func (o *ReviewResponse) SetTags(v []ModelEnumsReviewTag)`
 
 SetTags sets Tags field to given value.
 
 
 ### GetGrade
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetGrade() ModelEnumsGrade`
+`func (o *ReviewResponse) GetGrade() ModelEnumsGrade`
 
 GetGrade returns the Grade field if non-nil, zero value otherwise.
 
 ### GetGradeOk
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetGradeOk() (*ModelEnumsGrade, bool)`
+`func (o *ReviewResponse) GetGradeOk() (*ModelEnumsGrade, bool)`
 
 GetGradeOk returns a tuple with the Grade field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetGrade
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) SetGrade(v ModelEnumsGrade)`
+`func (o *ReviewResponse) SetGrade(v ModelEnumsGrade)`
 
 SetGrade sets Grade field to given value.
+
+
+### GetProfessorId
+
+`func (o *ReviewResponse) GetProfessorId() int32`
+
+GetProfessorId returns the ProfessorId field if non-nil, zero value otherwise.
+
+### GetProfessorIdOk
+
+`func (o *ReviewResponse) GetProfessorIdOk() (*int32, bool)`
+
+GetProfessorIdOk returns a tuple with the ProfessorId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProfessorId
+
+`func (o *ReviewResponse) SetProfessorId(v int32)`
+
+SetProfessorId sets ProfessorId field to given value.
 
 
 

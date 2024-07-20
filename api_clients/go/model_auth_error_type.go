@@ -20,18 +20,18 @@ type AuthErrorType string
 
 // List of AuthErrorType
 const (
-	INVALID_PASSWORD AuthErrorType = "INVALID_PASSWORD"
-	PASSWORD_TOO_SHORT AuthErrorType = "PASSWORD_TOO_SHORT"
-	PASSWORD_TOO_LONG AuthErrorType = "PASSWORD_TOO_LONG"
+	INVALID_PASSWORD           AuthErrorType = "INVALID_PASSWORD"
+	PASSWORD_TOO_SHORT         AuthErrorType = "PASSWORD_TOO_SHORT"
+	PASSWORD_TOO_LONG          AuthErrorType = "PASSWORD_TOO_LONG"
 	PASSWORD_MISSING_UPPERCASE AuthErrorType = "PASSWORD_MISSING_UPPERCASE"
-	PASSWORD_MISSING_NUMBER AuthErrorType = "PASSWORD_MISSING_NUMBER"
-	USER_NOT_FOUND AuthErrorType = "USER_NOT_FOUND"
-	USER_ALREADY_EXISTS AuthErrorType = "USER_ALREADY_EXISTS"
-	UNAUTHORIZED AuthErrorType = "UNAUTHORIZED"
-	INVALID_USERNAME AuthErrorType = "INVALID_USERNAME"
-	INVALID_TOKEN AuthErrorType = "INVALID_TOKEN"
-	UNABLE_TO_CREATE_JWT AuthErrorType = "UNABLE_TO_CREATE_JWT"
-	UNKNOWN__ERROR AuthErrorType = "UNKNOWN_ ERROR"
+	PASSWORD_MISSING_NUMBER    AuthErrorType = "PASSWORD_MISSING_NUMBER"
+	USER_NOT_FOUND             AuthErrorType = "USER_NOT_FOUND"
+	USER_ALREADY_EXISTS        AuthErrorType = "USER_ALREADY_EXISTS"
+	UNAUTHORIZED               AuthErrorType = "UNAUTHORIZED"
+	INVALID_USERNAME           AuthErrorType = "INVALID_USERNAME"
+	INVALID_TOKEN              AuthErrorType = "INVALID_TOKEN"
+	UNABLE_TO_CREATE_JWT       AuthErrorType = "UNABLE_TO_CREATE_JWT"
+	UNKNOWN__ERROR             AuthErrorType = "UNKNOWN_ ERROR"
 )
 
 // All allowed values of AuthErrorType enum
@@ -128,4 +128,3 @@ func (v *NullableAuthErrorType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

@@ -11,8 +11,8 @@ API version: 1.0.0
 package openapi
 
 import (
-	"encoding/json"
 	"bytes"
+	"encoding/json"
 	"fmt"
 )
 
@@ -21,8 +21,8 @@ var _ MappedNullable = &TagAmount{}
 
 // TagAmount struct for TagAmount
 type TagAmount struct {
-	Amount int32 `json:"amount"`
-	Tag Model36EnumsReviewTag `json:"tag"`
+	Amount int32               `json:"amount"`
+	Tag    ModelEnumsReviewTag `json:"tag"`
 }
 
 type _TagAmount TagAmount
@@ -31,7 +31,7 @@ type _TagAmount TagAmount
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTagAmount(amount int32, tag Model36EnumsReviewTag) *TagAmount {
+func NewTagAmount(amount int32, tag ModelEnumsReviewTag) *TagAmount {
 	this := TagAmount{}
 	this.Amount = amount
 	this.Tag = tag
@@ -71,9 +71,9 @@ func (o *TagAmount) SetAmount(v int32) {
 }
 
 // GetTag returns the Tag field value
-func (o *TagAmount) GetTag() Model36EnumsReviewTag {
+func (o *TagAmount) GetTag() ModelEnumsReviewTag {
 	if o == nil {
-		var ret Model36EnumsReviewTag
+		var ret ModelEnumsReviewTag
 		return ret
 	}
 
@@ -82,7 +82,7 @@ func (o *TagAmount) GetTag() Model36EnumsReviewTag {
 
 // GetTagOk returns a tuple with the Tag field value
 // and a boolean to check if the value has been set.
-func (o *TagAmount) GetTagOk() (*Model36EnumsReviewTag, bool) {
+func (o *TagAmount) GetTagOk() (*ModelEnumsReviewTag, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -90,12 +90,12 @@ func (o *TagAmount) GetTagOk() (*Model36EnumsReviewTag, bool) {
 }
 
 // SetTag sets field value
-func (o *TagAmount) SetTag(v Model36EnumsReviewTag) {
+func (o *TagAmount) SetTag(v ModelEnumsReviewTag) {
 	o.Tag = v
 }
 
 func (o TagAmount) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -123,10 +123,10 @@ func (o *TagAmount) UnmarshalJSON(data []byte) (err error) {
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err;
+		return err
 	}
 
-	for _, requiredProperty := range(requiredProperties) {
+	for _, requiredProperty := range requiredProperties {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -182,5 +182,3 @@ func (v *NullableTagAmount) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

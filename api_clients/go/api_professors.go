@@ -19,14 +19,13 @@ import (
 	"strings"
 )
 
-
 // ProfessorsAPIService ProfessorsAPI service
 type ProfessorsAPIService service
 
 type ApiCreateProfessorRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ProfessorsAPIService
-	body *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId
+	body       *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId
 }
 
 func (r ApiCreateProfessorRequest) Body(body PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) ApiCreateProfessorRequest {
@@ -41,24 +40,25 @@ func (r ApiCreateProfessorRequest) Execute() (*DefaultSelectionPrisma36Professor
 /*
 CreateProfessor Method for CreateProfessor
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiCreateProfessorRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateProfessorRequest
 */
 func (a *ProfessorsAPIService) CreateProfessor(ctx context.Context) ApiCreateProfessorRequest {
 	return ApiCreateProfessorRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return DefaultSelectionPrisma36ProfessorPayload
+//
+//	@return DefaultSelectionPrisma36ProfessorPayload
 func (a *ProfessorsAPIService) CreateProfessorExecute(r ApiCreateProfessorRequest) (*DefaultSelectionPrisma36ProfessorPayload, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *DefaultSelectionPrisma36ProfessorPayload
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DefaultSelectionPrisma36ProfessorPayload
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProfessorsAPIService.CreateProfessor")
@@ -123,8 +123,8 @@ func (a *ProfessorsAPIService) CreateProfessorExecute(r ApiCreateProfessorReques
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -142,9 +142,9 @@ func (a *ProfessorsAPIService) CreateProfessorExecute(r ApiCreateProfessorReques
 }
 
 type ApiDeleteProfessorRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ProfessorsAPIService
-	id int32
+	id         int32
 }
 
 func (r ApiDeleteProfessorRequest) Execute() (*http.Response, error) {
@@ -154,24 +154,24 @@ func (r ApiDeleteProfessorRequest) Execute() (*http.Response, error) {
 /*
 DeleteProfessor Method for DeleteProfessor
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiDeleteProfessorRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id
+	@return ApiDeleteProfessorRequest
 */
 func (a *ProfessorsAPIService) DeleteProfessor(ctx context.Context, id int32) ApiDeleteProfessorRequest {
 	return ApiDeleteProfessorRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *ProfessorsAPIService) DeleteProfessorExecute(r ApiDeleteProfessorRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProfessorsAPIService.DeleteProfessor")
@@ -232,8 +232,8 @@ func (a *ProfessorsAPIService) DeleteProfessorExecute(r ApiDeleteProfessorReques
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -242,10 +242,10 @@ func (a *ProfessorsAPIService) DeleteProfessorExecute(r ApiDeleteProfessorReques
 }
 
 type ApiEnrollRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ProfessorsAPIService
-	id int32
-	body *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId
+	id         int32
+	body       *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId
 }
 
 func (r ApiEnrollRequest) Body(body PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) ApiEnrollRequest {
@@ -260,26 +260,27 @@ func (r ApiEnrollRequest) Execute() (*DefaultSelectionPrisma36ProfessorCoursePay
 /*
 Enroll Method for Enroll
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiEnrollRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id
+	@return ApiEnrollRequest
 */
 func (a *ProfessorsAPIService) Enroll(ctx context.Context, id int32) ApiEnrollRequest {
 	return ApiEnrollRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
-//  @return DefaultSelectionPrisma36ProfessorCoursePayload
+//
+//	@return DefaultSelectionPrisma36ProfessorCoursePayload
 func (a *ProfessorsAPIService) EnrollExecute(r ApiEnrollRequest) (*DefaultSelectionPrisma36ProfessorCoursePayload, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *DefaultSelectionPrisma36ProfessorCoursePayload
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DefaultSelectionPrisma36ProfessorCoursePayload
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProfessorsAPIService.Enroll")
@@ -354,9 +355,9 @@ func (a *ProfessorsAPIService) EnrollExecute(r ApiEnrollRequest) (*DefaultSelect
 }
 
 type ApiGetProfessorRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ProfessorsAPIService
-	id int32
+	id         int32
 }
 
 func (r ApiGetProfessorRequest) Execute() (*DefaultSelectionPrisma36ProfessorPayload, *http.Response, error) {
@@ -366,26 +367,27 @@ func (r ApiGetProfessorRequest) Execute() (*DefaultSelectionPrisma36ProfessorPay
 /*
 GetProfessor Method for GetProfessor
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiGetProfessorRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id
+	@return ApiGetProfessorRequest
 */
 func (a *ProfessorsAPIService) GetProfessor(ctx context.Context, id int32) ApiGetProfessorRequest {
 	return ApiGetProfessorRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
-//  @return DefaultSelectionPrisma36ProfessorPayload
+//
+//	@return DefaultSelectionPrisma36ProfessorPayload
 func (a *ProfessorsAPIService) GetProfessorExecute(r ApiGetProfessorRequest) (*DefaultSelectionPrisma36ProfessorPayload, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *DefaultSelectionPrisma36ProfessorPayload
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DefaultSelectionPrisma36ProfessorPayload
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProfessorsAPIService.GetProfessor")
@@ -446,8 +448,8 @@ func (a *ProfessorsAPIService) GetProfessorExecute(r ApiGetProfessorRequest) (*D
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -465,9 +467,9 @@ func (a *ProfessorsAPIService) GetProfessorExecute(r ApiGetProfessorRequest) (*D
 }
 
 type ApiGetProfessorAnalysisRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ProfessorsAPIService
-	id int32
+	id         int32
 }
 
 func (r ApiGetProfessorAnalysisRequest) Execute() (*ProfessorAnalysis, *http.Response, error) {
@@ -477,26 +479,27 @@ func (r ApiGetProfessorAnalysisRequest) Execute() (*ProfessorAnalysis, *http.Res
 /*
 GetProfessorAnalysis Method for GetProfessorAnalysis
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiGetProfessorAnalysisRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id
+	@return ApiGetProfessorAnalysisRequest
 */
 func (a *ProfessorsAPIService) GetProfessorAnalysis(ctx context.Context, id int32) ApiGetProfessorAnalysisRequest {
 	return ApiGetProfessorAnalysisRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
-//  @return ProfessorAnalysis
+//
+//	@return ProfessorAnalysis
 func (a *ProfessorsAPIService) GetProfessorAnalysisExecute(r ApiGetProfessorAnalysisRequest) (*ProfessorAnalysis, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ProfessorAnalysis
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ProfessorAnalysis
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProfessorsAPIService.GetProfessorAnalysis")
@@ -557,8 +560,8 @@ func (a *ProfessorsAPIService) GetProfessorAnalysisExecute(r ApiGetProfessorAnal
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -576,11 +579,11 @@ func (a *ProfessorsAPIService) GetProfessorAnalysisExecute(r ApiGetProfessorAnal
 }
 
 type ApiGetProfessorCoursesRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ProfessorsAPIService
-	id int32
-	year *int32
-	semester *36EnumsSemester
+	id         int32
+	year       *int32
+	semester   *EnumsSemester
 }
 
 func (r ApiGetProfessorCoursesRequest) Year(year int32) ApiGetProfessorCoursesRequest {
@@ -588,7 +591,7 @@ func (r ApiGetProfessorCoursesRequest) Year(year int32) ApiGetProfessorCoursesRe
 	return r
 }
 
-func (r ApiGetProfessorCoursesRequest) Semester(semester 36EnumsSemester) ApiGetProfessorCoursesRequest {
+func (r ApiGetProfessorCoursesRequest) Semester(semester EnumsSemester) ApiGetProfessorCoursesRequest {
 	r.semester = &semester
 	return r
 }
@@ -600,26 +603,27 @@ func (r ApiGetProfessorCoursesRequest) Execute() (*ProfessorCourses, *http.Respo
 /*
 GetProfessorCourses Method for GetProfessorCourses
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiGetProfessorCoursesRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id
+	@return ApiGetProfessorCoursesRequest
 */
 func (a *ProfessorsAPIService) GetProfessorCourses(ctx context.Context, id int32) ApiGetProfessorCoursesRequest {
 	return ApiGetProfessorCoursesRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
-//  @return ProfessorCourses
+//
+//	@return ProfessorCourses
 func (a *ProfessorsAPIService) GetProfessorCoursesExecute(r ApiGetProfessorCoursesRequest) (*ProfessorCourses, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ProfessorCourses
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ProfessorCourses
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProfessorsAPIService.GetProfessorCourses")
@@ -686,8 +690,8 @@ func (a *ProfessorsAPIService) GetProfessorCoursesExecute(r ApiGetProfessorCours
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -705,9 +709,9 @@ func (a *ProfessorsAPIService) GetProfessorCoursesExecute(r ApiGetProfessorCours
 }
 
 type ApiGetProfessorRatingRequest struct {
-	ctx context.Context
-	ApiService *ProfessorsAPIService
-	id int32
+	ctx            context.Context
+	ApiService     *ProfessorsAPIService
+	id             int32
 	topKPercentage *int32
 }
 
@@ -723,26 +727,27 @@ func (r ApiGetProfessorRatingRequest) Execute() (*Rating, *http.Response, error)
 /*
 GetProfessorRating Method for GetProfessorRating
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiGetProfessorRatingRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id
+	@return ApiGetProfessorRatingRequest
 */
 func (a *ProfessorsAPIService) GetProfessorRating(ctx context.Context, id int32) ApiGetProfessorRatingRequest {
 	return ApiGetProfessorRatingRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
-//  @return Rating
+//
+//	@return Rating
 func (a *ProfessorsAPIService) GetProfessorRatingExecute(r ApiGetProfessorRatingRequest) (*Rating, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Rating
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Rating
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProfessorsAPIService.GetProfessorRating")
@@ -806,8 +811,8 @@ func (a *ProfessorsAPIService) GetProfessorRatingExecute(r ApiGetProfessorRating
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -825,11 +830,11 @@ func (a *ProfessorsAPIService) GetProfessorRatingExecute(r ApiGetProfessorRating
 }
 
 type ApiGetReviewsRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ProfessorsAPIService
-	id int32
-	cursor *string
-	pageSize *int32
+	id         int32
+	cursor     *string
+	pageSize   *int32
 }
 
 func (r ApiGetReviewsRequest) Cursor(cursor string) ApiGetReviewsRequest {
@@ -849,26 +854,27 @@ func (r ApiGetReviewsRequest) Execute() (*ReviewsSearchResult, *http.Response, e
 /*
 GetReviews Method for GetReviews
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiGetReviewsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id
+	@return ApiGetReviewsRequest
 */
 func (a *ProfessorsAPIService) GetReviews(ctx context.Context, id int32) ApiGetReviewsRequest {
 	return ApiGetReviewsRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
-//  @return ReviewsSearchResult
+//
+//	@return ReviewsSearchResult
 func (a *ProfessorsAPIService) GetReviewsExecute(r ApiGetReviewsRequest) (*ReviewsSearchResult, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ReviewsSearchResult
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ReviewsSearchResult
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProfessorsAPIService.GetReviews")
@@ -947,12 +953,12 @@ func (a *ProfessorsAPIService) GetReviewsExecute(r ApiGetReviewsRequest) (*Revie
 }
 
 type ApiSearchProfessorsRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ProfessorsAPIService
-	name *string
-	schoolId *int32
-	cursor *string
-	pageSize *int32
+	name       *string
+	schoolId   *int32
+	cursor     *string
+	pageSize   *int32
 }
 
 func (r ApiSearchProfessorsRequest) Name(name string) ApiSearchProfessorsRequest {
@@ -982,24 +988,25 @@ func (r ApiSearchProfessorsRequest) Execute() (*ProfessorSearchResult, *http.Res
 /*
 SearchProfessors Method for SearchProfessors
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSearchProfessorsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiSearchProfessorsRequest
 */
 func (a *ProfessorsAPIService) SearchProfessors(ctx context.Context) ApiSearchProfessorsRequest {
 	return ApiSearchProfessorsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return ProfessorSearchResult
+//
+//	@return ProfessorSearchResult
 func (a *ProfessorsAPIService) SearchProfessorsExecute(r ApiSearchProfessorsRequest) (*ProfessorSearchResult, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ProfessorSearchResult
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ProfessorSearchResult
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProfessorsAPIService.SearchProfessors")
@@ -1083,9 +1090,9 @@ func (a *ProfessorsAPIService) SearchProfessorsExecute(r ApiSearchProfessorsRequ
 }
 
 type ApiUpdateProfessorRequest struct {
-	ctx context.Context
-	ApiService *ProfessorsAPIService
-	id int32
+	ctx              context.Context
+	ApiService       *ProfessorsAPIService
+	id               int32
 	updatedProfessor *UpdatedProfessor
 }
 
@@ -1101,26 +1108,27 @@ func (r ApiUpdateProfessorRequest) Execute() (*DefaultSelectionPrisma36Professor
 /*
 UpdateProfessor Method for UpdateProfessor
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiUpdateProfessorRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id
+	@return ApiUpdateProfessorRequest
 */
 func (a *ProfessorsAPIService) UpdateProfessor(ctx context.Context, id int32) ApiUpdateProfessorRequest {
 	return ApiUpdateProfessorRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
-//  @return DefaultSelectionPrisma36ProfessorPayload
+//
+//	@return DefaultSelectionPrisma36ProfessorPayload
 func (a *ProfessorsAPIService) UpdateProfessorExecute(r ApiUpdateProfessorRequest) (*DefaultSelectionPrisma36ProfessorPayload, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPut
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *DefaultSelectionPrisma36ProfessorPayload
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DefaultSelectionPrisma36ProfessorPayload
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProfessorsAPIService.UpdateProfessor")
@@ -1186,8 +1194,8 @@ func (a *ProfessorsAPIService) UpdateProfessorExecute(r ApiUpdateProfessorReques
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

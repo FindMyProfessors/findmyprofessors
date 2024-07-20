@@ -10,10 +10,10 @@ api_schools.go
 api_users.go
 client.go
 configuration.go
-docs/36EnumsGrade.md
-docs/36EnumsReviewTag.md
-docs/36EnumsSemester.md
-docs/36EnumsUserRole.md
+docs/EnumsGrade.md
+docs/EnumsReviewTag.md
+docs/EnumsSemester.md
+docs/EnumsUserRole.md
 docs/AuthErrorType.md
 docs/AuthErrorTypeINVALIDPASSWORD.md
 docs/AuthErrorTypeUSERALREADYEXISTS.md
@@ -32,10 +32,10 @@ docs/CoursesAPI.md
 docs/DefaultSelectionPrisma36CoursePayload.md
 docs/DefaultSelectionPrisma36ProfessorCoursePayload.md
 docs/DefaultSelectionPrisma36ProfessorPayload.md
-docs/DefaultSelectionPrisma36ReviewPayload.md
 docs/DefaultSelectionPrisma36SchoolPayload.md
 docs/InvalidPasswordError.md
 docs/LoginResponse.md
+docs/NewReview.md
 docs/PickAuthErrorMessageOrType.md
 docs/PickCourseErrorMessageOrType.md
 docs/PickCourseNameOrCode.md
@@ -45,8 +45,6 @@ docs/PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId.md
 docs/PickProfessorErrorMessageOrType.md
 docs/PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId.md
 docs/PickReviewErrorMessageOrType.md
-docs/PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade.md
-docs/PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId.md
 docs/PickSchoolErrorMessageOrType.md
 docs/PickSchoolErrorMessageOrTypeMessage.md
 docs/PickSchoolName.md
@@ -68,6 +66,7 @@ docs/Rating.md
 docs/ReviewErrorType.md
 docs/ReviewErrorTypeREVIEWNOTFOUND.md
 docs/ReviewNotFoundError.md
+docs/ReviewResponse.md
 docs/ReviewsAPI.md
 docs/ReviewsSearchResult.md
 docs/ReviewsSearchResultEdgesInner.md
@@ -82,6 +81,7 @@ docs/SchoolSearchResultPageInfo.md
 docs/SchoolsAPI.md
 docs/TagAmount.md
 docs/UpdatedProfessor.md
+docs/UpdatedReview.md
 docs/UserAlreadyExistsError.md
 docs/UserNotFoundError.md
 docs/UsersAPI.md
@@ -108,10 +108,10 @@ model_course_search_result_edges_inner.go
 model_default_selection_prisma__36_course_payload_.go
 model_default_selection_prisma__36_professor_course_payload_.go
 model_default_selection_prisma__36_professor_payload_.go
-model_default_selection_prisma__36_review_payload_.go
 model_default_selection_prisma__36_school_payload_.go
 model_invalid_password_error.go
 model_login_response.go
+model_new_review.go
 model_pick_auth_error_message_or_type_.go
 model_pick_course_error_message_or_type_.go
 model_pick_course_name_or_code_.go
@@ -121,8 +121,6 @@ model_pick_professor_course_exclude_keyof_professor_course_professor_id_or_id_or
 model_pick_professor_error_message_or_type_.go
 model_pick_professor_first_name_or_last_name_or_rmp_id_or_school_id_.go
 model_pick_review_error_message_or_type_.go
-model_pick_review_quality_or_difficulty_or_time_or_tags_or_grade_.go
-model_pick_review_quality_or_difficulty_or_time_or_tags_or_grade_or_professor_id_.go
 model_pick_school_error_message_or_type_.go
 model_pick_school_error_message_or_type__message.go
 model_pick_school_name_.go
@@ -143,6 +141,7 @@ model_rating.go
 model_review_error_type.go
 model_review_error_type_review_not_found.go
 model_review_not_found_error.go
+model_review_response.go
 model_reviews_search_result.go
 model_reviews_search_result_edges_inner.go
 model_school_already_exists_error.go
@@ -155,6 +154,7 @@ model_school_search_result_edges_inner.go
 model_school_search_result_page_info.go
 model_tag_amount.go
 model_updated_professor.go
+model_updated_review.go
 model_user_already_exists_error.go
 model_user_not_found_error.go
 response.go

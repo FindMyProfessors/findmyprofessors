@@ -1,4 +1,4 @@
-# 36EnumsGrade
+# EnumsGrade
 
 ## Enum
 

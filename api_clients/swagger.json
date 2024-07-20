@@ -531,26 +531,53 @@
 					}
 				]
 			},
+			"_36_Enums.Grade": {
+				"type": "string",
+				"enum": [
+					"A_PLUS",
+					"A",
+					"A_MINUS",
+					"B_PLUS",
+					"B",
+					"B_MINUS",
+					"C_PLUS",
+					"C",
+					"C_MINUS",
+					"D_PLUS",
+					"D",
+					"D_MINUS",
+					"F_PLUS",
+					"F",
+					"F_MINUS",
+					"INCOMPLETE",
+					"WITHDRAWN",
+					"NOT_SURE",
+					"OTHER"
+				]
+			},
+			"Grade": {
+				"$ref": "#/components/schemas/_36_Enums.Grade"
+			},
 			"Rating": {
 				"properties": {
 					"averageGrade": {
-						"type": "string"
+						"$ref": "#/components/schemas/Grade"
 					},
 					"topKMostRecentDifficultyAverage": {
-						"type": "integer",
-						"format": "int32"
+						"type": "number",
+						"format": "float"
 					},
 					"totalDifficultyAverage": {
-						"type": "integer",
-						"format": "int32"
+						"type": "number",
+						"format": "float"
 					},
 					"topKMostRecentQualityAverage": {
-						"type": "integer",
-						"format": "int32"
+						"type": "number",
+						"format": "float"
 					},
 					"totalQualityAverage": {
-						"type": "integer",
-						"format": "int32"
+						"type": "number",
+						"format": "float"
 					},
 					"ratingAmount": {
 						"type": "integer",
@@ -667,76 +694,49 @@
 				},
 				"type": "object"
 			},
-			"_36_Enums.Grade": {
-				"type": "string",
-				"enum": [
-					"A_PLUS",
-					"A",
-					"A_MINUS",
-					"B_PLUS",
-					"B",
-					"B_MINUS",
-					"C_PLUS",
-					"C",
-					"C_MINUS",
-					"D_PLUS",
-					"D",
-					"D_MINUS",
-					"F_PLUS",
-					"F",
-					"F_MINUS",
-					"INCOMPLETE",
-					"WITHDRAWN",
-					"NOT_SURE",
-					"OTHER"
-				]
-			},
-			"DefaultSelection_Prisma._36_ReviewPayload_": {
+			"ReviewResponse": {
 				"properties": {
-					"professor_id": {
+					"id": {
 						"type": "integer",
 						"format": "int32"
 					},
-					"grade": {
-						"$ref": "#/components/schemas/_36_Enums.Grade"
+					"quality": {
+						"type": "number",
+						"format": "float"
 					},
-					"tags": {
-						"items": {
-							"$ref": "#/components/schemas/_36_Enums.ReviewTag"
-						},
-						"type": "array"
+					"difficulty": {
+						"type": "number",
+						"format": "float"
 					},
 					"time": {
 						"type": "string",
 						"format": "date-time"
 					},
-					"difficulty": {
-						"type": "integer",
-						"format": "int32"
+					"tags": {
+						"items": {
+							"$ref": "#/components/schemas/ReviewTag"
+						},
+						"type": "array"
 					},
-					"quality": {
-						"type": "integer",
-						"format": "int32"
+					"grade": {
+						"$ref": "#/components/schemas/Grade"
 					},
-					"id": {
+					"professor_id": {
 						"type": "integer",
 						"format": "int32"
 					}
 				},
 				"required": [
-					"professor_id",
-					"grade",
-					"tags",
-					"time",
-					"difficulty",
+					"id",
 					"quality",
-					"id"
+					"difficulty",
+					"time",
+					"tags",
+					"grade",
+					"professor_id"
 				],
-				"type": "object"
-			},
-			"Review": {
-				"$ref": "#/components/schemas/DefaultSelection_Prisma._36_ReviewPayload_",
-				"description": "Model Review"
+				"type": "object",
+				"additionalProperties": false
 			},
 			"ReviewsSearchResult": {
 				"properties": {
@@ -765,7 +765,7 @@
 						"items": {
 							"properties": {
 								"node": {
-									"$ref": "#/components/schemas/Review"
+									"$ref": "#/components/schemas/ReviewResponse"
 								},
 								"cursor": {
 									"type": "string"
@@ -853,19 +853,15 @@
 			"CourseEnrollment": {
 				"$ref": "#/components/schemas/Omit_ProfessorCourse.professor_id-or-id_"
 			},
-			"Pick_Review.quality-or-difficulty-or-time-or-tags-or-grade-or-professor_id_": {
+			"NewReview": {
 				"properties": {
-					"professor_id": {
-						"type": "integer",
-						"format": "int32"
-					},
 					"quality": {
-						"type": "integer",
-						"format": "int32"
+						"type": "number",
+						"format": "float"
 					},
 					"difficulty": {
-						"type": "integer",
-						"format": "int32"
+						"type": "number",
+						"format": "float"
 					},
 					"time": {
 						"type": "string",
@@ -873,27 +869,28 @@
 					},
 					"tags": {
 						"items": {
-							"$ref": "#/components/schemas/_36_Enums.ReviewTag"
+							"$ref": "#/components/schemas/ReviewTag"
 						},
 						"type": "array"
 					},
 					"grade": {
-						"$ref": "#/components/schemas/_36_Enums.Grade"
+						"$ref": "#/components/schemas/Grade"
+					},
+					"professor_id": {
+						"type": "integer",
+						"format": "int32"
 					}
 				},
 				"required": [
-					"professor_id",
 					"quality",
 					"difficulty",
 					"time",
 					"tags",
-					"grade"
+					"grade",
+					"professor_id"
 				],
 				"type": "object",
-				"description": "From T, pick a set of properties whose keys are in the union K"
-			},
-			"NewReview": {
-				"$ref": "#/components/schemas/Pick_Review.quality-or-difficulty-or-time-or-tags-or-grade-or-professor_id_"
+				"additionalProperties": false
 			},
 			"ReviewErrorType": {
 				"enum": [
@@ -952,15 +949,15 @@
 					}
 				]
 			},
-			"Pick_Review.quality-or-difficulty-or-time-or-tags-or-grade_": {
+			"UpdatedReview": {
 				"properties": {
 					"quality": {
-						"type": "integer",
-						"format": "int32"
+						"type": "number",
+						"format": "float"
 					},
 					"difficulty": {
-						"type": "integer",
-						"format": "int32"
+						"type": "number",
+						"format": "float"
 					},
 					"time": {
 						"type": "string",
@@ -968,26 +965,16 @@
 					},
 					"tags": {
 						"items": {
-							"$ref": "#/components/schemas/_36_Enums.ReviewTag"
+							"$ref": "#/components/schemas/ReviewTag"
 						},
 						"type": "array"
 					},
 					"grade": {
-						"$ref": "#/components/schemas/_36_Enums.Grade"
+						"$ref": "#/components/schemas/Grade"
 					}
 				},
-				"required": [
-					"quality",
-					"difficulty",
-					"time",
-					"tags",
-					"grade"
-				],
 				"type": "object",
-				"description": "From T, pick a set of properties whose keys are in the union K"
-			},
-			"UpdatedReview": {
-				"$ref": "#/components/schemas/Pick_Review.quality-or-difficulty-or-time-or-tags-or-grade_"
+				"additionalProperties": false
 			},
 			"CourseSearchResult": {
 				"properties": {
@@ -2310,7 +2297,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Review"
+									"$ref": "#/components/schemas/ReviewResponse"
 								}
 							}
 						}
@@ -2337,7 +2324,7 @@
 				}
 			}
 		},
-		"/reviews/reviews/{review_id}": {
+		"/reviews/{review_id}": {
 			"get": {
 				"operationId": "GetReview",
 				"responses": {
@@ -2346,7 +2333,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Review"
+									"$ref": "#/components/schemas/ReviewResponse"
 								}
 							}
 						}
@@ -2393,7 +2380,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Review"
+									"$ref": "#/components/schemas/ReviewResponse"
 								}
 							}
 						}

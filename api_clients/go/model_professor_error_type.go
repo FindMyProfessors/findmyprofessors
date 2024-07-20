@@ -20,7 +20,7 @@ type ProfessorErrorType string
 
 // List of ProfessorErrorType
 const (
-	NOT_FOUND ProfessorErrorType = "PROFESSOR_NOT_FOUND"
+	NOT_FOUND      ProfessorErrorType = "PROFESSOR_NOT_FOUND"
 	ALREADY_EXISTS ProfessorErrorType = "PROFESSOR_ALREADY_EXISTS"
 )
 
@@ -108,4 +108,3 @@ func (v *NullableProfessorErrorType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

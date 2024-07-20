@@ -11,8 +11,8 @@ API version: 1.0.0
 package openapi
 
 import (
-	"encoding/json"
 	"bytes"
+	"encoding/json"
 	"fmt"
 )
 
@@ -22,9 +22,9 @@ var _ MappedNullable = &PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId{}
 // PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId From T, pick a set of properties whose keys are in the union K
 type PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId struct {
 	FirstName string `json:"first_name"`
-	LastName string `json:"last_name"`
-	RmpId string `json:"rmp_id"`
-	SchoolId int32 `json:"school_id"`
+	LastName  string `json:"last_name"`
+	RmpId     string `json:"rmp_id"`
+	SchoolId  int32  `json:"school_id"`
 }
 
 type _PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId
@@ -147,7 +147,7 @@ func (o *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) SetSchoolId(v int32)
 }
 
 func (o PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -179,10 +179,10 @@ func (o *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) UnmarshalJSON(data [
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err;
+		return err
 	}
 
-	for _, requiredProperty := range(requiredProperties) {
+	for _, requiredProperty := range requiredProperties {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -238,5 +238,3 @@ func (v *NullablePickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) UnmarshalJSO
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -15,52 +15,52 @@ import (
 	"fmt"
 )
 
-// 36EnumsUserRole the model '36EnumsUserRole'
-type 36EnumsUserRole string
+// EnumsUserRole the model 'EnumsUserRole'
+type EnumsUserRole string
 
 // List of _36_Enums.UserRole
 const (
-	ADMIN 36EnumsUserRole = "ADMIN"
-	NORMAL 36EnumsUserRole = "NORMAL"
+	ADMIN  EnumsUserRole = "ADMIN"
+	NORMAL EnumsUserRole = "NORMAL"
 )
 
-// All allowed values of 36EnumsUserRole enum
-var Allowed36EnumsUserRoleEnumValues = []36EnumsUserRole{
+// All allowed values of EnumsUserRole enum
+var AllowedEnumsUserRoleEnumValues = []EnumsUserRole{
 	"ADMIN",
 	"NORMAL",
 }
 
-func (v *36EnumsUserRole) UnmarshalJSON(src []byte) error {
+func (v *EnumsUserRole) UnmarshalJSON(src []byte) error {
 	var value string
 	err := json.Unmarshal(src, &value)
 	if err != nil {
 		return err
 	}
-	enumTypeValue := 36EnumsUserRole(value)
-	for _, existing := range Allowed36EnumsUserRoleEnumValues {
+	enumTypeValue := EnumsUserRole(value)
+	for _, existing := range AllowedEnumsUserRoleEnumValues {
 		if existing == enumTypeValue {
 			*v = enumTypeValue
 			return nil
 		}
 	}
 
-	return fmt.Errorf("%+v is not a valid 36EnumsUserRole", value)
+	return fmt.Errorf("%+v is not a valid EnumsUserRole", value)
 }
 
-// New36EnumsUserRoleFromValue returns a pointer to a valid 36EnumsUserRole
+// NewEnumsUserRoleFromValue returns a pointer to a valid EnumsUserRole
 // for the value passed as argument, or an error if the value passed is not allowed by the enum
-func New36EnumsUserRoleFromValue(v string) (*36EnumsUserRole, error) {
-	ev := 36EnumsUserRole(v)
+func NewEnumsUserRoleFromValue(v string) (*EnumsUserRole, error) {
+	ev := EnumsUserRole(v)
 	if ev.IsValid() {
 		return &ev, nil
 	} else {
-		return nil, fmt.Errorf("invalid value '%v' for 36EnumsUserRole: valid values are %v", v, Allowed36EnumsUserRoleEnumValues)
+		return nil, fmt.Errorf("invalid value '%v' for EnumsUserRole: valid values are %v", v, AllowedEnumsUserRoleEnumValues)
 	}
 }
 
 // IsValid return true if the value is valid for the enum, false otherwise
-func (v 36EnumsUserRole) IsValid() bool {
-	for _, existing := range Allowed36EnumsUserRoleEnumValues {
+func (v EnumsUserRole) IsValid() bool {
+	for _, existing := range AllowedEnumsUserRoleEnumValues {
 		if existing == v {
 			return true
 		}
@@ -69,43 +69,42 @@ func (v 36EnumsUserRole) IsValid() bool {
 }
 
 // Ptr returns reference to _36_Enums.UserRole value
-func (v 36EnumsUserRole) Ptr() *36EnumsUserRole {
+func (v EnumsUserRole) Ptr() *EnumsUserRole {
 	return &v
 }
 
-type Nullable36EnumsUserRole struct {
-	value *36EnumsUserRole
+type NullableEnumsUserRole struct {
+	value *EnumsUserRole
 	isSet bool
 }
 
-func (v Nullable36EnumsUserRole) Get() *36EnumsUserRole {
+func (v NullableEnumsUserRole) Get() *EnumsUserRole {
 	return v.value
 }
 
-func (v *Nullable36EnumsUserRole) Set(val *36EnumsUserRole) {
+func (v *NullableEnumsUserRole) Set(val *EnumsUserRole) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v Nullable36EnumsUserRole) IsSet() bool {
+func (v NullableEnumsUserRole) IsSet() bool {
 	return v.isSet
 }
 
-func (v *Nullable36EnumsUserRole) Unset() {
+func (v *NullableEnumsUserRole) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullable36EnumsUserRole(val *36EnumsUserRole) *Nullable36EnumsUserRole {
-	return &Nullable36EnumsUserRole{value: val, isSet: true}
+func NewNullableEnumsUserRole(val *EnumsUserRole) *NullableEnumsUserRole {
+	return &NullableEnumsUserRole{value: val, isSet: true}
 }
 
-func (v Nullable36EnumsUserRole) MarshalJSON() ([]byte, error) {
+func (v NullableEnumsUserRole) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *Nullable36EnumsUserRole) UnmarshalJSON(src []byte) error {
+func (v *NullableEnumsUserRole) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

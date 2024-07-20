@@ -20,7 +20,7 @@ type CourseErrorType string
 
 // List of CourseErrorType
 const (
-	NOT_FOUND CourseErrorType = "COURSE_NOT_FOUND"
+	NOT_FOUND      CourseErrorType = "COURSE_NOT_FOUND"
 	ALREADY_EXISTS CourseErrorType = "COURSE_ALREADY_EXISTS"
 )
 
@@ -108,4 +108,3 @@ func (v *NullableCourseErrorType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

@@ -15,54 +15,54 @@ import (
 	"fmt"
 )
 
-// 36EnumsSemester the model '36EnumsSemester'
-type 36EnumsSemester string
+// EnumsSemester the model 'EnumsSemester'
+type EnumsSemester string
 
 // List of _36_Enums.Semester
 const (
-	SPRING 36EnumsSemester = "SPRING"
-	SUMMER 36EnumsSemester = "SUMMER"
-	FALL 36EnumsSemester = "FALL"
+	SPRING EnumsSemester = "SPRING"
+	SUMMER EnumsSemester = "SUMMER"
+	FALL   EnumsSemester = "FALL"
 )
 
-// All allowed values of 36EnumsSemester enum
-var Allowed36EnumsSemesterEnumValues = []36EnumsSemester{
+// All allowed values of EnumsSemester enum
+var AllowedEnumsSemesterEnumValues = []EnumsSemester{
 	"SPRING",
 	"SUMMER",
 	"FALL",
 }
 
-func (v *36EnumsSemester) UnmarshalJSON(src []byte) error {
+func (v *EnumsSemester) UnmarshalJSON(src []byte) error {
 	var value string
 	err := json.Unmarshal(src, &value)
 	if err != nil {
 		return err
 	}
-	enumTypeValue := 36EnumsSemester(value)
-	for _, existing := range Allowed36EnumsSemesterEnumValues {
+	enumTypeValue := EnumsSemester(value)
+	for _, existing := range AllowedEnumsSemesterEnumValues {
 		if existing == enumTypeValue {
 			*v = enumTypeValue
 			return nil
 		}
 	}
 
-	return fmt.Errorf("%+v is not a valid 36EnumsSemester", value)
+	return fmt.Errorf("%+v is not a valid EnumsSemester", value)
 }
 
-// New36EnumsSemesterFromValue returns a pointer to a valid 36EnumsSemester
+// NewEnumsSemesterFromValue returns a pointer to a valid EnumsSemester
 // for the value passed as argument, or an error if the value passed is not allowed by the enum
-func New36EnumsSemesterFromValue(v string) (*36EnumsSemester, error) {
-	ev := 36EnumsSemester(v)
+func NewEnumsSemesterFromValue(v string) (*EnumsSemester, error) {
+	ev := EnumsSemester(v)
 	if ev.IsValid() {
 		return &ev, nil
 	} else {
-		return nil, fmt.Errorf("invalid value '%v' for 36EnumsSemester: valid values are %v", v, Allowed36EnumsSemesterEnumValues)
+		return nil, fmt.Errorf("invalid value '%v' for EnumsSemester: valid values are %v", v, AllowedEnumsSemesterEnumValues)
 	}
 }
 
 // IsValid return true if the value is valid for the enum, false otherwise
-func (v 36EnumsSemester) IsValid() bool {
-	for _, existing := range Allowed36EnumsSemesterEnumValues {
+func (v EnumsSemester) IsValid() bool {
+	for _, existing := range AllowedEnumsSemesterEnumValues {
 		if existing == v {
 			return true
 		}
@@ -71,43 +71,42 @@ func (v 36EnumsSemester) IsValid() bool {
 }
 
 // Ptr returns reference to _36_Enums.Semester value
-func (v 36EnumsSemester) Ptr() *36EnumsSemester {
+func (v EnumsSemester) Ptr() *EnumsSemester {
 	return &v
 }
 
-type Nullable36EnumsSemester struct {
-	value *36EnumsSemester
+type NullableEnumsSemester struct {
+	value *EnumsSemester
 	isSet bool
 }
 
-func (v Nullable36EnumsSemester) Get() *36EnumsSemester {
+func (v NullableEnumsSemester) Get() *EnumsSemester {
 	return v.value
 }
 
-func (v *Nullable36EnumsSemester) Set(val *36EnumsSemester) {
+func (v *NullableEnumsSemester) Set(val *EnumsSemester) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v Nullable36EnumsSemester) IsSet() bool {
+func (v NullableEnumsSemester) IsSet() bool {
 	return v.isSet
 }
 
-func (v *Nullable36EnumsSemester) Unset() {
+func (v *NullableEnumsSemester) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullable36EnumsSemester(val *36EnumsSemester) *Nullable36EnumsSemester {
-	return &Nullable36EnumsSemester{value: val, isSet: true}
+func NewNullableEnumsSemester(val *EnumsSemester) *NullableEnumsSemester {
+	return &NullableEnumsSemester{value: val, isSet: true}
 }
 
-func (v Nullable36EnumsSemester) MarshalJSON() ([]byte, error) {
+func (v NullableEnumsSemester) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *Nullable36EnumsSemester) UnmarshalJSON(src []byte) error {
+func (v *NullableEnumsSemester) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

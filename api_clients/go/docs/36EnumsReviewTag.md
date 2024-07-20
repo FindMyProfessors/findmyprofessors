@@ -1,4 +1,4 @@
-# 36EnumsReviewTag
+# EnumsReviewTag
 
 ## Enum
 

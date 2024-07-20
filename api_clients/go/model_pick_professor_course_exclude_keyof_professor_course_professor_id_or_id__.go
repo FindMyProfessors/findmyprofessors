@@ -11,8 +11,8 @@ API version: 1.0.0
 package openapi
 
 import (
-	"encoding/json"
 	"bytes"
+	"encoding/json"
 	"fmt"
 )
 
@@ -21,9 +21,9 @@ var _ MappedNullable = &PickProfessorCourseExcludeKeyofProfessorCourseProfessorI
 
 // PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId From T, pick a set of properties whose keys are in the union K
 type PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId struct {
-	CourseId int32 `json:"course_id"`
-	Year int32 `json:"year"`
-	Semester Model36EnumsSemester `json:"semester"`
+	CourseId int32              `json:"course_id"`
+	Year     int32              `json:"year"`
+	Semester ModelEnumsSemester `json:"semester"`
 }
 
 type _PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId
@@ -32,7 +32,7 @@ type _PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId PickProfesso
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId(courseId int32, year int32, semester Model36EnumsSemester) *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId {
+func NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId(courseId int32, year int32, semester ModelEnumsSemester) *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId {
 	this := PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId{}
 	this.CourseId = courseId
 	this.Year = year
@@ -97,9 +97,9 @@ func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) SetYear(
 }
 
 // GetSemester returns the Semester field value
-func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetSemester() Model36EnumsSemester {
+func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetSemester() ModelEnumsSemester {
 	if o == nil {
-		var ret Model36EnumsSemester
+		var ret ModelEnumsSemester
 		return ret
 	}
 
@@ -108,7 +108,7 @@ func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetSemes
 
 // GetSemesterOk returns a tuple with the Semester field value
 // and a boolean to check if the value has been set.
-func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetSemesterOk() (*Model36EnumsSemester, bool) {
+func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetSemesterOk() (*ModelEnumsSemester, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -116,12 +116,12 @@ func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetSemes
 }
 
 // SetSemester sets field value
-func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) SetSemester(v Model36EnumsSemester) {
+func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) SetSemester(v ModelEnumsSemester) {
 	o.Semester = v
 }
 
 func (o PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -151,10 +151,10 @@ func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) Unmarsha
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err;
+		return err
 	}
 
-	for _, requiredProperty := range(requiredProperties) {
+	for _, requiredProperty := range requiredProperties {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -210,5 +210,3 @@ func (v *NullablePickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) 
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

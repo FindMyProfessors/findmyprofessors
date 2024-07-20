@@ -6,13 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **CourseId** | **int32** |  | 
 **Year** | **int32** |  | 
-**Semester** | [**Model36EnumsSemester**](36EnumsSemester.md) |  | 
+**Semester** | [**ModelEnumsSemester**](EnumsSemester.md) |  | 
 
 ## Methods
 
 ### NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId
 
-`func NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId(courseId int32, year int32, semester Model36EnumsSemester, ) *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId`
+`func NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId(courseId int32, year int32, semester ModelEnumsSemester, ) *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId`
 
 NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId instantiates a new PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId object
 This constructor will assign default values to properties that have it defined,
@@ -69,20 +69,20 @@ SetYear sets Year field to given value.
 
 ### GetSemester
 
-`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetSemester() Model36EnumsSemester`
+`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetSemester() ModelEnumsSemester`
 
 GetSemester returns the Semester field if non-nil, zero value otherwise.
 
 ### GetSemesterOk
 
-`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetSemesterOk() (*Model36EnumsSemester, bool)`
+`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetSemesterOk() (*ModelEnumsSemester, bool)`
 
 GetSemesterOk returns a tuple with the Semester field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSemester
 
-`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) SetSemester(v Model36EnumsSemester)`
+`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) SetSemester(v ModelEnumsSemester)`
 
 SetSemester sets Semester field to given value.
 

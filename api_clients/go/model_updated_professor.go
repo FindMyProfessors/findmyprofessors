@@ -19,7 +19,7 @@ var _ MappedNullable = &UpdatedProfessor{}
 
 // UpdatedProfessor struct for UpdatedProfessor
 type UpdatedProfessor struct {
-	LastName NullableString `json:"last_name,omitempty"`
+	LastName  NullableString `json:"last_name,omitempty"`
 	FirstName NullableString `json:"first_name,omitempty"`
 }
 
@@ -72,6 +72,7 @@ func (o *UpdatedProfessor) HasLastName() bool {
 func (o *UpdatedProfessor) SetLastName(v string) {
 	o.LastName.Set(&v)
 }
+
 // SetLastNameNil sets the value for LastName to be an explicit nil
 func (o *UpdatedProfessor) SetLastNameNil() {
 	o.LastName.Set(nil)
@@ -114,6 +115,7 @@ func (o *UpdatedProfessor) HasFirstName() bool {
 func (o *UpdatedProfessor) SetFirstName(v string) {
 	o.FirstName.Set(&v)
 }
+
 // SetFirstNameNil sets the value for FirstName to be an explicit nil
 func (o *UpdatedProfessor) SetFirstNameNil() {
 	o.FirstName.Set(nil)
@@ -125,7 +127,7 @@ func (o *UpdatedProfessor) UnsetFirstName() {
 }
 
 func (o UpdatedProfessor) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -178,5 +180,3 @@ func (v *NullableUpdatedProfessor) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

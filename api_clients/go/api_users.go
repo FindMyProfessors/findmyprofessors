@@ -19,14 +19,13 @@ import (
 	"strings"
 )
 
-
 // UsersAPIService UsersAPI service
 type UsersAPIService service
 
 type ApiGetUserRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *UsersAPIService
-	id int32
+	id         int32
 }
 
 func (r ApiGetUserRequest) Execute() (*PickUserExcludeKeyofUserPassword, *http.Response, error) {
@@ -36,26 +35,27 @@ func (r ApiGetUserRequest) Execute() (*PickUserExcludeKeyofUserPassword, *http.R
 /*
 GetUser Method for GetUser
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiGetUserRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id
+	@return ApiGetUserRequest
 */
 func (a *UsersAPIService) GetUser(ctx context.Context, id int32) ApiGetUserRequest {
 	return ApiGetUserRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
-//  @return PickUserExcludeKeyofUserPassword
+//
+//	@return PickUserExcludeKeyofUserPassword
 func (a *UsersAPIService) GetUserExecute(r ApiGetUserRequest) (*PickUserExcludeKeyofUserPassword, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *PickUserExcludeKeyofUserPassword
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *PickUserExcludeKeyofUserPassword
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.GetUser")
@@ -125,9 +125,9 @@ func (a *UsersAPIService) GetUserExecute(r ApiGetUserRequest) (*PickUserExcludeK
 }
 
 type ApiGetUserCartRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *UsersAPIService
-	id int32
+	id         int32
 }
 
 func (r ApiGetUserCartRequest) Execute() (*PickUserExcludeKeyofUserPassword, *http.Response, error) {
@@ -137,26 +137,27 @@ func (r ApiGetUserCartRequest) Execute() (*PickUserExcludeKeyofUserPassword, *ht
 /*
 GetUserCart Method for GetUserCart
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiGetUserCartRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id
+	@return ApiGetUserCartRequest
 */
 func (a *UsersAPIService) GetUserCart(ctx context.Context, id int32) ApiGetUserCartRequest {
 	return ApiGetUserCartRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
-//  @return PickUserExcludeKeyofUserPassword
+//
+//	@return PickUserExcludeKeyofUserPassword
 func (a *UsersAPIService) GetUserCartExecute(r ApiGetUserCartRequest) (*PickUserExcludeKeyofUserPassword, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *PickUserExcludeKeyofUserPassword
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *PickUserExcludeKeyofUserPassword
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.GetUserCart")
@@ -226,10 +227,10 @@ func (a *UsersAPIService) GetUserCartExecute(r ApiGetUserCartRequest) (*PickUser
 }
 
 type ApiUpdateUserRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *UsersAPIService
-	id int32
-	body *PickUserExcludeKeyofUserPasswordOrSignupTimeOrAccountVerifiedOrIdOrLastLoginTimeOrEmailOrRole
+	id         int32
+	body       *PickUserExcludeKeyofUserPasswordOrSignupTimeOrAccountVerifiedOrIdOrLastLoginTimeOrEmailOrRole
 }
 
 func (r ApiUpdateUserRequest) Body(body PickUserExcludeKeyofUserPasswordOrSignupTimeOrAccountVerifiedOrIdOrLastLoginTimeOrEmailOrRole) ApiUpdateUserRequest {
@@ -244,24 +245,24 @@ func (r ApiUpdateUserRequest) Execute() (*http.Response, error) {
 /*
 UpdateUser Method for UpdateUser
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiUpdateUserRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id
+	@return ApiUpdateUserRequest
 */
 func (a *UsersAPIService) UpdateUser(ctx context.Context, id int32) ApiUpdateUserRequest {
 	return ApiUpdateUserRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *UsersAPIService) UpdateUserExecute(r ApiUpdateUserRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPut
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPut
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.UpdateUser")

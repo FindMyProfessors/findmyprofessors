@@ -8,14 +8,14 @@ Name | Type | Description | Notes
 **Quality** | **int32** |  | 
 **Difficulty** | **int32** |  | 
 **Time** | **time.Time** |  | 
-**Tags** | [**[]Model36EnumsReviewTag**](Model36EnumsReviewTag.md) |  | 
-**Grade** | [**Model36EnumsGrade**](36EnumsGrade.md) |  | 
+**Tags** | [**[]ModelEnumsReviewTag**](ModelEnumsReviewTag.md) |  | 
+**Grade** | [**ModelEnumsGrade**](EnumsGrade.md) |  | 
 
 ## Methods
 
 ### NewPickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId
 
-`func NewPickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId(professorId int32, quality int32, difficulty int32, time time.Time, tags []Model36EnumsReviewTag, grade Model36EnumsGrade, ) *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId`
+`func NewPickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId(professorId int32, quality int32, difficulty int32, time time.Time, tags []ModelEnumsReviewTag, grade ModelEnumsGrade, ) *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId`
 
 NewPickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId instantiates a new PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId object
 This constructor will assign default values to properties that have it defined,
@@ -112,40 +112,40 @@ SetTime sets Time field to given value.
 
 ### GetTags
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetTags() []Model36EnumsReviewTag`
+`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetTags() []ModelEnumsReviewTag`
 
 GetTags returns the Tags field if non-nil, zero value otherwise.
 
 ### GetTagsOk
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetTagsOk() (*[]Model36EnumsReviewTag, bool)`
+`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetTagsOk() (*[]ModelEnumsReviewTag, bool)`
 
 GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTags
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) SetTags(v []Model36EnumsReviewTag)`
+`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) SetTags(v []ModelEnumsReviewTag)`
 
 SetTags sets Tags field to given value.
 
 
 ### GetGrade
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetGrade() Model36EnumsGrade`
+`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetGrade() ModelEnumsGrade`
 
 GetGrade returns the Grade field if non-nil, zero value otherwise.
 
 ### GetGradeOk
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetGradeOk() (*Model36EnumsGrade, bool)`
+`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetGradeOk() (*ModelEnumsGrade, bool)`
 
 GetGradeOk returns a tuple with the Grade field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetGrade
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) SetGrade(v Model36EnumsGrade)`
+`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) SetGrade(v ModelEnumsGrade)`
 
 SetGrade sets Grade field to given value.
 

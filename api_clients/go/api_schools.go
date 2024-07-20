@@ -19,14 +19,13 @@ import (
 	"strings"
 )
 
-
 // SchoolsAPIService SchoolsAPI service
 type SchoolsAPIService service
 
 type ApiCreateSchoolRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *SchoolsAPIService
-	body *PickSchoolName
+	body       *PickSchoolName
 }
 
 func (r ApiCreateSchoolRequest) Body(body PickSchoolName) ApiCreateSchoolRequest {
@@ -41,24 +40,25 @@ func (r ApiCreateSchoolRequest) Execute() (*DefaultSelectionPrisma36SchoolPayloa
 /*
 CreateSchool Method for CreateSchool
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiCreateSchoolRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateSchoolRequest
 */
 func (a *SchoolsAPIService) CreateSchool(ctx context.Context) ApiCreateSchoolRequest {
 	return ApiCreateSchoolRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return DefaultSelectionPrisma36SchoolPayload
+//
+//	@return DefaultSelectionPrisma36SchoolPayload
 func (a *SchoolsAPIService) CreateSchoolExecute(r ApiCreateSchoolRequest) (*DefaultSelectionPrisma36SchoolPayload, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *DefaultSelectionPrisma36SchoolPayload
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DefaultSelectionPrisma36SchoolPayload
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SchoolsAPIService.CreateSchool")
@@ -123,8 +123,8 @@ func (a *SchoolsAPIService) CreateSchoolExecute(r ApiCreateSchoolRequest) (*Defa
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -142,9 +142,9 @@ func (a *SchoolsAPIService) CreateSchoolExecute(r ApiCreateSchoolRequest) (*Defa
 }
 
 type ApiDeleteSchoolRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *SchoolsAPIService
-	id int32
+	id         int32
 }
 
 func (r ApiDeleteSchoolRequest) Execute() (*http.Response, error) {
@@ -154,24 +154,24 @@ func (r ApiDeleteSchoolRequest) Execute() (*http.Response, error) {
 /*
 DeleteSchool Method for DeleteSchool
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiDeleteSchoolRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id
+	@return ApiDeleteSchoolRequest
 */
 func (a *SchoolsAPIService) DeleteSchool(ctx context.Context, id int32) ApiDeleteSchoolRequest {
 	return ApiDeleteSchoolRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *SchoolsAPIService) DeleteSchoolExecute(r ApiDeleteSchoolRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SchoolsAPIService.DeleteSchool")
@@ -232,8 +232,8 @@ func (a *SchoolsAPIService) DeleteSchoolExecute(r ApiDeleteSchoolRequest) (*http
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -242,9 +242,9 @@ func (a *SchoolsAPIService) DeleteSchoolExecute(r ApiDeleteSchoolRequest) (*http
 }
 
 type ApiGetSchoolRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *SchoolsAPIService
-	id int32
+	id         int32
 }
 
 func (r ApiGetSchoolRequest) Execute() (*DefaultSelectionPrisma36SchoolPayload, *http.Response, error) {
@@ -254,26 +254,27 @@ func (r ApiGetSchoolRequest) Execute() (*DefaultSelectionPrisma36SchoolPayload, 
 /*
 GetSchool Method for GetSchool
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiGetSchoolRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id
+	@return ApiGetSchoolRequest
 */
 func (a *SchoolsAPIService) GetSchool(ctx context.Context, id int32) ApiGetSchoolRequest {
 	return ApiGetSchoolRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
-//  @return DefaultSelectionPrisma36SchoolPayload
+//
+//	@return DefaultSelectionPrisma36SchoolPayload
 func (a *SchoolsAPIService) GetSchoolExecute(r ApiGetSchoolRequest) (*DefaultSelectionPrisma36SchoolPayload, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *DefaultSelectionPrisma36SchoolPayload
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DefaultSelectionPrisma36SchoolPayload
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SchoolsAPIService.GetSchool")
@@ -334,8 +335,8 @@ func (a *SchoolsAPIService) GetSchoolExecute(r ApiGetSchoolRequest) (*DefaultSel
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -353,11 +354,11 @@ func (a *SchoolsAPIService) GetSchoolExecute(r ApiGetSchoolRequest) (*DefaultSel
 }
 
 type ApiSearchSchoolsRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *SchoolsAPIService
-	name *string
-	cursor *string
-	pageSize *int32
+	name       *string
+	cursor     *string
+	pageSize   *int32
 }
 
 func (r ApiSearchSchoolsRequest) Name(name string) ApiSearchSchoolsRequest {
@@ -382,24 +383,25 @@ func (r ApiSearchSchoolsRequest) Execute() (*SchoolSearchResult, *http.Response,
 /*
 SearchSchools Method for SearchSchools
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSearchSchoolsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiSearchSchoolsRequest
 */
 func (a *SchoolsAPIService) SearchSchools(ctx context.Context) ApiSearchSchoolsRequest {
 	return ApiSearchSchoolsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return SchoolSearchResult
+//
+//	@return SchoolSearchResult
 func (a *SchoolsAPIService) SearchSchoolsExecute(r ApiSearchSchoolsRequest) (*SchoolSearchResult, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *SchoolSearchResult
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *SchoolSearchResult
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SchoolsAPIService.SearchSchools")
@@ -480,10 +482,10 @@ func (a *SchoolsAPIService) SearchSchoolsExecute(r ApiSearchSchoolsRequest) (*Sc
 }
 
 type ApiUpdateSchoolRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *SchoolsAPIService
-	id int32
-	body *PickSchoolName
+	id         int32
+	body       *PickSchoolName
 }
 
 func (r ApiUpdateSchoolRequest) Body(body PickSchoolName) ApiUpdateSchoolRequest {
@@ -498,26 +500,27 @@ func (r ApiUpdateSchoolRequest) Execute() (*DefaultSelectionPrisma36SchoolPayloa
 /*
 UpdateSchool Method for UpdateSchool
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiUpdateSchoolRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id
+	@return ApiUpdateSchoolRequest
 */
 func (a *SchoolsAPIService) UpdateSchool(ctx context.Context, id int32) ApiUpdateSchoolRequest {
 	return ApiUpdateSchoolRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
-//  @return DefaultSelectionPrisma36SchoolPayload
+//
+//	@return DefaultSelectionPrisma36SchoolPayload
 func (a *SchoolsAPIService) UpdateSchoolExecute(r ApiUpdateSchoolRequest) (*DefaultSelectionPrisma36SchoolPayload, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPut
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *DefaultSelectionPrisma36SchoolPayload
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DefaultSelectionPrisma36SchoolPayload
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SchoolsAPIService.UpdateSchool")
@@ -583,8 +586,8 @@ func (a *SchoolsAPIService) UpdateSchoolExecute(r ApiUpdateSchoolRequest) (*Defa
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

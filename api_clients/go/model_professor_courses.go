@@ -11,8 +11,8 @@ API version: 1.0.0
 package openapi
 
 import (
-	"encoding/json"
 	"bytes"
+	"encoding/json"
 	"fmt"
 )
 
@@ -21,7 +21,7 @@ var _ MappedNullable = &ProfessorCourses{}
 
 // ProfessorCourses struct for ProfessorCourses
 type ProfessorCourses struct {
-	Total int32 `json:"total"`
+	Total   int32                                                                     `json:"total"`
 	Courses []PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId `json:"courses"`
 }
 
@@ -95,7 +95,7 @@ func (o *ProfessorCourses) SetCourses(v []PickProfessorCourseExcludeKeyofProfess
 }
 
 func (o ProfessorCourses) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -123,10 +123,10 @@ func (o *ProfessorCourses) UnmarshalJSON(data []byte) (err error) {
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err;
+		return err
 	}
 
-	for _, requiredProperty := range(requiredProperties) {
+	for _, requiredProperty := range requiredProperties {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -182,5 +182,3 @@ func (v *NullableProfessorCourses) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

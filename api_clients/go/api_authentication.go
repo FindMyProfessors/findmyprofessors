@@ -18,14 +18,13 @@ import (
 	"net/url"
 )
 
-
 // AuthenticationAPIService AuthenticationAPI service
 type AuthenticationAPIService service
 
 type ApiLoginRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *AuthenticationAPIService
-	body *PickUserUsernameOrPassword
+	body       *PickUserUsernameOrPassword
 }
 
 func (r ApiLoginRequest) Body(body PickUserUsernameOrPassword) ApiLoginRequest {
@@ -40,24 +39,25 @@ func (r ApiLoginRequest) Execute() (*LoginResponse, *http.Response, error) {
 /*
 Login Method for Login
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiLoginRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiLoginRequest
 */
 func (a *AuthenticationAPIService) Login(ctx context.Context) ApiLoginRequest {
 	return ApiLoginRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return LoginResponse
+//
+//	@return LoginResponse
 func (a *AuthenticationAPIService) LoginExecute(r ApiLoginRequest) (*LoginResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *LoginResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *LoginResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthenticationAPIService.Login")
@@ -122,8 +122,8 @@ func (a *AuthenticationAPIService) LoginExecute(r ApiLoginRequest) (*LoginRespon
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -133,8 +133,8 @@ func (a *AuthenticationAPIService) LoginExecute(r ApiLoginRequest) (*LoginRespon
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -152,9 +152,9 @@ func (a *AuthenticationAPIService) LoginExecute(r ApiLoginRequest) (*LoginRespon
 }
 
 type ApiRegisterRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *AuthenticationAPIService
-	body *PickUserEmailOrUsernameOrPassword
+	body       *PickUserEmailOrUsernameOrPassword
 }
 
 func (r ApiRegisterRequest) Body(body PickUserEmailOrUsernameOrPassword) ApiRegisterRequest {
@@ -169,24 +169,25 @@ func (r ApiRegisterRequest) Execute() (*LoginResponse, *http.Response, error) {
 /*
 Register Method for Register
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiRegisterRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiRegisterRequest
 */
 func (a *AuthenticationAPIService) Register(ctx context.Context) ApiRegisterRequest {
 	return ApiRegisterRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return LoginResponse
+//
+//	@return LoginResponse
 func (a *AuthenticationAPIService) RegisterExecute(r ApiRegisterRequest) (*LoginResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *LoginResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *LoginResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthenticationAPIService.Register")
@@ -251,8 +252,8 @@ func (a *AuthenticationAPIService) RegisterExecute(r ApiRegisterRequest) (*Login
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

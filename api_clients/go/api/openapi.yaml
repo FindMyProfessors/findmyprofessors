@@ -632,13 +632,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Review'
+                $ref: '#/components/schemas/ReviewResponse'
           description: Review Created Successfully
       security:
       - jwt: []
       tags:
       - Reviews
-  /reviews/reviews/{review_id}:
+  /reviews/{review_id}:
     delete:
       operationId: DeleteReview
       parameters:
@@ -681,7 +681,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Review'
+                $ref: '#/components/schemas/ReviewResponse'
           description: Review Retrieved Successfully
         "404":
           content:
@@ -717,7 +717,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Review'
+                $ref: '#/components/schemas/ReviewResponse'
           description: Review Updated Successfully
         "404":
           content:
@@ -1430,22 +1430,46 @@ components:
       example:
         message: Pick_SchoolError_message_or_type__message
         type: PROFESSOR_NOT_FOUND
+    _36_Enums.Grade:
+      enum:
+      - A_PLUS
+      - A
+      - A_MINUS
+      - B_PLUS
+      - B
+      - B_MINUS
+      - C_PLUS
+      - C
+      - C_MINUS
+      - D_PLUS
+      - D
+      - D_MINUS
+      - F_PLUS
+      - F
+      - F_MINUS
+      - INCOMPLETE
+      - WITHDRAWN
+      - NOT_SURE
+      - OTHER
+      type: string
+    Grade:
+      $ref: '#/components/schemas/_36_Enums.Grade'
     Rating:
       properties:
         averageGrade:
-          type: string
+          $ref: '#/components/schemas/_36_Enums.Grade'
         topKMostRecentDifficultyAverage:
-          format: int32
-          type: integer
+          format: float
+          type: number
         totalDifficultyAverage:
-          format: int32
-          type: integer
+          format: float
+          type: number
         topKMostRecentQualityAverage:
-          format: int32
-          type: integer
+          format: float
+          type: number
         totalQualityAverage:
-          format: int32
-          type: integer
+          format: float
+          type: number
         ratingAmount:
           format: int32
           type: integer
@@ -1536,59 +1560,38 @@ components:
           nullable: true
           type: string
       type: object
-    _36_Enums.Grade:
-      enum:
-      - A_PLUS
-      - A
-      - A_MINUS
-      - B_PLUS
-      - B
-      - B_MINUS
-      - C_PLUS
-      - C
-      - C_MINUS
-      - D_PLUS
-      - D
-      - D_MINUS
-      - F_PLUS
-      - F
-      - F_MINUS
-      - INCOMPLETE
-      - WITHDRAWN
-      - NOT_SURE
-      - OTHER
-      type: string
-    DefaultSelection_Prisma._36_ReviewPayload_:
+    ReviewResponse:
+      additionalProperties: false
       example:
-        difficulty: 6
-        professor_id: 0
+        difficulty: 1.4658129
+        professor_id: 5
         grade: A_PLUS
+        id: 0
         time: 2000-01-23T04:56:07.000+00:00
-        id: 5
+        quality: 6.0274563
         tags:
-        - TOUGH_GRADER
-        - TOUGH_GRADER
-        quality: 1
+        - null
+        - null
       properties:
-        professor_id:
-          format: int32
-          type: integer
-        grade:
-          $ref: '#/components/schemas/_36_Enums.Grade'
-        tags:
-          items:
-            $ref: '#/components/schemas/_36_Enums.ReviewTag'
-          type: array
-        time:
-          format: date-time
-          type: string
-        difficulty:
+        id:
           format: int32
           type: integer
         quality:
-          format: int32
-          type: integer
-        id:
+          format: float
+          type: number
+        difficulty:
+          format: float
+          type: number
+        time:
+          format: date-time
+          type: string
+        tags:
+          items:
+            $ref: '#/components/schemas/ReviewTag'
+          type: array
+        grade:
+          $ref: '#/components/schemas/_36_Enums.Grade'
+        professor_id:
           format: int32
           type: integer
       required:
@@ -1600,8 +1603,6 @@ components:
       - tags
       - time
       type: object
-    Review:
-      $ref: '#/components/schemas/DefaultSelection_Prisma._36_ReviewPayload_'
     ReviewsSearchResult:
       example:
         pageInfo:
@@ -1611,26 +1612,26 @@ components:
         edges:
         - cursor: cursor
           node:
-            difficulty: 6
-            professor_id: 0
+            difficulty: 1.4658129
+            professor_id: 5
             grade: A_PLUS
+            id: 0
             time: 2000-01-23T04:56:07.000+00:00
-            id: 5
+            quality: 6.0274563
             tags:
-            - TOUGH_GRADER
-            - TOUGH_GRADER
-            quality: 1
+            - null
+            - null
         - cursor: cursor
           node:
-            difficulty: 6
-            professor_id: 0
+            difficulty: 1.4658129
+            professor_id: 5
             grade: A_PLUS
+            id: 0
             time: 2000-01-23T04:56:07.000+00:00
-            id: 5
+            quality: 6.0274563
             tags:
-            - TOUGH_GRADER
-            - TOUGH_GRADER
-            quality: 1
+            - null
+            - null
       properties:
         pageInfo:
           $ref: '#/components/schemas/SchoolSearchResult_pageInfo'
@@ -1695,27 +1696,36 @@ components:
       $ref: '#/components/schemas/Pick_ProfessorCourse.Exclude_keyofProfessorCourse.professor_id-or-id__'
     CourseEnrollment:
       $ref: '#/components/schemas/Omit_ProfessorCourse.professor_id-or-id_'
-    Pick_Review.quality-or-difficulty-or-time-or-tags-or-grade-or-professor_id_:
-      description: "From T, pick a set of properties whose keys are in the union K"
+    NewReview:
+      additionalProperties: false
+      example:
+        difficulty: 6.0274563
+        professor_id: 1
+        grade: A_PLUS
+        time: 2000-01-23T04:56:07.000+00:00
+        quality: 0.8008282
+        tags:
+        - null
+        - null
       properties:
-        professor_id:
-          format: int32
-          type: integer
         quality:
-          format: int32
-          type: integer
+          format: float
+          type: number
         difficulty:
-          format: int32
-          type: integer
+          format: float
+          type: number
         time:
           format: date-time
           type: string
         tags:
           items:
-            $ref: '#/components/schemas/_36_Enums.ReviewTag'
+            $ref: '#/components/schemas/ReviewTag'
           type: array
         grade:
           $ref: '#/components/schemas/_36_Enums.Grade'
+        professor_id:
+          format: int32
+          type: integer
       required:
       - difficulty
       - grade
@@ -1724,8 +1734,6 @@ components:
       - tags
       - time
       type: object
-    NewReview:
-      $ref: '#/components/schemas/Pick_Review.quality-or-difficulty-or-time-or-tags-or-grade-or-professor_id_'
     ReviewErrorType:
       enum:
       - REVIEW_NOT_FOUND
@@ -1757,33 +1765,33 @@ components:
       example:
         message: Pick_SchoolError_message_or_type__message
         type: REVIEW_NOT_FOUND
-    Pick_Review.quality-or-difficulty-or-time-or-tags-or-grade_:
-      description: "From T, pick a set of properties whose keys are in the union K"
+    UpdatedReview:
+      additionalProperties: false
+      example:
+        difficulty: 6.0274563
+        grade: A_PLUS
+        time: 2000-01-23T04:56:07.000+00:00
+        quality: 0.8008282
+        tags:
+        - null
+        - null
       properties:
         quality:
-          format: int32
-          type: integer
+          format: float
+          type: number
         difficulty:
-          format: int32
-          type: integer
+          format: float
+          type: number
         time:
           format: date-time
           type: string
         tags:
           items:
-            $ref: '#/components/schemas/_36_Enums.ReviewTag'
+            $ref: '#/components/schemas/ReviewTag'
           type: array
         grade:
           $ref: '#/components/schemas/_36_Enums.Grade'
-      required:
-      - difficulty
-      - grade
-      - quality
-      - tags
-      - time
       type: object
-    UpdatedReview:
-      $ref: '#/components/schemas/Pick_Review.quality-or-difficulty-or-time-or-tags-or-grade_'
     CourseSearchResult:
       example:
         pageInfo:
@@ -2096,18 +2104,18 @@ components:
       example:
         cursor: cursor
         node:
-          difficulty: 6
-          professor_id: 0
+          difficulty: 1.4658129
+          professor_id: 5
           grade: A_PLUS
+          id: 0
           time: 2000-01-23T04:56:07.000+00:00
-          id: 5
+          quality: 6.0274563
           tags:
-          - TOUGH_GRADER
-          - TOUGH_GRADER
-          quality: 1
+          - null
+          - null
       properties:
         node:
-          $ref: '#/components/schemas/DefaultSelection_Prisma._36_ReviewPayload_'
+          $ref: '#/components/schemas/ReviewResponse'
         cursor:
           type: string
       required:

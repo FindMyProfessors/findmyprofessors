@@ -11,8 +11,8 @@ API version: 1.0.0
 package openapi
 
 import (
-	"encoding/json"
 	"bytes"
+	"encoding/json"
 	"fmt"
 )
 
@@ -22,7 +22,7 @@ var _ MappedNullable = &UserNotFoundError{}
 // UserNotFoundError struct for UserNotFoundError
 type UserNotFoundError struct {
 	Message PickSchoolErrorMessageOrTypeMessage `json:"message"`
-	Type AuthErrorTypeUSERNOTFOUND `json:"type"`
+	Type    AuthErrorTypeUSERNOTFOUND           `json:"type"`
 }
 
 type _UserNotFoundError UserNotFoundError
@@ -95,7 +95,7 @@ func (o *UserNotFoundError) SetType(v AuthErrorTypeUSERNOTFOUND) {
 }
 
 func (o UserNotFoundError) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -123,10 +123,10 @@ func (o *UserNotFoundError) UnmarshalJSON(data []byte) (err error) {
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err;
+		return err
 	}
 
-	for _, requiredProperty := range(requiredProperties) {
+	for _, requiredProperty := range requiredProperties {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -182,5 +182,3 @@ func (v *NullableUserNotFoundError) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

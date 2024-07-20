@@ -11,10 +11,10 @@ API version: 1.0.0
 package openapi
 
 import (
-	"encoding/json"
-	"time"
 	"bytes"
+	"encoding/json"
 	"fmt"
+	"time"
 )
 
 // checks if the PickUserExcludeKeyofUserPassword type satisfies the MappedNullable interface at compile time
@@ -22,13 +22,13 @@ var _ MappedNullable = &PickUserExcludeKeyofUserPassword{}
 
 // PickUserExcludeKeyofUserPassword From T, pick a set of properties whose keys are in the union K
 type PickUserExcludeKeyofUserPassword struct {
-	Id int32 `json:"id"`
-	Email string `json:"email"`
-	Username string `json:"username"`
-	SignupTime time.Time `json:"signup_time"`
-	LastLoginTime time.Time `json:"last_login_time"`
-	AccountVerified bool `json:"account_verified"`
-	Role Model36EnumsUserRole `json:"role"`
+	Id              int32              `json:"id"`
+	Email           string             `json:"email"`
+	Username        string             `json:"username"`
+	SignupTime      time.Time          `json:"signup_time"`
+	LastLoginTime   time.Time          `json:"last_login_time"`
+	AccountVerified bool               `json:"account_verified"`
+	Role            ModelEnumsUserRole `json:"role"`
 }
 
 type _PickUserExcludeKeyofUserPassword PickUserExcludeKeyofUserPassword
@@ -37,7 +37,7 @@ type _PickUserExcludeKeyofUserPassword PickUserExcludeKeyofUserPassword
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPickUserExcludeKeyofUserPassword(id int32, email string, username string, signupTime time.Time, lastLoginTime time.Time, accountVerified bool, role Model36EnumsUserRole) *PickUserExcludeKeyofUserPassword {
+func NewPickUserExcludeKeyofUserPassword(id int32, email string, username string, signupTime time.Time, lastLoginTime time.Time, accountVerified bool, role ModelEnumsUserRole) *PickUserExcludeKeyofUserPassword {
 	this := PickUserExcludeKeyofUserPassword{}
 	this.Id = id
 	this.Email = email
@@ -202,9 +202,9 @@ func (o *PickUserExcludeKeyofUserPassword) SetAccountVerified(v bool) {
 }
 
 // GetRole returns the Role field value
-func (o *PickUserExcludeKeyofUserPassword) GetRole() Model36EnumsUserRole {
+func (o *PickUserExcludeKeyofUserPassword) GetRole() ModelEnumsUserRole {
 	if o == nil {
-		var ret Model36EnumsUserRole
+		var ret ModelEnumsUserRole
 		return ret
 	}
 
@@ -213,7 +213,7 @@ func (o *PickUserExcludeKeyofUserPassword) GetRole() Model36EnumsUserRole {
 
 // GetRoleOk returns a tuple with the Role field value
 // and a boolean to check if the value has been set.
-func (o *PickUserExcludeKeyofUserPassword) GetRoleOk() (*Model36EnumsUserRole, bool) {
+func (o *PickUserExcludeKeyofUserPassword) GetRoleOk() (*ModelEnumsUserRole, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -221,12 +221,12 @@ func (o *PickUserExcludeKeyofUserPassword) GetRoleOk() (*Model36EnumsUserRole, b
 }
 
 // SetRole sets field value
-func (o *PickUserExcludeKeyofUserPassword) SetRole(v Model36EnumsUserRole) {
+func (o *PickUserExcludeKeyofUserPassword) SetRole(v ModelEnumsUserRole) {
 	o.Role = v
 }
 
 func (o PickUserExcludeKeyofUserPassword) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -264,10 +264,10 @@ func (o *PickUserExcludeKeyofUserPassword) UnmarshalJSON(data []byte) (err error
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err;
+		return err
 	}
 
-	for _, requiredProperty := range(requiredProperties) {
+	for _, requiredProperty := range requiredProperties {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -323,5 +323,3 @@ func (v *NullablePickUserExcludeKeyofUserPassword) UnmarshalJSON(src []byte) err
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

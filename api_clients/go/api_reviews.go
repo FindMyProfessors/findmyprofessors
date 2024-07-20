@@ -19,46 +19,46 @@ import (
 	"strings"
 )
 
-
 // ReviewsAPIService ReviewsAPI service
 type ReviewsAPIService service
 
 type ApiCreateReviewRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ReviewsAPIService
-	body *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId
+	newReview  *NewReview
 }
 
-func (r ApiCreateReviewRequest) Body(body PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) ApiCreateReviewRequest {
-	r.body = &body
+func (r ApiCreateReviewRequest) NewReview(newReview NewReview) ApiCreateReviewRequest {
+	r.newReview = &newReview
 	return r
 }
 
-func (r ApiCreateReviewRequest) Execute() (*DefaultSelectionPrisma36ReviewPayload, *http.Response, error) {
+func (r ApiCreateReviewRequest) Execute() (*ReviewResponse, *http.Response, error) {
 	return r.ApiService.CreateReviewExecute(r)
 }
 
 /*
 CreateReview Method for CreateReview
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiCreateReviewRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateReviewRequest
 */
 func (a *ReviewsAPIService) CreateReview(ctx context.Context) ApiCreateReviewRequest {
 	return ApiCreateReviewRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return DefaultSelectionPrisma36ReviewPayload
-func (a *ReviewsAPIService) CreateReviewExecute(r ApiCreateReviewRequest) (*DefaultSelectionPrisma36ReviewPayload, *http.Response, error) {
+//
+//	@return ReviewResponse
+func (a *ReviewsAPIService) CreateReviewExecute(r ApiCreateReviewRequest) (*ReviewResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *DefaultSelectionPrisma36ReviewPayload
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ReviewResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReviewsAPIService.CreateReview")
@@ -71,8 +71,8 @@ func (a *ReviewsAPIService) CreateReviewExecute(r ApiCreateReviewRequest) (*Defa
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.body == nil {
-		return localVarReturnValue, nil, reportError("body is required and must be specified")
+	if r.newReview == nil {
+		return localVarReturnValue, nil, reportError("newReview is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -93,7 +93,7 @@ func (a *ReviewsAPIService) CreateReviewExecute(r ApiCreateReviewRequest) (*Defa
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.body
+	localVarPostBody = r.newReview
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -132,9 +132,9 @@ func (a *ReviewsAPIService) CreateReviewExecute(r ApiCreateReviewRequest) (*Defa
 }
 
 type ApiDeleteReviewRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ReviewsAPIService
-	reviewId int32
+	reviewId   int32
 }
 
 func (r ApiDeleteReviewRequest) Execute() (*http.Response, error) {
@@ -144,24 +144,24 @@ func (r ApiDeleteReviewRequest) Execute() (*http.Response, error) {
 /*
 DeleteReview Method for DeleteReview
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param reviewId
- @return ApiDeleteReviewRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param reviewId
+	@return ApiDeleteReviewRequest
 */
 func (a *ReviewsAPIService) DeleteReview(ctx context.Context, reviewId int32) ApiDeleteReviewRequest {
 	return ApiDeleteReviewRequest{
 		ApiService: a,
-		ctx: ctx,
-		reviewId: reviewId,
+		ctx:        ctx,
+		reviewId:   reviewId,
 	}
 }
 
 // Execute executes the request
 func (a *ReviewsAPIService) DeleteReviewExecute(r ApiDeleteReviewRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReviewsAPIService.DeleteReview")
@@ -169,7 +169,7 @@ func (a *ReviewsAPIService) DeleteReviewExecute(r ApiDeleteReviewRequest) (*http
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/reviews/reviews/{review_id}"
+	localVarPath := localBasePath + "/reviews/{review_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"review_id"+"}", url.PathEscape(parameterValueToString(r.reviewId, "reviewId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -222,8 +222,8 @@ func (a *ReviewsAPIService) DeleteReviewExecute(r ApiDeleteReviewRequest) (*http
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -232,38 +232,39 @@ func (a *ReviewsAPIService) DeleteReviewExecute(r ApiDeleteReviewRequest) (*http
 }
 
 type ApiGetReviewRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ReviewsAPIService
-	reviewId int32
+	reviewId   int32
 }
 
-func (r ApiGetReviewRequest) Execute() (*DefaultSelectionPrisma36ReviewPayload, *http.Response, error) {
+func (r ApiGetReviewRequest) Execute() (*ReviewResponse, *http.Response, error) {
 	return r.ApiService.GetReviewExecute(r)
 }
 
 /*
 GetReview Method for GetReview
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param reviewId
- @return ApiGetReviewRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param reviewId
+	@return ApiGetReviewRequest
 */
 func (a *ReviewsAPIService) GetReview(ctx context.Context, reviewId int32) ApiGetReviewRequest {
 	return ApiGetReviewRequest{
 		ApiService: a,
-		ctx: ctx,
-		reviewId: reviewId,
+		ctx:        ctx,
+		reviewId:   reviewId,
 	}
 }
 
 // Execute executes the request
-//  @return DefaultSelectionPrisma36ReviewPayload
-func (a *ReviewsAPIService) GetReviewExecute(r ApiGetReviewRequest) (*DefaultSelectionPrisma36ReviewPayload, *http.Response, error) {
+//
+//	@return ReviewResponse
+func (a *ReviewsAPIService) GetReviewExecute(r ApiGetReviewRequest) (*ReviewResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *DefaultSelectionPrisma36ReviewPayload
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ReviewResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReviewsAPIService.GetReview")
@@ -271,7 +272,7 @@ func (a *ReviewsAPIService) GetReviewExecute(r ApiGetReviewRequest) (*DefaultSel
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/reviews/reviews/{review_id}"
+	localVarPath := localBasePath + "/reviews/{review_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"review_id"+"}", url.PathEscape(parameterValueToString(r.reviewId, "reviewId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -324,8 +325,8 @@ func (a *ReviewsAPIService) GetReviewExecute(r ApiGetReviewRequest) (*DefaultSel
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -343,44 +344,45 @@ func (a *ReviewsAPIService) GetReviewExecute(r ApiGetReviewRequest) (*DefaultSel
 }
 
 type ApiUpdateReviewRequest struct {
-	ctx context.Context
-	ApiService *ReviewsAPIService
-	reviewId int32
-	body *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade
+	ctx           context.Context
+	ApiService    *ReviewsAPIService
+	reviewId      int32
+	updatedReview *UpdatedReview
 }
 
-func (r ApiUpdateReviewRequest) Body(body PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) ApiUpdateReviewRequest {
-	r.body = &body
+func (r ApiUpdateReviewRequest) UpdatedReview(updatedReview UpdatedReview) ApiUpdateReviewRequest {
+	r.updatedReview = &updatedReview
 	return r
 }
 
-func (r ApiUpdateReviewRequest) Execute() (*DefaultSelectionPrisma36ReviewPayload, *http.Response, error) {
+func (r ApiUpdateReviewRequest) Execute() (*ReviewResponse, *http.Response, error) {
 	return r.ApiService.UpdateReviewExecute(r)
 }
 
 /*
 UpdateReview Method for UpdateReview
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param reviewId
- @return ApiUpdateReviewRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param reviewId
+	@return ApiUpdateReviewRequest
 */
 func (a *ReviewsAPIService) UpdateReview(ctx context.Context, reviewId int32) ApiUpdateReviewRequest {
 	return ApiUpdateReviewRequest{
 		ApiService: a,
-		ctx: ctx,
-		reviewId: reviewId,
+		ctx:        ctx,
+		reviewId:   reviewId,
 	}
 }
 
 // Execute executes the request
-//  @return DefaultSelectionPrisma36ReviewPayload
-func (a *ReviewsAPIService) UpdateReviewExecute(r ApiUpdateReviewRequest) (*DefaultSelectionPrisma36ReviewPayload, *http.Response, error) {
+//
+//	@return ReviewResponse
+func (a *ReviewsAPIService) UpdateReviewExecute(r ApiUpdateReviewRequest) (*ReviewResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPut
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *DefaultSelectionPrisma36ReviewPayload
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ReviewResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReviewsAPIService.UpdateReview")
@@ -388,14 +390,14 @@ func (a *ReviewsAPIService) UpdateReviewExecute(r ApiUpdateReviewRequest) (*Defa
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/reviews/reviews/{review_id}"
+	localVarPath := localBasePath + "/reviews/{review_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"review_id"+"}", url.PathEscape(parameterValueToString(r.reviewId, "reviewId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.body == nil {
-		return localVarReturnValue, nil, reportError("body is required and must be specified")
+	if r.updatedReview == nil {
+		return localVarReturnValue, nil, reportError("updatedReview is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -416,7 +418,7 @@ func (a *ReviewsAPIService) UpdateReviewExecute(r ApiUpdateReviewRequest) (*Defa
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.body
+	localVarPostBody = r.updatedReview
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -446,8 +448,8 @@ func (a *ReviewsAPIService) UpdateReviewExecute(r ApiUpdateReviewRequest) (*Defa
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

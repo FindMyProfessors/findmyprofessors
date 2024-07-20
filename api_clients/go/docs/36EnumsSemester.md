@@ -1,4 +1,4 @@
-# 36EnumsSemester
+# EnumsSemester
 
 ## Enum
 

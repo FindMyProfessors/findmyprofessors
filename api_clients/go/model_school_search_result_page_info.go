@@ -11,8 +11,8 @@ API version: 1.0.0
 package openapi
 
 import (
-	"encoding/json"
 	"bytes"
+	"encoding/json"
 	"fmt"
 )
 
@@ -21,9 +21,9 @@ var _ MappedNullable = &SchoolSearchResultPageInfo{}
 
 // SchoolSearchResultPageInfo struct for SchoolSearchResultPageInfo
 type SchoolSearchResultPageInfo struct {
-	Total int32 `json:"total"`
-	EndCursor NullableString `json:"endCursor"`
-	HasNextPage bool `json:"hasNextPage"`
+	Total       int32          `json:"total"`
+	EndCursor   NullableString `json:"endCursor"`
+	HasNextPage bool           `json:"hasNextPage"`
 }
 
 type _SchoolSearchResultPageInfo SchoolSearchResultPageInfo
@@ -123,7 +123,7 @@ func (o *SchoolSearchResultPageInfo) SetHasNextPage(v bool) {
 }
 
 func (o SchoolSearchResultPageInfo) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -153,10 +153,10 @@ func (o *SchoolSearchResultPageInfo) UnmarshalJSON(data []byte) (err error) {
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err;
+		return err
 	}
 
-	for _, requiredProperty := range(requiredProperties) {
+	for _, requiredProperty := range requiredProperties {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -212,5 +212,3 @@ func (v *NullableSchoolSearchResultPageInfo) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

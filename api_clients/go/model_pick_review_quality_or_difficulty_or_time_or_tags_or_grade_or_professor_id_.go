@@ -11,10 +11,10 @@ API version: 1.0.0
 package openapi
 
 import (
-	"encoding/json"
-	"time"
 	"bytes"
+	"encoding/json"
 	"fmt"
+	"time"
 )
 
 // checks if the PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId type satisfies the MappedNullable interface at compile time
@@ -22,12 +22,12 @@ var _ MappedNullable = &PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfes
 
 // PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId From T, pick a set of properties whose keys are in the union K
 type PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId struct {
-	ProfessorId int32 `json:"professor_id"`
-	Quality int32 `json:"quality"`
-	Difficulty int32 `json:"difficulty"`
-	Time time.Time `json:"time"`
-	Tags []Model36EnumsReviewTag `json:"tags"`
-	Grade Model36EnumsGrade `json:"grade"`
+	ProfessorId int32                 `json:"professor_id"`
+	Quality     int32                 `json:"quality"`
+	Difficulty  int32                 `json:"difficulty"`
+	Time        time.Time             `json:"time"`
+	Tags        []ModelEnumsReviewTag `json:"tags"`
+	Grade       ModelEnumsGrade       `json:"grade"`
 }
 
 type _PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId
@@ -36,7 +36,7 @@ type _PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId PickReviewQu
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId(professorId int32, quality int32, difficulty int32, time time.Time, tags []Model36EnumsReviewTag, grade Model36EnumsGrade) *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId {
+func NewPickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId(professorId int32, quality int32, difficulty int32, time time.Time, tags []ModelEnumsReviewTag, grade ModelEnumsGrade) *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId {
 	this := PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId{}
 	this.ProfessorId = professorId
 	this.Quality = quality
@@ -152,9 +152,9 @@ func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) SetTime(
 }
 
 // GetTags returns the Tags field value
-func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetTags() []Model36EnumsReviewTag {
+func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetTags() []ModelEnumsReviewTag {
 	if o == nil {
-		var ret []Model36EnumsReviewTag
+		var ret []ModelEnumsReviewTag
 		return ret
 	}
 
@@ -163,7 +163,7 @@ func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetTags(
 
 // GetTagsOk returns a tuple with the Tags field value
 // and a boolean to check if the value has been set.
-func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetTagsOk() ([]Model36EnumsReviewTag, bool) {
+func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetTagsOk() ([]ModelEnumsReviewTag, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -171,14 +171,14 @@ func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetTagsO
 }
 
 // SetTags sets field value
-func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) SetTags(v []Model36EnumsReviewTag) {
+func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) SetTags(v []ModelEnumsReviewTag) {
 	o.Tags = v
 }
 
 // GetGrade returns the Grade field value
-func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetGrade() Model36EnumsGrade {
+func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetGrade() ModelEnumsGrade {
 	if o == nil {
-		var ret Model36EnumsGrade
+		var ret ModelEnumsGrade
 		return ret
 	}
 
@@ -187,7 +187,7 @@ func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetGrade
 
 // GetGradeOk returns a tuple with the Grade field value
 // and a boolean to check if the value has been set.
-func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetGradeOk() (*Model36EnumsGrade, bool) {
+func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetGradeOk() (*ModelEnumsGrade, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -195,12 +195,12 @@ func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) GetGrade
 }
 
 // SetGrade sets field value
-func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) SetGrade(v Model36EnumsGrade) {
+func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) SetGrade(v ModelEnumsGrade) {
 	o.Grade = v
 }
 
 func (o PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -236,10 +236,10 @@ func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) Unmarsha
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err;
+		return err
 	}
 
-	for _, requiredProperty := range(requiredProperties) {
+	for _, requiredProperty := range requiredProperties {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -295,5 +295,3 @@ func (v *NullablePickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId) 
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

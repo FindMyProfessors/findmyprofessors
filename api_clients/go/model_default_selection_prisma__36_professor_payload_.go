@@ -11,8 +11,8 @@ API version: 1.0.0
 package openapi
 
 import (
-	"encoding/json"
 	"bytes"
+	"encoding/json"
 	"fmt"
 )
 
@@ -21,11 +21,11 @@ var _ MappedNullable = &DefaultSelectionPrisma36ProfessorPayload{}
 
 // DefaultSelectionPrisma36ProfessorPayload struct for DefaultSelectionPrisma36ProfessorPayload
 type DefaultSelectionPrisma36ProfessorPayload struct {
-	SchoolId int32 `json:"school_id"`
-	RmpId string `json:"rmp_id"`
-	LastName string `json:"last_name"`
+	SchoolId  int32  `json:"school_id"`
+	RmpId     string `json:"rmp_id"`
+	LastName  string `json:"last_name"`
 	FirstName string `json:"first_name"`
-	Id int32 `json:"id"`
+	Id        int32  `json:"id"`
 }
 
 type _DefaultSelectionPrisma36ProfessorPayload DefaultSelectionPrisma36ProfessorPayload
@@ -173,7 +173,7 @@ func (o *DefaultSelectionPrisma36ProfessorPayload) SetId(v int32) {
 }
 
 func (o DefaultSelectionPrisma36ProfessorPayload) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -207,10 +207,10 @@ func (o *DefaultSelectionPrisma36ProfessorPayload) UnmarshalJSON(data []byte) (e
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err;
+		return err
 	}
 
-	for _, requiredProperty := range(requiredProperties) {
+	for _, requiredProperty := range requiredProperties {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -266,5 +266,3 @@ func (v *NullableDefaultSelectionPrisma36ProfessorPayload) UnmarshalJSON(src []b
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

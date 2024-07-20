@@ -5,15 +5,15 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateReview**](ReviewsAPI.md#CreateReview) | **Post** /reviews/create | 
-[**DeleteReview**](ReviewsAPI.md#DeleteReview) | **Delete** /reviews/reviews/{review_id} | 
-[**GetReview**](ReviewsAPI.md#GetReview) | **Get** /reviews/reviews/{review_id} | 
-[**UpdateReview**](ReviewsAPI.md#UpdateReview) | **Put** /reviews/reviews/{review_id} | 
+[**DeleteReview**](ReviewsAPI.md#DeleteReview) | **Delete** /reviews/{review_id} | 
+[**GetReview**](ReviewsAPI.md#GetReview) | **Get** /reviews/{review_id} | 
+[**UpdateReview**](ReviewsAPI.md#UpdateReview) | **Put** /reviews/{review_id} | 
 
 
 
 ## CreateReview
 
-> DefaultSelectionPrisma36ReviewPayload CreateReview(ctx).Body(body).Execute()
+> ReviewResponse CreateReview(ctx).NewReview(newReview).Execute()
 
 
 
@@ -26,20 +26,21 @@ import (
 	"context"
 	"fmt"
 	"os"
+    "time"
 	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
 )
 
 func main() {
-	body := PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId(987) // PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId | 
+	newReview := *openapiclient.NewNewReview(float32(123), float32(123), time.Now(), []ModelEnumsReviewTag{"TODO"}, "TODO", int32(123)) // NewReview | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ReviewsAPI.CreateReview(context.Background()).Body(body).Execute()
+	resp, r, err := apiClient.ReviewsAPI.CreateReview(context.Background()).NewReview(newReview).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ReviewsAPI.CreateReview``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `CreateReview`: DefaultSelectionPrisma36ReviewPayload
+	// response from `CreateReview`: ReviewResponse
 	fmt.Fprintf(os.Stdout, "Response from `ReviewsAPI.CreateReview`: %v\n", resp)
 }
 ```
@@ -55,11 +56,11 @@ Other parameters are passed through a pointer to a apiCreateReviewRequest struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | **PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId** |  | 
+ **newReview** | [**NewReview**](NewReview.md) |  | 
 
 ### Return type
 
-[**DefaultSelectionPrisma36ReviewPayload**](DefaultSelectionPrisma36ReviewPayload.md)
+[**ReviewResponse**](ReviewResponse.md)
 
 ### Authorization
 
@@ -143,7 +144,7 @@ Name | Type | Description  | Notes
 
 ## GetReview
 
-> DefaultSelectionPrisma36ReviewPayload GetReview(ctx, reviewId).Execute()
+> ReviewResponse GetReview(ctx, reviewId).Execute()
 
 
 
@@ -169,7 +170,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `ReviewsAPI.GetReview``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetReview`: DefaultSelectionPrisma36ReviewPayload
+	// response from `GetReview`: ReviewResponse
 	fmt.Fprintf(os.Stdout, "Response from `ReviewsAPI.GetReview`: %v\n", resp)
 }
 ```
@@ -193,7 +194,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**DefaultSelectionPrisma36ReviewPayload**](DefaultSelectionPrisma36ReviewPayload.md)
+[**ReviewResponse**](ReviewResponse.md)
 
 ### Authorization
 
@@ -211,7 +212,7 @@ Name | Type | Description  | Notes
 
 ## UpdateReview
 
-> DefaultSelectionPrisma36ReviewPayload UpdateReview(ctx, reviewId).Body(body).Execute()
+> ReviewResponse UpdateReview(ctx, reviewId).UpdatedReview(updatedReview).Execute()
 
 
 
@@ -229,16 +230,16 @@ import (
 
 func main() {
 	reviewId := int32(56) // int32 | 
-	body := PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade(987) // PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade | 
+	updatedReview := *openapiclient.NewUpdatedReview() // UpdatedReview | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ReviewsAPI.UpdateReview(context.Background(), reviewId).Body(body).Execute()
+	resp, r, err := apiClient.ReviewsAPI.UpdateReview(context.Background(), reviewId).UpdatedReview(updatedReview).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ReviewsAPI.UpdateReview``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `UpdateReview`: DefaultSelectionPrisma36ReviewPayload
+	// response from `UpdateReview`: ReviewResponse
 	fmt.Fprintf(os.Stdout, "Response from `ReviewsAPI.UpdateReview`: %v\n", resp)
 }
 ```
@@ -259,11 +260,11 @@ Other parameters are passed through a pointer to a apiUpdateReviewRequest struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **body** | **PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade** |  | 
+ **updatedReview** | [**UpdatedReview**](UpdatedReview.md) |  | 
 
 ### Return type
 
-[**DefaultSelectionPrisma36ReviewPayload**](DefaultSelectionPrisma36ReviewPayload.md)
+[**ReviewResponse**](ReviewResponse.md)
 
 ### Authorization
 

@@ -11,8 +11,8 @@ API version: 1.0.0
 package openapi
 
 import (
-	"encoding/json"
 	"bytes"
+	"encoding/json"
 	"fmt"
 )
 
@@ -21,8 +21,8 @@ var _ MappedNullable = &ReviewsSearchResultEdgesInner{}
 
 // ReviewsSearchResultEdgesInner struct for ReviewsSearchResultEdgesInner
 type ReviewsSearchResultEdgesInner struct {
-	Node DefaultSelectionPrisma36ReviewPayload `json:"node"`
-	Cursor string `json:"cursor"`
+	Node   ReviewResponse `json:"node"`
+	Cursor string         `json:"cursor"`
 }
 
 type _ReviewsSearchResultEdgesInner ReviewsSearchResultEdgesInner
@@ -31,7 +31,7 @@ type _ReviewsSearchResultEdgesInner ReviewsSearchResultEdgesInner
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewReviewsSearchResultEdgesInner(node DefaultSelectionPrisma36ReviewPayload, cursor string) *ReviewsSearchResultEdgesInner {
+func NewReviewsSearchResultEdgesInner(node ReviewResponse, cursor string) *ReviewsSearchResultEdgesInner {
 	this := ReviewsSearchResultEdgesInner{}
 	this.Node = node
 	this.Cursor = cursor
@@ -47,9 +47,9 @@ func NewReviewsSearchResultEdgesInnerWithDefaults() *ReviewsSearchResultEdgesInn
 }
 
 // GetNode returns the Node field value
-func (o *ReviewsSearchResultEdgesInner) GetNode() DefaultSelectionPrisma36ReviewPayload {
+func (o *ReviewsSearchResultEdgesInner) GetNode() ReviewResponse {
 	if o == nil {
-		var ret DefaultSelectionPrisma36ReviewPayload
+		var ret ReviewResponse
 		return ret
 	}
 
@@ -58,7 +58,7 @@ func (o *ReviewsSearchResultEdgesInner) GetNode() DefaultSelectionPrisma36Review
 
 // GetNodeOk returns a tuple with the Node field value
 // and a boolean to check if the value has been set.
-func (o *ReviewsSearchResultEdgesInner) GetNodeOk() (*DefaultSelectionPrisma36ReviewPayload, bool) {
+func (o *ReviewsSearchResultEdgesInner) GetNodeOk() (*ReviewResponse, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -66,7 +66,7 @@ func (o *ReviewsSearchResultEdgesInner) GetNodeOk() (*DefaultSelectionPrisma36Re
 }
 
 // SetNode sets field value
-func (o *ReviewsSearchResultEdgesInner) SetNode(v DefaultSelectionPrisma36ReviewPayload) {
+func (o *ReviewsSearchResultEdgesInner) SetNode(v ReviewResponse) {
 	o.Node = v
 }
 
@@ -95,7 +95,7 @@ func (o *ReviewsSearchResultEdgesInner) SetCursor(v string) {
 }
 
 func (o ReviewsSearchResultEdgesInner) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -123,10 +123,10 @@ func (o *ReviewsSearchResultEdgesInner) UnmarshalJSON(data []byte) (err error) {
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err;
+		return err
 	}
 
-	for _, requiredProperty := range(requiredProperties) {
+	for _, requiredProperty := range requiredProperties {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -182,5 +182,3 @@ func (v *NullableReviewsSearchResultEdgesInner) UnmarshalJSON(src []byte) error 
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

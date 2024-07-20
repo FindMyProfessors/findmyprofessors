@@ -19,14 +19,13 @@ import (
 	"strings"
 )
 
-
 // CoursesAPIService CoursesAPI service
 type CoursesAPIService service
 
 type ApiCreateCourseRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *CoursesAPIService
-	body *PickCourseNameOrCodeOrSchoolId
+	body       *PickCourseNameOrCodeOrSchoolId
 }
 
 func (r ApiCreateCourseRequest) Body(body PickCourseNameOrCodeOrSchoolId) ApiCreateCourseRequest {
@@ -41,24 +40,25 @@ func (r ApiCreateCourseRequest) Execute() (*DefaultSelectionPrisma36CoursePayloa
 /*
 CreateCourse Method for CreateCourse
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiCreateCourseRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateCourseRequest
 */
 func (a *CoursesAPIService) CreateCourse(ctx context.Context) ApiCreateCourseRequest {
 	return ApiCreateCourseRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return DefaultSelectionPrisma36CoursePayload
+//
+//	@return DefaultSelectionPrisma36CoursePayload
 func (a *CoursesAPIService) CreateCourseExecute(r ApiCreateCourseRequest) (*DefaultSelectionPrisma36CoursePayload, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *DefaultSelectionPrisma36CoursePayload
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DefaultSelectionPrisma36CoursePayload
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CoursesAPIService.CreateCourse")
@@ -123,8 +123,8 @@ func (a *CoursesAPIService) CreateCourseExecute(r ApiCreateCourseRequest) (*Defa
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -142,9 +142,9 @@ func (a *CoursesAPIService) CreateCourseExecute(r ApiCreateCourseRequest) (*Defa
 }
 
 type ApiDeleteCourseRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *CoursesAPIService
-	id int32
+	id         int32
 }
 
 func (r ApiDeleteCourseRequest) Execute() (*http.Response, error) {
@@ -154,24 +154,24 @@ func (r ApiDeleteCourseRequest) Execute() (*http.Response, error) {
 /*
 DeleteCourse Method for DeleteCourse
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiDeleteCourseRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id
+	@return ApiDeleteCourseRequest
 */
 func (a *CoursesAPIService) DeleteCourse(ctx context.Context, id int32) ApiDeleteCourseRequest {
 	return ApiDeleteCourseRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *CoursesAPIService) DeleteCourseExecute(r ApiDeleteCourseRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CoursesAPIService.DeleteCourse")
@@ -232,8 +232,8 @@ func (a *CoursesAPIService) DeleteCourseExecute(r ApiDeleteCourseRequest) (*http
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -242,9 +242,9 @@ func (a *CoursesAPIService) DeleteCourseExecute(r ApiDeleteCourseRequest) (*http
 }
 
 type ApiGetCourseRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *CoursesAPIService
-	id int32
+	id         int32
 }
 
 func (r ApiGetCourseRequest) Execute() (*DefaultSelectionPrisma36CoursePayload, *http.Response, error) {
@@ -254,26 +254,27 @@ func (r ApiGetCourseRequest) Execute() (*DefaultSelectionPrisma36CoursePayload, 
 /*
 GetCourse Method for GetCourse
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiGetCourseRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id
+	@return ApiGetCourseRequest
 */
 func (a *CoursesAPIService) GetCourse(ctx context.Context, id int32) ApiGetCourseRequest {
 	return ApiGetCourseRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
-//  @return DefaultSelectionPrisma36CoursePayload
+//
+//	@return DefaultSelectionPrisma36CoursePayload
 func (a *CoursesAPIService) GetCourseExecute(r ApiGetCourseRequest) (*DefaultSelectionPrisma36CoursePayload, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *DefaultSelectionPrisma36CoursePayload
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DefaultSelectionPrisma36CoursePayload
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CoursesAPIService.GetCourse")
@@ -334,8 +335,8 @@ func (a *CoursesAPIService) GetCourseExecute(r ApiGetCourseRequest) (*DefaultSel
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -353,11 +354,11 @@ func (a *CoursesAPIService) GetCourseExecute(r ApiGetCourseRequest) (*DefaultSel
 }
 
 type ApiGetCourseProfessorsRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *CoursesAPIService
-	id int32
-	year *int32
-	semester *36EnumsSemester
+	id         int32
+	year       *int32
+	semester   *EnumsSemester
 }
 
 func (r ApiGetCourseProfessorsRequest) Year(year int32) ApiGetCourseProfessorsRequest {
@@ -365,7 +366,7 @@ func (r ApiGetCourseProfessorsRequest) Year(year int32) ApiGetCourseProfessorsRe
 	return r
 }
 
-func (r ApiGetCourseProfessorsRequest) Semester(semester 36EnumsSemester) ApiGetCourseProfessorsRequest {
+func (r ApiGetCourseProfessorsRequest) Semester(semester EnumsSemester) ApiGetCourseProfessorsRequest {
 	r.semester = &semester
 	return r
 }
@@ -377,26 +378,27 @@ func (r ApiGetCourseProfessorsRequest) Execute() (*CourseProfessors, *http.Respo
 /*
 GetCourseProfessors Method for GetCourseProfessors
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiGetCourseProfessorsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id
+	@return ApiGetCourseProfessorsRequest
 */
 func (a *CoursesAPIService) GetCourseProfessors(ctx context.Context, id int32) ApiGetCourseProfessorsRequest {
 	return ApiGetCourseProfessorsRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
-//  @return CourseProfessors
+//
+//	@return CourseProfessors
 func (a *CoursesAPIService) GetCourseProfessorsExecute(r ApiGetCourseProfessorsRequest) (*CourseProfessors, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *CourseProfessors
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *CourseProfessors
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CoursesAPIService.GetCourseProfessors")
@@ -465,8 +467,8 @@ func (a *CoursesAPIService) GetCourseProfessorsExecute(r ApiGetCourseProfessorsR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -484,14 +486,14 @@ func (a *CoursesAPIService) GetCourseProfessorsExecute(r ApiGetCourseProfessorsR
 }
 
 type ApiSearchCoursesRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *CoursesAPIService
-	schoolId *int32
-	query *string
-	semester *36EnumsSemester
-	year *int32
-	cursor *string
-	pageSize *int32
+	schoolId   *int32
+	query      *string
+	semester   *EnumsSemester
+	year       *int32
+	cursor     *string
+	pageSize   *int32
 }
 
 func (r ApiSearchCoursesRequest) SchoolId(schoolId int32) ApiSearchCoursesRequest {
@@ -504,7 +506,7 @@ func (r ApiSearchCoursesRequest) Query(query string) ApiSearchCoursesRequest {
 	return r
 }
 
-func (r ApiSearchCoursesRequest) Semester(semester 36EnumsSemester) ApiSearchCoursesRequest {
+func (r ApiSearchCoursesRequest) Semester(semester EnumsSemester) ApiSearchCoursesRequest {
 	r.semester = &semester
 	return r
 }
@@ -531,24 +533,25 @@ func (r ApiSearchCoursesRequest) Execute() (*CourseSearchResult, *http.Response,
 /*
 SearchCourses Method for SearchCourses
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSearchCoursesRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiSearchCoursesRequest
 */
 func (a *CoursesAPIService) SearchCourses(ctx context.Context) ApiSearchCoursesRequest {
 	return ApiSearchCoursesRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return CourseSearchResult
+//
+//	@return CourseSearchResult
 func (a *CoursesAPIService) SearchCoursesExecute(r ApiSearchCoursesRequest) (*CourseSearchResult, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *CourseSearchResult
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *CourseSearchResult
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CoursesAPIService.SearchCourses")
@@ -639,10 +642,10 @@ func (a *CoursesAPIService) SearchCoursesExecute(r ApiSearchCoursesRequest) (*Co
 }
 
 type ApiUpdateCourseRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *CoursesAPIService
-	id int32
-	body *PickCourseNameOrCode
+	id         int32
+	body       *PickCourseNameOrCode
 }
 
 func (r ApiUpdateCourseRequest) Body(body PickCourseNameOrCode) ApiUpdateCourseRequest {
@@ -657,26 +660,27 @@ func (r ApiUpdateCourseRequest) Execute() (*DefaultSelectionPrisma36CoursePayloa
 /*
 UpdateCourse Method for UpdateCourse
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiUpdateCourseRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id
+	@return ApiUpdateCourseRequest
 */
 func (a *CoursesAPIService) UpdateCourse(ctx context.Context, id int32) ApiUpdateCourseRequest {
 	return ApiUpdateCourseRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
-//  @return DefaultSelectionPrisma36CoursePayload
+//
+//	@return DefaultSelectionPrisma36CoursePayload
 func (a *CoursesAPIService) UpdateCourseExecute(r ApiUpdateCourseRequest) (*DefaultSelectionPrisma36CoursePayload, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPut
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *DefaultSelectionPrisma36CoursePayload
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DefaultSelectionPrisma36CoursePayload
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CoursesAPIService.UpdateCourse")
@@ -742,8 +746,8 @@ func (a *CoursesAPIService) UpdateCourseExecute(r ApiUpdateCourseRequest) (*Defa
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

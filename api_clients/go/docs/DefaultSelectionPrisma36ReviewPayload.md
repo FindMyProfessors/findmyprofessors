@@ -5,8 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProfessorId** | **int32** |  | 
-**Grade** | [**Model36EnumsGrade**](36EnumsGrade.md) |  | 
-**Tags** | [**[]Model36EnumsReviewTag**](Model36EnumsReviewTag.md) |  | 
+**Grade** | [**ModelEnumsGrade**](EnumsGrade.md) |  | 
+**Tags** | [**[]ModelEnumsReviewTag**](ModelEnumsReviewTag.md) |  | 
 **Time** | **time.Time** |  | 
 **Difficulty** | **int32** |  | 
 **Quality** | **int32** |  | 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewDefaultSelectionPrisma36ReviewPayload
 
-`func NewDefaultSelectionPrisma36ReviewPayload(professorId int32, grade Model36EnumsGrade, tags []Model36EnumsReviewTag, time time.Time, difficulty int32, quality int32, id int32, ) *DefaultSelectionPrisma36ReviewPayload`
+`func NewDefaultSelectionPrisma36ReviewPayload(professorId int32, grade ModelEnumsGrade, tags []ModelEnumsReviewTag, time time.Time, difficulty int32, quality int32, id int32, ) *DefaultSelectionPrisma36ReviewPayload`
 
 NewDefaultSelectionPrisma36ReviewPayload instantiates a new DefaultSelectionPrisma36ReviewPayload object
 This constructor will assign default values to properties that have it defined,
@@ -53,40 +53,40 @@ SetProfessorId sets ProfessorId field to given value.
 
 ### GetGrade
 
-`func (o *DefaultSelectionPrisma36ReviewPayload) GetGrade() Model36EnumsGrade`
+`func (o *DefaultSelectionPrisma36ReviewPayload) GetGrade() ModelEnumsGrade`
 
 GetGrade returns the Grade field if non-nil, zero value otherwise.
 
 ### GetGradeOk
 
-`func (o *DefaultSelectionPrisma36ReviewPayload) GetGradeOk() (*Model36EnumsGrade, bool)`
+`func (o *DefaultSelectionPrisma36ReviewPayload) GetGradeOk() (*ModelEnumsGrade, bool)`
 
 GetGradeOk returns a tuple with the Grade field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetGrade
 
-`func (o *DefaultSelectionPrisma36ReviewPayload) SetGrade(v Model36EnumsGrade)`
+`func (o *DefaultSelectionPrisma36ReviewPayload) SetGrade(v ModelEnumsGrade)`
 
 SetGrade sets Grade field to given value.
 
 
 ### GetTags
 
-`func (o *DefaultSelectionPrisma36ReviewPayload) GetTags() []Model36EnumsReviewTag`
+`func (o *DefaultSelectionPrisma36ReviewPayload) GetTags() []ModelEnumsReviewTag`
 
 GetTags returns the Tags field if non-nil, zero value otherwise.
 
 ### GetTagsOk
 
-`func (o *DefaultSelectionPrisma36ReviewPayload) GetTagsOk() (*[]Model36EnumsReviewTag, bool)`
+`func (o *DefaultSelectionPrisma36ReviewPayload) GetTagsOk() (*[]ModelEnumsReviewTag, bool)`
 
 GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTags
 
-`func (o *DefaultSelectionPrisma36ReviewPayload) SetTags(v []Model36EnumsReviewTag)`
+`func (o *DefaultSelectionPrisma36ReviewPayload) SetTags(v []ModelEnumsReviewTag)`
 
 SetTags sets Tags field to given value.
 

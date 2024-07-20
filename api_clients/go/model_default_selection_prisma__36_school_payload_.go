@@ -11,8 +11,8 @@ API version: 1.0.0
 package openapi
 
 import (
-	"encoding/json"
 	"bytes"
+	"encoding/json"
 	"fmt"
 )
 
@@ -22,7 +22,7 @@ var _ MappedNullable = &DefaultSelectionPrisma36SchoolPayload{}
 // DefaultSelectionPrisma36SchoolPayload struct for DefaultSelectionPrisma36SchoolPayload
 type DefaultSelectionPrisma36SchoolPayload struct {
 	Name string `json:"name"`
-	Id int32 `json:"id"`
+	Id   int32  `json:"id"`
 }
 
 type _DefaultSelectionPrisma36SchoolPayload DefaultSelectionPrisma36SchoolPayload
@@ -95,7 +95,7 @@ func (o *DefaultSelectionPrisma36SchoolPayload) SetId(v int32) {
 }
 
 func (o DefaultSelectionPrisma36SchoolPayload) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -123,10 +123,10 @@ func (o *DefaultSelectionPrisma36SchoolPayload) UnmarshalJSON(data []byte) (err 
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err;
+		return err
 	}
 
-	for _, requiredProperty := range(requiredProperties) {
+	for _, requiredProperty := range requiredProperties {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -182,5 +182,3 @@ func (v *NullableDefaultSelectionPrisma36SchoolPayload) UnmarshalJSON(src []byte
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -15,34 +15,34 @@ import (
 	"fmt"
 )
 
-// 36EnumsGrade the model '36EnumsGrade'
-type 36EnumsGrade string
+// EnumsGrade the model 'EnumsGrade'
+type EnumsGrade string
 
 // List of _36_Enums.Grade
 const (
-	A_PLUS 36EnumsGrade = "A_PLUS"
-	A 36EnumsGrade = "A"
-	A_MINUS 36EnumsGrade = "A_MINUS"
-	B_PLUS 36EnumsGrade = "B_PLUS"
-	B 36EnumsGrade = "B"
-	B_MINUS 36EnumsGrade = "B_MINUS"
-	C_PLUS 36EnumsGrade = "C_PLUS"
-	C 36EnumsGrade = "C"
-	C_MINUS 36EnumsGrade = "C_MINUS"
-	D_PLUS 36EnumsGrade = "D_PLUS"
-	D 36EnumsGrade = "D"
-	D_MINUS 36EnumsGrade = "D_MINUS"
-	F_PLUS 36EnumsGrade = "F_PLUS"
-	F 36EnumsGrade = "F"
-	F_MINUS 36EnumsGrade = "F_MINUS"
-	INCOMPLETE 36EnumsGrade = "INCOMPLETE"
-	WITHDRAWN 36EnumsGrade = "WITHDRAWN"
-	NOT_SURE 36EnumsGrade = "NOT_SURE"
-	OTHER 36EnumsGrade = "OTHER"
+	A_PLUS     EnumsGrade = "A_PLUS"
+	A          EnumsGrade = "A"
+	A_MINUS    EnumsGrade = "A_MINUS"
+	B_PLUS     EnumsGrade = "B_PLUS"
+	B          EnumsGrade = "B"
+	B_MINUS    EnumsGrade = "B_MINUS"
+	C_PLUS     EnumsGrade = "C_PLUS"
+	C          EnumsGrade = "C"
+	C_MINUS    EnumsGrade = "C_MINUS"
+	D_PLUS     EnumsGrade = "D_PLUS"
+	D          EnumsGrade = "D"
+	D_MINUS    EnumsGrade = "D_MINUS"
+	F_PLUS     EnumsGrade = "F_PLUS"
+	F          EnumsGrade = "F"
+	F_MINUS    EnumsGrade = "F_MINUS"
+	INCOMPLETE EnumsGrade = "INCOMPLETE"
+	WITHDRAWN  EnumsGrade = "WITHDRAWN"
+	NOT_SURE   EnumsGrade = "NOT_SURE"
+	OTHER      EnumsGrade = "OTHER"
 )
 
-// All allowed values of 36EnumsGrade enum
-var Allowed36EnumsGradeEnumValues = []36EnumsGrade{
+// All allowed values of EnumsGrade enum
+var AllowedEnumsGradeEnumValues = []EnumsGrade{
 	"A_PLUS",
 	"A",
 	"A_MINUS",
@@ -64,37 +64,37 @@ var Allowed36EnumsGradeEnumValues = []36EnumsGrade{
 	"OTHER",
 }
 
-func (v *36EnumsGrade) UnmarshalJSON(src []byte) error {
+func (v *EnumsGrade) UnmarshalJSON(src []byte) error {
 	var value string
 	err := json.Unmarshal(src, &value)
 	if err != nil {
 		return err
 	}
-	enumTypeValue := 36EnumsGrade(value)
-	for _, existing := range Allowed36EnumsGradeEnumValues {
+	enumTypeValue := EnumsGrade(value)
+	for _, existing := range AllowedEnumsGradeEnumValues {
 		if existing == enumTypeValue {
 			*v = enumTypeValue
 			return nil
 		}
 	}
 
-	return fmt.Errorf("%+v is not a valid 36EnumsGrade", value)
+	return fmt.Errorf("%+v is not a valid EnumsGrade", value)
 }
 
-// New36EnumsGradeFromValue returns a pointer to a valid 36EnumsGrade
+// NewEnumsGradeFromValue returns a pointer to a valid EnumsGrade
 // for the value passed as argument, or an error if the value passed is not allowed by the enum
-func New36EnumsGradeFromValue(v string) (*36EnumsGrade, error) {
-	ev := 36EnumsGrade(v)
+func NewEnumsGradeFromValue(v string) (*EnumsGrade, error) {
+	ev := EnumsGrade(v)
 	if ev.IsValid() {
 		return &ev, nil
 	} else {
-		return nil, fmt.Errorf("invalid value '%v' for 36EnumsGrade: valid values are %v", v, Allowed36EnumsGradeEnumValues)
+		return nil, fmt.Errorf("invalid value '%v' for EnumsGrade: valid values are %v", v, AllowedEnumsGradeEnumValues)
 	}
 }
 
 // IsValid return true if the value is valid for the enum, false otherwise
-func (v 36EnumsGrade) IsValid() bool {
-	for _, existing := range Allowed36EnumsGradeEnumValues {
+func (v EnumsGrade) IsValid() bool {
+	for _, existing := range AllowedEnumsGradeEnumValues {
 		if existing == v {
 			return true
 		}
@@ -103,43 +103,42 @@ func (v 36EnumsGrade) IsValid() bool {
 }
 
 // Ptr returns reference to _36_Enums.Grade value
-func (v 36EnumsGrade) Ptr() *36EnumsGrade {
+func (v EnumsGrade) Ptr() *EnumsGrade {
 	return &v
 }
 
-type Nullable36EnumsGrade struct {
-	value *36EnumsGrade
+type NullableEnumsGrade struct {
+	value *EnumsGrade
 	isSet bool
 }
 
-func (v Nullable36EnumsGrade) Get() *36EnumsGrade {
+func (v NullableEnumsGrade) Get() *EnumsGrade {
 	return v.value
 }
 
-func (v *Nullable36EnumsGrade) Set(val *36EnumsGrade) {
+func (v *NullableEnumsGrade) Set(val *EnumsGrade) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v Nullable36EnumsGrade) IsSet() bool {
+func (v NullableEnumsGrade) IsSet() bool {
 	return v.isSet
 }
 
-func (v *Nullable36EnumsGrade) Unset() {
+func (v *NullableEnumsGrade) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullable36EnumsGrade(val *36EnumsGrade) *Nullable36EnumsGrade {
-	return &Nullable36EnumsGrade{value: val, isSet: true}
+func NewNullableEnumsGrade(val *EnumsGrade) *NullableEnumsGrade {
+	return &NullableEnumsGrade{value: val, isSet: true}
 }
 
-func (v Nullable36EnumsGrade) MarshalJSON() ([]byte, error) {
+func (v NullableEnumsGrade) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *Nullable36EnumsGrade) UnmarshalJSON(src []byte) error {
+func (v *NullableEnumsGrade) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

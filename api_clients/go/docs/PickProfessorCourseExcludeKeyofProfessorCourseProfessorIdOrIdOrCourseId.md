@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Year** | **int32** |  | 
-**Semester** | [**Model36EnumsSemester**](36EnumsSemester.md) |  | 
+**Semester** | [**ModelEnumsSemester**](EnumsSemester.md) |  | 
 
 ## Methods
 
 ### NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId
 
-`func NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId(year int32, semester Model36EnumsSemester, ) *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId`
+`func NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId(year int32, semester ModelEnumsSemester, ) *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId`
 
 NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId instantiates a new PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId object
 This constructor will assign default values to properties that have it defined,
@@ -48,20 +48,20 @@ SetYear sets Year field to given value.
 
 ### GetSemester
 
-`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) GetSemester() Model36EnumsSemester`
+`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) GetSemester() ModelEnumsSemester`
 
 GetSemester returns the Semester field if non-nil, zero value otherwise.
 
 ### GetSemesterOk
 
-`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) GetSemesterOk() (*Model36EnumsSemester, bool)`
+`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) GetSemesterOk() (*ModelEnumsSemester, bool)`
 
 GetSemesterOk returns a tuple with the Semester field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSemester
 
-`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) SetSemester(v Model36EnumsSemester)`
+`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) SetSemester(v ModelEnumsSemester)`
 
 SetSemester sets Semester field to given value.
 

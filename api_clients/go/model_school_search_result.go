@@ -11,8 +11,8 @@ API version: 1.0.0
 package openapi
 
 import (
-	"encoding/json"
 	"bytes"
+	"encoding/json"
 	"fmt"
 )
 
@@ -21,8 +21,8 @@ var _ MappedNullable = &SchoolSearchResult{}
 
 // SchoolSearchResult struct for SchoolSearchResult
 type SchoolSearchResult struct {
-	PageInfo SchoolSearchResultPageInfo `json:"pageInfo"`
-	Edges []SchoolSearchResultEdgesInner `json:"edges"`
+	PageInfo SchoolSearchResultPageInfo     `json:"pageInfo"`
+	Edges    []SchoolSearchResultEdgesInner `json:"edges"`
 }
 
 type _SchoolSearchResult SchoolSearchResult
@@ -95,7 +95,7 @@ func (o *SchoolSearchResult) SetEdges(v []SchoolSearchResultEdgesInner) {
 }
 
 func (o SchoolSearchResult) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -123,10 +123,10 @@ func (o *SchoolSearchResult) UnmarshalJSON(data []byte) (err error) {
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err;
+		return err
 	}
 
-	for _, requiredProperty := range(requiredProperties) {
+	for _, requiredProperty := range requiredProperties {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -182,5 +182,3 @@ func (v *NullableSchoolSearchResult) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

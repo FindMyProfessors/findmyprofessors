@@ -97,9 +97,9 @@ Class | Method | HTTP request | Description
 *ProfessorsAPI* | [**SearchProfessors**](docs/ProfessorsAPI.md#searchprofessors) | **Get** /professors/search | 
 *ProfessorsAPI* | [**UpdateProfessor**](docs/ProfessorsAPI.md#updateprofessor) | **Put** /professors/{id} | 
 *ReviewsAPI* | [**CreateReview**](docs/ReviewsAPI.md#createreview) | **Post** /reviews/create | 
-*ReviewsAPI* | [**DeleteReview**](docs/ReviewsAPI.md#deletereview) | **Delete** /reviews/reviews/{review_id} | 
-*ReviewsAPI* | [**GetReview**](docs/ReviewsAPI.md#getreview) | **Get** /reviews/reviews/{review_id} | 
-*ReviewsAPI* | [**UpdateReview**](docs/ReviewsAPI.md#updatereview) | **Put** /reviews/reviews/{review_id} | 
+*ReviewsAPI* | [**DeleteReview**](docs/ReviewsAPI.md#deletereview) | **Delete** /reviews/{review_id} | 
+*ReviewsAPI* | [**GetReview**](docs/ReviewsAPI.md#getreview) | **Get** /reviews/{review_id} | 
+*ReviewsAPI* | [**UpdateReview**](docs/ReviewsAPI.md#updatereview) | **Put** /reviews/{review_id} | 
 *SchoolsAPI* | [**CreateSchool**](docs/SchoolsAPI.md#createschool) | **Post** /schools/create | 
 *SchoolsAPI* | [**DeleteSchool**](docs/SchoolsAPI.md#deleteschool) | **Delete** /schools/{id} | 
 *SchoolsAPI* | [**GetSchool**](docs/SchoolsAPI.md#getschool) | **Get** /schools/{id} | 
@@ -112,10 +112,10 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
- - [36EnumsGrade](docs/36EnumsGrade.md)
- - [36EnumsReviewTag](docs/36EnumsReviewTag.md)
- - [36EnumsSemester](docs/36EnumsSemester.md)
- - [36EnumsUserRole](docs/36EnumsUserRole.md)
+ - [EnumsGrade](docs/EnumsGrade.md)
+ - [EnumsReviewTag](docs/EnumsReviewTag.md)
+ - [EnumsSemester](docs/EnumsSemester.md)
+ - [EnumsUserRole](docs/EnumsUserRole.md)
  - [AuthErrorType](docs/AuthErrorType.md)
  - [AuthErrorTypeINVALIDPASSWORD](docs/AuthErrorTypeINVALIDPASSWORD.md)
  - [AuthErrorTypeUSERALREADYEXISTS](docs/AuthErrorTypeUSERALREADYEXISTS.md)
@@ -132,10 +132,10 @@ Class | Method | HTTP request | Description
  - [DefaultSelectionPrisma36CoursePayload](docs/DefaultSelectionPrisma36CoursePayload.md)
  - [DefaultSelectionPrisma36ProfessorCoursePayload](docs/DefaultSelectionPrisma36ProfessorCoursePayload.md)
  - [DefaultSelectionPrisma36ProfessorPayload](docs/DefaultSelectionPrisma36ProfessorPayload.md)
- - [DefaultSelectionPrisma36ReviewPayload](docs/DefaultSelectionPrisma36ReviewPayload.md)
  - [DefaultSelectionPrisma36SchoolPayload](docs/DefaultSelectionPrisma36SchoolPayload.md)
  - [InvalidPasswordError](docs/InvalidPasswordError.md)
  - [LoginResponse](docs/LoginResponse.md)
+ - [NewReview](docs/NewReview.md)
  - [PickAuthErrorMessageOrType](docs/PickAuthErrorMessageOrType.md)
  - [PickCourseErrorMessageOrType](docs/PickCourseErrorMessageOrType.md)
  - [PickCourseNameOrCode](docs/PickCourseNameOrCode.md)
@@ -145,8 +145,6 @@ Class | Method | HTTP request | Description
  - [PickProfessorErrorMessageOrType](docs/PickProfessorErrorMessageOrType.md)
  - [PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId](docs/PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId.md)
  - [PickReviewErrorMessageOrType](docs/PickReviewErrorMessageOrType.md)
- - [PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade](docs/PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade.md)
- - [PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId](docs/PickReviewQualityOrDifficultyOrTimeOrTagsOrGradeOrProfessorId.md)
  - [PickSchoolErrorMessageOrType](docs/PickSchoolErrorMessageOrType.md)
  - [PickSchoolErrorMessageOrTypeMessage](docs/PickSchoolErrorMessageOrTypeMessage.md)
  - [PickSchoolName](docs/PickSchoolName.md)
@@ -167,6 +165,7 @@ Class | Method | HTTP request | Description
  - [ReviewErrorType](docs/ReviewErrorType.md)
  - [ReviewErrorTypeREVIEWNOTFOUND](docs/ReviewErrorTypeREVIEWNOTFOUND.md)
  - [ReviewNotFoundError](docs/ReviewNotFoundError.md)
+ - [ReviewResponse](docs/ReviewResponse.md)
  - [ReviewsSearchResult](docs/ReviewsSearchResult.md)
  - [ReviewsSearchResultEdgesInner](docs/ReviewsSearchResultEdgesInner.md)
  - [SchoolAlreadyExistsError](docs/SchoolAlreadyExistsError.md)
@@ -179,6 +178,7 @@ Class | Method | HTTP request | Description
  - [SchoolSearchResultPageInfo](docs/SchoolSearchResultPageInfo.md)
  - [TagAmount](docs/TagAmount.md)
  - [UpdatedProfessor](docs/UpdatedProfessor.md)
+ - [UpdatedReview](docs/UpdatedReview.md)
  - [UserAlreadyExistsError](docs/UserAlreadyExistsError.md)
  - [UserNotFoundError](docs/UserNotFoundError.md)
 

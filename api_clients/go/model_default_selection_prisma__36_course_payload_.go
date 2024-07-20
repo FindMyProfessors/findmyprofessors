@@ -11,8 +11,8 @@ API version: 1.0.0
 package openapi
 
 import (
-	"encoding/json"
 	"bytes"
+	"encoding/json"
 	"fmt"
 )
 
@@ -21,10 +21,10 @@ var _ MappedNullable = &DefaultSelectionPrisma36CoursePayload{}
 
 // DefaultSelectionPrisma36CoursePayload struct for DefaultSelectionPrisma36CoursePayload
 type DefaultSelectionPrisma36CoursePayload struct {
-	SchoolId int32 `json:"school_id"`
-	Code string `json:"code"`
-	Name string `json:"name"`
-	Id int32 `json:"id"`
+	SchoolId int32  `json:"school_id"`
+	Code     string `json:"code"`
+	Name     string `json:"name"`
+	Id       int32  `json:"id"`
 }
 
 type _DefaultSelectionPrisma36CoursePayload DefaultSelectionPrisma36CoursePayload
@@ -147,7 +147,7 @@ func (o *DefaultSelectionPrisma36CoursePayload) SetId(v int32) {
 }
 
 func (o DefaultSelectionPrisma36CoursePayload) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -179,10 +179,10 @@ func (o *DefaultSelectionPrisma36CoursePayload) UnmarshalJSON(data []byte) (err 
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err;
+		return err
 	}
 
-	for _, requiredProperty := range(requiredProperties) {
+	for _, requiredProperty := range requiredProperties {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -238,5 +238,3 @@ func (v *NullableDefaultSelectionPrisma36CoursePayload) UnmarshalJSON(src []byte
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

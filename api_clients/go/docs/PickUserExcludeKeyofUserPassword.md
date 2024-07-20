@@ -10,13 +10,13 @@ Name | Type | Description | Notes
 **SignupTime** | **time.Time** |  | 
 **LastLoginTime** | **time.Time** |  | 
 **AccountVerified** | **bool** |  | 
-**Role** | [**Model36EnumsUserRole**](36EnumsUserRole.md) |  | 
+**Role** | [**ModelEnumsUserRole**](EnumsUserRole.md) |  | 
 
 ## Methods
 
 ### NewPickUserExcludeKeyofUserPassword
 
-`func NewPickUserExcludeKeyofUserPassword(id int32, email string, username string, signupTime time.Time, lastLoginTime time.Time, accountVerified bool, role Model36EnumsUserRole, ) *PickUserExcludeKeyofUserPassword`
+`func NewPickUserExcludeKeyofUserPassword(id int32, email string, username string, signupTime time.Time, lastLoginTime time.Time, accountVerified bool, role ModelEnumsUserRole, ) *PickUserExcludeKeyofUserPassword`
 
 NewPickUserExcludeKeyofUserPassword instantiates a new PickUserExcludeKeyofUserPassword object
 This constructor will assign default values to properties that have it defined,
@@ -153,20 +153,20 @@ SetAccountVerified sets AccountVerified field to given value.
 
 ### GetRole
 
-`func (o *PickUserExcludeKeyofUserPassword) GetRole() Model36EnumsUserRole`
+`func (o *PickUserExcludeKeyofUserPassword) GetRole() ModelEnumsUserRole`
 
 GetRole returns the Role field if non-nil, zero value otherwise.
 
 ### GetRoleOk
 
-`func (o *PickUserExcludeKeyofUserPassword) GetRoleOk() (*Model36EnumsUserRole, bool)`
+`func (o *PickUserExcludeKeyofUserPassword) GetRoleOk() (*ModelEnumsUserRole, bool)`
 
 GetRoleOk returns a tuple with the Role field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRole
 
-`func (o *PickUserExcludeKeyofUserPassword) SetRole(v Model36EnumsUserRole)`
+`func (o *PickUserExcludeKeyofUserPassword) SetRole(v ModelEnumsUserRole)`
 
 SetRole sets Role field to given value.
 

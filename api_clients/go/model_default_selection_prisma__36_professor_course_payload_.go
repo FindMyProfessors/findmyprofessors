@@ -11,8 +11,8 @@ API version: 1.0.0
 package openapi
 
 import (
-	"encoding/json"
 	"bytes"
+	"encoding/json"
 	"fmt"
 )
 
@@ -21,11 +21,11 @@ var _ MappedNullable = &DefaultSelectionPrisma36ProfessorCoursePayload{}
 
 // DefaultSelectionPrisma36ProfessorCoursePayload struct for DefaultSelectionPrisma36ProfessorCoursePayload
 type DefaultSelectionPrisma36ProfessorCoursePayload struct {
-	Semester Model36EnumsSemester `json:"semester"`
-	Year int32 `json:"year"`
-	CourseId int32 `json:"course_id"`
-	ProfessorId int32 `json:"professor_id"`
-	Id int32 `json:"id"`
+	Semester    ModelEnumsSemester `json:"semester"`
+	Year        int32              `json:"year"`
+	CourseId    int32              `json:"course_id"`
+	ProfessorId int32              `json:"professor_id"`
+	Id          int32              `json:"id"`
 }
 
 type _DefaultSelectionPrisma36ProfessorCoursePayload DefaultSelectionPrisma36ProfessorCoursePayload
@@ -34,7 +34,7 @@ type _DefaultSelectionPrisma36ProfessorCoursePayload DefaultSelectionPrisma36Pro
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDefaultSelectionPrisma36ProfessorCoursePayload(semester Model36EnumsSemester, year int32, courseId int32, professorId int32, id int32) *DefaultSelectionPrisma36ProfessorCoursePayload {
+func NewDefaultSelectionPrisma36ProfessorCoursePayload(semester ModelEnumsSemester, year int32, courseId int32, professorId int32, id int32) *DefaultSelectionPrisma36ProfessorCoursePayload {
 	this := DefaultSelectionPrisma36ProfessorCoursePayload{}
 	this.Semester = semester
 	this.Year = year
@@ -53,9 +53,9 @@ func NewDefaultSelectionPrisma36ProfessorCoursePayloadWithDefaults() *DefaultSel
 }
 
 // GetSemester returns the Semester field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetSemester() Model36EnumsSemester {
+func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetSemester() ModelEnumsSemester {
 	if o == nil {
-		var ret Model36EnumsSemester
+		var ret ModelEnumsSemester
 		return ret
 	}
 
@@ -64,7 +64,7 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetSemester() Model36En
 
 // GetSemesterOk returns a tuple with the Semester field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetSemesterOk() (*Model36EnumsSemester, bool) {
+func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetSemesterOk() (*ModelEnumsSemester, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -72,7 +72,7 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetSemesterOk() (*Model
 }
 
 // SetSemester sets field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) SetSemester(v Model36EnumsSemester) {
+func (o *DefaultSelectionPrisma36ProfessorCoursePayload) SetSemester(v ModelEnumsSemester) {
 	o.Semester = v
 }
 
@@ -173,7 +173,7 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) SetId(v int32) {
 }
 
 func (o DefaultSelectionPrisma36ProfessorCoursePayload) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -207,10 +207,10 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) UnmarshalJSON(data []by
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err;
+		return err
 	}
 
-	for _, requiredProperty := range(requiredProperties) {
+	for _, requiredProperty := range requiredProperties {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -266,5 +266,3 @@ func (v *NullableDefaultSelectionPrisma36ProfessorCoursePayload) UnmarshalJSON(s
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

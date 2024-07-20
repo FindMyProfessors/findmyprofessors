@@ -18,14 +18,14 @@ import (
 // PickSchoolErrorMessageOrTypeMessage struct for PickSchoolErrorMessageOrTypeMessage
 type PickSchoolErrorMessageOrTypeMessage struct {
 	MapmapOfStringstring *map[string]string
-	String *string
+	String               *string
 }
 
 // Unmarshal JSON data into any of the pointers in the struct
 func (dst *PickSchoolErrorMessageOrTypeMessage) UnmarshalJSON(data []byte) error {
 	var err error
 	// try to unmarshal JSON data into MapmapOfStringstring
-	err = json.Unmarshal(data, &dst.MapmapOfStringstring);
+	err = json.Unmarshal(data, &dst.MapmapOfStringstring)
 	if err == nil {
 		jsonMapmapOfStringstring, _ := json.Marshal(dst.MapmapOfStringstring)
 		if string(jsonMapmapOfStringstring) == "{}" { // empty struct
@@ -38,7 +38,7 @@ func (dst *PickSchoolErrorMessageOrTypeMessage) UnmarshalJSON(data []byte) error
 	}
 
 	// try to unmarshal JSON data into String
-	err = json.Unmarshal(data, &dst.String);
+	err = json.Unmarshal(data, &dst.String)
 	if err == nil {
 		jsonString, _ := json.Marshal(dst.String)
 		if string(jsonString) == "{}" { // empty struct
@@ -101,5 +101,3 @@ func (v *NullablePickSchoolErrorMessageOrTypeMessage) UnmarshalJSON(src []byte) 
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

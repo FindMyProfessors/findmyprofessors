@@ -11,10 +11,10 @@ API version: 1.0.0
 package openapi
 
 import (
-	"encoding/json"
-	"time"
 	"bytes"
+	"encoding/json"
 	"fmt"
+	"time"
 )
 
 // checks if the DefaultSelectionPrisma36ReviewPayload type satisfies the MappedNullable interface at compile time
@@ -22,13 +22,13 @@ var _ MappedNullable = &DefaultSelectionPrisma36ReviewPayload{}
 
 // DefaultSelectionPrisma36ReviewPayload struct for DefaultSelectionPrisma36ReviewPayload
 type DefaultSelectionPrisma36ReviewPayload struct {
-	ProfessorId int32 `json:"professor_id"`
-	Grade Model36EnumsGrade `json:"grade"`
-	Tags []Model36EnumsReviewTag `json:"tags"`
-	Time time.Time `json:"time"`
-	Difficulty int32 `json:"difficulty"`
-	Quality int32 `json:"quality"`
-	Id int32 `json:"id"`
+	ProfessorId int32                 `json:"professor_id"`
+	Grade       ModelEnumsGrade       `json:"grade"`
+	Tags        []ModelEnumsReviewTag `json:"tags"`
+	Time        time.Time             `json:"time"`
+	Difficulty  int32                 `json:"difficulty"`
+	Quality     int32                 `json:"quality"`
+	Id          int32                 `json:"id"`
 }
 
 type _DefaultSelectionPrisma36ReviewPayload DefaultSelectionPrisma36ReviewPayload
@@ -37,7 +37,7 @@ type _DefaultSelectionPrisma36ReviewPayload DefaultSelectionPrisma36ReviewPayloa
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDefaultSelectionPrisma36ReviewPayload(professorId int32, grade Model36EnumsGrade, tags []Model36EnumsReviewTag, time time.Time, difficulty int32, quality int32, id int32) *DefaultSelectionPrisma36ReviewPayload {
+func NewDefaultSelectionPrisma36ReviewPayload(professorId int32, grade ModelEnumsGrade, tags []ModelEnumsReviewTag, time time.Time, difficulty int32, quality int32, id int32) *DefaultSelectionPrisma36ReviewPayload {
 	this := DefaultSelectionPrisma36ReviewPayload{}
 	this.ProfessorId = professorId
 	this.Grade = grade
@@ -82,9 +82,9 @@ func (o *DefaultSelectionPrisma36ReviewPayload) SetProfessorId(v int32) {
 }
 
 // GetGrade returns the Grade field value
-func (o *DefaultSelectionPrisma36ReviewPayload) GetGrade() Model36EnumsGrade {
+func (o *DefaultSelectionPrisma36ReviewPayload) GetGrade() ModelEnumsGrade {
 	if o == nil {
-		var ret Model36EnumsGrade
+		var ret ModelEnumsGrade
 		return ret
 	}
 
@@ -93,7 +93,7 @@ func (o *DefaultSelectionPrisma36ReviewPayload) GetGrade() Model36EnumsGrade {
 
 // GetGradeOk returns a tuple with the Grade field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ReviewPayload) GetGradeOk() (*Model36EnumsGrade, bool) {
+func (o *DefaultSelectionPrisma36ReviewPayload) GetGradeOk() (*ModelEnumsGrade, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -101,14 +101,14 @@ func (o *DefaultSelectionPrisma36ReviewPayload) GetGradeOk() (*Model36EnumsGrade
 }
 
 // SetGrade sets field value
-func (o *DefaultSelectionPrisma36ReviewPayload) SetGrade(v Model36EnumsGrade) {
+func (o *DefaultSelectionPrisma36ReviewPayload) SetGrade(v ModelEnumsGrade) {
 	o.Grade = v
 }
 
 // GetTags returns the Tags field value
-func (o *DefaultSelectionPrisma36ReviewPayload) GetTags() []Model36EnumsReviewTag {
+func (o *DefaultSelectionPrisma36ReviewPayload) GetTags() []ModelEnumsReviewTag {
 	if o == nil {
-		var ret []Model36EnumsReviewTag
+		var ret []ModelEnumsReviewTag
 		return ret
 	}
 
@@ -117,7 +117,7 @@ func (o *DefaultSelectionPrisma36ReviewPayload) GetTags() []Model36EnumsReviewTa
 
 // GetTagsOk returns a tuple with the Tags field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ReviewPayload) GetTagsOk() ([]Model36EnumsReviewTag, bool) {
+func (o *DefaultSelectionPrisma36ReviewPayload) GetTagsOk() ([]ModelEnumsReviewTag, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -125,7 +125,7 @@ func (o *DefaultSelectionPrisma36ReviewPayload) GetTagsOk() ([]Model36EnumsRevie
 }
 
 // SetTags sets field value
-func (o *DefaultSelectionPrisma36ReviewPayload) SetTags(v []Model36EnumsReviewTag) {
+func (o *DefaultSelectionPrisma36ReviewPayload) SetTags(v []ModelEnumsReviewTag) {
 	o.Tags = v
 }
 
@@ -226,7 +226,7 @@ func (o *DefaultSelectionPrisma36ReviewPayload) SetId(v int32) {
 }
 
 func (o DefaultSelectionPrisma36ReviewPayload) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -264,10 +264,10 @@ func (o *DefaultSelectionPrisma36ReviewPayload) UnmarshalJSON(data []byte) (err 
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err;
+		return err
 	}
 
-	for _, requiredProperty := range(requiredProperties) {
+	for _, requiredProperty := range requiredProperties {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -323,5 +323,3 @@ func (v *NullableDefaultSelectionPrisma36ReviewPayload) UnmarshalJSON(src []byte
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -20,7 +20,7 @@ type SchoolErrorType string
 
 // List of SchoolErrorType
 const (
-	NOT_FOUND SchoolErrorType = "SCHOOL_NOT_FOUND"
+	NOT_FOUND      SchoolErrorType = "SCHOOL_NOT_FOUND"
 	ALREADY_EXISTS SchoolErrorType = "SCHOOL_ALREADY_EXISTS"
 )
 
@@ -108,4 +108,3 @@ func (v *NullableSchoolErrorType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
