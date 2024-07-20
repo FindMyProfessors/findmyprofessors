@@ -87,7 +87,7 @@ Future<void> getCourses(BuildContext context) async {
       }
 
       if (courseCodes.isNotEmpty) {
-        for (var courseCode in courseCodes!) {
+        for (var courseCode in courseCodes) {
           print('Course Code: ${courseCode.Name}, ID: ${courseCode.ID}');
         }
       } else {
