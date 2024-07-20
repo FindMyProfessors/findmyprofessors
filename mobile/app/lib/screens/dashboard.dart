@@ -39,26 +39,27 @@ class _DashboardState extends State<Dashboard> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final storage = FlutterSecureStorage();
+  final List<String>? semesterNames= ['fall','spring','summer'];
 
   String? userName;
   String? userID;
   bool showProfessors = false;
 
-  
-  String schoolID = '';
+  //String schoolID = '';
   String semesterSelection = '';
   String year = '';
 
   late Name_ID schoolSelection;
   late Name_ID courseSelection;
 
-  List<String> professors= [];     
+  //List<String> professors= [];     
  
   //each list has both the name and the ID
   List<Name_ID>? schoolNames= [];
   List<Name_ID> courseCodes = [];
-  final List<String>? semesterNames= ['fall','spring','summer'];
+  List<Name_ID>? Professors= [];
 
+  
   @override
   void initState() {
     super.initState();
@@ -67,11 +68,65 @@ class _DashboardState extends State<Dashboard> {
   }
 
   void _refreshProfessors() {
-  setState(() {
-    _professors();
-  });
-}
+    print('Refreshing Professors...');
+    setState(() {
+      _professors();
+    });
+  }
   
+  Future<void> _getProfessors() async {
+
+    print("Loading Professors from DB...");
+    
+    String? JWT = await storage.read(key: 'JWT');
+    try {
+      var response = await http.get(
+        Uri.parse('http://localhost:8080/courses/'+courseSelection.ID.toString()+'/professors?year='+year+'&semester='+semesterSelection.toUpperCase()),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + JWT.toString(),
+        },
+      );
+
+      // print("Response status: ${response.statusCode}");
+      // print("Response headers: ${response.headers}");
+      // print("Response body: ${response.body}");
+
+      final responseData = json.decode(response.body);
+
+      if (response.statusCode == 200) {
+        print("successfull professor search");
+        Professors = [];
+        final List<dynamic> professors_list = responseData['professors'];
+        
+        for (var professor in professors_list) {
+          final String professorName = professor['first_name'] + ' ' + professor['last_name'];
+          final int professorID = professor['id'];
+          Professors?.add(new Name_ID(professorID, professorName));
+        }
+
+        if (Professors != null) {
+          for (var professor in Professors!) {
+            print('Professor Name: ${professor.Name}, ID: ${professor.ID}');
+          }
+        } else {
+          print('No Professor names found.');
+        }
+      } 
+      else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(responseData['message']),
+          ),
+        );
+        print('Failed to Load Professors: ${response.body[0]}');
+      }
+    } 
+    catch (e) {
+      print('ERROR occurred: $e');
+    }
+  }
+
   Future<void> _getCourses() async {
 
     print("Loading Courses...");
@@ -86,9 +141,9 @@ class _DashboardState extends State<Dashboard> {
         },
       );
 
-      print("Response status: ${response.statusCode}");
-      print("Response headers: ${response.headers}");
-      print("Response body: ${response.body}");
+      // print("Response status: ${response.statusCode}");
+      // print("Response headers: ${response.headers}");
+      // print("Response body: ${response.body}");
 
       final responseData = json.decode(response.body);
 
@@ -137,9 +192,9 @@ class _DashboardState extends State<Dashboard> {
         },
       );
 
-      print("Response status: ${response.statusCode}");
-      print("Response headers: ${response.headers}");
-      print("Response body: ${response.body}");
+      // print("Response status: ${response.statusCode}");
+      // print("Response headers: ${response.headers}");
+      // print("Response body: ${response.body}");
 
       final responseData = json.decode(response.body);
 
@@ -369,8 +424,8 @@ class _DashboardState extends State<Dashboard> {
             ),
 
             Divider(color: Colors.black, thickness: 1.0, indent: 16.0, endIndent: 16.0,),
-
-            if(professors.isNotEmpty)
+            
+            if(Professors!.isNotEmpty)
               _professors()
             else
               Column(
@@ -474,15 +529,12 @@ class _DashboardState extends State<Dashboard> {
                   )
                 );
               },
-              onSelected: (Name_ID selection) {
+              onSelected: (Name_ID selection) async {
                 setState(() {
-                  schoolSelection = selection;
+                  courseSelection = selection;
                 });
-                //set professors with random vals
-                var random = new Random();
-                professors = List.generate(10, (index) => 'Professor ${random.nextInt(100)}');
+                await _getProfessors();
                 _refreshProfessors();
-                //
                 print('You just selected ${selection.Name} with ID ${selection.ID}');
               },
             ),
@@ -495,13 +547,14 @@ class _DashboardState extends State<Dashboard> {
 
     
     _professors() {
+    //print('Professors is trying to load...');
     return Expanded(
       child: ListView.builder(
-        itemCount: professors.length,
+        itemCount: Professors!.length,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => Professor(item: "${index + 1}", rating: (index+1)%5,)));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => Professor(item: "${index + 1}", rating: (index+1)%5, id: 1,)));
             },
             child: Container(
               height: 100.0,
@@ -520,7 +573,7 @@ class _DashboardState extends State<Dashboard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        professors[index],
+                        Professors![index].Name,
                         style: TextStyle(color: Colors.white, fontSize: 18.0),
                       ),
 
@@ -558,8 +611,7 @@ class _DashboardState extends State<Dashboard> {
                   ),
         
                 ]
-                
-
+              
               ),
               
             )
