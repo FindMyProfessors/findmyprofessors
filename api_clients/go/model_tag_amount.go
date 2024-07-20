@@ -21,7 +21,7 @@ var _ MappedNullable = &TagAmount{}
 
 // TagAmount struct for TagAmount
 type TagAmount struct {
-	Amount float64 `json:"amount"`
+	Amount int32 `json:"amount"`
 	Tag Model36EnumsReviewTag `json:"tag"`
 }
 
@@ -31,7 +31,7 @@ type _TagAmount TagAmount
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTagAmount(amount float64, tag Model36EnumsReviewTag) *TagAmount {
+func NewTagAmount(amount int32, tag Model36EnumsReviewTag) *TagAmount {
 	this := TagAmount{}
 	this.Amount = amount
 	this.Tag = tag
@@ -47,9 +47,9 @@ func NewTagAmountWithDefaults() *TagAmount {
 }
 
 // GetAmount returns the Amount field value
-func (o *TagAmount) GetAmount() float64 {
+func (o *TagAmount) GetAmount() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -58,7 +58,7 @@ func (o *TagAmount) GetAmount() float64 {
 
 // GetAmountOk returns a tuple with the Amount field value
 // and a boolean to check if the value has been set.
-func (o *TagAmount) GetAmountOk() (*float64, bool) {
+func (o *TagAmount) GetAmountOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -66,7 +66,7 @@ func (o *TagAmount) GetAmountOk() (*float64, bool) {
 }
 
 // SetAmount sets field value
-func (o *TagAmount) SetAmount(v float64) {
+func (o *TagAmount) SetAmount(v int32) {
 	o.Amount = v
 }
 

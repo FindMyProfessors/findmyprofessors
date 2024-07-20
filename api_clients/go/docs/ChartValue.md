@@ -4,15 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Year** | **float64** |  | 
+**Year** | **int32** |  | 
 **Month** | **string** |  | 
-**Value** | **float64** |  | 
+**Value** | **int32** |  | 
 
 ## Methods
 
 ### NewChartValue
 
-`func NewChartValue(year float64, month string, value float64, ) *ChartValue`
+`func NewChartValue(year int32, month string, value int32, ) *ChartValue`
 
 NewChartValue instantiates a new ChartValue object
 This constructor will assign default values to properties that have it defined,
@@ -29,20 +29,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetYear
 
-`func (o *ChartValue) GetYear() float64`
+`func (o *ChartValue) GetYear() int32`
 
 GetYear returns the Year field if non-nil, zero value otherwise.
 
 ### GetYearOk
 
-`func (o *ChartValue) GetYearOk() (*float64, bool)`
+`func (o *ChartValue) GetYearOk() (*int32, bool)`
 
 GetYearOk returns a tuple with the Year field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetYear
 
-`func (o *ChartValue) SetYear(v float64)`
+`func (o *ChartValue) SetYear(v int32)`
 
 SetYear sets Year field to given value.
 
@@ -69,20 +69,20 @@ SetMonth sets Month field to given value.
 
 ### GetValue
 
-`func (o *ChartValue) GetValue() float64`
+`func (o *ChartValue) GetValue() int32`
 
 GetValue returns the Value field if non-nil, zero value otherwise.
 
 ### GetValueOk
 
-`func (o *ChartValue) GetValueOk() (*float64, bool)`
+`func (o *ChartValue) GetValueOk() (*int32, bool)`
 
 GetValueOk returns a tuple with the Value field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetValue
 
-`func (o *ChartValue) SetValue(v float64)`
+`func (o *ChartValue) SetValue(v int32)`
 
 SetValue sets Value field to given value.
 

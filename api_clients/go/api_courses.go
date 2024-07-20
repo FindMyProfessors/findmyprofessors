@@ -144,7 +144,7 @@ func (a *CoursesAPIService) CreateCourseExecute(r ApiCreateCourseRequest) (*Defa
 type ApiDeleteCourseRequest struct {
 	ctx context.Context
 	ApiService *CoursesAPIService
-	id float64
+	id int32
 }
 
 func (r ApiDeleteCourseRequest) Execute() (*http.Response, error) {
@@ -158,7 +158,7 @@ DeleteCourse Method for DeleteCourse
  @param id
  @return ApiDeleteCourseRequest
 */
-func (a *CoursesAPIService) DeleteCourse(ctx context.Context, id float64) ApiDeleteCourseRequest {
+func (a *CoursesAPIService) DeleteCourse(ctx context.Context, id int32) ApiDeleteCourseRequest {
 	return ApiDeleteCourseRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -244,7 +244,7 @@ func (a *CoursesAPIService) DeleteCourseExecute(r ApiDeleteCourseRequest) (*http
 type ApiGetCourseRequest struct {
 	ctx context.Context
 	ApiService *CoursesAPIService
-	id float64
+	id int32
 }
 
 func (r ApiGetCourseRequest) Execute() (*DefaultSelectionPrisma36CoursePayload, *http.Response, error) {
@@ -258,7 +258,7 @@ GetCourse Method for GetCourse
  @param id
  @return ApiGetCourseRequest
 */
-func (a *CoursesAPIService) GetCourse(ctx context.Context, id float64) ApiGetCourseRequest {
+func (a *CoursesAPIService) GetCourse(ctx context.Context, id int32) ApiGetCourseRequest {
 	return ApiGetCourseRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -355,12 +355,12 @@ func (a *CoursesAPIService) GetCourseExecute(r ApiGetCourseRequest) (*DefaultSel
 type ApiGetCourseProfessorsRequest struct {
 	ctx context.Context
 	ApiService *CoursesAPIService
-	id float64
-	year *float64
+	id int32
+	year *int32
 	semester *36EnumsSemester
 }
 
-func (r ApiGetCourseProfessorsRequest) Year(year float64) ApiGetCourseProfessorsRequest {
+func (r ApiGetCourseProfessorsRequest) Year(year int32) ApiGetCourseProfessorsRequest {
 	r.year = &year
 	return r
 }
@@ -381,7 +381,7 @@ GetCourseProfessors Method for GetCourseProfessors
  @param id
  @return ApiGetCourseProfessorsRequest
 */
-func (a *CoursesAPIService) GetCourseProfessors(ctx context.Context, id float64) ApiGetCourseProfessorsRequest {
+func (a *CoursesAPIService) GetCourseProfessors(ctx context.Context, id int32) ApiGetCourseProfessorsRequest {
 	return ApiGetCourseProfessorsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -486,15 +486,15 @@ func (a *CoursesAPIService) GetCourseProfessorsExecute(r ApiGetCourseProfessorsR
 type ApiSearchCoursesRequest struct {
 	ctx context.Context
 	ApiService *CoursesAPIService
-	schoolId *float64
+	schoolId *int32
 	query *string
 	semester *36EnumsSemester
-	year *float64
+	year *int32
 	cursor *string
-	pageSize *float64
+	pageSize *int32
 }
 
-func (r ApiSearchCoursesRequest) SchoolId(schoolId float64) ApiSearchCoursesRequest {
+func (r ApiSearchCoursesRequest) SchoolId(schoolId int32) ApiSearchCoursesRequest {
 	r.schoolId = &schoolId
 	return r
 }
@@ -509,7 +509,7 @@ func (r ApiSearchCoursesRequest) Semester(semester 36EnumsSemester) ApiSearchCou
 	return r
 }
 
-func (r ApiSearchCoursesRequest) Year(year float64) ApiSearchCoursesRequest {
+func (r ApiSearchCoursesRequest) Year(year int32) ApiSearchCoursesRequest {
 	r.year = &year
 	return r
 }
@@ -519,7 +519,7 @@ func (r ApiSearchCoursesRequest) Cursor(cursor string) ApiSearchCoursesRequest {
 	return r
 }
 
-func (r ApiSearchCoursesRequest) PageSize(pageSize float64) ApiSearchCoursesRequest {
+func (r ApiSearchCoursesRequest) PageSize(pageSize int32) ApiSearchCoursesRequest {
 	r.pageSize = &pageSize
 	return r
 }
@@ -581,7 +581,7 @@ func (a *CoursesAPIService) SearchCoursesExecute(r ApiSearchCoursesRequest) (*Co
 	if r.pageSize != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "")
 	} else {
-		var defaultValue float64 = 10
+		var defaultValue int32 = 10
 		r.pageSize = &defaultValue
 	}
 	// to determine the Content-Type header
@@ -641,7 +641,7 @@ func (a *CoursesAPIService) SearchCoursesExecute(r ApiSearchCoursesRequest) (*Co
 type ApiUpdateCourseRequest struct {
 	ctx context.Context
 	ApiService *CoursesAPIService
-	id float64
+	id int32
 	body *PickCourseNameOrCode
 }
 
@@ -661,7 +661,7 @@ UpdateCourse Method for UpdateCourse
  @param id
  @return ApiUpdateCourseRequest
 */
-func (a *CoursesAPIService) UpdateCourse(ctx context.Context, id float64) ApiUpdateCourseRequest {
+func (a *CoursesAPIService) UpdateCourse(ctx context.Context, id int32) ApiUpdateCourseRequest {
 	return ApiUpdateCourseRequest{
 		ApiService: a,
 		ctx: ctx,

@@ -22,7 +22,7 @@ var _ MappedNullable = &DefaultSelectionPrisma36SchoolPayload{}
 // DefaultSelectionPrisma36SchoolPayload struct for DefaultSelectionPrisma36SchoolPayload
 type DefaultSelectionPrisma36SchoolPayload struct {
 	Name string `json:"name"`
-	Id float64 `json:"id"`
+	Id int32 `json:"id"`
 }
 
 type _DefaultSelectionPrisma36SchoolPayload DefaultSelectionPrisma36SchoolPayload
@@ -31,7 +31,7 @@ type _DefaultSelectionPrisma36SchoolPayload DefaultSelectionPrisma36SchoolPayloa
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDefaultSelectionPrisma36SchoolPayload(name string, id float64) *DefaultSelectionPrisma36SchoolPayload {
+func NewDefaultSelectionPrisma36SchoolPayload(name string, id int32) *DefaultSelectionPrisma36SchoolPayload {
 	this := DefaultSelectionPrisma36SchoolPayload{}
 	this.Name = name
 	this.Id = id
@@ -71,9 +71,9 @@ func (o *DefaultSelectionPrisma36SchoolPayload) SetName(v string) {
 }
 
 // GetId returns the Id field value
-func (o *DefaultSelectionPrisma36SchoolPayload) GetId() float64 {
+func (o *DefaultSelectionPrisma36SchoolPayload) GetId() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -82,7 +82,7 @@ func (o *DefaultSelectionPrisma36SchoolPayload) GetId() float64 {
 
 // GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36SchoolPayload) GetIdOk() (*float64, bool) {
+func (o *DefaultSelectionPrisma36SchoolPayload) GetIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -90,7 +90,7 @@ func (o *DefaultSelectionPrisma36SchoolPayload) GetIdOk() (*float64, bool) {
 }
 
 // SetId sets field value
-func (o *DefaultSelectionPrisma36SchoolPayload) SetId(v float64) {
+func (o *DefaultSelectionPrisma36SchoolPayload) SetId(v int32) {
 	o.Id = v
 }
 

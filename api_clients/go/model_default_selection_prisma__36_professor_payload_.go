@@ -21,11 +21,11 @@ var _ MappedNullable = &DefaultSelectionPrisma36ProfessorPayload{}
 
 // DefaultSelectionPrisma36ProfessorPayload struct for DefaultSelectionPrisma36ProfessorPayload
 type DefaultSelectionPrisma36ProfessorPayload struct {
-	SchoolId float64 `json:"school_id"`
+	SchoolId int32 `json:"school_id"`
 	RmpId string `json:"rmp_id"`
 	LastName string `json:"last_name"`
 	FirstName string `json:"first_name"`
-	Id float64 `json:"id"`
+	Id int32 `json:"id"`
 }
 
 type _DefaultSelectionPrisma36ProfessorPayload DefaultSelectionPrisma36ProfessorPayload
@@ -34,7 +34,7 @@ type _DefaultSelectionPrisma36ProfessorPayload DefaultSelectionPrisma36Professor
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDefaultSelectionPrisma36ProfessorPayload(schoolId float64, rmpId string, lastName string, firstName string, id float64) *DefaultSelectionPrisma36ProfessorPayload {
+func NewDefaultSelectionPrisma36ProfessorPayload(schoolId int32, rmpId string, lastName string, firstName string, id int32) *DefaultSelectionPrisma36ProfessorPayload {
 	this := DefaultSelectionPrisma36ProfessorPayload{}
 	this.SchoolId = schoolId
 	this.RmpId = rmpId
@@ -53,9 +53,9 @@ func NewDefaultSelectionPrisma36ProfessorPayloadWithDefaults() *DefaultSelection
 }
 
 // GetSchoolId returns the SchoolId field value
-func (o *DefaultSelectionPrisma36ProfessorPayload) GetSchoolId() float64 {
+func (o *DefaultSelectionPrisma36ProfessorPayload) GetSchoolId() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -64,7 +64,7 @@ func (o *DefaultSelectionPrisma36ProfessorPayload) GetSchoolId() float64 {
 
 // GetSchoolIdOk returns a tuple with the SchoolId field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ProfessorPayload) GetSchoolIdOk() (*float64, bool) {
+func (o *DefaultSelectionPrisma36ProfessorPayload) GetSchoolIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -72,7 +72,7 @@ func (o *DefaultSelectionPrisma36ProfessorPayload) GetSchoolIdOk() (*float64, bo
 }
 
 // SetSchoolId sets field value
-func (o *DefaultSelectionPrisma36ProfessorPayload) SetSchoolId(v float64) {
+func (o *DefaultSelectionPrisma36ProfessorPayload) SetSchoolId(v int32) {
 	o.SchoolId = v
 }
 
@@ -149,9 +149,9 @@ func (o *DefaultSelectionPrisma36ProfessorPayload) SetFirstName(v string) {
 }
 
 // GetId returns the Id field value
-func (o *DefaultSelectionPrisma36ProfessorPayload) GetId() float64 {
+func (o *DefaultSelectionPrisma36ProfessorPayload) GetId() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -160,7 +160,7 @@ func (o *DefaultSelectionPrisma36ProfessorPayload) GetId() float64 {
 
 // GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ProfessorPayload) GetIdOk() (*float64, bool) {
+func (o *DefaultSelectionPrisma36ProfessorPayload) GetIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -168,7 +168,7 @@ func (o *DefaultSelectionPrisma36ProfessorPayload) GetIdOk() (*float64, bool) {
 }
 
 // SetId sets field value
-func (o *DefaultSelectionPrisma36ProfessorPayload) SetId(v float64) {
+func (o *DefaultSelectionPrisma36ProfessorPayload) SetId(v int32) {
 	o.Id = v
 }
 

@@ -21,8 +21,8 @@ var _ MappedNullable = &PickProfessorCourseExcludeKeyofProfessorCourseProfessorI
 
 // PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId From T, pick a set of properties whose keys are in the union K
 type PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId struct {
-	CourseId float64 `json:"course_id"`
-	Year float64 `json:"year"`
+	CourseId int32 `json:"course_id"`
+	Year int32 `json:"year"`
 	Semester Model36EnumsSemester `json:"semester"`
 }
 
@@ -32,7 +32,7 @@ type _PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId PickProfesso
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId(courseId float64, year float64, semester Model36EnumsSemester) *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId {
+func NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId(courseId int32, year int32, semester Model36EnumsSemester) *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId {
 	this := PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId{}
 	this.CourseId = courseId
 	this.Year = year
@@ -49,9 +49,9 @@ func NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdWithDefault
 }
 
 // GetCourseId returns the CourseId field value
-func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetCourseId() float64 {
+func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetCourseId() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -60,7 +60,7 @@ func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetCours
 
 // GetCourseIdOk returns a tuple with the CourseId field value
 // and a boolean to check if the value has been set.
-func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetCourseIdOk() (*float64, bool) {
+func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetCourseIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -68,14 +68,14 @@ func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetCours
 }
 
 // SetCourseId sets field value
-func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) SetCourseId(v float64) {
+func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) SetCourseId(v int32) {
 	o.CourseId = v
 }
 
 // GetYear returns the Year field value
-func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetYear() float64 {
+func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetYear() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -84,7 +84,7 @@ func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetYear(
 
 // GetYearOk returns a tuple with the Year field value
 // and a boolean to check if the value has been set.
-func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetYearOk() (*float64, bool) {
+func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetYearOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -92,7 +92,7 @@ func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetYearO
 }
 
 // SetYear sets field value
-func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) SetYear(v float64) {
+func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) SetYear(v int32) {
 	o.Year = v
 }
 

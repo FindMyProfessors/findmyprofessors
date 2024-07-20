@@ -22,8 +22,8 @@ var _ MappedNullable = &PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade{}
 
 // PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade From T, pick a set of properties whose keys are in the union K
 type PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade struct {
-	Quality float64 `json:"quality"`
-	Difficulty float64 `json:"difficulty"`
+	Quality int32 `json:"quality"`
+	Difficulty int32 `json:"difficulty"`
 	Time time.Time `json:"time"`
 	Tags []Model36EnumsReviewTag `json:"tags"`
 	Grade Model36EnumsGrade `json:"grade"`
@@ -35,7 +35,7 @@ type _PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade PickReviewQualityOrDiffic
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPickReviewQualityOrDifficultyOrTimeOrTagsOrGrade(quality float64, difficulty float64, time time.Time, tags []Model36EnumsReviewTag, grade Model36EnumsGrade) *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade {
+func NewPickReviewQualityOrDifficultyOrTimeOrTagsOrGrade(quality int32, difficulty int32, time time.Time, tags []Model36EnumsReviewTag, grade Model36EnumsGrade) *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade {
 	this := PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade{}
 	this.Quality = quality
 	this.Difficulty = difficulty
@@ -54,9 +54,9 @@ func NewPickReviewQualityOrDifficultyOrTimeOrTagsOrGradeWithDefaults() *PickRevi
 }
 
 // GetQuality returns the Quality field value
-func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetQuality() float64 {
+func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetQuality() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -65,7 +65,7 @@ func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetQuality() float64 
 
 // GetQualityOk returns a tuple with the Quality field value
 // and a boolean to check if the value has been set.
-func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetQualityOk() (*float64, bool) {
+func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetQualityOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -73,14 +73,14 @@ func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetQualityOk() (*floa
 }
 
 // SetQuality sets field value
-func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) SetQuality(v float64) {
+func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) SetQuality(v int32) {
 	o.Quality = v
 }
 
 // GetDifficulty returns the Difficulty field value
-func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetDifficulty() float64 {
+func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetDifficulty() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -89,7 +89,7 @@ func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetDifficulty() float
 
 // GetDifficultyOk returns a tuple with the Difficulty field value
 // and a boolean to check if the value has been set.
-func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetDifficultyOk() (*float64, bool) {
+func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetDifficultyOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -97,7 +97,7 @@ func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetDifficultyOk() (*f
 }
 
 // SetDifficulty sets field value
-func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) SetDifficulty(v float64) {
+func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) SetDifficulty(v int32) {
 	o.Difficulty = v
 }
 

@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Total** | **float64** |  | 
+**Total** | **int32** |  | 
 **Professors** | [**[]DefaultSelectionPrisma36ProfessorPayload**](DefaultSelectionPrisma36ProfessorPayload.md) |  | 
 
 ## Methods
 
 ### NewCourseProfessors
 
-`func NewCourseProfessors(total float64, professors []DefaultSelectionPrisma36ProfessorPayload, ) *CourseProfessors`
+`func NewCourseProfessors(total int32, professors []DefaultSelectionPrisma36ProfessorPayload, ) *CourseProfessors`
 
 NewCourseProfessors instantiates a new CourseProfessors object
 This constructor will assign default values to properties that have it defined,
@@ -28,20 +28,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetTotal
 
-`func (o *CourseProfessors) GetTotal() float64`
+`func (o *CourseProfessors) GetTotal() int32`
 
 GetTotal returns the Total field if non-nil, zero value otherwise.
 
 ### GetTotalOk
 
-`func (o *CourseProfessors) GetTotalOk() (*float64, bool)`
+`func (o *CourseProfessors) GetTotalOk() (*int32, bool)`
 
 GetTotalOk returns a tuple with the Total field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTotal
 
-`func (o *CourseProfessors) SetTotal(v float64)`
+`func (o *CourseProfessors) SetTotal(v int32)`
 
 SetTotal sets Total field to given value.
 

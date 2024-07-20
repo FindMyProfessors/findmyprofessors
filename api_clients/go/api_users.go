@@ -26,7 +26,7 @@ type UsersAPIService service
 type ApiGetUserRequest struct {
 	ctx context.Context
 	ApiService *UsersAPIService
-	id float64
+	id int32
 }
 
 func (r ApiGetUserRequest) Execute() (*PickUserExcludeKeyofUserPassword, *http.Response, error) {
@@ -40,7 +40,7 @@ GetUser Method for GetUser
  @param id
  @return ApiGetUserRequest
 */
-func (a *UsersAPIService) GetUser(ctx context.Context, id float64) ApiGetUserRequest {
+func (a *UsersAPIService) GetUser(ctx context.Context, id int32) ApiGetUserRequest {
 	return ApiGetUserRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -127,7 +127,7 @@ func (a *UsersAPIService) GetUserExecute(r ApiGetUserRequest) (*PickUserExcludeK
 type ApiGetUserCartRequest struct {
 	ctx context.Context
 	ApiService *UsersAPIService
-	id float64
+	id int32
 }
 
 func (r ApiGetUserCartRequest) Execute() (*PickUserExcludeKeyofUserPassword, *http.Response, error) {
@@ -141,7 +141,7 @@ GetUserCart Method for GetUserCart
  @param id
  @return ApiGetUserCartRequest
 */
-func (a *UsersAPIService) GetUserCart(ctx context.Context, id float64) ApiGetUserCartRequest {
+func (a *UsersAPIService) GetUserCart(ctx context.Context, id int32) ApiGetUserCartRequest {
 	return ApiGetUserCartRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -228,7 +228,7 @@ func (a *UsersAPIService) GetUserCartExecute(r ApiGetUserCartRequest) (*PickUser
 type ApiUpdateUserRequest struct {
 	ctx context.Context
 	ApiService *UsersAPIService
-	id float64
+	id int32
 	body *PickUserExcludeKeyofUserPasswordOrSignupTimeOrAccountVerifiedOrIdOrLastLoginTimeOrEmailOrRole
 }
 
@@ -248,7 +248,7 @@ UpdateUser Method for UpdateUser
  @param id
  @return ApiUpdateUserRequest
 */
-func (a *UsersAPIService) UpdateUser(ctx context.Context, id float64) ApiUpdateUserRequest {
+func (a *UsersAPIService) UpdateUser(ctx context.Context, id int32) ApiUpdateUserRequest {
 	return ApiUpdateUserRequest{
 		ApiService: a,
 		ctx: ctx,

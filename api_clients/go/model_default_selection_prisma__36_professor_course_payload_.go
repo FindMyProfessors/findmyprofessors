@@ -22,10 +22,10 @@ var _ MappedNullable = &DefaultSelectionPrisma36ProfessorCoursePayload{}
 // DefaultSelectionPrisma36ProfessorCoursePayload struct for DefaultSelectionPrisma36ProfessorCoursePayload
 type DefaultSelectionPrisma36ProfessorCoursePayload struct {
 	Semester Model36EnumsSemester `json:"semester"`
-	Year float64 `json:"year"`
-	CourseId float64 `json:"course_id"`
-	ProfessorId float64 `json:"professor_id"`
-	Id float64 `json:"id"`
+	Year int32 `json:"year"`
+	CourseId int32 `json:"course_id"`
+	ProfessorId int32 `json:"professor_id"`
+	Id int32 `json:"id"`
 }
 
 type _DefaultSelectionPrisma36ProfessorCoursePayload DefaultSelectionPrisma36ProfessorCoursePayload
@@ -34,7 +34,7 @@ type _DefaultSelectionPrisma36ProfessorCoursePayload DefaultSelectionPrisma36Pro
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDefaultSelectionPrisma36ProfessorCoursePayload(semester Model36EnumsSemester, year float64, courseId float64, professorId float64, id float64) *DefaultSelectionPrisma36ProfessorCoursePayload {
+func NewDefaultSelectionPrisma36ProfessorCoursePayload(semester Model36EnumsSemester, year int32, courseId int32, professorId int32, id int32) *DefaultSelectionPrisma36ProfessorCoursePayload {
 	this := DefaultSelectionPrisma36ProfessorCoursePayload{}
 	this.Semester = semester
 	this.Year = year
@@ -77,9 +77,9 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) SetSemester(v Model36En
 }
 
 // GetYear returns the Year field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetYear() float64 {
+func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetYear() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -88,7 +88,7 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetYear() float64 {
 
 // GetYearOk returns a tuple with the Year field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetYearOk() (*float64, bool) {
+func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetYearOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -96,14 +96,14 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetYearOk() (*float64, 
 }
 
 // SetYear sets field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) SetYear(v float64) {
+func (o *DefaultSelectionPrisma36ProfessorCoursePayload) SetYear(v int32) {
 	o.Year = v
 }
 
 // GetCourseId returns the CourseId field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetCourseId() float64 {
+func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetCourseId() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -112,7 +112,7 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetCourseId() float64 {
 
 // GetCourseIdOk returns a tuple with the CourseId field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetCourseIdOk() (*float64, bool) {
+func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetCourseIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -120,14 +120,14 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetCourseIdOk() (*float
 }
 
 // SetCourseId sets field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) SetCourseId(v float64) {
+func (o *DefaultSelectionPrisma36ProfessorCoursePayload) SetCourseId(v int32) {
 	o.CourseId = v
 }
 
 // GetProfessorId returns the ProfessorId field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetProfessorId() float64 {
+func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetProfessorId() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -136,7 +136,7 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetProfessorId() float6
 
 // GetProfessorIdOk returns a tuple with the ProfessorId field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetProfessorIdOk() (*float64, bool) {
+func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetProfessorIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -144,14 +144,14 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetProfessorIdOk() (*fl
 }
 
 // SetProfessorId sets field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) SetProfessorId(v float64) {
+func (o *DefaultSelectionPrisma36ProfessorCoursePayload) SetProfessorId(v int32) {
 	o.ProfessorId = v
 }
 
 // GetId returns the Id field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetId() float64 {
+func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetId() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -160,7 +160,7 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetId() float64 {
 
 // GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetIdOk() (*float64, bool) {
+func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -168,7 +168,7 @@ func (o *DefaultSelectionPrisma36ProfessorCoursePayload) GetIdOk() (*float64, bo
 }
 
 // SetId sets field value
-func (o *DefaultSelectionPrisma36ProfessorCoursePayload) SetId(v float64) {
+func (o *DefaultSelectionPrisma36ProfessorCoursePayload) SetId(v int32) {
 	o.Id = v
 }
 

@@ -17,8 +17,8 @@ paths:
         name: id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       responses:
         "200":
@@ -49,8 +49,8 @@ paths:
         name: id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       requestBody:
         content:
@@ -74,8 +74,8 @@ paths:
         name: id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       responses:
         "200":
@@ -114,8 +114,8 @@ paths:
         required: false
         schema:
           default: 10
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: form
       responses:
         "200":
@@ -171,8 +171,8 @@ paths:
         name: id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       responses:
         "200":
@@ -197,8 +197,8 @@ paths:
         name: id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       responses:
         "200":
@@ -227,8 +227,8 @@ paths:
         name: id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       requestBody:
         content:
@@ -271,8 +271,8 @@ paths:
         name: school_id
         required: false
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: form
       - explode: true
         in: query
@@ -287,8 +287,8 @@ paths:
         required: false
         schema:
           default: 10
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: form
       responses:
         "200":
@@ -347,8 +347,8 @@ paths:
         name: id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       responses:
         "200":
@@ -378,16 +378,16 @@ paths:
         name: id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       - explode: true
         in: query
         name: topKPercentage
         required: false
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: form
       responses:
         "200":
@@ -419,8 +419,8 @@ paths:
         name: id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       responses:
         "200":
@@ -445,8 +445,8 @@ paths:
         name: id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       responses:
         "200":
@@ -475,8 +475,8 @@ paths:
         name: id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       requestBody:
         content:
@@ -512,16 +512,16 @@ paths:
         name: id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       - explode: true
         in: query
         name: year
         required: false
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: form
       - explode: true
         in: query
@@ -558,8 +558,8 @@ paths:
         name: id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       - explode: true
         in: query
@@ -574,8 +574,8 @@ paths:
         required: false
         schema:
           default: 25
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: form
       responses:
         "200":
@@ -597,8 +597,8 @@ paths:
         name: id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       requestBody:
         content:
@@ -647,8 +647,8 @@ paths:
         name: review_id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       responses:
         "200":
@@ -673,8 +673,8 @@ paths:
         name: review_id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       responses:
         "200":
@@ -703,8 +703,8 @@ paths:
         name: review_id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       requestBody:
         content:
@@ -740,8 +740,8 @@ paths:
         name: school_id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: form
       - explode: true
         in: query
@@ -762,8 +762,8 @@ paths:
         name: year
         required: false
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: form
       - explode: true
         in: query
@@ -778,8 +778,8 @@ paths:
         required: false
         schema:
           default: 10
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: form
       responses:
         "200":
@@ -837,8 +837,8 @@ paths:
         name: id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       responses:
         "200":
@@ -863,8 +863,8 @@ paths:
         name: id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       responses:
         "200":
@@ -893,8 +893,8 @@ paths:
         name: id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       requestBody:
         content:
@@ -930,16 +930,16 @@ paths:
         name: id
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: simple
       - explode: true
         in: query
         name: year
         required: true
         schema:
-          format: double
-          type: number
+          format: int32
+          type: integer
         style: form
       - explode: true
         in: query
@@ -1060,14 +1060,14 @@ components:
         role: ADMIN
         last_login_time: 2000-01-23T04:56:07.000+00:00
         signup_time: 2000-01-23T04:56:07.000+00:00
-        id: 0.8008281904610115
+        id: 0
         email: email
         username: username
         account_verified: true
       properties:
         id:
-          format: double
-          type: number
+          format: int32
+          type: integer
         email:
           type: string
         username:
@@ -1110,13 +1110,13 @@ components:
     DefaultSelection_Prisma._36_SchoolPayload_:
       example:
         name: name
-        id: 6.027456183070403
+        id: 6
       properties:
         name:
           type: string
         id:
-          format: double
-          type: number
+          format: int32
+          type: integer
       required:
       - id
       - name
@@ -1126,18 +1126,18 @@ components:
     SchoolSearchResult:
       example:
         pageInfo:
-          total: 0.8008281904610115
+          total: 0
           hasNextPage: true
           endCursor: endCursor
         edges:
         - cursor: cursor
           node:
             name: name
-            id: 6.027456183070403
+            id: 6
         - cursor: cursor
           node:
             name: name
-            id: 6.027456183070403
+            id: 6
       properties:
         pageInfo:
           $ref: '#/components/schemas/SchoolSearchResult_pageInfo'
@@ -1211,15 +1211,15 @@ components:
       $ref: '#/components/schemas/Pick_School.name_'
     DefaultSelection_Prisma._36_ProfessorPayload_:
       example:
-        school_id: 0.8008281904610115
+        school_id: 0
         rmp_id: rmp_id
         last_name: last_name
-        id: 6.027456183070403
+        id: 6
         first_name: first_name
       properties:
         school_id:
-          format: double
-          type: number
+          format: int32
+          type: integer
         rmp_id:
           type: string
         last_name:
@@ -1227,8 +1227,8 @@ components:
         first_name:
           type: string
         id:
-          format: double
-          type: number
+          format: int32
+          type: integer
       required:
       - first_name
       - id
@@ -1241,23 +1241,23 @@ components:
     ProfessorSearchResult:
       example:
         pageInfo:
-          total: 0.8008281904610115
+          total: 0
           hasNextPage: true
           endCursor: endCursor
         edges:
         - cursor: cursor
           node:
-            school_id: 0.8008281904610115
+            school_id: 0
             rmp_id: rmp_id
             last_name: last_name
-            id: 6.027456183070403
+            id: 6
             first_name: first_name
         - cursor: cursor
           node:
-            school_id: 0.8008281904610115
+            school_id: 0
             rmp_id: rmp_id
             last_name: last_name
-            id: 6.027456183070403
+            id: 6
             first_name: first_name
       properties:
         pageInfo:
@@ -1312,8 +1312,8 @@ components:
         rmp_id:
           type: string
         school_id:
-          format: double
-          type: number
+          format: int32
+          type: integer
       required:
       - first_name
       - last_name
@@ -1356,12 +1356,12 @@ components:
       $ref: '#/components/schemas/_36_Enums.ReviewTag'
     TagAmount:
       example:
-        amount: 1.4658129805029452
+        amount: 1
         tag: TOUGH_GRADER
       properties:
         amount:
-          format: double
-          type: number
+          format: int32
+          type: integer
         tag:
           $ref: '#/components/schemas/_36_Enums.ReviewTag'
       required:
@@ -1371,17 +1371,17 @@ components:
     ChartValue:
       example:
         month: month
-        year: 0.8008281904610115
-        value: 6.027456183070403
+        year: 0
+        value: 6
       properties:
         year:
-          format: double
-          type: number
+          format: int32
+          type: integer
         month:
           type: string
         value:
-          format: double
-          type: number
+          format: int32
+          type: integer
       required:
       - month
       - value
@@ -1391,15 +1391,15 @@ components:
       example:
         averageRatingValues:
         - month: month
-          year: 0.8008281904610115
-          value: 6.027456183070403
+          year: 0
+          value: 6
         - month: month
-          year: 0.8008281904610115
-          value: 6.027456183070403
+          year: 0
+          value: 6
         tagAmount:
-        - amount: 1.4658129805029452
+        - amount: 1
           tag: TOUGH_GRADER
-        - amount: 1.4658129805029452
+        - amount: 1
           tag: TOUGH_GRADER
       properties:
         averageRatingValues:
@@ -1435,20 +1435,20 @@ components:
         averageGrade:
           type: string
         topKMostRecentDifficultyAverage:
-          format: double
-          type: number
+          format: int32
+          type: integer
         totalDifficultyAverage:
-          format: double
-          type: number
+          format: int32
+          type: integer
         topKMostRecentQualityAverage:
-          format: double
-          type: number
+          format: int32
+          type: integer
         totalQualityAverage:
-          format: double
-          type: number
+          format: int32
+          type: integer
         ratingAmount:
-          format: double
-          type: number
+          format: int32
+          type: integer
       required:
       - averageGrade
       - ratingAmount
@@ -1467,8 +1467,8 @@ components:
       description: "From T, pick a set of properties whose keys are in the union K"
       properties:
         year:
-          format: double
-          type: number
+          format: int32
+          type: integer
         semester:
           $ref: '#/components/schemas/_36_Enums.Semester'
       required:
@@ -1480,20 +1480,20 @@ components:
     DefaultSelection_Prisma._36_CoursePayload_:
       example:
         code: code
-        school_id: 0.8008281904610115
+        school_id: 0
         name: name
-        id: 6.027456183070403
+        id: 6
       properties:
         school_id:
-          format: double
-          type: number
+          format: int32
+          type: integer
         code:
           type: string
         name:
           type: string
         id:
-          format: double
-          type: number
+          format: int32
+          type: integer
       required:
       - code
       - id
@@ -1507,11 +1507,11 @@ components:
         courses:
         - ""
         - ""
-        total: 0.8008281904610115
+        total: 0
       properties:
         total:
-          format: double
-          type: number
+          format: int32
+          type: integer
         courses:
           items:
             allOf:
@@ -1560,19 +1560,19 @@ components:
       type: string
     DefaultSelection_Prisma._36_ReviewPayload_:
       example:
-        difficulty: 6.027456183070403
-        professor_id: 0.8008281904610115
+        difficulty: 6
+        professor_id: 0
         grade: A_PLUS
         time: 2000-01-23T04:56:07.000+00:00
-        id: 5.962133916683182
+        id: 5
         tags:
         - TOUGH_GRADER
         - TOUGH_GRADER
-        quality: 1.4658129805029452
+        quality: 1
       properties:
         professor_id:
-          format: double
-          type: number
+          format: int32
+          type: integer
         grade:
           $ref: '#/components/schemas/_36_Enums.Grade'
         tags:
@@ -1583,14 +1583,14 @@ components:
           format: date-time
           type: string
         difficulty:
-          format: double
-          type: number
+          format: int32
+          type: integer
         quality:
-          format: double
-          type: number
+          format: int32
+          type: integer
         id:
-          format: double
-          type: number
+          format: int32
+          type: integer
       required:
       - difficulty
       - grade
@@ -1605,32 +1605,32 @@ components:
     ReviewsSearchResult:
       example:
         pageInfo:
-          total: 0.8008281904610115
+          total: 0
           hasNextPage: true
           endCursor: endCursor
         edges:
         - cursor: cursor
           node:
-            difficulty: 6.027456183070403
-            professor_id: 0.8008281904610115
+            difficulty: 6
+            professor_id: 0
             grade: A_PLUS
             time: 2000-01-23T04:56:07.000+00:00
-            id: 5.962133916683182
+            id: 5
             tags:
             - TOUGH_GRADER
             - TOUGH_GRADER
-            quality: 1.4658129805029452
+            quality: 1
         - cursor: cursor
           node:
-            difficulty: 6.027456183070403
-            professor_id: 0.8008281904610115
+            difficulty: 6
+            professor_id: 0
             grade: A_PLUS
             time: 2000-01-23T04:56:07.000+00:00
-            id: 5.962133916683182
+            id: 5
             tags:
             - TOUGH_GRADER
             - TOUGH_GRADER
-            quality: 1.4658129805029452
+            quality: 1
       properties:
         pageInfo:
           $ref: '#/components/schemas/SchoolSearchResult_pageInfo'
@@ -1644,26 +1644,26 @@ components:
       type: object
     DefaultSelection_Prisma._36_ProfessorCoursePayload_:
       example:
-        course_id: 6.027456183070403
-        year: 0.8008281904610115
-        professor_id: 1.4658129805029452
+        course_id: 6
+        year: 0
+        professor_id: 1
         semester: SPRING
-        id: 5.962133916683182
+        id: 5
       properties:
         semester:
           $ref: '#/components/schemas/_36_Enums.Semester'
         year:
-          format: double
-          type: number
+          format: int32
+          type: integer
         course_id:
-          format: double
-          type: number
+          format: int32
+          type: integer
         professor_id:
-          format: double
-          type: number
+          format: int32
+          type: integer
         id:
-          format: double
-          type: number
+          format: int32
+          type: integer
       required:
       - course_id
       - id
@@ -1679,11 +1679,11 @@ components:
       description: "From T, pick a set of properties whose keys are in the union K"
       properties:
         course_id:
-          format: double
-          type: number
+          format: int32
+          type: integer
         year:
-          format: double
-          type: number
+          format: int32
+          type: integer
         semester:
           $ref: '#/components/schemas/_36_Enums.Semester'
       required:
@@ -1699,14 +1699,14 @@ components:
       description: "From T, pick a set of properties whose keys are in the union K"
       properties:
         professor_id:
-          format: double
-          type: number
+          format: int32
+          type: integer
         quality:
-          format: double
-          type: number
+          format: int32
+          type: integer
         difficulty:
-          format: double
-          type: number
+          format: int32
+          type: integer
         time:
           format: date-time
           type: string
@@ -1761,11 +1761,11 @@ components:
       description: "From T, pick a set of properties whose keys are in the union K"
       properties:
         quality:
-          format: double
-          type: number
+          format: int32
+          type: integer
         difficulty:
-          format: double
-          type: number
+          format: int32
+          type: integer
         time:
           format: date-time
           type: string
@@ -1787,22 +1787,22 @@ components:
     CourseSearchResult:
       example:
         pageInfo:
-          total: 0.8008281904610115
+          total: 0
           hasNextPage: true
           endCursor: endCursor
         edges:
         - cursor: cursor
           node:
             code: code
-            school_id: 0.8008281904610115
+            school_id: 0
             name: name
-            id: 6.027456183070403
+            id: 6
         - cursor: cursor
           node:
             code: code
-            school_id: 0.8008281904610115
+            school_id: 0
             name: name
-            id: 6.027456183070403
+            id: 6
       properties:
         pageInfo:
           $ref: '#/components/schemas/SchoolSearchResult_pageInfo'
@@ -1852,8 +1852,8 @@ components:
         name:
           type: string
         school_id:
-          format: double
-          type: number
+          format: int32
+          type: integer
         code:
           type: string
       required:
@@ -1894,14 +1894,14 @@ components:
       $ref: '#/components/schemas/Pick_Course.name-or-code_'
     CourseProfessors:
       example:
-        total: 0.8008281904610115
+        total: 0
         professors:
         - null
         - null
       properties:
         total:
-          format: double
-          type: number
+          format: int32
+          type: integer
         professors:
           items:
             $ref: '#/components/schemas/Professor'
@@ -1916,7 +1916,7 @@ components:
           role: ADMIN
           last_login_time: 2000-01-23T04:56:07.000+00:00
           signup_time: 2000-01-23T04:56:07.000+00:00
-          id: 0.8008281904610115
+          id: 0
           email: email
           username: username
           account_verified: true
@@ -2035,13 +2035,13 @@ components:
       $ref: '#/components/schemas/Pick_User.username-or-password_'
     SchoolSearchResult_pageInfo:
       example:
-        total: 0.8008281904610115
+        total: 0
         hasNextPage: true
         endCursor: endCursor
       properties:
         total:
-          format: double
-          type: number
+          format: int32
+          type: integer
         endCursor:
           nullable: true
           type: string
@@ -2057,7 +2057,7 @@ components:
         cursor: cursor
         node:
           name: name
-          id: 6.027456183070403
+          id: 6
       properties:
         node:
           $ref: '#/components/schemas/DefaultSelection_Prisma._36_SchoolPayload_'
@@ -2078,10 +2078,10 @@ components:
       example:
         cursor: cursor
         node:
-          school_id: 0.8008281904610115
+          school_id: 0
           rmp_id: rmp_id
           last_name: last_name
-          id: 6.027456183070403
+          id: 6
           first_name: first_name
       properties:
         node:
@@ -2096,15 +2096,15 @@ components:
       example:
         cursor: cursor
         node:
-          difficulty: 6.027456183070403
-          professor_id: 0.8008281904610115
+          difficulty: 6
+          professor_id: 0
           grade: A_PLUS
           time: 2000-01-23T04:56:07.000+00:00
-          id: 5.962133916683182
+          id: 5
           tags:
           - TOUGH_GRADER
           - TOUGH_GRADER
-          quality: 1.4658129805029452
+          quality: 1
       properties:
         node:
           $ref: '#/components/schemas/DefaultSelection_Prisma._36_ReviewPayload_'
@@ -2119,9 +2119,9 @@ components:
         cursor: cursor
         node:
           code: code
-          school_id: 0.8008281904610115
+          school_id: 0
           name: name
-          id: 6.027456183070403
+          id: 6
       properties:
         node:
           $ref: '#/components/schemas/DefaultSelection_Prisma._36_CoursePayload_'

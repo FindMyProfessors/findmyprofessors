@@ -24,7 +24,7 @@ type PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId struct {
 	FirstName string `json:"first_name"`
 	LastName string `json:"last_name"`
 	RmpId string `json:"rmp_id"`
-	SchoolId float64 `json:"school_id"`
+	SchoolId int32 `json:"school_id"`
 }
 
 type _PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId
@@ -33,7 +33,7 @@ type _PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId PickProfessorFirstNameOr
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId(firstName string, lastName string, rmpId string, schoolId float64) *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId {
+func NewPickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId(firstName string, lastName string, rmpId string, schoolId int32) *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId {
 	this := PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId{}
 	this.FirstName = firstName
 	this.LastName = lastName
@@ -123,9 +123,9 @@ func (o *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) SetRmpId(v string) {
 }
 
 // GetSchoolId returns the SchoolId field value
-func (o *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) GetSchoolId() float64 {
+func (o *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) GetSchoolId() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -134,7 +134,7 @@ func (o *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) GetSchoolId() float6
 
 // GetSchoolIdOk returns a tuple with the SchoolId field value
 // and a boolean to check if the value has been set.
-func (o *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) GetSchoolIdOk() (*float64, bool) {
+func (o *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) GetSchoolIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -142,7 +142,7 @@ func (o *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) GetSchoolIdOk() (*fl
 }
 
 // SetSchoolId sets field value
-func (o *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) SetSchoolId(v float64) {
+func (o *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) SetSchoolId(v int32) {
 	o.SchoolId = v
 }
 

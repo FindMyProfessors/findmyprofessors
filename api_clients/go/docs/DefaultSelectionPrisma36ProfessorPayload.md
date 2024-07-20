@@ -4,17 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SchoolId** | **float64** |  | 
+**SchoolId** | **int32** |  | 
 **RmpId** | **string** |  | 
 **LastName** | **string** |  | 
 **FirstName** | **string** |  | 
-**Id** | **float64** |  | 
+**Id** | **int32** |  | 
 
 ## Methods
 
 ### NewDefaultSelectionPrisma36ProfessorPayload
 
-`func NewDefaultSelectionPrisma36ProfessorPayload(schoolId float64, rmpId string, lastName string, firstName string, id float64, ) *DefaultSelectionPrisma36ProfessorPayload`
+`func NewDefaultSelectionPrisma36ProfessorPayload(schoolId int32, rmpId string, lastName string, firstName string, id int32, ) *DefaultSelectionPrisma36ProfessorPayload`
 
 NewDefaultSelectionPrisma36ProfessorPayload instantiates a new DefaultSelectionPrisma36ProfessorPayload object
 This constructor will assign default values to properties that have it defined,
@@ -31,20 +31,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetSchoolId
 
-`func (o *DefaultSelectionPrisma36ProfessorPayload) GetSchoolId() float64`
+`func (o *DefaultSelectionPrisma36ProfessorPayload) GetSchoolId() int32`
 
 GetSchoolId returns the SchoolId field if non-nil, zero value otherwise.
 
 ### GetSchoolIdOk
 
-`func (o *DefaultSelectionPrisma36ProfessorPayload) GetSchoolIdOk() (*float64, bool)`
+`func (o *DefaultSelectionPrisma36ProfessorPayload) GetSchoolIdOk() (*int32, bool)`
 
 GetSchoolIdOk returns a tuple with the SchoolId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSchoolId
 
-`func (o *DefaultSelectionPrisma36ProfessorPayload) SetSchoolId(v float64)`
+`func (o *DefaultSelectionPrisma36ProfessorPayload) SetSchoolId(v int32)`
 
 SetSchoolId sets SchoolId field to given value.
 
@@ -111,20 +111,20 @@ SetFirstName sets FirstName field to given value.
 
 ### GetId
 
-`func (o *DefaultSelectionPrisma36ProfessorPayload) GetId() float64`
+`func (o *DefaultSelectionPrisma36ProfessorPayload) GetId() int32`
 
 GetId returns the Id field if non-nil, zero value otherwise.
 
 ### GetIdOk
 
-`func (o *DefaultSelectionPrisma36ProfessorPayload) GetIdOk() (*float64, bool)`
+`func (o *DefaultSelectionPrisma36ProfessorPayload) GetIdOk() (*int32, bool)`
 
 GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetId
 
-`func (o *DefaultSelectionPrisma36ProfessorPayload) SetId(v float64)`
+`func (o *DefaultSelectionPrisma36ProfessorPayload) SetId(v int32)`
 
 SetId sets Id field to given value.
 

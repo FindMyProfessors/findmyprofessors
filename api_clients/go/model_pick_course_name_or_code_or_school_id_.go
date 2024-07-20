@@ -22,7 +22,7 @@ var _ MappedNullable = &PickCourseNameOrCodeOrSchoolId{}
 // PickCourseNameOrCodeOrSchoolId From T, pick a set of properties whose keys are in the union K
 type PickCourseNameOrCodeOrSchoolId struct {
 	Name string `json:"name"`
-	SchoolId float64 `json:"school_id"`
+	SchoolId int32 `json:"school_id"`
 	Code string `json:"code"`
 }
 
@@ -32,7 +32,7 @@ type _PickCourseNameOrCodeOrSchoolId PickCourseNameOrCodeOrSchoolId
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPickCourseNameOrCodeOrSchoolId(name string, schoolId float64, code string) *PickCourseNameOrCodeOrSchoolId {
+func NewPickCourseNameOrCodeOrSchoolId(name string, schoolId int32, code string) *PickCourseNameOrCodeOrSchoolId {
 	this := PickCourseNameOrCodeOrSchoolId{}
 	this.Name = name
 	this.SchoolId = schoolId
@@ -73,9 +73,9 @@ func (o *PickCourseNameOrCodeOrSchoolId) SetName(v string) {
 }
 
 // GetSchoolId returns the SchoolId field value
-func (o *PickCourseNameOrCodeOrSchoolId) GetSchoolId() float64 {
+func (o *PickCourseNameOrCodeOrSchoolId) GetSchoolId() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -84,7 +84,7 @@ func (o *PickCourseNameOrCodeOrSchoolId) GetSchoolId() float64 {
 
 // GetSchoolIdOk returns a tuple with the SchoolId field value
 // and a boolean to check if the value has been set.
-func (o *PickCourseNameOrCodeOrSchoolId) GetSchoolIdOk() (*float64, bool) {
+func (o *PickCourseNameOrCodeOrSchoolId) GetSchoolIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -92,7 +92,7 @@ func (o *PickCourseNameOrCodeOrSchoolId) GetSchoolIdOk() (*float64, bool) {
 }
 
 // SetSchoolId sets field value
-func (o *PickCourseNameOrCodeOrSchoolId) SetSchoolId(v float64) {
+func (o *PickCourseNameOrCodeOrSchoolId) SetSchoolId(v int32) {
 	o.SchoolId = v
 }
 

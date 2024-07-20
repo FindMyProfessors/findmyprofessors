@@ -5,14 +5,14 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** |  | 
-**SchoolId** | **float64** |  | 
+**SchoolId** | **int32** |  | 
 **Code** | **string** |  | 
 
 ## Methods
 
 ### NewPickCourseNameOrCodeOrSchoolId
 
-`func NewPickCourseNameOrCodeOrSchoolId(name string, schoolId float64, code string, ) *PickCourseNameOrCodeOrSchoolId`
+`func NewPickCourseNameOrCodeOrSchoolId(name string, schoolId int32, code string, ) *PickCourseNameOrCodeOrSchoolId`
 
 NewPickCourseNameOrCodeOrSchoolId instantiates a new PickCourseNameOrCodeOrSchoolId object
 This constructor will assign default values to properties that have it defined,
@@ -49,20 +49,20 @@ SetName sets Name field to given value.
 
 ### GetSchoolId
 
-`func (o *PickCourseNameOrCodeOrSchoolId) GetSchoolId() float64`
+`func (o *PickCourseNameOrCodeOrSchoolId) GetSchoolId() int32`
 
 GetSchoolId returns the SchoolId field if non-nil, zero value otherwise.
 
 ### GetSchoolIdOk
 
-`func (o *PickCourseNameOrCodeOrSchoolId) GetSchoolIdOk() (*float64, bool)`
+`func (o *PickCourseNameOrCodeOrSchoolId) GetSchoolIdOk() (*int32, bool)`
 
 GetSchoolIdOk returns a tuple with the SchoolId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSchoolId
 
-`func (o *PickCourseNameOrCodeOrSchoolId) SetSchoolId(v float64)`
+`func (o *PickCourseNameOrCodeOrSchoolId) SetSchoolId(v int32)`
 
 SetSchoolId sets SchoolId field to given value.
 

@@ -7,13 +7,13 @@ Name | Type | Description | Notes
 **FirstName** | **string** |  | 
 **LastName** | **string** |  | 
 **RmpId** | **string** |  | 
-**SchoolId** | **float64** |  | 
+**SchoolId** | **int32** |  | 
 
 ## Methods
 
 ### NewPickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId
 
-`func NewPickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId(firstName string, lastName string, rmpId string, schoolId float64, ) *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId`
+`func NewPickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId(firstName string, lastName string, rmpId string, schoolId int32, ) *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId`
 
 NewPickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId instantiates a new PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId object
 This constructor will assign default values to properties that have it defined,
@@ -90,20 +90,20 @@ SetRmpId sets RmpId field to given value.
 
 ### GetSchoolId
 
-`func (o *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) GetSchoolId() float64`
+`func (o *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) GetSchoolId() int32`
 
 GetSchoolId returns the SchoolId field if non-nil, zero value otherwise.
 
 ### GetSchoolIdOk
 
-`func (o *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) GetSchoolIdOk() (*float64, bool)`
+`func (o *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) GetSchoolIdOk() (*int32, bool)`
 
 GetSchoolIdOk returns a tuple with the SchoolId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSchoolId
 
-`func (o *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) SetSchoolId(v float64)`
+`func (o *PickProfessorFirstNameOrLastNameOrRmpIdOrSchoolId) SetSchoolId(v int32)`
 
 SetSchoolId sets SchoolId field to given value.
 

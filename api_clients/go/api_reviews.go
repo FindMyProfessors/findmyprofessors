@@ -134,7 +134,7 @@ func (a *ReviewsAPIService) CreateReviewExecute(r ApiCreateReviewRequest) (*Defa
 type ApiDeleteReviewRequest struct {
 	ctx context.Context
 	ApiService *ReviewsAPIService
-	reviewId float64
+	reviewId int32
 }
 
 func (r ApiDeleteReviewRequest) Execute() (*http.Response, error) {
@@ -148,7 +148,7 @@ DeleteReview Method for DeleteReview
  @param reviewId
  @return ApiDeleteReviewRequest
 */
-func (a *ReviewsAPIService) DeleteReview(ctx context.Context, reviewId float64) ApiDeleteReviewRequest {
+func (a *ReviewsAPIService) DeleteReview(ctx context.Context, reviewId int32) ApiDeleteReviewRequest {
 	return ApiDeleteReviewRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -234,7 +234,7 @@ func (a *ReviewsAPIService) DeleteReviewExecute(r ApiDeleteReviewRequest) (*http
 type ApiGetReviewRequest struct {
 	ctx context.Context
 	ApiService *ReviewsAPIService
-	reviewId float64
+	reviewId int32
 }
 
 func (r ApiGetReviewRequest) Execute() (*DefaultSelectionPrisma36ReviewPayload, *http.Response, error) {
@@ -248,7 +248,7 @@ GetReview Method for GetReview
  @param reviewId
  @return ApiGetReviewRequest
 */
-func (a *ReviewsAPIService) GetReview(ctx context.Context, reviewId float64) ApiGetReviewRequest {
+func (a *ReviewsAPIService) GetReview(ctx context.Context, reviewId int32) ApiGetReviewRequest {
 	return ApiGetReviewRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -345,7 +345,7 @@ func (a *ReviewsAPIService) GetReviewExecute(r ApiGetReviewRequest) (*DefaultSel
 type ApiUpdateReviewRequest struct {
 	ctx context.Context
 	ApiService *ReviewsAPIService
-	reviewId float64
+	reviewId int32
 	body *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade
 }
 
@@ -365,7 +365,7 @@ UpdateReview Method for UpdateReview
  @param reviewId
  @return ApiUpdateReviewRequest
 */
-func (a *ReviewsAPIService) UpdateReview(ctx context.Context, reviewId float64) ApiUpdateReviewRequest {
+func (a *ReviewsAPIService) UpdateReview(ctx context.Context, reviewId int32) ApiUpdateReviewRequest {
 	return ApiUpdateReviewRequest{
 		ApiService: a,
 		ctx: ctx,

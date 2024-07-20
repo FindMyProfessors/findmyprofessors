@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** |  | 
-**Id** | **float64** |  | 
+**Id** | **int32** |  | 
 
 ## Methods
 
 ### NewDefaultSelectionPrisma36SchoolPayload
 
-`func NewDefaultSelectionPrisma36SchoolPayload(name string, id float64, ) *DefaultSelectionPrisma36SchoolPayload`
+`func NewDefaultSelectionPrisma36SchoolPayload(name string, id int32, ) *DefaultSelectionPrisma36SchoolPayload`
 
 NewDefaultSelectionPrisma36SchoolPayload instantiates a new DefaultSelectionPrisma36SchoolPayload object
 This constructor will assign default values to properties that have it defined,
@@ -48,20 +48,20 @@ SetName sets Name field to given value.
 
 ### GetId
 
-`func (o *DefaultSelectionPrisma36SchoolPayload) GetId() float64`
+`func (o *DefaultSelectionPrisma36SchoolPayload) GetId() int32`
 
 GetId returns the Id field if non-nil, zero value otherwise.
 
 ### GetIdOk
 
-`func (o *DefaultSelectionPrisma36SchoolPayload) GetIdOk() (*float64, bool)`
+`func (o *DefaultSelectionPrisma36SchoolPayload) GetIdOk() (*int32, bool)`
 
 GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetId
 
-`func (o *DefaultSelectionPrisma36SchoolPayload) SetId(v float64)`
+`func (o *DefaultSelectionPrisma36SchoolPayload) SetId(v int32)`
 
 SetId sets Id field to given value.
 

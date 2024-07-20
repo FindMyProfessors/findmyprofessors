@@ -21,7 +21,7 @@ var _ MappedNullable = &PickProfessorCourseExcludeKeyofProfessorCourseProfessorI
 
 // PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId From T, pick a set of properties whose keys are in the union K
 type PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId struct {
-	Year float64 `json:"year"`
+	Year int32 `json:"year"`
 	Semester Model36EnumsSemester `json:"semester"`
 }
 
@@ -31,7 +31,7 @@ type _PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId Pi
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId(year float64, semester Model36EnumsSemester) *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId {
+func NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId(year int32, semester Model36EnumsSemester) *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId {
 	this := PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId{}
 	this.Year = year
 	this.Semester = semester
@@ -47,9 +47,9 @@ func NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseIdW
 }
 
 // GetYear returns the Year field value
-func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) GetYear() float64 {
+func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) GetYear() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -58,7 +58,7 @@ func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId
 
 // GetYearOk returns a tuple with the Year field value
 // and a boolean to check if the value has been set.
-func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) GetYearOk() (*float64, bool) {
+func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) GetYearOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -66,7 +66,7 @@ func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId
 }
 
 // SetYear sets field value
-func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) SetYear(v float64) {
+func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) SetYear(v int32) {
 	o.Year = v
 }
 

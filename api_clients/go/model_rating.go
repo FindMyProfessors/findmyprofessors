@@ -22,11 +22,11 @@ var _ MappedNullable = &Rating{}
 // Rating struct for Rating
 type Rating struct {
 	AverageGrade string `json:"averageGrade"`
-	TopKMostRecentDifficultyAverage float64 `json:"topKMostRecentDifficultyAverage"`
-	TotalDifficultyAverage float64 `json:"totalDifficultyAverage"`
-	TopKMostRecentQualityAverage float64 `json:"topKMostRecentQualityAverage"`
-	TotalQualityAverage float64 `json:"totalQualityAverage"`
-	RatingAmount float64 `json:"ratingAmount"`
+	TopKMostRecentDifficultyAverage int32 `json:"topKMostRecentDifficultyAverage"`
+	TotalDifficultyAverage int32 `json:"totalDifficultyAverage"`
+	TopKMostRecentQualityAverage int32 `json:"topKMostRecentQualityAverage"`
+	TotalQualityAverage int32 `json:"totalQualityAverage"`
+	RatingAmount int32 `json:"ratingAmount"`
 }
 
 type _Rating Rating
@@ -35,7 +35,7 @@ type _Rating Rating
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewRating(averageGrade string, topKMostRecentDifficultyAverage float64, totalDifficultyAverage float64, topKMostRecentQualityAverage float64, totalQualityAverage float64, ratingAmount float64) *Rating {
+func NewRating(averageGrade string, topKMostRecentDifficultyAverage int32, totalDifficultyAverage int32, topKMostRecentQualityAverage int32, totalQualityAverage int32, ratingAmount int32) *Rating {
 	this := Rating{}
 	this.AverageGrade = averageGrade
 	this.TopKMostRecentDifficultyAverage = topKMostRecentDifficultyAverage
@@ -79,9 +79,9 @@ func (o *Rating) SetAverageGrade(v string) {
 }
 
 // GetTopKMostRecentDifficultyAverage returns the TopKMostRecentDifficultyAverage field value
-func (o *Rating) GetTopKMostRecentDifficultyAverage() float64 {
+func (o *Rating) GetTopKMostRecentDifficultyAverage() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -90,7 +90,7 @@ func (o *Rating) GetTopKMostRecentDifficultyAverage() float64 {
 
 // GetTopKMostRecentDifficultyAverageOk returns a tuple with the TopKMostRecentDifficultyAverage field value
 // and a boolean to check if the value has been set.
-func (o *Rating) GetTopKMostRecentDifficultyAverageOk() (*float64, bool) {
+func (o *Rating) GetTopKMostRecentDifficultyAverageOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -98,14 +98,14 @@ func (o *Rating) GetTopKMostRecentDifficultyAverageOk() (*float64, bool) {
 }
 
 // SetTopKMostRecentDifficultyAverage sets field value
-func (o *Rating) SetTopKMostRecentDifficultyAverage(v float64) {
+func (o *Rating) SetTopKMostRecentDifficultyAverage(v int32) {
 	o.TopKMostRecentDifficultyAverage = v
 }
 
 // GetTotalDifficultyAverage returns the TotalDifficultyAverage field value
-func (o *Rating) GetTotalDifficultyAverage() float64 {
+func (o *Rating) GetTotalDifficultyAverage() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -114,7 +114,7 @@ func (o *Rating) GetTotalDifficultyAverage() float64 {
 
 // GetTotalDifficultyAverageOk returns a tuple with the TotalDifficultyAverage field value
 // and a boolean to check if the value has been set.
-func (o *Rating) GetTotalDifficultyAverageOk() (*float64, bool) {
+func (o *Rating) GetTotalDifficultyAverageOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -122,14 +122,14 @@ func (o *Rating) GetTotalDifficultyAverageOk() (*float64, bool) {
 }
 
 // SetTotalDifficultyAverage sets field value
-func (o *Rating) SetTotalDifficultyAverage(v float64) {
+func (o *Rating) SetTotalDifficultyAverage(v int32) {
 	o.TotalDifficultyAverage = v
 }
 
 // GetTopKMostRecentQualityAverage returns the TopKMostRecentQualityAverage field value
-func (o *Rating) GetTopKMostRecentQualityAverage() float64 {
+func (o *Rating) GetTopKMostRecentQualityAverage() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -138,7 +138,7 @@ func (o *Rating) GetTopKMostRecentQualityAverage() float64 {
 
 // GetTopKMostRecentQualityAverageOk returns a tuple with the TopKMostRecentQualityAverage field value
 // and a boolean to check if the value has been set.
-func (o *Rating) GetTopKMostRecentQualityAverageOk() (*float64, bool) {
+func (o *Rating) GetTopKMostRecentQualityAverageOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -146,14 +146,14 @@ func (o *Rating) GetTopKMostRecentQualityAverageOk() (*float64, bool) {
 }
 
 // SetTopKMostRecentQualityAverage sets field value
-func (o *Rating) SetTopKMostRecentQualityAverage(v float64) {
+func (o *Rating) SetTopKMostRecentQualityAverage(v int32) {
 	o.TopKMostRecentQualityAverage = v
 }
 
 // GetTotalQualityAverage returns the TotalQualityAverage field value
-func (o *Rating) GetTotalQualityAverage() float64 {
+func (o *Rating) GetTotalQualityAverage() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -162,7 +162,7 @@ func (o *Rating) GetTotalQualityAverage() float64 {
 
 // GetTotalQualityAverageOk returns a tuple with the TotalQualityAverage field value
 // and a boolean to check if the value has been set.
-func (o *Rating) GetTotalQualityAverageOk() (*float64, bool) {
+func (o *Rating) GetTotalQualityAverageOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -170,14 +170,14 @@ func (o *Rating) GetTotalQualityAverageOk() (*float64, bool) {
 }
 
 // SetTotalQualityAverage sets field value
-func (o *Rating) SetTotalQualityAverage(v float64) {
+func (o *Rating) SetTotalQualityAverage(v int32) {
 	o.TotalQualityAverage = v
 }
 
 // GetRatingAmount returns the RatingAmount field value
-func (o *Rating) GetRatingAmount() float64 {
+func (o *Rating) GetRatingAmount() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -186,7 +186,7 @@ func (o *Rating) GetRatingAmount() float64 {
 
 // GetRatingAmountOk returns a tuple with the RatingAmount field value
 // and a boolean to check if the value has been set.
-func (o *Rating) GetRatingAmountOk() (*float64, bool) {
+func (o *Rating) GetRatingAmountOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -194,7 +194,7 @@ func (o *Rating) GetRatingAmountOk() (*float64, bool) {
 }
 
 // SetRatingAmount sets field value
-func (o *Rating) SetRatingAmount(v float64) {
+func (o *Rating) SetRatingAmount(v int32) {
 	o.RatingAmount = v
 }
 

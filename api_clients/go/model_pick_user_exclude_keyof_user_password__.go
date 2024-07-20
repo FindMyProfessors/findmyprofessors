@@ -22,7 +22,7 @@ var _ MappedNullable = &PickUserExcludeKeyofUserPassword{}
 
 // PickUserExcludeKeyofUserPassword From T, pick a set of properties whose keys are in the union K
 type PickUserExcludeKeyofUserPassword struct {
-	Id float64 `json:"id"`
+	Id int32 `json:"id"`
 	Email string `json:"email"`
 	Username string `json:"username"`
 	SignupTime time.Time `json:"signup_time"`
@@ -37,7 +37,7 @@ type _PickUserExcludeKeyofUserPassword PickUserExcludeKeyofUserPassword
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPickUserExcludeKeyofUserPassword(id float64, email string, username string, signupTime time.Time, lastLoginTime time.Time, accountVerified bool, role Model36EnumsUserRole) *PickUserExcludeKeyofUserPassword {
+func NewPickUserExcludeKeyofUserPassword(id int32, email string, username string, signupTime time.Time, lastLoginTime time.Time, accountVerified bool, role Model36EnumsUserRole) *PickUserExcludeKeyofUserPassword {
 	this := PickUserExcludeKeyofUserPassword{}
 	this.Id = id
 	this.Email = email
@@ -58,9 +58,9 @@ func NewPickUserExcludeKeyofUserPasswordWithDefaults() *PickUserExcludeKeyofUser
 }
 
 // GetId returns the Id field value
-func (o *PickUserExcludeKeyofUserPassword) GetId() float64 {
+func (o *PickUserExcludeKeyofUserPassword) GetId() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -69,7 +69,7 @@ func (o *PickUserExcludeKeyofUserPassword) GetId() float64 {
 
 // GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
-func (o *PickUserExcludeKeyofUserPassword) GetIdOk() (*float64, bool) {
+func (o *PickUserExcludeKeyofUserPassword) GetIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -77,7 +77,7 @@ func (o *PickUserExcludeKeyofUserPassword) GetIdOk() (*float64, bool) {
 }
 
 // SetId sets field value
-func (o *PickUserExcludeKeyofUserPassword) SetId(v float64) {
+func (o *PickUserExcludeKeyofUserPassword) SetId(v int32) {
 	o.Id = v
 }
 

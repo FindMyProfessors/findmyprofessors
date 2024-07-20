@@ -21,9 +21,9 @@ var _ MappedNullable = &ChartValue{}
 
 // ChartValue struct for ChartValue
 type ChartValue struct {
-	Year float64 `json:"year"`
+	Year int32 `json:"year"`
 	Month string `json:"month"`
-	Value float64 `json:"value"`
+	Value int32 `json:"value"`
 }
 
 type _ChartValue ChartValue
@@ -32,7 +32,7 @@ type _ChartValue ChartValue
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewChartValue(year float64, month string, value float64) *ChartValue {
+func NewChartValue(year int32, month string, value int32) *ChartValue {
 	this := ChartValue{}
 	this.Year = year
 	this.Month = month
@@ -49,9 +49,9 @@ func NewChartValueWithDefaults() *ChartValue {
 }
 
 // GetYear returns the Year field value
-func (o *ChartValue) GetYear() float64 {
+func (o *ChartValue) GetYear() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -60,7 +60,7 @@ func (o *ChartValue) GetYear() float64 {
 
 // GetYearOk returns a tuple with the Year field value
 // and a boolean to check if the value has been set.
-func (o *ChartValue) GetYearOk() (*float64, bool) {
+func (o *ChartValue) GetYearOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -68,7 +68,7 @@ func (o *ChartValue) GetYearOk() (*float64, bool) {
 }
 
 // SetYear sets field value
-func (o *ChartValue) SetYear(v float64) {
+func (o *ChartValue) SetYear(v int32) {
 	o.Year = v
 }
 
@@ -97,9 +97,9 @@ func (o *ChartValue) SetMonth(v string) {
 }
 
 // GetValue returns the Value field value
-func (o *ChartValue) GetValue() float64 {
+func (o *ChartValue) GetValue() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -108,7 +108,7 @@ func (o *ChartValue) GetValue() float64 {
 
 // GetValueOk returns a tuple with the Value field value
 // and a boolean to check if the value has been set.
-func (o *ChartValue) GetValueOk() (*float64, bool) {
+func (o *ChartValue) GetValueOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -116,7 +116,7 @@ func (o *ChartValue) GetValueOk() (*float64, bool) {
 }
 
 // SetValue sets field value
-func (o *ChartValue) SetValue(v float64) {
+func (o *ChartValue) SetValue(v int32) {
 	o.Value = v
 }
 

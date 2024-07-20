@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Total** | **float64** |  | 
+**Total** | **int32** |  | 
 **Courses** | [**[]PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId**](PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId.md) |  | 
 
 ## Methods
 
 ### NewProfessorCourses
 
-`func NewProfessorCourses(total float64, courses []PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId, ) *ProfessorCourses`
+`func NewProfessorCourses(total int32, courses []PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId, ) *ProfessorCourses`
 
 NewProfessorCourses instantiates a new ProfessorCourses object
 This constructor will assign default values to properties that have it defined,
@@ -28,20 +28,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetTotal
 
-`func (o *ProfessorCourses) GetTotal() float64`
+`func (o *ProfessorCourses) GetTotal() int32`
 
 GetTotal returns the Total field if non-nil, zero value otherwise.
 
 ### GetTotalOk
 
-`func (o *ProfessorCourses) GetTotalOk() (*float64, bool)`
+`func (o *ProfessorCourses) GetTotalOk() (*int32, bool)`
 
 GetTotalOk returns a tuple with the Total field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTotal
 
-`func (o *ProfessorCourses) SetTotal(v float64)`
+`func (o *ProfessorCourses) SetTotal(v int32)`
 
 SetTotal sets Total field to given value.
 

@@ -144,7 +144,7 @@ func (a *ProfessorsAPIService) CreateProfessorExecute(r ApiCreateProfessorReques
 type ApiDeleteProfessorRequest struct {
 	ctx context.Context
 	ApiService *ProfessorsAPIService
-	id float64
+	id int32
 }
 
 func (r ApiDeleteProfessorRequest) Execute() (*http.Response, error) {
@@ -158,7 +158,7 @@ DeleteProfessor Method for DeleteProfessor
  @param id
  @return ApiDeleteProfessorRequest
 */
-func (a *ProfessorsAPIService) DeleteProfessor(ctx context.Context, id float64) ApiDeleteProfessorRequest {
+func (a *ProfessorsAPIService) DeleteProfessor(ctx context.Context, id int32) ApiDeleteProfessorRequest {
 	return ApiDeleteProfessorRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -244,7 +244,7 @@ func (a *ProfessorsAPIService) DeleteProfessorExecute(r ApiDeleteProfessorReques
 type ApiEnrollRequest struct {
 	ctx context.Context
 	ApiService *ProfessorsAPIService
-	id float64
+	id int32
 	body *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId
 }
 
@@ -264,7 +264,7 @@ Enroll Method for Enroll
  @param id
  @return ApiEnrollRequest
 */
-func (a *ProfessorsAPIService) Enroll(ctx context.Context, id float64) ApiEnrollRequest {
+func (a *ProfessorsAPIService) Enroll(ctx context.Context, id int32) ApiEnrollRequest {
 	return ApiEnrollRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -356,7 +356,7 @@ func (a *ProfessorsAPIService) EnrollExecute(r ApiEnrollRequest) (*DefaultSelect
 type ApiGetProfessorRequest struct {
 	ctx context.Context
 	ApiService *ProfessorsAPIService
-	id float64
+	id int32
 }
 
 func (r ApiGetProfessorRequest) Execute() (*DefaultSelectionPrisma36ProfessorPayload, *http.Response, error) {
@@ -370,7 +370,7 @@ GetProfessor Method for GetProfessor
  @param id
  @return ApiGetProfessorRequest
 */
-func (a *ProfessorsAPIService) GetProfessor(ctx context.Context, id float64) ApiGetProfessorRequest {
+func (a *ProfessorsAPIService) GetProfessor(ctx context.Context, id int32) ApiGetProfessorRequest {
 	return ApiGetProfessorRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -467,7 +467,7 @@ func (a *ProfessorsAPIService) GetProfessorExecute(r ApiGetProfessorRequest) (*D
 type ApiGetProfessorAnalysisRequest struct {
 	ctx context.Context
 	ApiService *ProfessorsAPIService
-	id float64
+	id int32
 }
 
 func (r ApiGetProfessorAnalysisRequest) Execute() (*ProfessorAnalysis, *http.Response, error) {
@@ -481,7 +481,7 @@ GetProfessorAnalysis Method for GetProfessorAnalysis
  @param id
  @return ApiGetProfessorAnalysisRequest
 */
-func (a *ProfessorsAPIService) GetProfessorAnalysis(ctx context.Context, id float64) ApiGetProfessorAnalysisRequest {
+func (a *ProfessorsAPIService) GetProfessorAnalysis(ctx context.Context, id int32) ApiGetProfessorAnalysisRequest {
 	return ApiGetProfessorAnalysisRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -578,12 +578,12 @@ func (a *ProfessorsAPIService) GetProfessorAnalysisExecute(r ApiGetProfessorAnal
 type ApiGetProfessorCoursesRequest struct {
 	ctx context.Context
 	ApiService *ProfessorsAPIService
-	id float64
-	year *float64
+	id int32
+	year *int32
 	semester *36EnumsSemester
 }
 
-func (r ApiGetProfessorCoursesRequest) Year(year float64) ApiGetProfessorCoursesRequest {
+func (r ApiGetProfessorCoursesRequest) Year(year int32) ApiGetProfessorCoursesRequest {
 	r.year = &year
 	return r
 }
@@ -604,7 +604,7 @@ GetProfessorCourses Method for GetProfessorCourses
  @param id
  @return ApiGetProfessorCoursesRequest
 */
-func (a *ProfessorsAPIService) GetProfessorCourses(ctx context.Context, id float64) ApiGetProfessorCoursesRequest {
+func (a *ProfessorsAPIService) GetProfessorCourses(ctx context.Context, id int32) ApiGetProfessorCoursesRequest {
 	return ApiGetProfessorCoursesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -707,11 +707,11 @@ func (a *ProfessorsAPIService) GetProfessorCoursesExecute(r ApiGetProfessorCours
 type ApiGetProfessorRatingRequest struct {
 	ctx context.Context
 	ApiService *ProfessorsAPIService
-	id float64
-	topKPercentage *float64
+	id int32
+	topKPercentage *int32
 }
 
-func (r ApiGetProfessorRatingRequest) TopKPercentage(topKPercentage float64) ApiGetProfessorRatingRequest {
+func (r ApiGetProfessorRatingRequest) TopKPercentage(topKPercentage int32) ApiGetProfessorRatingRequest {
 	r.topKPercentage = &topKPercentage
 	return r
 }
@@ -727,7 +727,7 @@ GetProfessorRating Method for GetProfessorRating
  @param id
  @return ApiGetProfessorRatingRequest
 */
-func (a *ProfessorsAPIService) GetProfessorRating(ctx context.Context, id float64) ApiGetProfessorRatingRequest {
+func (a *ProfessorsAPIService) GetProfessorRating(ctx context.Context, id int32) ApiGetProfessorRatingRequest {
 	return ApiGetProfessorRatingRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -827,9 +827,9 @@ func (a *ProfessorsAPIService) GetProfessorRatingExecute(r ApiGetProfessorRating
 type ApiGetReviewsRequest struct {
 	ctx context.Context
 	ApiService *ProfessorsAPIService
-	id float64
+	id int32
 	cursor *string
-	pageSize *float64
+	pageSize *int32
 }
 
 func (r ApiGetReviewsRequest) Cursor(cursor string) ApiGetReviewsRequest {
@@ -837,7 +837,7 @@ func (r ApiGetReviewsRequest) Cursor(cursor string) ApiGetReviewsRequest {
 	return r
 }
 
-func (r ApiGetReviewsRequest) PageSize(pageSize float64) ApiGetReviewsRequest {
+func (r ApiGetReviewsRequest) PageSize(pageSize int32) ApiGetReviewsRequest {
 	r.pageSize = &pageSize
 	return r
 }
@@ -853,7 +853,7 @@ GetReviews Method for GetReviews
  @param id
  @return ApiGetReviewsRequest
 */
-func (a *ProfessorsAPIService) GetReviews(ctx context.Context, id float64) ApiGetReviewsRequest {
+func (a *ProfessorsAPIService) GetReviews(ctx context.Context, id int32) ApiGetReviewsRequest {
 	return ApiGetReviewsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -889,7 +889,7 @@ func (a *ProfessorsAPIService) GetReviewsExecute(r ApiGetReviewsRequest) (*Revie
 	if r.pageSize != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "")
 	} else {
-		var defaultValue float64 = 25
+		var defaultValue int32 = 25
 		r.pageSize = &defaultValue
 	}
 	// to determine the Content-Type header
@@ -950,9 +950,9 @@ type ApiSearchProfessorsRequest struct {
 	ctx context.Context
 	ApiService *ProfessorsAPIService
 	name *string
-	schoolId *float64
+	schoolId *int32
 	cursor *string
-	pageSize *float64
+	pageSize *int32
 }
 
 func (r ApiSearchProfessorsRequest) Name(name string) ApiSearchProfessorsRequest {
@@ -960,7 +960,7 @@ func (r ApiSearchProfessorsRequest) Name(name string) ApiSearchProfessorsRequest
 	return r
 }
 
-func (r ApiSearchProfessorsRequest) SchoolId(schoolId float64) ApiSearchProfessorsRequest {
+func (r ApiSearchProfessorsRequest) SchoolId(schoolId int32) ApiSearchProfessorsRequest {
 	r.schoolId = &schoolId
 	return r
 }
@@ -970,7 +970,7 @@ func (r ApiSearchProfessorsRequest) Cursor(cursor string) ApiSearchProfessorsReq
 	return r
 }
 
-func (r ApiSearchProfessorsRequest) PageSize(pageSize float64) ApiSearchProfessorsRequest {
+func (r ApiSearchProfessorsRequest) PageSize(pageSize int32) ApiSearchProfessorsRequest {
 	r.pageSize = &pageSize
 	return r
 }
@@ -1025,7 +1025,7 @@ func (a *ProfessorsAPIService) SearchProfessorsExecute(r ApiSearchProfessorsRequ
 	if r.pageSize != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "")
 	} else {
-		var defaultValue float64 = 10
+		var defaultValue int32 = 10
 		r.pageSize = &defaultValue
 	}
 	// to determine the Content-Type header
@@ -1085,7 +1085,7 @@ func (a *ProfessorsAPIService) SearchProfessorsExecute(r ApiSearchProfessorsRequ
 type ApiUpdateProfessorRequest struct {
 	ctx context.Context
 	ApiService *ProfessorsAPIService
-	id float64
+	id int32
 	updatedProfessor *UpdatedProfessor
 }
 
@@ -1105,7 +1105,7 @@ UpdateProfessor Method for UpdateProfessor
  @param id
  @return ApiUpdateProfessorRequest
 */
-func (a *ProfessorsAPIService) UpdateProfessor(ctx context.Context, id float64) ApiUpdateProfessorRequest {
+func (a *ProfessorsAPIService) UpdateProfessor(ctx context.Context, id int32) ApiUpdateProfessorRequest {
 	return ApiUpdateProfessorRequest{
 		ApiService: a,
 		ctx: ctx,

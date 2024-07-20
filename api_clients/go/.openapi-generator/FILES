@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 .travis.yml
 README.md
 api/openapi.yaml
@@ -159,10 +158,4 @@ model_updated_professor.go
 model_user_already_exists_error.go
 model_user_not_found_error.go
 response.go
-test/api_authentication_test.go
-test/api_courses_test.go
-test/api_professors_test.go
-test/api_reviews_test.go
-test/api_schools_test.go
-test/api_users_test.go
 utils.go

@@ -95,7 +95,7 @@ import (
 )
 
 func main() {
-	id := float64(1.2) // float64 | 
+	id := int32(56) // int32 | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -113,7 +113,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **float64** |  | 
+**id** | **int32** |  | 
 
 ### Other Parameters
 
@@ -161,7 +161,7 @@ import (
 )
 
 func main() {
-	id := float64(1.2) // float64 | 
+	id := int32(56) // int32 | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -181,7 +181,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **float64** |  | 
+**id** | **int32** |  | 
 
 ### Other Parameters
 
@@ -231,7 +231,7 @@ import (
 func main() {
 	name := "name_example" // string |  (optional)
 	cursor := "cursor_example" // string |  (optional)
-	pageSize := float64(1.2) // float64 |  (optional) (default to 10)
+	pageSize := int32(56) // int32 |  (optional) (default to 10)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -258,7 +258,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **string** |  | 
  **cursor** | **string** |  | 
- **pageSize** | **float64** |  | [default to 10]
+ **pageSize** | **int32** |  | [default to 10]
 
 ### Return type
 
@@ -297,7 +297,7 @@ import (
 )
 
 func main() {
-	id := float64(1.2) // float64 | 
+	id := int32(56) // int32 | 
 	body := PickSchoolName(987) // PickSchoolName | 
 
 	configuration := openapiclient.NewConfiguration()
@@ -318,7 +318,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **float64** |  | 
+**id** | **int32** |  | 
 
 ### Other Parameters
 

@@ -100,7 +100,7 @@ import (
 )
 
 func main() {
-	id := float64(1.2) // float64 | 
+	id := int32(56) // int32 | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -118,7 +118,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **float64** |  | 
+**id** | **int32** |  | 
 
 ### Other Parameters
 
@@ -166,7 +166,7 @@ import (
 )
 
 func main() {
-	id := float64(1.2) // float64 | 
+	id := int32(56) // int32 | 
 	body := PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId(987) // PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId | 
 
 	configuration := openapiclient.NewConfiguration()
@@ -187,7 +187,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **float64** |  | 
+**id** | **int32** |  | 
 
 ### Other Parameters
 
@@ -236,7 +236,7 @@ import (
 )
 
 func main() {
-	id := float64(1.2) // float64 | 
+	id := int32(56) // int32 | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -256,7 +256,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **float64** |  | 
+**id** | **int32** |  | 
 
 ### Other Parameters
 
@@ -304,7 +304,7 @@ import (
 )
 
 func main() {
-	id := float64(1.2) // float64 | 
+	id := int32(56) // int32 | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -324,7 +324,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **float64** |  | 
+**id** | **int32** |  | 
 
 ### Other Parameters
 
@@ -372,8 +372,8 @@ import (
 )
 
 func main() {
-	id := float64(1.2) // float64 | 
-	year := float64(1.2) // float64 |  (optional)
+	id := int32(56) // int32 | 
+	year := int32(56) // int32 |  (optional)
 	semester := openapiclient._36_Enums.Semester("SPRING") // 36EnumsSemester |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
@@ -394,7 +394,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **float64** |  | 
+**id** | **int32** |  | 
 
 ### Other Parameters
 
@@ -404,7 +404,7 @@ Other parameters are passed through a pointer to a apiGetProfessorCoursesRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **year** | **float64** |  | 
+ **year** | **int32** |  | 
  **semester** | [**36EnumsSemester**](36EnumsSemester.md) |  | 
 
 ### Return type
@@ -444,8 +444,8 @@ import (
 )
 
 func main() {
-	id := float64(1.2) // float64 | 
-	topKPercentage := float64(1.2) // float64 |  (optional)
+	id := int32(56) // int32 | 
+	topKPercentage := int32(56) // int32 |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -465,7 +465,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **float64** |  | 
+**id** | **int32** |  | 
 
 ### Other Parameters
 
@@ -475,7 +475,7 @@ Other parameters are passed through a pointer to a apiGetProfessorRatingRequest 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **topKPercentage** | **float64** |  | 
+ **topKPercentage** | **int32** |  | 
 
 ### Return type
 
@@ -514,9 +514,9 @@ import (
 )
 
 func main() {
-	id := float64(1.2) // float64 | 
+	id := int32(56) // int32 | 
 	cursor := "cursor_example" // string |  (optional)
-	pageSize := float64(1.2) // float64 |  (optional) (default to 25)
+	pageSize := int32(56) // int32 |  (optional) (default to 25)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -536,7 +536,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **float64** |  | 
+**id** | **int32** |  | 
 
 ### Other Parameters
 
@@ -547,7 +547,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **cursor** | **string** |  | 
- **pageSize** | **float64** |  | [default to 25]
+ **pageSize** | **int32** |  | [default to 25]
 
 ### Return type
 
@@ -587,9 +587,9 @@ import (
 
 func main() {
 	name := "name_example" // string |  (optional)
-	schoolId := float64(1.2) // float64 |  (optional)
+	schoolId := int32(56) // int32 |  (optional)
 	cursor := "cursor_example" // string |  (optional)
-	pageSize := float64(1.2) // float64 |  (optional) (default to 10)
+	pageSize := int32(56) // int32 |  (optional) (default to 10)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -615,9 +615,9 @@ Other parameters are passed through a pointer to a apiSearchProfessorsRequest st
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **string** |  | 
- **schoolId** | **float64** |  | 
+ **schoolId** | **int32** |  | 
  **cursor** | **string** |  | 
- **pageSize** | **float64** |  | [default to 10]
+ **pageSize** | **int32** |  | [default to 10]
 
 ### Return type
 
@@ -656,7 +656,7 @@ import (
 )
 
 func main() {
-	id := float64(1.2) // float64 | 
+	id := int32(56) // int32 | 
 	updatedProfessor := *openapiclient.NewUpdatedProfessor() // UpdatedProfessor | 
 
 	configuration := openapiclient.NewConfiguration()
@@ -677,7 +677,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **float64** |  | 
+**id** | **int32** |  | 
 
 ### Other Parameters
 

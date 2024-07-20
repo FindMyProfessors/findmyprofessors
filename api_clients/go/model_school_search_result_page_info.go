@@ -21,7 +21,7 @@ var _ MappedNullable = &SchoolSearchResultPageInfo{}
 
 // SchoolSearchResultPageInfo struct for SchoolSearchResultPageInfo
 type SchoolSearchResultPageInfo struct {
-	Total float64 `json:"total"`
+	Total int32 `json:"total"`
 	EndCursor NullableString `json:"endCursor"`
 	HasNextPage bool `json:"hasNextPage"`
 }
@@ -32,7 +32,7 @@ type _SchoolSearchResultPageInfo SchoolSearchResultPageInfo
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSchoolSearchResultPageInfo(total float64, endCursor NullableString, hasNextPage bool) *SchoolSearchResultPageInfo {
+func NewSchoolSearchResultPageInfo(total int32, endCursor NullableString, hasNextPage bool) *SchoolSearchResultPageInfo {
 	this := SchoolSearchResultPageInfo{}
 	this.Total = total
 	this.EndCursor = endCursor
@@ -49,9 +49,9 @@ func NewSchoolSearchResultPageInfoWithDefaults() *SchoolSearchResultPageInfo {
 }
 
 // GetTotal returns the Total field value
-func (o *SchoolSearchResultPageInfo) GetTotal() float64 {
+func (o *SchoolSearchResultPageInfo) GetTotal() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -60,7 +60,7 @@ func (o *SchoolSearchResultPageInfo) GetTotal() float64 {
 
 // GetTotalOk returns a tuple with the Total field value
 // and a boolean to check if the value has been set.
-func (o *SchoolSearchResultPageInfo) GetTotalOk() (*float64, bool) {
+func (o *SchoolSearchResultPageInfo) GetTotalOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -68,7 +68,7 @@ func (o *SchoolSearchResultPageInfo) GetTotalOk() (*float64, bool) {
 }
 
 // SetTotal sets field value
-func (o *SchoolSearchResultPageInfo) SetTotal(v float64) {
+func (o *SchoolSearchResultPageInfo) SetTotal(v int32) {
 	o.Total = v
 }
 

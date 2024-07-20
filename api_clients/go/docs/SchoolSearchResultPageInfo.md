@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Total** | **float64** |  | 
+**Total** | **int32** |  | 
 **EndCursor** | **NullableString** |  | 
 **HasNextPage** | **bool** |  | 
 
@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 
 ### NewSchoolSearchResultPageInfo
 
-`func NewSchoolSearchResultPageInfo(total float64, endCursor NullableString, hasNextPage bool, ) *SchoolSearchResultPageInfo`
+`func NewSchoolSearchResultPageInfo(total int32, endCursor NullableString, hasNextPage bool, ) *SchoolSearchResultPageInfo`
 
 NewSchoolSearchResultPageInfo instantiates a new SchoolSearchResultPageInfo object
 This constructor will assign default values to properties that have it defined,
@@ -29,20 +29,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetTotal
 
-`func (o *SchoolSearchResultPageInfo) GetTotal() float64`
+`func (o *SchoolSearchResultPageInfo) GetTotal() int32`
 
 GetTotal returns the Total field if non-nil, zero value otherwise.
 
 ### GetTotalOk
 
-`func (o *SchoolSearchResultPageInfo) GetTotalOk() (*float64, bool)`
+`func (o *SchoolSearchResultPageInfo) GetTotalOk() (*int32, bool)`
 
 GetTotalOk returns a tuple with the Total field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTotal
 
-`func (o *SchoolSearchResultPageInfo) SetTotal(v float64)`
+`func (o *SchoolSearchResultPageInfo) SetTotal(v int32)`
 
 SetTotal sets Total field to given value.
 

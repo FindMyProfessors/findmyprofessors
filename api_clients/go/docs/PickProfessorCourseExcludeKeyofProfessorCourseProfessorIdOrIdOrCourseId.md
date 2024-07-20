@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Year** | **float64** |  | 
+**Year** | **int32** |  | 
 **Semester** | [**Model36EnumsSemester**](36EnumsSemester.md) |  | 
 
 ## Methods
 
 ### NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId
 
-`func NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId(year float64, semester Model36EnumsSemester, ) *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId`
+`func NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId(year int32, semester Model36EnumsSemester, ) *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId`
 
 NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId instantiates a new PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId object
 This constructor will assign default values to properties that have it defined,
@@ -28,20 +28,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetYear
 
-`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) GetYear() float64`
+`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) GetYear() int32`
 
 GetYear returns the Year field if non-nil, zero value otherwise.
 
 ### GetYearOk
 
-`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) GetYearOk() (*float64, bool)`
+`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) GetYearOk() (*int32, bool)`
 
 GetYearOk returns a tuple with the Year field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetYear
 
-`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) SetYear(v float64)`
+`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrIdOrCourseId) SetYear(v int32)`
 
 SetYear sets Year field to given value.
 

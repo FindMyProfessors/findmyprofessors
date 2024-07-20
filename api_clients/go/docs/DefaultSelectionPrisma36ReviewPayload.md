@@ -4,19 +4,19 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ProfessorId** | **float64** |  | 
+**ProfessorId** | **int32** |  | 
 **Grade** | [**Model36EnumsGrade**](36EnumsGrade.md) |  | 
 **Tags** | [**[]Model36EnumsReviewTag**](Model36EnumsReviewTag.md) |  | 
 **Time** | **time.Time** |  | 
-**Difficulty** | **float64** |  | 
-**Quality** | **float64** |  | 
-**Id** | **float64** |  | 
+**Difficulty** | **int32** |  | 
+**Quality** | **int32** |  | 
+**Id** | **int32** |  | 
 
 ## Methods
 
 ### NewDefaultSelectionPrisma36ReviewPayload
 
-`func NewDefaultSelectionPrisma36ReviewPayload(professorId float64, grade Model36EnumsGrade, tags []Model36EnumsReviewTag, time time.Time, difficulty float64, quality float64, id float64, ) *DefaultSelectionPrisma36ReviewPayload`
+`func NewDefaultSelectionPrisma36ReviewPayload(professorId int32, grade Model36EnumsGrade, tags []Model36EnumsReviewTag, time time.Time, difficulty int32, quality int32, id int32, ) *DefaultSelectionPrisma36ReviewPayload`
 
 NewDefaultSelectionPrisma36ReviewPayload instantiates a new DefaultSelectionPrisma36ReviewPayload object
 This constructor will assign default values to properties that have it defined,
@@ -33,20 +33,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetProfessorId
 
-`func (o *DefaultSelectionPrisma36ReviewPayload) GetProfessorId() float64`
+`func (o *DefaultSelectionPrisma36ReviewPayload) GetProfessorId() int32`
 
 GetProfessorId returns the ProfessorId field if non-nil, zero value otherwise.
 
 ### GetProfessorIdOk
 
-`func (o *DefaultSelectionPrisma36ReviewPayload) GetProfessorIdOk() (*float64, bool)`
+`func (o *DefaultSelectionPrisma36ReviewPayload) GetProfessorIdOk() (*int32, bool)`
 
 GetProfessorIdOk returns a tuple with the ProfessorId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetProfessorId
 
-`func (o *DefaultSelectionPrisma36ReviewPayload) SetProfessorId(v float64)`
+`func (o *DefaultSelectionPrisma36ReviewPayload) SetProfessorId(v int32)`
 
 SetProfessorId sets ProfessorId field to given value.
 
@@ -113,60 +113,60 @@ SetTime sets Time field to given value.
 
 ### GetDifficulty
 
-`func (o *DefaultSelectionPrisma36ReviewPayload) GetDifficulty() float64`
+`func (o *DefaultSelectionPrisma36ReviewPayload) GetDifficulty() int32`
 
 GetDifficulty returns the Difficulty field if non-nil, zero value otherwise.
 
 ### GetDifficultyOk
 
-`func (o *DefaultSelectionPrisma36ReviewPayload) GetDifficultyOk() (*float64, bool)`
+`func (o *DefaultSelectionPrisma36ReviewPayload) GetDifficultyOk() (*int32, bool)`
 
 GetDifficultyOk returns a tuple with the Difficulty field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDifficulty
 
-`func (o *DefaultSelectionPrisma36ReviewPayload) SetDifficulty(v float64)`
+`func (o *DefaultSelectionPrisma36ReviewPayload) SetDifficulty(v int32)`
 
 SetDifficulty sets Difficulty field to given value.
 
 
 ### GetQuality
 
-`func (o *DefaultSelectionPrisma36ReviewPayload) GetQuality() float64`
+`func (o *DefaultSelectionPrisma36ReviewPayload) GetQuality() int32`
 
 GetQuality returns the Quality field if non-nil, zero value otherwise.
 
 ### GetQualityOk
 
-`func (o *DefaultSelectionPrisma36ReviewPayload) GetQualityOk() (*float64, bool)`
+`func (o *DefaultSelectionPrisma36ReviewPayload) GetQualityOk() (*int32, bool)`
 
 GetQualityOk returns a tuple with the Quality field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetQuality
 
-`func (o *DefaultSelectionPrisma36ReviewPayload) SetQuality(v float64)`
+`func (o *DefaultSelectionPrisma36ReviewPayload) SetQuality(v int32)`
 
 SetQuality sets Quality field to given value.
 
 
 ### GetId
 
-`func (o *DefaultSelectionPrisma36ReviewPayload) GetId() float64`
+`func (o *DefaultSelectionPrisma36ReviewPayload) GetId() int32`
 
 GetId returns the Id field if non-nil, zero value otherwise.
 
 ### GetIdOk
 
-`func (o *DefaultSelectionPrisma36ReviewPayload) GetIdOk() (*float64, bool)`
+`func (o *DefaultSelectionPrisma36ReviewPayload) GetIdOk() (*int32, bool)`
 
 GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetId
 
-`func (o *DefaultSelectionPrisma36ReviewPayload) SetId(v float64)`
+`func (o *DefaultSelectionPrisma36ReviewPayload) SetId(v int32)`
 
 SetId sets Id field to given value.
 

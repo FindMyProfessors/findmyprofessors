@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Quality** | **float64** |  | 
-**Difficulty** | **float64** |  | 
+**Quality** | **int32** |  | 
+**Difficulty** | **int32** |  | 
 **Time** | **time.Time** |  | 
 **Tags** | [**[]Model36EnumsReviewTag**](Model36EnumsReviewTag.md) |  | 
 **Grade** | [**Model36EnumsGrade**](36EnumsGrade.md) |  | 
@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewPickReviewQualityOrDifficultyOrTimeOrTagsOrGrade
 
-`func NewPickReviewQualityOrDifficultyOrTimeOrTagsOrGrade(quality float64, difficulty float64, time time.Time, tags []Model36EnumsReviewTag, grade Model36EnumsGrade, ) *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade`
+`func NewPickReviewQualityOrDifficultyOrTimeOrTagsOrGrade(quality int32, difficulty int32, time time.Time, tags []Model36EnumsReviewTag, grade Model36EnumsGrade, ) *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade`
 
 NewPickReviewQualityOrDifficultyOrTimeOrTagsOrGrade instantiates a new PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade object
 This constructor will assign default values to properties that have it defined,
@@ -31,40 +31,40 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetQuality
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetQuality() float64`
+`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetQuality() int32`
 
 GetQuality returns the Quality field if non-nil, zero value otherwise.
 
 ### GetQualityOk
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetQualityOk() (*float64, bool)`
+`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetQualityOk() (*int32, bool)`
 
 GetQualityOk returns a tuple with the Quality field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetQuality
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) SetQuality(v float64)`
+`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) SetQuality(v int32)`
 
 SetQuality sets Quality field to given value.
 
 
 ### GetDifficulty
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetDifficulty() float64`
+`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetDifficulty() int32`
 
 GetDifficulty returns the Difficulty field if non-nil, zero value otherwise.
 
 ### GetDifficultyOk
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetDifficultyOk() (*float64, bool)`
+`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) GetDifficultyOk() (*int32, bool)`
 
 GetDifficultyOk returns a tuple with the Difficulty field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDifficulty
 
-`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) SetDifficulty(v float64)`
+`func (o *PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade) SetDifficulty(v int32)`
 
 SetDifficulty sets Difficulty field to given value.
 

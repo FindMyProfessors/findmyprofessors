@@ -144,7 +144,7 @@ func (a *SchoolsAPIService) CreateSchoolExecute(r ApiCreateSchoolRequest) (*Defa
 type ApiDeleteSchoolRequest struct {
 	ctx context.Context
 	ApiService *SchoolsAPIService
-	id float64
+	id int32
 }
 
 func (r ApiDeleteSchoolRequest) Execute() (*http.Response, error) {
@@ -158,7 +158,7 @@ DeleteSchool Method for DeleteSchool
  @param id
  @return ApiDeleteSchoolRequest
 */
-func (a *SchoolsAPIService) DeleteSchool(ctx context.Context, id float64) ApiDeleteSchoolRequest {
+func (a *SchoolsAPIService) DeleteSchool(ctx context.Context, id int32) ApiDeleteSchoolRequest {
 	return ApiDeleteSchoolRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -244,7 +244,7 @@ func (a *SchoolsAPIService) DeleteSchoolExecute(r ApiDeleteSchoolRequest) (*http
 type ApiGetSchoolRequest struct {
 	ctx context.Context
 	ApiService *SchoolsAPIService
-	id float64
+	id int32
 }
 
 func (r ApiGetSchoolRequest) Execute() (*DefaultSelectionPrisma36SchoolPayload, *http.Response, error) {
@@ -258,7 +258,7 @@ GetSchool Method for GetSchool
  @param id
  @return ApiGetSchoolRequest
 */
-func (a *SchoolsAPIService) GetSchool(ctx context.Context, id float64) ApiGetSchoolRequest {
+func (a *SchoolsAPIService) GetSchool(ctx context.Context, id int32) ApiGetSchoolRequest {
 	return ApiGetSchoolRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -357,7 +357,7 @@ type ApiSearchSchoolsRequest struct {
 	ApiService *SchoolsAPIService
 	name *string
 	cursor *string
-	pageSize *float64
+	pageSize *int32
 }
 
 func (r ApiSearchSchoolsRequest) Name(name string) ApiSearchSchoolsRequest {
@@ -370,7 +370,7 @@ func (r ApiSearchSchoolsRequest) Cursor(cursor string) ApiSearchSchoolsRequest {
 	return r
 }
 
-func (r ApiSearchSchoolsRequest) PageSize(pageSize float64) ApiSearchSchoolsRequest {
+func (r ApiSearchSchoolsRequest) PageSize(pageSize int32) ApiSearchSchoolsRequest {
 	r.pageSize = &pageSize
 	return r
 }
@@ -422,7 +422,7 @@ func (a *SchoolsAPIService) SearchSchoolsExecute(r ApiSearchSchoolsRequest) (*Sc
 	if r.pageSize != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "")
 	} else {
-		var defaultValue float64 = 10
+		var defaultValue int32 = 10
 		r.pageSize = &defaultValue
 	}
 	// to determine the Content-Type header
@@ -482,7 +482,7 @@ func (a *SchoolsAPIService) SearchSchoolsExecute(r ApiSearchSchoolsRequest) (*Sc
 type ApiUpdateSchoolRequest struct {
 	ctx context.Context
 	ApiService *SchoolsAPIService
-	id float64
+	id int32
 	body *PickSchoolName
 }
 
@@ -502,7 +502,7 @@ UpdateSchool Method for UpdateSchool
  @param id
  @return ApiUpdateSchoolRequest
 */
-func (a *SchoolsAPIService) UpdateSchool(ctx context.Context, id float64) ApiUpdateSchoolRequest {
+func (a *SchoolsAPIService) UpdateSchool(ctx context.Context, id int32) ApiUpdateSchoolRequest {
 	return ApiUpdateSchoolRequest{
 		ApiService: a,
 		ctx: ctx,

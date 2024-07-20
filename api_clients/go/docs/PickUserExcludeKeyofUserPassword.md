@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **float64** |  | 
+**Id** | **int32** |  | 
 **Email** | **string** |  | 
 **Username** | **string** |  | 
 **SignupTime** | **time.Time** |  | 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewPickUserExcludeKeyofUserPassword
 
-`func NewPickUserExcludeKeyofUserPassword(id float64, email string, username string, signupTime time.Time, lastLoginTime time.Time, accountVerified bool, role Model36EnumsUserRole, ) *PickUserExcludeKeyofUserPassword`
+`func NewPickUserExcludeKeyofUserPassword(id int32, email string, username string, signupTime time.Time, lastLoginTime time.Time, accountVerified bool, role Model36EnumsUserRole, ) *PickUserExcludeKeyofUserPassword`
 
 NewPickUserExcludeKeyofUserPassword instantiates a new PickUserExcludeKeyofUserPassword object
 This constructor will assign default values to properties that have it defined,
@@ -33,20 +33,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetId
 
-`func (o *PickUserExcludeKeyofUserPassword) GetId() float64`
+`func (o *PickUserExcludeKeyofUserPassword) GetId() int32`
 
 GetId returns the Id field if non-nil, zero value otherwise.
 
 ### GetIdOk
 
-`func (o *PickUserExcludeKeyofUserPassword) GetIdOk() (*float64, bool)`
+`func (o *PickUserExcludeKeyofUserPassword) GetIdOk() (*int32, bool)`
 
 GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetId
 
-`func (o *PickUserExcludeKeyofUserPassword) SetId(v float64)`
+`func (o *PickUserExcludeKeyofUserPassword) SetId(v int32)`
 
 SetId sets Id field to given value.
 

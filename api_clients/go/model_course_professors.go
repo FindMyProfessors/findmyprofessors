@@ -21,7 +21,7 @@ var _ MappedNullable = &CourseProfessors{}
 
 // CourseProfessors struct for CourseProfessors
 type CourseProfessors struct {
-	Total float64 `json:"total"`
+	Total int32 `json:"total"`
 	Professors []DefaultSelectionPrisma36ProfessorPayload `json:"professors"`
 }
 
@@ -31,7 +31,7 @@ type _CourseProfessors CourseProfessors
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCourseProfessors(total float64, professors []DefaultSelectionPrisma36ProfessorPayload) *CourseProfessors {
+func NewCourseProfessors(total int32, professors []DefaultSelectionPrisma36ProfessorPayload) *CourseProfessors {
 	this := CourseProfessors{}
 	this.Total = total
 	this.Professors = professors
@@ -47,9 +47,9 @@ func NewCourseProfessorsWithDefaults() *CourseProfessors {
 }
 
 // GetTotal returns the Total field value
-func (o *CourseProfessors) GetTotal() float64 {
+func (o *CourseProfessors) GetTotal() int32 {
 	if o == nil {
-		var ret float64
+		var ret int32
 		return ret
 	}
 
@@ -58,7 +58,7 @@ func (o *CourseProfessors) GetTotal() float64 {
 
 // GetTotalOk returns a tuple with the Total field value
 // and a boolean to check if the value has been set.
-func (o *CourseProfessors) GetTotalOk() (*float64, bool) {
+func (o *CourseProfessors) GetTotalOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -66,7 +66,7 @@ func (o *CourseProfessors) GetTotalOk() (*float64, bool) {
 }
 
 // SetTotal sets field value
-func (o *CourseProfessors) SetTotal(v float64) {
+func (o *CourseProfessors) SetTotal(v int32) {
 	o.Total = v
 }
 

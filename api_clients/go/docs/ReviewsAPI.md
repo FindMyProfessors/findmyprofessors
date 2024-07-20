@@ -94,7 +94,7 @@ import (
 )
 
 func main() {
-	reviewId := float64(1.2) // float64 | 
+	reviewId := int32(56) // int32 | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -112,7 +112,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**reviewId** | **float64** |  | 
+**reviewId** | **int32** |  | 
 
 ### Other Parameters
 
@@ -160,7 +160,7 @@ import (
 )
 
 func main() {
-	reviewId := float64(1.2) // float64 | 
+	reviewId := int32(56) // int32 | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -180,7 +180,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**reviewId** | **float64** |  | 
+**reviewId** | **int32** |  | 
 
 ### Other Parameters
 
@@ -228,7 +228,7 @@ import (
 )
 
 func main() {
-	reviewId := float64(1.2) // float64 | 
+	reviewId := int32(56) // int32 | 
 	body := PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade(987) // PickReviewQualityOrDifficultyOrTimeOrTagsOrGrade | 
 
 	configuration := openapiclient.NewConfiguration()
@@ -249,7 +249,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**reviewId** | **float64** |  | 
+**reviewId** | **int32** |  | 
 
 ### Other Parameters
 

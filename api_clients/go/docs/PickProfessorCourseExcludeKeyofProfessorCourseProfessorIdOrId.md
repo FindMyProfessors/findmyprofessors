@@ -4,15 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**CourseId** | **float64** |  | 
-**Year** | **float64** |  | 
+**CourseId** | **int32** |  | 
+**Year** | **int32** |  | 
 **Semester** | [**Model36EnumsSemester**](36EnumsSemester.md) |  | 
 
 ## Methods
 
 ### NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId
 
-`func NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId(courseId float64, year float64, semester Model36EnumsSemester, ) *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId`
+`func NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId(courseId int32, year int32, semester Model36EnumsSemester, ) *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId`
 
 NewPickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId instantiates a new PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId object
 This constructor will assign default values to properties that have it defined,
@@ -29,40 +29,40 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetCourseId
 
-`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetCourseId() float64`
+`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetCourseId() int32`
 
 GetCourseId returns the CourseId field if non-nil, zero value otherwise.
 
 ### GetCourseIdOk
 
-`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetCourseIdOk() (*float64, bool)`
+`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetCourseIdOk() (*int32, bool)`
 
 GetCourseIdOk returns a tuple with the CourseId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCourseId
 
-`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) SetCourseId(v float64)`
+`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) SetCourseId(v int32)`
 
 SetCourseId sets CourseId field to given value.
 
 
 ### GetYear
 
-`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetYear() float64`
+`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetYear() int32`
 
 GetYear returns the Year field if non-nil, zero value otherwise.
 
 ### GetYearOk
 
-`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetYearOk() (*float64, bool)`
+`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) GetYearOk() (*int32, bool)`
 
 GetYearOk returns a tuple with the Year field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetYear
 
-`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) SetYear(v float64)`
+`func (o *PickProfessorCourseExcludeKeyofProfessorCourseProfessorIdOrId) SetYear(v int32)`
 
 SetYear sets Year field to given value.
 

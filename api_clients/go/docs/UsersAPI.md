@@ -29,7 +29,7 @@ import (
 )
 
 func main() {
-	id := float64(1.2) // float64 | 
+	id := int32(56) // int32 | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -49,7 +49,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **float64** |  | 
+**id** | **int32** |  | 
 
 ### Other Parameters
 
@@ -97,7 +97,7 @@ import (
 )
 
 func main() {
-	id := float64(1.2) // float64 | 
+	id := int32(56) // int32 | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -117,7 +117,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **float64** |  | 
+**id** | **int32** |  | 
 
 ### Other Parameters
 
@@ -165,7 +165,7 @@ import (
 )
 
 func main() {
-	id := float64(1.2) // float64 | 
+	id := int32(56) // int32 | 
 	body := PickUserExcludeKeyofUserPasswordOrSignupTimeOrAccountVerifiedOrIdOrLastLoginTimeOrEmailOrRole(987) // PickUserExcludeKeyofUserPasswordOrSignupTimeOrAccountVerifiedOrIdOrLastLoginTimeOrEmailOrRole | 
 
 	configuration := openapiclient.NewConfiguration()
@@ -184,7 +184,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **float64** |  | 
+**id** | **int32** |  | 
 
 ### Other Parameters
 
