@@ -1,0 +1,63 @@
+# 36EnumsReviewTag
+
+## Enum
+
+
+* `TOUGH_GRADER` (value: `"TOUGH_GRADER"`)
+
+* `GET_READY_TO_READ` (value: `"GET_READY_TO_READ"`)
+
+* `PARTICIPATION_MATTERS` (value: `"PARTICIPATION_MATTERS"`)
+
+* `EXTRA_CREDIT` (value: `"EXTRA_CREDIT"`)
+
+* `GROUP_PROJECTS` (value: `"GROUP_PROJECTS"`)
+
+* `AMAZING_LECTURES` (value: `"AMAZING_LECTURES"`)
+
+* `CLEAR_GRADING_CRITERIA` (value: `"CLEAR_GRADING_CRITERIA"`)
+
+* `GIVES_GOOD_FEEDBACK` (value: `"GIVES_GOOD_FEEDBACK"`)
+
+* `INSPIRATIONAL` (value: `"INSPIRATIONAL"`)
+
+* `LOTS_OF_HOMEWORK` (value: `"LOTS_OF_HOMEWORK"`)
+
+* `HILARIOUS` (value: `"HILARIOUS"`)
+
+* `BEWARE_OF_POP_QUIZZES` (value: `"BEWARE_OF_POP_QUIZZES"`)
+
+* `SO_MANY_PAPERS` (value: `"SO_MANY_PAPERS"`)
+
+* `CARING` (value: `"CARING"`)
+
+* `RESPECTED` (value: `"RESPECTED"`)
+
+* `LECTURE_HEAVY` (value: `"LECTURE_HEAVY"`)
+
+* `GRADED_BY_FEW_THINGS` (value: `"GRADED_BY_FEW_THINGS"`)
+
+* `ACCESSIBLE_OUTSIDE_CLASS` (value: `"ACCESSIBLE_OUTSIDE_CLASS"`)
+
+* `ONLINE_SAVVY` (value: `"ONLINE_SAVVY"`)
+
+* `TESTS_ARE_TOUGH` (value: `"TESTS_ARE_TOUGH"`)
+
+* `TEST_HEAVY` (value: `"TEST_HEAVY"`)
+
+* `WOULD_TAKE_AGAIN` (value: `"WOULD_TAKE_AGAIN"`)
+
+* `TESTS_NOT_MANY` (value: `"TESTS_NOT_MANY"`)
+
+* `SKIP_CLASS_YOU_WONT_PASS` (value: `"SKIP_CLASS_YOU_WONT_PASS"`)
+
+* `CARES_ABOUT_STUDENTS` (value: `"CARES_ABOUT_STUDENTS"`)
+
+* `RESPECTED_BY_STUDENTS` (value: `"RESPECTED_BY_STUDENTS"`)
+
+* `EXTRA_CREDIT_OFFERED` (value: `"EXTRA_CREDIT_OFFERED"`)
+
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

@@ -1,0 +1,2138 @@
+openapi: 3.0.0
+info:
+  contact: {}
+  license:
+    name: ISC
+  title: api
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /users/{id}:
+    get:
+      operationId: GetUser
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    id: 1
+                    username: joedoe
+                    email: johndoe@gmail.com
+                    signup_time: 2021-03-25T00:00:00.000Z
+                    last_login_time: 2021-03-26T00:00:00.000Z
+                    account_verified: true
+                    role: NORMAL
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+          description: Ok
+      security:
+      - jwt: []
+      tags:
+      - Users
+    put:
+      operationId: UpdateUser
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserParams'
+        required: true
+      responses:
+        "204":
+          description: User Updated Successfully
+      security:
+      - jwt: []
+      tags:
+      - Users
+  /users/{id}/cart:
+    get:
+      operationId: GetUserCart
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/UserResponse'
+                nullable: true
+          description: Ok
+      security:
+      - jwt: []
+      tags:
+      - Users
+  /schools/search:
+    get:
+      operationId: SearchSchools
+      parameters:
+      - explode: true
+        in: query
+        name: name
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          default: 10
+          format: double
+          type: number
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchoolSearchResult'
+          description: Schools Retrieved Successfully
+      security:
+      - jwt: []
+      tags:
+      - Schools
+  /schools/create:
+    post:
+      operationId: CreateSchool
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewSchool'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    id: 1
+                    name: Example School
+              schema:
+                $ref: '#/components/schemas/School'
+          description: School Created Successfully
+        "409":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/SchoolAlreadyExistsError'
+          description: School already exists
+      security:
+      - jwt: []
+      tags:
+      - Schools
+  /schools/{id}:
+    delete:
+      operationId: DeleteSchool
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      responses:
+        "200":
+          description: School Deleted Successfully
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/SchoolNotFoundError'
+          description: School not found
+      security:
+      - jwt: []
+      tags:
+      - Schools
+    get:
+      operationId: GetSchool
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: School Retrieved Successfully
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/SchoolNotFoundError'
+          description: School not found
+      security:
+      - jwt: []
+      tags:
+      - Schools
+    put:
+      operationId: UpdateSchool
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatedSchool'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: School Updated Successfully
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/SchoolNotFoundError'
+          description: School not found
+      security:
+      - jwt: []
+      tags:
+      - Schools
+  /professors/search:
+    get:
+      operationId: SearchProfessors
+      parameters:
+      - explode: true
+        in: query
+        name: name
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: school_id
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          default: 10
+          format: double
+          type: number
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfessorSearchResult'
+          description: Professors Retrieved Successfully
+      security:
+      - jwt: []
+      tags:
+      - Professors
+  /professors/create:
+    post:
+      operationId: CreateProfessor
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewProfessor'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    id: 1
+                    first_name: Example
+                    last_name: Professor
+                    rmp_id: hfaksjdfhuicyv
+                    school_id: 1
+              schema:
+                $ref: '#/components/schemas/Professor'
+          description: Professor Created Successfully
+        "409":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/ProfessorAlreadyExistsError'
+          description: Professor already exists
+      security:
+      - jwt: []
+      tags:
+      - Professors
+  /professors/{id}/analysis:
+    get:
+      operationId: GetProfessorAnalysis
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfessorAnalysis'
+          description: Professor Analysis Retrieved Successfully
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/ProfessorNotFoundError'
+          description: Professor not found
+      security:
+      - jwt: []
+      tags:
+      - Professors
+  /professors/{id}/rating:
+    get:
+      operationId: GetProfessorRating
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      - explode: true
+        in: query
+        name: topKPercentage
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/Rating'
+                nullable: true
+          description: Rating Retrieved Successfully
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/ProfessorNotFoundError'
+          description: Professor not found
+      security:
+      - jwt: []
+      tags:
+      - Professors
+  /professors/{id}:
+    delete:
+      operationId: DeleteProfessor
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      responses:
+        "200":
+          description: Professor Deleted Successfully
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/ProfessorNotFoundError'
+          description: Professor not found
+      security:
+      - jwt: []
+      tags:
+      - Professors
+    get:
+      operationId: GetProfessor
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Professor'
+          description: Professor Retrieved Successfully
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/ProfessorNotFoundError'
+          description: Professor not found
+      security:
+      - jwt: []
+      tags:
+      - Professors
+    put:
+      operationId: UpdateProfessor
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatedProfessor'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Professor'
+          description: Professor Updated Successfully
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/ProfessorNotFoundError'
+          description: Professor not found
+      security:
+      - jwt: []
+      tags:
+      - Professors
+  /professors/{id}/courses:
+    get:
+      operationId: GetProfessorCourses
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      - explode: true
+        in: query
+        name: year
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - explode: true
+        in: query
+        name: semester
+        required: false
+        schema:
+          $ref: '#/components/schemas/Semester'
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfessorCourses'
+          description: Courses Retrieved Successfully
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/ProfessorNotFoundError'
+          description: Professor not found
+      security:
+      - jwt: []
+      tags:
+      - Professors
+  /professors/{id}/reviews:
+    get:
+      operationId: GetReviews
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      - explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          default: 25
+          format: double
+          type: number
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewsSearchResult'
+          description: Reviews Retrieved Successfully
+      security:
+      - jwt: []
+      tags:
+      - Professors
+  /professors/{id}/enroll:
+    post:
+      operationId: Enroll
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseEnrollment'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseEnrollmentResult'
+          description: Review Created Successfully
+      security:
+      - jwt: []
+      tags:
+      - Professors
+  /reviews/create:
+    post:
+      operationId: CreateReview
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewReview'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+          description: Review Created Successfully
+      security:
+      - jwt: []
+      tags:
+      - Reviews
+  /reviews/reviews/{review_id}:
+    delete:
+      operationId: DeleteReview
+      parameters:
+      - explode: false
+        in: path
+        name: review_id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      responses:
+        "200":
+          description: Review Deleted Successfully
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/ReviewNotFoundError'
+          description: Review not found
+      security:
+      - jwt: []
+      tags:
+      - Reviews
+    get:
+      operationId: GetReview
+      parameters:
+      - explode: false
+        in: path
+        name: review_id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+          description: Review Retrieved Successfully
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/ReviewNotFoundError'
+          description: Review not found
+      security:
+      - jwt: []
+      tags:
+      - Reviews
+    put:
+      operationId: UpdateReview
+      parameters:
+      - explode: false
+        in: path
+        name: review_id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatedReview'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+          description: Review Updated Successfully
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/ReviewNotFoundError'
+          description: Review not found
+      security:
+      - jwt: []
+      tags:
+      - Reviews
+  /courses/search:
+    get:
+      operationId: SearchCourses
+      parameters:
+      - explode: true
+        in: query
+        name: school_id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: form
+      - explode: true
+        in: query
+        name: query
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: semester
+        required: false
+        schema:
+          $ref: '#/components/schemas/Semester'
+        style: form
+      - explode: true
+        in: query
+        name: year
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          default: 10
+          format: double
+          type: number
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseSearchResult'
+          description: Courses Retrieved Successfully
+      security:
+      - jwt: []
+      tags:
+      - Courses
+  /courses/create:
+    post:
+      operationId: CreateCourse
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCourse'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    id: 1
+                    name: Example Course
+                    code: EX101
+                    school_id: 1
+              schema:
+                $ref: '#/components/schemas/Course'
+          description: Course Created Successfully
+        "409":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/CourseAlreadyExistsError'
+          description: Course already exists
+      security:
+      - jwt: []
+      tags:
+      - Courses
+  /courses/{id}:
+    delete:
+      operationId: DeleteCourse
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      responses:
+        "200":
+          description: Course Deleted Successfully
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/CourseNotFoundError'
+          description: Course not found
+      security:
+      - jwt: []
+      tags:
+      - Courses
+    get:
+      operationId: GetCourse
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+          description: Course Retrieved Successfully
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/CourseNotFoundError'
+          description: Course not found
+      security:
+      - jwt: []
+      tags:
+      - Courses
+    put:
+      operationId: UpdateCourse
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatedCourse'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+          description: Course Updated Successfully
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/CourseNotFoundError'
+          description: Course not found
+      security:
+      - jwt: []
+      tags:
+      - Courses
+  /courses/{id}/professors:
+    get:
+      operationId: GetCourseProfessors
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: double
+          type: number
+        style: simple
+      - explode: true
+        in: query
+        name: year
+        required: true
+        schema:
+          format: double
+          type: number
+        style: form
+      - explode: true
+        in: query
+        name: semester
+        required: true
+        schema:
+          $ref: '#/components/schemas/Semester'
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseProfessors'
+          description: Professors Retrieved Successfully
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/CourseNotFoundError'
+          description: Course not found
+      security:
+      - jwt: []
+      tags:
+      - Courses
+  /auth/register:
+    post:
+      operationId: Register
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrationParams'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    email: johndoe@gmail.com
+                    username: joedoe
+                    password: Password123!
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+          description: User Created Successfully
+        "409":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/UserAlreadyExistsError'
+          description: User already exists
+      security: []
+      tags:
+      - Authentication
+  /auth/login:
+    post:
+      operationId: Login
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    username: joedoe
+                    password: Password123!
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+          description: Login Successful
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/InvalidPasswordError'
+          description: Invalid password
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1: {}
+              schema:
+                $ref: '#/components/schemas/UserNotFoundError'
+          description: User does not exist
+      security: []
+      tags:
+      - Authentication
+components:
+  examples: {}
+  headers: {}
+  parameters: {}
+  requestBodies: {}
+  responses: {}
+  schemas:
+    _36_Enums.UserRole:
+      enum:
+      - ADMIN
+      - NORMAL
+      type: string
+    Pick_User.Exclude_keyofUser.password__:
+      description: "From T, pick a set of properties whose keys are in the union K"
+      example:
+        role: ADMIN
+        last_login_time: 2000-01-23T04:56:07.000+00:00
+        signup_time: 2000-01-23T04:56:07.000+00:00
+        id: 0.8008281904610115
+        email: email
+        username: username
+        account_verified: true
+      properties:
+        id:
+          format: double
+          type: number
+        email:
+          type: string
+        username:
+          type: string
+        signup_time:
+          format: date-time
+          type: string
+        last_login_time:
+          format: date-time
+          type: string
+        account_verified:
+          type: boolean
+        role:
+          $ref: '#/components/schemas/_36_Enums.UserRole'
+      required:
+      - account_verified
+      - email
+      - id
+      - last_login_time
+      - role
+      - signup_time
+      - username
+      type: object
+    Omit_User.password_:
+      $ref: '#/components/schemas/Pick_User.Exclude_keyofUser.password__'
+    UserResponse:
+      $ref: '#/components/schemas/Omit_User.password_'
+    Pick_User.Exclude_keyofUser.password-or-signup_time-or-account_verified-or-id-or-last_login_time-or-email-or-role__:
+      description: "From T, pick a set of properties whose keys are in the union K"
+      properties:
+        username:
+          type: string
+      required:
+      - username
+      type: object
+    Omit_User.password-or-signup_time-or-account_verified-or-id-or-last_login_time-or-email-or-role_:
+      $ref: '#/components/schemas/Pick_User.Exclude_keyofUser.password-or-signup_time-or-account_verified-or-id-or-last_login_time-or-email-or-role__'
+    UpdateUserParams:
+      $ref: '#/components/schemas/Omit_User.password-or-signup_time-or-account_verified-or-id-or-last_login_time-or-email-or-role_'
+    DefaultSelection_Prisma._36_SchoolPayload_:
+      example:
+        name: name
+        id: 6.027456183070403
+      properties:
+        name:
+          type: string
+        id:
+          format: double
+          type: number
+      required:
+      - id
+      - name
+      type: object
+    School:
+      $ref: '#/components/schemas/DefaultSelection_Prisma._36_SchoolPayload_'
+    SchoolSearchResult:
+      example:
+        pageInfo:
+          total: 0.8008281904610115
+          hasNextPage: true
+          endCursor: endCursor
+        edges:
+        - cursor: cursor
+          node:
+            name: name
+            id: 6.027456183070403
+        - cursor: cursor
+          node:
+            name: name
+            id: 6.027456183070403
+      properties:
+        pageInfo:
+          $ref: '#/components/schemas/SchoolSearchResult_pageInfo'
+        edges:
+          items:
+            $ref: '#/components/schemas/SchoolSearchResult_edges_inner'
+          type: array
+      required:
+      - edges
+      - pageInfo
+      type: object
+    SchoolErrorType:
+      enum:
+      - SCHOOL_NOT_FOUND
+      - SCHOOL_ALREADY_EXISTS
+      type: string
+    Pick_SchoolError.message-or-type_:
+      description: "From T, pick a set of properties whose keys are in the union K"
+      properties:
+        message:
+          $ref: '#/components/schemas/Pick_SchoolError_message_or_type__message'
+        type:
+          $ref: '#/components/schemas/SchoolErrorType'
+      required:
+      - message
+      - type
+      type: object
+    SchoolErrorType.SCHOOL_ALREADY_EXISTS:
+      enum:
+      - SCHOOL_ALREADY_EXISTS
+      type: string
+    SchoolAlreadyExistsError:
+      allOf:
+      - $ref: '#/components/schemas/Pick_SchoolError.message-or-type_'
+      - properties:
+          type:
+            $ref: '#/components/schemas/SchoolErrorType.SCHOOL_ALREADY_EXISTS'
+        required:
+        - type
+        type: object
+      example:
+        message: Pick_SchoolError_message_or_type__message
+        type: SCHOOL_ALREADY_EXISTS
+    Pick_School.name_:
+      description: "From T, pick a set of properties whose keys are in the union K"
+      properties:
+        name:
+          type: string
+      required:
+      - name
+      type: object
+    NewSchool:
+      $ref: '#/components/schemas/Pick_School.name_'
+    SchoolErrorType.SCHOOL_NOT_FOUND:
+      enum:
+      - SCHOOL_NOT_FOUND
+      type: string
+    SchoolNotFoundError:
+      allOf:
+      - $ref: '#/components/schemas/Pick_SchoolError.message-or-type_'
+      - properties:
+          type:
+            $ref: '#/components/schemas/SchoolErrorType.SCHOOL_NOT_FOUND'
+        required:
+        - type
+        type: object
+      example:
+        message: Pick_SchoolError_message_or_type__message
+        type: SCHOOL_NOT_FOUND
+    UpdatedSchool:
+      $ref: '#/components/schemas/Pick_School.name_'
+    DefaultSelection_Prisma._36_ProfessorPayload_:
+      example:
+        school_id: 0.8008281904610115
+        rmp_id: rmp_id
+        last_name: last_name
+        id: 6.027456183070403
+        first_name: first_name
+      properties:
+        school_id:
+          format: double
+          type: number
+        rmp_id:
+          type: string
+        last_name:
+          type: string
+        first_name:
+          type: string
+        id:
+          format: double
+          type: number
+      required:
+      - first_name
+      - id
+      - last_name
+      - rmp_id
+      - school_id
+      type: object
+    Professor:
+      $ref: '#/components/schemas/DefaultSelection_Prisma._36_ProfessorPayload_'
+    ProfessorSearchResult:
+      example:
+        pageInfo:
+          total: 0.8008281904610115
+          hasNextPage: true
+          endCursor: endCursor
+        edges:
+        - cursor: cursor
+          node:
+            school_id: 0.8008281904610115
+            rmp_id: rmp_id
+            last_name: last_name
+            id: 6.027456183070403
+            first_name: first_name
+        - cursor: cursor
+          node:
+            school_id: 0.8008281904610115
+            rmp_id: rmp_id
+            last_name: last_name
+            id: 6.027456183070403
+            first_name: first_name
+      properties:
+        pageInfo:
+          $ref: '#/components/schemas/SchoolSearchResult_pageInfo'
+        edges:
+          items:
+            $ref: '#/components/schemas/ProfessorSearchResult_edges_inner'
+          type: array
+      required:
+      - edges
+      - pageInfo
+      type: object
+    ProfessorErrorType:
+      enum:
+      - PROFESSOR_NOT_FOUND
+      - PROFESSOR_ALREADY_EXISTS
+      type: string
+    Pick_ProfessorError.message-or-type_:
+      description: "From T, pick a set of properties whose keys are in the union K"
+      properties:
+        message:
+          $ref: '#/components/schemas/Pick_SchoolError_message_or_type__message'
+        type:
+          $ref: '#/components/schemas/ProfessorErrorType'
+      required:
+      - message
+      - type
+      type: object
+    ProfessorErrorType.PROFESSOR_ALREADY_EXISTS:
+      enum:
+      - PROFESSOR_ALREADY_EXISTS
+      type: string
+    ProfessorAlreadyExistsError:
+      allOf:
+      - $ref: '#/components/schemas/Pick_ProfessorError.message-or-type_'
+      - properties:
+          type:
+            $ref: '#/components/schemas/ProfessorErrorType.PROFESSOR_ALREADY_EXISTS'
+        required:
+        - type
+        type: object
+      example:
+        message: Pick_SchoolError_message_or_type__message
+        type: PROFESSOR_ALREADY_EXISTS
+    Pick_Professor.first_name-or-last_name-or-rmp_id-or-school_id_:
+      description: "From T, pick a set of properties whose keys are in the union K"
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        rmp_id:
+          type: string
+        school_id:
+          format: double
+          type: number
+      required:
+      - first_name
+      - last_name
+      - rmp_id
+      - school_id
+      type: object
+    NewProfessor:
+      $ref: '#/components/schemas/Pick_Professor.first_name-or-last_name-or-rmp_id-or-school_id_'
+    _36_Enums.ReviewTag:
+      enum:
+      - TOUGH_GRADER
+      - GET_READY_TO_READ
+      - PARTICIPATION_MATTERS
+      - EXTRA_CREDIT
+      - GROUP_PROJECTS
+      - AMAZING_LECTURES
+      - CLEAR_GRADING_CRITERIA
+      - GIVES_GOOD_FEEDBACK
+      - INSPIRATIONAL
+      - LOTS_OF_HOMEWORK
+      - HILARIOUS
+      - BEWARE_OF_POP_QUIZZES
+      - SO_MANY_PAPERS
+      - CARING
+      - RESPECTED
+      - LECTURE_HEAVY
+      - GRADED_BY_FEW_THINGS
+      - ACCESSIBLE_OUTSIDE_CLASS
+      - ONLINE_SAVVY
+      - TESTS_ARE_TOUGH
+      - TEST_HEAVY
+      - WOULD_TAKE_AGAIN
+      - TESTS_NOT_MANY
+      - SKIP_CLASS_YOU_WONT_PASS
+      - CARES_ABOUT_STUDENTS
+      - RESPECTED_BY_STUDENTS
+      - EXTRA_CREDIT_OFFERED
+      type: string
+    ReviewTag:
+      $ref: '#/components/schemas/_36_Enums.ReviewTag'
+    TagAmount:
+      example:
+        amount: 1.4658129805029452
+        tag: TOUGH_GRADER
+      properties:
+        amount:
+          format: double
+          type: number
+        tag:
+          $ref: '#/components/schemas/_36_Enums.ReviewTag'
+      required:
+      - amount
+      - tag
+      type: object
+    ChartValue:
+      example:
+        month: month
+        year: 0.8008281904610115
+        value: 6.027456183070403
+      properties:
+        year:
+          format: double
+          type: number
+        month:
+          type: string
+        value:
+          format: double
+          type: number
+      required:
+      - month
+      - value
+      - year
+      type: object
+    ProfessorAnalysis:
+      example:
+        averageRatingValues:
+        - month: month
+          year: 0.8008281904610115
+          value: 6.027456183070403
+        - month: month
+          year: 0.8008281904610115
+          value: 6.027456183070403
+        tagAmount:
+        - amount: 1.4658129805029452
+          tag: TOUGH_GRADER
+        - amount: 1.4658129805029452
+          tag: TOUGH_GRADER
+      properties:
+        averageRatingValues:
+          items:
+            $ref: '#/components/schemas/ChartValue'
+          type: array
+        tagAmount:
+          items:
+            $ref: '#/components/schemas/TagAmount'
+          type: array
+      required:
+      - averageRatingValues
+      - tagAmount
+      type: object
+    ProfessorErrorType.PROFESSOR_NOT_FOUND:
+      enum:
+      - PROFESSOR_NOT_FOUND
+      type: string
+    ProfessorNotFoundError:
+      allOf:
+      - $ref: '#/components/schemas/Pick_ProfessorError.message-or-type_'
+      - properties:
+          type:
+            $ref: '#/components/schemas/ProfessorErrorType.PROFESSOR_NOT_FOUND'
+        required:
+        - type
+        type: object
+      example:
+        message: Pick_SchoolError_message_or_type__message
+        type: PROFESSOR_NOT_FOUND
+    Rating:
+      properties:
+        averageGrade:
+          type: string
+        topKMostRecentDifficultyAverage:
+          format: double
+          type: number
+        totalDifficultyAverage:
+          format: double
+          type: number
+        topKMostRecentQualityAverage:
+          format: double
+          type: number
+        totalQualityAverage:
+          format: double
+          type: number
+        ratingAmount:
+          format: double
+          type: number
+      required:
+      - averageGrade
+      - ratingAmount
+      - topKMostRecentDifficultyAverage
+      - topKMostRecentQualityAverage
+      - totalDifficultyAverage
+      - totalQualityAverage
+      type: object
+    _36_Enums.Semester:
+      enum:
+      - SPRING
+      - SUMMER
+      - FALL
+      type: string
+    Pick_ProfessorCourse.Exclude_keyofProfessorCourse.professor_id-or-id-or-course_id__:
+      description: "From T, pick a set of properties whose keys are in the union K"
+      properties:
+        year:
+          format: double
+          type: number
+        semester:
+          $ref: '#/components/schemas/_36_Enums.Semester'
+      required:
+      - semester
+      - year
+      type: object
+    Omit_ProfessorCourse.professor_id-or-id-or-course_id_:
+      $ref: '#/components/schemas/Pick_ProfessorCourse.Exclude_keyofProfessorCourse.professor_id-or-id-or-course_id__'
+    DefaultSelection_Prisma._36_CoursePayload_:
+      example:
+        code: code
+        school_id: 0.8008281904610115
+        name: name
+        id: 6.027456183070403
+      properties:
+        school_id:
+          format: double
+          type: number
+        code:
+          type: string
+        name:
+          type: string
+        id:
+          format: double
+          type: number
+      required:
+      - code
+      - id
+      - name
+      - school_id
+      type: object
+    Course:
+      $ref: '#/components/schemas/DefaultSelection_Prisma._36_CoursePayload_'
+    ProfessorCourses:
+      example:
+        courses:
+        - ""
+        - ""
+        total: 0.8008281904610115
+      properties:
+        total:
+          format: double
+          type: number
+        courses:
+          items:
+            allOf:
+            - $ref: '#/components/schemas/Omit_ProfessorCourse.professor_id-or-id-or-course_id_'
+            - $ref: '#/components/schemas/Course'
+          type: array
+      required:
+      - courses
+      - total
+      type: object
+    Semester:
+      $ref: '#/components/schemas/_36_Enums.Semester'
+    UpdatedProfessor:
+      example:
+        last_name: last_name
+        first_name: first_name
+      properties:
+        last_name:
+          nullable: true
+          type: string
+        first_name:
+          nullable: true
+          type: string
+      type: object
+    _36_Enums.Grade:
+      enum:
+      - A_PLUS
+      - A
+      - A_MINUS
+      - B_PLUS
+      - B
+      - B_MINUS
+      - C_PLUS
+      - C
+      - C_MINUS
+      - D_PLUS
+      - D
+      - D_MINUS
+      - F_PLUS
+      - F
+      - F_MINUS
+      - INCOMPLETE
+      - WITHDRAWN
+      - NOT_SURE
+      - OTHER
+      type: string
+    DefaultSelection_Prisma._36_ReviewPayload_:
+      example:
+        difficulty: 6.027456183070403
+        professor_id: 0.8008281904610115
+        grade: A_PLUS
+        time: 2000-01-23T04:56:07.000+00:00
+        id: 5.962133916683182
+        tags:
+        - TOUGH_GRADER
+        - TOUGH_GRADER
+        quality: 1.4658129805029452
+      properties:
+        professor_id:
+          format: double
+          type: number
+        grade:
+          $ref: '#/components/schemas/_36_Enums.Grade'
+        tags:
+          items:
+            $ref: '#/components/schemas/_36_Enums.ReviewTag'
+          type: array
+        time:
+          format: date-time
+          type: string
+        difficulty:
+          format: double
+          type: number
+        quality:
+          format: double
+          type: number
+        id:
+          format: double
+          type: number
+      required:
+      - difficulty
+      - grade
+      - id
+      - professor_id
+      - quality
+      - tags
+      - time
+      type: object
+    Review:
+      $ref: '#/components/schemas/DefaultSelection_Prisma._36_ReviewPayload_'
+    ReviewsSearchResult:
+      example:
+        pageInfo:
+          total: 0.8008281904610115
+          hasNextPage: true
+          endCursor: endCursor
+        edges:
+        - cursor: cursor
+          node:
+            difficulty: 6.027456183070403
+            professor_id: 0.8008281904610115
+            grade: A_PLUS
+            time: 2000-01-23T04:56:07.000+00:00
+            id: 5.962133916683182
+            tags:
+            - TOUGH_GRADER
+            - TOUGH_GRADER
+            quality: 1.4658129805029452
+        - cursor: cursor
+          node:
+            difficulty: 6.027456183070403
+            professor_id: 0.8008281904610115
+            grade: A_PLUS
+            time: 2000-01-23T04:56:07.000+00:00
+            id: 5.962133916683182
+            tags:
+            - TOUGH_GRADER
+            - TOUGH_GRADER
+            quality: 1.4658129805029452
+      properties:
+        pageInfo:
+          $ref: '#/components/schemas/SchoolSearchResult_pageInfo'
+        edges:
+          items:
+            $ref: '#/components/schemas/ReviewsSearchResult_edges_inner'
+          type: array
+      required:
+      - edges
+      - pageInfo
+      type: object
+    DefaultSelection_Prisma._36_ProfessorCoursePayload_:
+      example:
+        course_id: 6.027456183070403
+        year: 0.8008281904610115
+        professor_id: 1.4658129805029452
+        semester: SPRING
+        id: 5.962133916683182
+      properties:
+        semester:
+          $ref: '#/components/schemas/_36_Enums.Semester'
+        year:
+          format: double
+          type: number
+        course_id:
+          format: double
+          type: number
+        professor_id:
+          format: double
+          type: number
+        id:
+          format: double
+          type: number
+      required:
+      - course_id
+      - id
+      - professor_id
+      - semester
+      - year
+      type: object
+    ProfessorCourse:
+      $ref: '#/components/schemas/DefaultSelection_Prisma._36_ProfessorCoursePayload_'
+    CourseEnrollmentResult:
+      $ref: '#/components/schemas/ProfessorCourse'
+    Pick_ProfessorCourse.Exclude_keyofProfessorCourse.professor_id-or-id__:
+      description: "From T, pick a set of properties whose keys are in the union K"
+      properties:
+        course_id:
+          format: double
+          type: number
+        year:
+          format: double
+          type: number
+        semester:
+          $ref: '#/components/schemas/_36_Enums.Semester'
+      required:
+      - course_id
+      - semester
+      - year
+      type: object
+    Omit_ProfessorCourse.professor_id-or-id_:
+      $ref: '#/components/schemas/Pick_ProfessorCourse.Exclude_keyofProfessorCourse.professor_id-or-id__'
+    CourseEnrollment:
+      $ref: '#/components/schemas/Omit_ProfessorCourse.professor_id-or-id_'
+    Pick_Review.quality-or-difficulty-or-time-or-tags-or-grade-or-professor_id_:
+      description: "From T, pick a set of properties whose keys are in the union K"
+      properties:
+        professor_id:
+          format: double
+          type: number
+        quality:
+          format: double
+          type: number
+        difficulty:
+          format: double
+          type: number
+        time:
+          format: date-time
+          type: string
+        tags:
+          items:
+            $ref: '#/components/schemas/_36_Enums.ReviewTag'
+          type: array
+        grade:
+          $ref: '#/components/schemas/_36_Enums.Grade'
+      required:
+      - difficulty
+      - grade
+      - professor_id
+      - quality
+      - tags
+      - time
+      type: object
+    NewReview:
+      $ref: '#/components/schemas/Pick_Review.quality-or-difficulty-or-time-or-tags-or-grade-or-professor_id_'
+    ReviewErrorType:
+      enum:
+      - REVIEW_NOT_FOUND
+      type: string
+    Pick_ReviewError.message-or-type_:
+      description: "From T, pick a set of properties whose keys are in the union K"
+      properties:
+        message:
+          $ref: '#/components/schemas/Pick_SchoolError_message_or_type__message'
+        type:
+          $ref: '#/components/schemas/ReviewErrorType'
+      required:
+      - message
+      - type
+      type: object
+    ReviewErrorType.REVIEW_NOT_FOUND:
+      enum:
+      - REVIEW_NOT_FOUND
+      type: string
+    ReviewNotFoundError:
+      allOf:
+      - $ref: '#/components/schemas/Pick_ReviewError.message-or-type_'
+      - properties:
+          type:
+            $ref: '#/components/schemas/ReviewErrorType.REVIEW_NOT_FOUND'
+        required:
+        - type
+        type: object
+      example:
+        message: Pick_SchoolError_message_or_type__message
+        type: REVIEW_NOT_FOUND
+    Pick_Review.quality-or-difficulty-or-time-or-tags-or-grade_:
+      description: "From T, pick a set of properties whose keys are in the union K"
+      properties:
+        quality:
+          format: double
+          type: number
+        difficulty:
+          format: double
+          type: number
+        time:
+          format: date-time
+          type: string
+        tags:
+          items:
+            $ref: '#/components/schemas/_36_Enums.ReviewTag'
+          type: array
+        grade:
+          $ref: '#/components/schemas/_36_Enums.Grade'
+      required:
+      - difficulty
+      - grade
+      - quality
+      - tags
+      - time
+      type: object
+    UpdatedReview:
+      $ref: '#/components/schemas/Pick_Review.quality-or-difficulty-or-time-or-tags-or-grade_'
+    CourseSearchResult:
+      example:
+        pageInfo:
+          total: 0.8008281904610115
+          hasNextPage: true
+          endCursor: endCursor
+        edges:
+        - cursor: cursor
+          node:
+            code: code
+            school_id: 0.8008281904610115
+            name: name
+            id: 6.027456183070403
+        - cursor: cursor
+          node:
+            code: code
+            school_id: 0.8008281904610115
+            name: name
+            id: 6.027456183070403
+      properties:
+        pageInfo:
+          $ref: '#/components/schemas/SchoolSearchResult_pageInfo'
+        edges:
+          items:
+            $ref: '#/components/schemas/CourseSearchResult_edges_inner'
+          type: array
+      required:
+      - edges
+      - pageInfo
+      type: object
+    CourseErrorType:
+      enum:
+      - COURSE_NOT_FOUND
+      - COURSE_ALREADY_EXISTS
+      type: string
+    Pick_CourseError.message-or-type_:
+      description: "From T, pick a set of properties whose keys are in the union K"
+      properties:
+        message:
+          $ref: '#/components/schemas/Pick_SchoolError_message_or_type__message'
+        type:
+          $ref: '#/components/schemas/CourseErrorType'
+      required:
+      - message
+      - type
+      type: object
+    CourseErrorType.COURSE_ALREADY_EXISTS:
+      enum:
+      - COURSE_ALREADY_EXISTS
+      type: string
+    CourseAlreadyExistsError:
+      allOf:
+      - $ref: '#/components/schemas/Pick_CourseError.message-or-type_'
+      - properties:
+          type:
+            $ref: '#/components/schemas/CourseErrorType.COURSE_ALREADY_EXISTS'
+        required:
+        - type
+        type: object
+      example:
+        message: Pick_SchoolError_message_or_type__message
+        type: COURSE_ALREADY_EXISTS
+    Pick_Course.name-or-code-or-school_id_:
+      description: "From T, pick a set of properties whose keys are in the union K"
+      properties:
+        name:
+          type: string
+        school_id:
+          format: double
+          type: number
+        code:
+          type: string
+      required:
+      - code
+      - name
+      - school_id
+      type: object
+    NewCourse:
+      $ref: '#/components/schemas/Pick_Course.name-or-code-or-school_id_'
+    CourseErrorType.COURSE_NOT_FOUND:
+      enum:
+      - COURSE_NOT_FOUND
+      type: string
+    CourseNotFoundError:
+      allOf:
+      - $ref: '#/components/schemas/Pick_CourseError.message-or-type_'
+      - properties:
+          type:
+            $ref: '#/components/schemas/CourseErrorType.COURSE_NOT_FOUND'
+        required:
+        - type
+        type: object
+      example:
+        message: Pick_SchoolError_message_or_type__message
+        type: COURSE_NOT_FOUND
+    Pick_Course.name-or-code_:
+      description: "From T, pick a set of properties whose keys are in the union K"
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+      required:
+      - code
+      - name
+      type: object
+    UpdatedCourse:
+      $ref: '#/components/schemas/Pick_Course.name-or-code_'
+    CourseProfessors:
+      example:
+        total: 0.8008281904610115
+        professors:
+        - null
+        - null
+      properties:
+        total:
+          format: double
+          type: number
+        professors:
+          items:
+            $ref: '#/components/schemas/Professor'
+          type: array
+      required:
+      - professors
+      - total
+      type: object
+    LoginResponse:
+      example:
+        user:
+          role: ADMIN
+          last_login_time: 2000-01-23T04:56:07.000+00:00
+          signup_time: 2000-01-23T04:56:07.000+00:00
+          id: 0.8008281904610115
+          email: email
+          username: username
+          account_verified: true
+        token: token
+      properties:
+        user:
+          $ref: '#/components/schemas/Pick_User.Exclude_keyofUser.password__'
+        token:
+          type: string
+      required:
+      - token
+      - user
+      type: object
+    AuthErrorType:
+      enum:
+      - INVALID_PASSWORD
+      - PASSWORD_TOO_SHORT
+      - PASSWORD_TOO_LONG
+      - PASSWORD_MISSING_UPPERCASE
+      - PASSWORD_MISSING_NUMBER
+      - USER_NOT_FOUND
+      - USER_ALREADY_EXISTS
+      - UNAUTHORIZED
+      - INVALID_USERNAME
+      - INVALID_TOKEN
+      - UNABLE_TO_CREATE_JWT
+      - UNKNOWN_ ERROR
+      type: string
+    Pick_AuthError.message-or-type_:
+      description: "From T, pick a set of properties whose keys are in the union K"
+      properties:
+        message:
+          $ref: '#/components/schemas/Pick_SchoolError_message_or_type__message'
+        type:
+          $ref: '#/components/schemas/AuthErrorType'
+      required:
+      - message
+      - type
+      type: object
+    AuthErrorType.USER_ALREADY_EXISTS:
+      enum:
+      - USER_ALREADY_EXISTS
+      type: string
+    UserAlreadyExistsError:
+      allOf:
+      - $ref: '#/components/schemas/Pick_AuthError.message-or-type_'
+      - properties:
+          type:
+            $ref: '#/components/schemas/AuthErrorType.USER_ALREADY_EXISTS'
+        required:
+        - type
+        type: object
+      example:
+        message: Pick_SchoolError_message_or_type__message
+        type: USER_ALREADY_EXISTS
+    Pick_User.email-or-username-or-password_:
+      description: "From T, pick a set of properties whose keys are in the union K"
+      properties:
+        email:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+      required:
+      - email
+      - password
+      - username
+      type: object
+    RegistrationParams:
+      $ref: '#/components/schemas/Pick_User.email-or-username-or-password_'
+    AuthErrorType.USER_NOT_FOUND:
+      enum:
+      - USER_NOT_FOUND
+      type: string
+    UserNotFoundError:
+      allOf:
+      - $ref: '#/components/schemas/Pick_AuthError.message-or-type_'
+      - properties:
+          type:
+            $ref: '#/components/schemas/AuthErrorType.USER_NOT_FOUND'
+        required:
+        - type
+        type: object
+      example:
+        message: Pick_SchoolError_message_or_type__message
+        type: USER_NOT_FOUND
+    AuthErrorType.INVALID_PASSWORD:
+      enum:
+      - INVALID_PASSWORD
+      type: string
+    InvalidPasswordError:
+      allOf:
+      - $ref: '#/components/schemas/Pick_AuthError.message-or-type_'
+      - properties:
+          type:
+            $ref: '#/components/schemas/AuthErrorType.INVALID_PASSWORD'
+        required:
+        - type
+        type: object
+      example:
+        message: Pick_SchoolError_message_or_type__message
+        type: INVALID_PASSWORD
+    Pick_User.username-or-password_:
+      description: "From T, pick a set of properties whose keys are in the union K"
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+      - password
+      - username
+      type: object
+    LoginParams:
+      $ref: '#/components/schemas/Pick_User.username-or-password_'
+    SchoolSearchResult_pageInfo:
+      example:
+        total: 0.8008281904610115
+        hasNextPage: true
+        endCursor: endCursor
+      properties:
+        total:
+          format: double
+          type: number
+        endCursor:
+          nullable: true
+          type: string
+        hasNextPage:
+          type: boolean
+      required:
+      - endCursor
+      - hasNextPage
+      - total
+      type: object
+    SchoolSearchResult_edges_inner:
+      example:
+        cursor: cursor
+        node:
+          name: name
+          id: 6.027456183070403
+      properties:
+        node:
+          $ref: '#/components/schemas/DefaultSelection_Prisma._36_SchoolPayload_'
+        cursor:
+          type: string
+      required:
+      - cursor
+      - node
+      type: object
+    Pick_SchoolError_message_or_type__message:
+      anyOf:
+      - type: string
+      - additionalProperties:
+          type: string
+        properties: {}
+        type: object
+    ProfessorSearchResult_edges_inner:
+      example:
+        cursor: cursor
+        node:
+          school_id: 0.8008281904610115
+          rmp_id: rmp_id
+          last_name: last_name
+          id: 6.027456183070403
+          first_name: first_name
+      properties:
+        node:
+          $ref: '#/components/schemas/DefaultSelection_Prisma._36_ProfessorPayload_'
+        cursor:
+          type: string
+      required:
+      - cursor
+      - node
+      type: object
+    ReviewsSearchResult_edges_inner:
+      example:
+        cursor: cursor
+        node:
+          difficulty: 6.027456183070403
+          professor_id: 0.8008281904610115
+          grade: A_PLUS
+          time: 2000-01-23T04:56:07.000+00:00
+          id: 5.962133916683182
+          tags:
+          - TOUGH_GRADER
+          - TOUGH_GRADER
+          quality: 1.4658129805029452
+      properties:
+        node:
+          $ref: '#/components/schemas/DefaultSelection_Prisma._36_ReviewPayload_'
+        cursor:
+          type: string
+      required:
+      - cursor
+      - node
+      type: object
+    CourseSearchResult_edges_inner:
+      example:
+        cursor: cursor
+        node:
+          code: code
+          school_id: 0.8008281904610115
+          name: name
+          id: 6.027456183070403
+      properties:
+        node:
+          $ref: '#/components/schemas/DefaultSelection_Prisma._36_CoursePayload_'
+        cursor:
+          type: string
+      required:
+      - cursor
+      - node
+      type: object
+  securitySchemes:
+    jwt:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
