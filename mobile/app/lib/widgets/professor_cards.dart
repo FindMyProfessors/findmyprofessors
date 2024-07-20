@@ -10,9 +10,14 @@ Widget professorsWidget({
     child: ListView.builder(
       itemCount: professors!.length,
       itemBuilder: (context, index) {
+        final professor = professors[index];
         return GestureDetector(
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Professor(item: "${index + 1}", rating: (index+1)%5, id: 1,)));
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Professor(
+              name: professor.Name,
+              rating: (index + 1) % 5,
+              id: professor.ID,
+              )));
           },
           child: Container(
             height: 100.0,

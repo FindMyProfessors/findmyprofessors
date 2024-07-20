@@ -5,20 +5,19 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class Professor extends StatelessWidget {
-  final String item;
+  final String name;
   final int rating;
   final int id;
 
   final Random random = Random();
 
-  //name, rating, id
-  Professor({required this.item, required this.rating, required this.id});
+  Professor({required this.name, required this.rating, required this.id});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Professor "+item),
+        title: Text("Professor "+name),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -27,7 +26,7 @@ class Professor extends StatelessWidget {
           children: [
                 
             Text(
-              'Details for professor $item',
+              'Details for professor $name',
               style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
             ),
 
@@ -46,6 +45,7 @@ class Professor extends StatelessWidget {
                 //SizedBox(width: 10.0),
 
                 RatingBar.builder(
+                  ignoreGestures: true,
                   itemSize: 30.0,
                   initialRating: rating.toDouble(),
                   minRating: 1,
