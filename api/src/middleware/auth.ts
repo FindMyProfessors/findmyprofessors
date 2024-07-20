@@ -1,6 +1,5 @@
 import * as express from "express";
 import * as jwt from "jsonwebtoken";
-import { Secret } from "jsonwebtoken";
 import { logger } from "../utils/logger";
 import { InvalidTokenError, AuthErrorType } from "../models/auth";
 import { config } from "../config";
@@ -32,7 +31,6 @@ export function expressAuthentication(
         reject(invalidTokenError);
         return;
       }
-
 
       jwt.verify(token, config.JWT_SECRET, function (err: any, decoded: any) {
         if (err) {

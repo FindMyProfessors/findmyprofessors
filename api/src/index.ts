@@ -18,6 +18,9 @@ import requestIdMiddleware from "./middleware/request_id";
 import { config } from "./config";
 
 import cors from 'cors';
+import { SchoolErrorHttpStatus, isSchoolError } from "./models/schools";
+import { CourseErrorHttpStatus, isCourseError } from "./models/courses";
+import { ReviewErrorHttpStatus, isReviewError } from "./models/reviews";
 
 export const app = express();
 
@@ -62,12 +65,6 @@ app.use("/docs", swaggerUi.serve, async (_req: ExRequest, res: ExResponse) => {
   );
 });
 
-app.use(function notFoundHandler(_req, res: ExResponse) {
-  res.status(404).send({
-    message: "Not Found",
-  });
-});
-
 app.use(function errorHandler(
   err: unknown,
   req: ExRequest,
@@ -84,6 +81,31 @@ app.use(function errorHandler(
     });
   }
 
+  if (isSchoolError(err)) {
+    const statusCode = SchoolErrorHttpStatus[err.type];
+    return res.status(statusCode).json({
+      message: err.message,
+      type: err.type,
+    });
+  }
+
+  if (isCourseError(err)) {
+    const statusCode = CourseErrorHttpStatus[err.type];
+    return res.status(statusCode).json({
+      message: err.message,
+      type: err.type,
+    });
+  }
+  
+  if (isReviewError(err)) {
+    const statusCode = ReviewErrorHttpStatus[err.type];
+    return res.status(statusCode).json({
+      message: err.message,
+      type: err.type,
+    });
+  }
+
+
   if (err instanceof ValidateError) {
     logger.warn(`Caught Validation Error for ${req.path}:`, err.fields);
     return res.status(422).json({
@@ -98,7 +120,15 @@ app.use(function errorHandler(
     });
   }
 
+  logger.warn("Unhandled error", err);
+
   next();
+});
+
+app.use(function notFoundHandler(_req, res: ExResponse) {
+  res.status(404).send({
+    message: "Not Found",
+  });
 });
 
 
