@@ -1,4 +1,4 @@
-import 'package:app/screens/dashboard/dashboard.dart';
+import 'package:app/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/signin_screen.dart';
 import 'package:app/widgets/custom_scaffold.dart';

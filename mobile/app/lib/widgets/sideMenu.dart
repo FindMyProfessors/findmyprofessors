@@ -1,7 +1,8 @@
-import 'package:app/screens/dashboard/dashboard.dart';
+import 'package:app/screens/dashboard.dart';
 import 'package:app/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:app/API_services/dashboard_API.dart';
 
 final storage = new FlutterSecureStorage();
 
@@ -95,6 +96,8 @@ Future<void> _loadUserValues() async {
             leading: Icon(Icons.exit_to_app , color: Colors.white),
             title: Text('Logout' , style: TextStyle(color: Colors.white)),
             onTap: () async => {
+              //clerar storage of proffessors
+              Professors = [],
               //delete user info
               await storage.deleteAll(),
 
