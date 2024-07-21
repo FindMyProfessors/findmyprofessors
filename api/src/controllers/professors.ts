@@ -13,6 +13,7 @@ import {
   Request,
   Security,
   Query,
+  Path,
 } from "tsoa";
 import { prisma } from "../database/database";
 import {
@@ -25,18 +26,21 @@ import {
   ProfessorNotFoundError,
   ProfessorSearchResult,
   UpdatedProfessor,
+  getGradeFromIndex,
+  getGradeIndex,
 } from "../models/professors";
 import { logger } from "../utils/logger";
 import { AuthErrorType, JWTBody, UnauthorizedError } from "../models/auth";
 import { Professor, Review, Semester, UserRole } from "@prisma/client";
 import { SchoolErrorType, SchoolNotFoundError } from "../models/schools";
 import {
-  NewReview,
-  ReviewErrorType,
-  ReviewNotFoundError,
+  ProfessorAnalysis,
+  Rating,
   ReviewsSearchResult,
-  UpdatedReview,
 } from "../models/reviews";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { CourseError, CourseErrorType } from "../models/courses";
+import { beginAnalysis } from "../analysis";
 
 const PROFESSOR_SEARCH_PAGE_SIZE = 10;
 const REVIEW_SEARCH_PAGE_SIZE = 25;
@@ -179,6 +183,116 @@ export class ProfessorsController extends Controller {
     return professor;
   }
 
+  // Add this new endpoint to the ProfessorsController class
+  @SuccessResponse("200", "Professor Analysis Retrieved Successfully")
+  @Response<ProfessorNotFoundError>("404", "Professor not found")
+  @Security("jwt")
+  @Get("{id}/analysis")
+  public async getProfessorAnalysis(id: number): Promise<ProfessorAnalysis> {
+    await getProfessorById(id);
+    const reviews = await prisma.review.findMany({
+      where: { professor_id: id },
+      orderBy: { time: "desc" },
+    });
+
+    if (reviews.length === 0) {
+      throw new Error("No reviews found for this professor");
+    }
+
+    return await beginAnalysis(reviews);
+  }
+
+  @SuccessResponse("200", "Rating Retrieved Successfully")
+  @Response<ProfessorNotFoundError>("404", "Professor not found")
+  @Security("jwt")
+  @Get("{id}/rating")
+  public async getProfessorRating(
+    @Path() id: number,
+    @Query() topKPercentage?: number
+  ): Promise<Rating | null> {
+    const professor = await prisma.professor.findUnique({ where: { id } });
+    if (!professor) {
+      const error: ProfessorNotFoundError = {
+        message: "Professor not found",
+        type: ProfessorErrorType.PROFESSOR_NOT_FOUND,
+      };
+      return Promise.reject(error);
+    }
+
+    const reviews = await prisma.review.findMany({
+      where: { professor_id: id },
+      orderBy: { time: "desc" },
+    });
+
+    const total = reviews.length;
+    const rating: Rating = {
+      ratingAmount: total,
+      totalQualityAverage: 0,
+      totalDifficultyAverage: 0,
+      topKMostRecentQualityAverage: 0,
+      topKMostRecentDifficultyAverage: 0,
+      averageGrade: "OTHER",
+    };
+
+    if (total === 0) {
+      return null;
+    }
+
+    if (topKPercentage && (topKPercentage <= 0 || topKPercentage > 1)) {
+      throw new Error("topKPercentage must be in (0, 1]");
+    }
+
+    const topKTotal = topKPercentage
+      ? Math.floor(total * (1 - topKPercentage))
+      : 0;
+    const topKStartIndex = Math.max(0, total - topKTotal - 1);
+
+    let totalQualitySum = 0;
+    let totalDifficultySum = 0;
+    let topKQualitySum = 0;
+    let topKDifficultySum = 0;
+    let gradeIndexSum = 0;
+    let totalGrades = 0;
+
+    for (let i = 0; i < total; i++) {
+      const review = reviews[i];
+      totalQualitySum += review.quality;
+      totalDifficultySum += review.difficulty || 0;
+
+      if (topKPercentage && i > topKStartIndex) {
+        topKQualitySum += review.quality;
+        topKDifficultySum += review.difficulty || 0;
+      }
+
+      if (review.grade) {
+        const gradeIndex = getGradeIndex(review.grade);
+        if (gradeIndex !== -1) {
+          gradeIndexSum += gradeIndex;
+          totalGrades++;
+        }
+      }
+    }
+
+    rating.totalQualityAverage = totalQualitySum / total;
+    rating.totalDifficultyAverage = totalDifficultySum / total;
+
+    if (topKTotal > 0) {
+      rating.topKMostRecentQualityAverage = topKQualitySum / topKTotal;
+      rating.topKMostRecentDifficultyAverage = topKDifficultySum / topKTotal;
+    } else {
+      rating.topKMostRecentQualityAverage = rating.totalQualityAverage;
+      rating.topKMostRecentDifficultyAverage = rating.totalDifficultyAverage;
+    }
+
+    if (totalGrades > 0) {
+      rating.averageGrade = getGradeFromIndex(
+        Math.floor(gradeIndexSum / totalGrades)
+      );
+    }
+
+    return rating;
+  }
+
   @SuccessResponse("200", "Professor Retrieved Successfully")
   @Response<ProfessorNotFoundError>("404", "Professor not found")
   @Security("jwt")
@@ -198,19 +312,20 @@ export class ProfessorsController extends Controller {
     @Query() year?: number,
     @Query() semester?: Semester
   ): Promise<ProfessorCourses> {
-    //let professor = await getProfessorById(id);
+    await getProfessorById(id);
 
-    const profesor = await prisma.professor.findFirst({
-      relationLoadStrategy: "join", // or 'query'
+    const profesor = await prisma.professor.findUnique({
       where: {
         id: id,
-      },
-      include: {
         courses: {
-          where: {
+          every: {
             year: year,
             semester: semester,
           },
+        },
+      },
+      include: {
+        courses: {
           include: {
             course: true,
           },
@@ -351,16 +466,13 @@ export class ProfessorsController extends Controller {
         // Check that last professor is not the same as the last professor in the database
         const lastReview = await prisma.review.findFirst({
           where: {
-            professor_id: id
+            professor_id: id,
           },
           orderBy: {
             time: "asc",
           },
         });
-        if (
-          lastReview &&
-          lastReview.id == reviews[reviews.length - 1].id
-        ) {
+        if (lastReview && lastReview.id == reviews[reviews.length - 1].id) {
           hasNextPage = false;
         }
       }
@@ -405,14 +517,29 @@ export class ProfessorsController extends Controller {
       return Promise.reject(error);
     }
 
-    let professor = await getProfessorById(id);
+    await getProfessorById(id);
 
-    const enrollment = await prisma.professorCourse.create({
-      data: {
-        ...body,
-        professor_id: id,
-      },
-    });
+    let enrollment;
+    try {
+      enrollment = await prisma.professorCourse.create({
+        data: {
+          ...body,
+          professor_id: id,
+        },
+      });
+    } catch (error: any) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === "P2002") {
+          const error: CourseError = {
+            message: "Course enrollment already exists",
+            type: CourseErrorType.COURSE_ALREADY_EXISTS,
+          };
+          return Promise.reject(error);
+        }
+      }
+      logger.error("Failed to create enrollment", error);
+      throw new Error("Failed to create enrollment: " + error.message);
+    }
 
     return enrollment as CourseEnrollmentResult;
   }

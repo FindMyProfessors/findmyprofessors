@@ -20,6 +20,8 @@ import { config } from "./config";
 
 import cors from 'cors';
 import { SchoolErrorHttpStatus, isSchoolError } from "./models/schools";
+import { CourseErrorHttpStatus, isCourseError } from "./models/courses";
+import { ReviewErrorHttpStatus, isReviewError } from "./models/reviews";
 
 export const app = express();
 
@@ -87,6 +89,23 @@ app.use(function errorHandler(
       type: err.type,
     });
   }
+
+  if (isCourseError(err)) {
+    const statusCode = CourseErrorHttpStatus[err.type];
+    return res.status(statusCode).json({
+      message: err.message,
+      type: err.type,
+    });
+  }
+  
+  if (isReviewError(err)) {
+    const statusCode = ReviewErrorHttpStatus[err.type];
+    return res.status(statusCode).json({
+      message: err.message,
+      type: err.type,
+    });
+  }
+
 
   if (err instanceof ValidateError) {
     logger.warn(`Caught Validation Error for ${req.path}:`, err.fields);
