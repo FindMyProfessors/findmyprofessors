@@ -1,14 +1,16 @@
-import 'package:app/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/signin_screen.dart';
 import 'package:app/widgets/custom_scaffold.dart';
 import 'package:app/themes/theme.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:app/API_services/API.dart';
 
 final storage = new FlutterSecureStorage();
+
+final TextEditingController sighnUpUsernameController = TextEditingController(); // Added controller for username
+final TextEditingController sighnUpemailController = TextEditingController(); // Added controller for email
+final TextEditingController sighnUppasswordController = TextEditingController(); // Added controller for password
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -21,57 +23,6 @@ class _SignInScreenState extends State<SignUpScreen> {
 
   final _formSignUpKey = GlobalKey<FormState>();
   bool agreePersonalData = false;
-  final TextEditingController _nameController = TextEditingController(); // Added controller for username
-  final TextEditingController _emailController = TextEditingController(); // Added controller for email
-  final TextEditingController _passwordController = TextEditingController(); // Added controller for password
-  
-   Future<void> _registerUser() async {
-   print('Registering new user... ' + _emailController.text + ' ' + _nameController.text + ' ' + _passwordController.text);
-    
-  try {
-    var response = await http.post(
-      Uri.parse('http://localhost:8080/auth/register'),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({
-        'email': _emailController.text,
-        'username': _nameController.text,
-        'password': _passwordController.text,
-      }),
-    );
-
-    print("Response status: ${response.statusCode}");
-    print("Response headers: ${response.headers}");
-    print("Response body: ${response.body}");
-
-    final responseData = json.decode(response.body);
-
-    if (response.statusCode == 201) {
-      final String username = responseData['user']['username'];
-      final int id = responseData['user']['id'];
-
-      await storage.write(key: 'JWT', value: responseData['token']);
-      await storage.write(key: 'userName', value: username);
-      await storage.write(key: 'id', value: id.toString());  //saved as a string NOT an int
-
-      print('User registered: '+ username + ' ID: ' + id.toString());
-
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Dashboard()));
-    } 
-    else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(responseData['message']),
-        ),
-      );
-      print('Failed to register user: ${response.body[0]}');
-    }
-  } 
-  catch (e) {
-    print('ERROR occurred: $e');
-  }
-  }
 
   bool validateEmail(String email) {
   // Regular expression for a basic email validation
@@ -82,6 +33,7 @@ class _SignInScreenState extends State<SignUpScreen> {
   // Check if the email matches the regular expression
   return emailRegex.hasMatch(email);
   }
+  
   String validatePassword(String password) {
     // Regular expressions for different requirements
     final RegExp hasUppercase = RegExp(r'(?=.*[A-Z])');
@@ -216,7 +168,7 @@ class _SignInScreenState extends State<SignUpScreen> {
                     const SizedBox(height: 30), 
                     
                     TextFormField(
-                        controller: _nameController, // Assigning controller
+                        controller: sighnUpUsernameController, // Assigning controller
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter Username';
@@ -254,7 +206,7 @@ class _SignInScreenState extends State<SignUpScreen> {
                     const SizedBox(height: 20),
 
                     TextFormField(
-                        controller: _emailController, // Assigning controller
+                        controller: sighnUpemailController, // Assigning controller
                         validator: (value) {
                           if (!validateEmail(value!)) {
                             return 'Please enter a valid Email';
@@ -286,7 +238,7 @@ class _SignInScreenState extends State<SignUpScreen> {
                     const SizedBox(height: 20), 
               
                     TextFormField(
-                        controller: _passwordController, // Assigning controller
+                        controller: sighnUppasswordController, // Assigning controller
                         obscureText: true,
                         obscuringCharacter: '*',
                         validator: (value) {
@@ -377,7 +329,7 @@ class _SignInScreenState extends State<SignUpScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please agree to the Privacy Policy to proceed.')));
                           }
                           if (_formSignUpKey.currentState!.validate()) {
-                            _registerUser();
+                            registerUser(context);
                           }
                         },
                         child: const Text('Sign Up'),

@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../screens/dashboard.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http; 
+import 'package:app/screens/signin_screen.dart';
+import 'package:app/screens/signup_screen.dart';
+
+
+final storage = new FlutterSecureStorage();
 
 Future<void> getProfessors(BuildContext context) async {
 
@@ -158,3 +164,99 @@ Future<void> getSchools(BuildContext context) async {
     print('ERROR occurred: $e');
   }
 }
+
+Future<void> signInUser(BuildContext context) async {
+   print('Registering new user... ' + nameController.text + ' ' + passwordController.text);
+    
+  try {
+    var response = await http.post(
+      Uri.parse('http://localhost:8080/auth/login'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'username': nameController.text,
+        'password': passwordController.text,
+      }),
+    );
+
+    print("Response status: ${response.statusCode}");
+    print("Response headers: ${response.headers}");
+    print("Response body: ${response.body}");
+
+    final responseData = json.decode(response.body);
+
+    if (response.statusCode == 200) {
+
+      final String username = responseData['user']['username'];
+      final int id = responseData['user']['id'];
+
+      await storage.write(key: 'JWT', value: responseData['token']);
+      await storage.write(key: 'userName', value: username);
+      await storage.write(key: 'id', value: id.toString());  //saved as a string NOT an int
+
+      print('User registered: '+ username + ' ID: ' + id.toString());
+
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Dashboard()));
+    } 
+    else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(responseData['message']),
+        ),
+      );
+      print('Failed to Sign user: ${response.body[0]}');
+    }
+  } 
+  catch (e) {
+    print('ERROR occurred: $e');
+  }
+  }
+
+Future<void> registerUser(BuildContext context) async {
+    print('Registering new user... ' + sighnUpemailController.text + ' ' + sighnUpUsernameController.text + ' ' + sighnUppasswordController.text);
+      
+    try {
+      var response = await http.post(
+        Uri.parse('http://localhost:8080/auth/register'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'email': sighnUpemailController.text,
+          'username': sighnUpUsernameController.text,
+          'password': sighnUppasswordController.text,
+        }),
+      );
+
+      print("Response status: ${response.statusCode}");
+      print("Response headers: ${response.headers}");
+      print("Response body: ${response.body}");
+
+      final responseData = json.decode(response.body);
+
+      if (response.statusCode == 201) {
+        final String username = responseData['user']['username'];
+        final int id = responseData['user']['id'];
+
+        await storage.write(key: 'JWT', value: responseData['token']);
+        await storage.write(key: 'userName', value: username);
+        await storage.write(key: 'id', value: id.toString());  //saved as a string NOT an int
+
+        print('User registered: '+ username + ' ID: ' + id.toString());
+
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Dashboard()));
+      } 
+      else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(responseData['message']),
+          ),
+        );
+        print('Failed to register user: ${response.body[0]}');
+      }
+    } 
+    catch (e) {
+      print('ERROR occurred: $e');
+    }
+  }

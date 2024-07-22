@@ -15,6 +15,7 @@ class Professor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('professor name: $name rating: $rating id: $id'); 
     return Scaffold(
       appBar: AppBar(
         title: Text("Professor "+name),
