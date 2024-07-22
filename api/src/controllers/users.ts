@@ -152,6 +152,12 @@ export class UsersController extends Controller {
       data: { confirmed_at: new Date() },
     });
 
+    // set account to verified
+    await prisma.user.update({
+      where: { id: id },
+      data: { account_verified: true },
+    });
+
     this.setStatus(200);
   }
 
