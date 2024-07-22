@@ -8,6 +8,7 @@ import 'package:app/screens/signup_screen.dart';
 import 'package:app/screens/Professor.dart';
 
 final storage = new FlutterSecureStorage();
+final String apiURL = 'http://localhost:8080/';
 
 Future<void> getProfessorRating(BuildContext context, int professorID) async {
 
@@ -16,7 +17,7 @@ Future<void> getProfessorRating(BuildContext context, int professorID) async {
     String? JWT = await storage.read(key: 'JWT');
     try {
       var response = await http.get(
-        Uri.parse('http://localhost:8080/professors/'+professorID.toString()+'/rating'),
+        Uri.parse(apiURL+'professors/'+professorID.toString()+'/rating'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + JWT.toString(),
@@ -98,7 +99,7 @@ Future<void> getProfessors(BuildContext context) async {
     String? JWT = await storage.read(key: 'JWT');
     try {
       var response = await http.get(
-        Uri.parse('http://localhost:8080/courses/'+courseSelection.ID.toString()+'/professors?year='+year+'&semester='+semesterSelection.toUpperCase()),
+        Uri.parse(apiURL+'courses/'+courseSelection.ID.toString()+'/professors?year='+year+'&semester='+semesterSelection.toUpperCase()),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + JWT.toString(),
@@ -150,7 +151,7 @@ Future<void> getCourses(BuildContext context) async {
   String? JWT = await storage.read(key: 'JWT');
   try {
     var response = await http.get(
-      Uri.parse('http://localhost:8080/courses/search?school_id='+schoolSelection.ID.toString()+'&semester='+semesterSelection.toString().toUpperCase()+'&year='+year.toString()+'&pageSize=5000'),
+      Uri.parse(apiURL+'courses/search?school_id='+schoolSelection.ID.toString()+'&semester='+semesterSelection.toString().toUpperCase()+'&year='+year.toString()+'&pageSize=5000'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + JWT.toString(),
@@ -201,7 +202,7 @@ Future<void> getSchools(BuildContext context) async {
   String? JWT = await storage.read(key: 'JWT');
   try {
     var response = await http.get(
-      Uri.parse('http://localhost:8080/schools/search?pageSize=2000'),
+      Uri.parse(apiURL+'schools/search?pageSize=2000'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + JWT.toString(),
@@ -252,7 +253,7 @@ Future<void> signInUser(BuildContext context) async {
     
   try {
     var response = await http.post(
-      Uri.parse('http://localhost:8080/auth/login'),
+      Uri.parse(apiURL+'auth/login'),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -300,7 +301,7 @@ Future<void> registerUser(BuildContext context) async {
       
     try {
       var response = await http.post(
-        Uri.parse('http://localhost:8080/auth/register'),
+        Uri.parse(apiURL+'auth/register'),
         headers: {
           'Content-Type': 'application/json',
         },
