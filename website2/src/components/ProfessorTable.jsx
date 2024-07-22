@@ -10,11 +10,13 @@ import {
   MDBPagination,
   MDBPaginationItem,
   MDBPaginationLink,
+
   MDBBtn,
   MDBIcon
 } from 'mdb-react-ui-kit';
 import { Line, Radar } from 'react-chartjs-2';
 import 'chart.js/auto';
+
 
 const ProfessorTable = ({ professors }) => {
   const [searchTerm, setSearchTerm] = useState('');
