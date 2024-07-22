@@ -7,4 +7,5 @@ type SchoolScraper interface {
 	Name() string
 	Terms() []model.Term
 	SetTerm(term model.Term)
+	PrintStats()
 }

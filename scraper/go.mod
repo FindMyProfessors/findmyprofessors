@@ -2,7 +2,6 @@ module github.com/FindMyProfessors/scraper
 
 go 1.19
 
-replace github.com/FindMyProfessors/scraper/api_client => ../api_clients/go
 
 require (
 	github.com/Khan/genqlient v0.5.0
@@ -10,7 +9,6 @@ require (
 )
 
 require (
-	github.com/FindMyProfessors/scraper/api_client v0.0.0-00010101000000-000000000000 // indirect
 	github.com/agnivade/levenshtein v1.1.1 // indirect
 	github.com/alexflint/go-arg v1.4.2 // indirect
 	github.com/alexflint/go-scalar v1.0.0 // indirect

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"math"
 	"net/http"
 	"strconv"
 	"strings"
@@ -24,64 +25,61 @@ type Scraper struct {
 	term         model.Term
 	CourseMap    map[string]*model.Course
 	ProfessorMap map[string]*model.Professor
+
+	FailedURLs    map[string]int
+	RecoveredURLs map[string]bool
 }
 
 func (u *Scraper) Scrape() (*model.School, error) {
 	log.Println("Starting scrape process...")
 	u.CourseMap = map[string]*model.Course{}
 	u.ProfessorMap = map[string]*model.Professor{}
+	u.FailedURLs = map[string]int{}
+	u.RecoveredURLs = map[string]bool{}
 
 	var wg sync.WaitGroup
-	wg.Add(len(UCF_COURSE_MODALITIES) * len(UCF_COURSE_PREFIXES))
-	//wg.Add(1)
+	batchSize := 10               // Define the batch size
+	sem := make(chan struct{}, 1) // Semaphore with a capacity of 1
 
-	sem := make(chan struct{}, 1) // Semaphore with a capacity of 5
-
-	for _, modality := range UCF_COURSE_MODALITIES {
-		for _, prefix := range UCF_COURSE_PREFIXES {
-			url := fmt.Sprintf(
-				"https://cdl.ucf.edu/wp-content/themes/cdl/lib/course-search-ajax.php?call=classes&term=%s&prefix=%s&catalog=&title=&instructor=&career=&college=&department=&mode=%s&_=1721445449614",
-				u.term.ID,
-				prefix,
-				modality,
-			)
-
-			log.Printf("Scraping URL: %s\n", url)
-			mu := &sync.Mutex{}
-
-			sem <- struct{}{} // Acquire a slot
-			go func(url string) {
-				defer wg.Done()
-				defer func() { <-sem }() // Release the slot
-				u.scrape(url, mu, func(success bool) {
-					if !success {
-						log.Println("Scrape failed, retrying, going to sleep first for 15 seconds...")
-						time.Sleep(15 * time.Second)
-						wg.Add(1)
-						go func(url string) {
-							defer wg.Done()
-							u.scrape(url, mu, func(success bool) {})
-						}(url)
-					}
-				})
-			}(url)
-			// print going to sleep for 5 seconds
-			log.Println("Going to sleep for 5 seconds")
-			time.Sleep(5 * time.Second)
-			log.Println("Waking up")
+	for i := 0; i < len(UCF_COURSE_MODALITIES); i += batchSize {
+		end := i + batchSize
+		if end > len(UCF_COURSE_MODALITIES) {
+			end = len(UCF_COURSE_MODALITIES)
 		}
+		batch := UCF_COURSE_MODALITIES[i:end]
+
+		for _, modality := range batch {
+			for _, prefix := range UCF_COURSE_PREFIXES {
+				url := fmt.Sprintf(
+					"https://cdl.ucf.edu/wp-content/themes/cdl/lib/course-search-ajax.php?call=classes&term=%s&prefix=%s&catalog=&title=&instructor=&career=&college=&department=&mode=%s",
+					u.term.ID,
+					prefix,
+					modality,
+				)
+
+				log.Printf("Scraping URL: %s\n", url)
+				mu := &sync.Mutex{}
+
+				sem <- struct{}{} // Acquire a slot
+				wg.Add(1)
+				go func(url string) {
+					defer wg.Done()
+					defer func() { <-sem }() // Release the slot
+					u.scrapeWithBackoff(url, mu)
+				}(url)
+			}
+		}
+		wg.Wait() // Wait for the current batch to complete
 	}
-	wg.Wait()
+
 	close(sem)
 
 	var courseArray []*model.Course
-
 	for _, course := range u.CourseMap {
 		courseArray = append(courseArray, course)
 	}
 
 	var professorArray []*model.Professor
-
 	for _, professor := range u.ProfessorMap {
 		professorArray = append(professorArray, professor)
 	}
@@ -93,31 +91,59 @@ func (u *Scraper) Scrape() (*model.School, error) {
 	}
 
 	log.Println("Scraping completed, starting RMP API scrape...")
-	/*
-		api := rmp.NewApi("dGVzdDp0ZXN0")
-		err := api.StartScrape(context.Background(), school, UCF_RMP_IDS...)
-		if err != nil {
-			log.Println("Error during RMP API scrape:", err)
-			return nil, err
-		}*/
+	// RMP API scrape code here...
 
 	log.Println("Scrape process completed successfully.")
 	return school, nil
 }
 
-func (u *Scraper) scrape(url string, mu *sync.Mutex, callback func(success bool)) {
+func (u *Scraper) scrapeWithBackoff(url string, mu *sync.Mutex) {
+	const maxRetries = 7
+	const initialBackoff = 1 * time.Second
+	vowels := []string{"a", "e", "i", "o", "u"}
+
+	for attempt := 1; attempt <= maxRetries; attempt++ {
+		success := u.scrape(url, mu)
+		if success {
+			u.recordRecovery(url)
+			return
+		}
+		backoff := initialBackoff * time.Duration(math.Pow(2, float64(attempt)))
+		log.Printf("Scrape failed, retrying in %v...\n", backoff)
+		time.Sleep(backoff)
+	}
+
+	// If initial attempts fail, retry with vowels
+	for _, vowel := range vowels {
+		for attempt := 1; attempt <= maxRetries; attempt++ {
+			vowelURL := fmt.Sprintf("%s&title=%s", url, vowel)
+			success := u.scrape(vowelURL, mu)
+			if success {
+				u.recordRecovery(url)
+				return
+			}
+			backoff := initialBackoff * (time.Duration(math.Pow(2, float64(attempt))))
+			log.Printf("Scrape with vowel '%s' failed, retrying in %v...\n", vowel, backoff)
+			time.Sleep(backoff)
+		}
+	}
+	log.Printf("Scrape failed after %d attempts with vowels: %s\n", maxRetries, url)
+	u.recordFailure(url)
+}
+
+func (u *Scraper) scrape(url string, mu *sync.Mutex) bool {
 	log.Printf("Fetching data from URL: %s\n", url)
 	response, err := http.Get(url)
 	if err != nil {
 		log.Println("HTTP request error:", err)
-		callback(false)
-		return
+		u.recordFailure(url)
+		return false
 	}
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
 			log.Println("Error closing response body:", err)
-			callback(false)
+			return
 		}
 	}(response.Body)
 	body, err := io.ReadAll(response.Body)
@@ -125,8 +151,8 @@ func (u *Scraper) scrape(url string, mu *sync.Mutex, callback func(success bool)
 	log.Printf("Body length: %d\n", len(body))
 	if err != nil {
 		log.Println("Error reading response body:", err)
-		callback(false)
-		return
+		u.recordFailure(url)
+		return false
 	}
 
 	var data struct {
@@ -136,59 +162,48 @@ func (u *Scraper) scrape(url string, mu *sync.Mutex, callback func(success bool)
 	err = json.Unmarshal(body, &data)
 	if err != nil {
 		log.Println("JSON unmarshal error:", err)
-		callback(false)
-		return
+		u.recordFailure(url)
+		return false
 	}
 
 	if data.Status == "failure" {
-		log.Println("No professors found in response")
-		callback(false)
-		return
+		log.Println("Failed!!!!")
+		u.recordFailure(url)
+		return false
 	}
-
 	for _, ucfProfessor := range data.Professors {
-		log.Printf("Processing professor: %s %s\n", ucfProfessor.NameFirst, ucfProfessor.NameLast)
 		ucfProfessor.NameFirst = util.WashName(ucfProfessor.NameFirst)
 		ucfProfessor.NameLast = util.WashName(ucfProfessor.NameLast)
 
-		course, ok := u.CourseMap[ucfProfessor.CoursePrefix+ucfProfessor.CatalogNumber]
-		if !ok {
+		courseKey := ucfProfessor.CoursePrefix + ucfProfessor.CatalogNumber
+		professorKey := ucfProfessor.NameFirst + "_" + ucfProfessor.NameLast
+
+		mu.Lock()
+		course, courseExists := u.CourseMap[courseKey]
+		if !courseExists {
 			course = &model.Course{
-				Code: ucfProfessor.CoursePrefix + ucfProfessor.CatalogNumber,
+				Code: courseKey,
 				Name: strings.ReplaceAll(ucfProfessor.CourseTitle, "\"", ""),
 			}
+			u.CourseMap[courseKey] = course
 		}
-		professor, ok := u.ProfessorMap[ucfProfessor.NameFirst+"_"+ucfProfessor.NameLast]
-		// print here
-		if !ok {
-			log.Printf("Professor %s %s does not exist in map\n", ucfProfessor.NameFirst, ucfProfessor.NameLast)
+
+		professor, professorExists := u.ProfessorMap[professorKey]
+		if !professorExists {
 			professor = &model.Professor{
 				FirstName: strings.ReplaceAll(ucfProfessor.NameFirst, "/", ""),
 				LastName:  strings.ReplaceAll(ucfProfessor.NameLast, "/", ""),
 				Courses:   map[string]*model.Course{},
 			}
+			u.ProfessorMap[professorKey] = professor
 		}
 
-		doesTeachThisClass := func() bool {
-			for _, c := range professor.Courses {
-				if c.Code == course.Code {
-					return true
-				}
-			}
-			return false
-		}()
-		if !doesTeachThisClass {
-			professor.Courses[course.Code] = course
+		if _, teachesCourse := professor.Courses[courseKey]; !teachesCourse {
+			professor.Courses[courseKey] = course
 		}
-
-		// print here
-		log.Printf("Professor %s %s teaches course %s %s\n", ucfProfessor.NameFirst, ucfProfessor.NameLast, ucfProfessor.CoursePrefix, ucfProfessor.CatalogNumber)
-		mu.Lock()
-		u.ProfessorMap[ucfProfessor.NameFirst+"_"+ucfProfessor.NameLast] = professor
-		u.CourseMap[ucfProfessor.CoursePrefix+ucfProfessor.CatalogNumber] = course
 		mu.Unlock()
 	}
-	callback(true)
+	return true
 }
 
 func (u *Scraper) Terms() (terms []model.Term) {
@@ -244,4 +259,24 @@ func (u *Scraper) Name() string {
 func (u *Scraper) SetTerm(term model.Term) {
 	log.Printf("Setting term: %d %s\n", term.Year, term.Semester)
 	u.term = term
+}
+
+func (u *Scraper) recordFailure(url string) {
+	u.FailedURLs[url]++
+}
+
+func (u *Scraper) recordRecovery(url string) {
+	if u.FailedURLs[url] > 0 {
+		u.RecoveredURLs[url] = true
+	}
+}
+
+func (u *Scraper) PrintStats() {
+	// Print them
+	for url, count := range u.FailedURLs {
+		log.Printf("Failed URL: %s, count: %d\n", url, count)
+	}
+	for url := range u.RecoveredURLs {
+		log.Printf("Recovered URL: %s\n", url)
+	}
 }

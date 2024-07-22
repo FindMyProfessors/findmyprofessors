@@ -14,13 +14,12 @@ import (
 	"github.com/FindMyProfessors/scraper/model"
 	"github.com/FindMyProfessors/scraper/schools"
 	"github.com/FindMyProfessors/scraper/schools/ucf"
-	"github.com/FindMyProfessors/scraper/schools/valencia"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )
 
 var (
-	SchoolScraperMap = []schools.SchoolScraper{&ucf.Scraper{}, &valencia.ValenciaScraper{}}
+	SchoolScraperMap = []schools.SchoolScraper{&ucf.Scraper{}}
 )
 
 func main() {
