@@ -7,6 +7,34 @@ import 'package:flip_card/flip_card.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:app/API_services/API.dart';
 
+
+String formatTagName(String tag) {
+  // Convert to lowercase and replace underscores with spaces
+  String formattedTag = tag.toLowerCase().replaceAll('_', ' ');
+
+  // Shorten the tag names if necessary
+  switch (formattedTag) {
+    case 'tough grader':
+      return 'tough grader';
+    case 'extra credit':
+      return 'extra credit';
+    case 'group projects':
+      return 'group projects';
+    case 'amazing lectures':
+      return 'lectures';
+    case 'lots of homework':
+      return 'homework';
+    case 'tests are tough':
+      return 'tests tough';
+    case 'test heavy':
+      return 'test heavy';
+    case 'extra credit offered':
+      return 'extra credit';
+    default:
+      return formattedTag;
+  }
+}
+
 int roundUpToReasonableNumber(int value) {
   if (value <= 10) {
     return ((value + 9) ~/ 10) * 10; 
@@ -24,12 +52,14 @@ int getGreatestRoundedAmount(List<RatingData> data) {
   return roundUpToReasonableNumber(greatestAmount);
 }
 class RatingData {
-  RatingData(this.rating, this.amount);
+  RatingData(this.value, this.amount);
 
-  final String rating;
+  final String value;
   int amount;
 
 }
+
+List<RatingData> tagData = [];
 
 List<RatingData> ratingData= [ 
       RatingData('1 ★', 0),
@@ -266,12 +296,12 @@ class _ProfessorState extends State<Professor> {
                                               titleTextStyle: TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w500,
-                                                fontSize: 11,
+                                                fontSize: 12,
                                               ),
                                               getTitle: (index, angle) {
                                                 final usedAngle = angle;
                                                 return RadarChartTitle(
-                                                  text: 'Parameter ' + index.toString(),
+                                                  text: formatTagName(tagData[index].value.toString()),
                                                   angle: usedAngle,
                                                   positionPercentageOffset: .05,
                                                 );
@@ -283,16 +313,33 @@ class _ProfessorState extends State<Professor> {
                                                   borderWidth: 2,
                                                   entryRadius: 5,
                                                   dataEntries: [
-                                                    RadarEntry(value: random.nextDouble() * 5),
-                                                    RadarEntry(value: random.nextDouble() * 5),
-                                                    RadarEntry(value: random.nextDouble() * 5),
-                                                    RadarEntry(value: random.nextDouble() * 5),
-                                                    RadarEntry(value: random.nextDouble() * 5),
-                                                    RadarEntry(value: random.nextDouble() * 5),
-                                                    RadarEntry(value: random.nextDouble() * 5),
-                                                    RadarEntry(value: random.nextDouble() * 5),
+                                                    RadarEntry(value: tagData[0].amount.toDouble()),
+                                                    RadarEntry(value: tagData[1].amount.toDouble()),
+                                                    RadarEntry(value: tagData[2].amount.toDouble()),
+                                                    RadarEntry(value: tagData[3].amount.toDouble()),
+                                                    RadarEntry(value: tagData[4].amount.toDouble()),
+                                                    RadarEntry(value: tagData[5].amount.toDouble()),
+                                                    RadarEntry(value: tagData[6].amount.toDouble()),
+                                                    RadarEntry(value: tagData[7].amount.toDouble()),
                                                   ],
                                                 ),
+                                                //this is used to ensure the lowest tic on the chart is 0
+                                                RadarDataSet(
+                                                  entryRadius: 5,
+                                                  fillColor: Colors.transparent,
+                                                  borderColor: Colors.transparent,
+                                                  dataEntries: [
+                                                    RadarEntry(value: 0),
+                                                    RadarEntry(value: 0),
+                                                    RadarEntry(value: 0),
+                                                    RadarEntry(value: 0),
+                                                    RadarEntry(value: 0),
+                                                    RadarEntry(value: 0),
+                                                    RadarEntry(value: 0),
+                                                    RadarEntry(value: 0),
+                                                  ],
+                                                ),
+
                                               ],
                                             ),
                                           ),
@@ -418,7 +465,7 @@ class _ProfessorState extends State<Professor> {
                                             series: <CartesianSeries>[
                                               BarSeries<RatingData, String>(
                                                 dataSource: ratingData,
-                                                xValueMapper: (RatingData data, _) => data.rating,
+                                                xValueMapper: (RatingData data, _) => data.value,
                                                 yValueMapper: (RatingData data, _) => data.amount,
                                                 //dataLabelSettings: DataLabelSettings(isVisible: true),
                                                 dataLabelSettings: DataLabelSettings(

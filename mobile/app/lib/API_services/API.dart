@@ -28,20 +28,54 @@ Future<void> getProfessorAnalysis(BuildContext context, int professorID) async {
       print("Response headers: ${response.headers}");
       print("Response body: ${response.body}");
 
-      ratingData= [ RatingData('1 ★', 0),
-      RatingData('2 ★', 0),
-      RatingData('3 ★', 0),
-      RatingData('4 ★', 0),
-      RatingData('5 ★', 0),];
+      ratingData= [ 
+        RatingData('1 ★', 0),
+        RatingData('2 ★', 0),
+        RatingData('3 ★', 0),
+        RatingData('4 ★', 0),
+        RatingData('5 ★', 0),
+      ];
+
+      tagData = [];
 
       final responseData = json.decode(response.body);
-      if (response.body.isNotEmpty) {
+
+      if (response.body.isNotEmpty && response.statusCode == 200) {
+        
+        //tag data
+        final List<String> requiredTags = [
+          "TOUGH_GRADER",
+          "EXTRA_CREDIT",
+          "GROUP_PROJECTS",
+          "AMAZING_LECTURES",
+          "LOTS_OF_HOMEWORK",
+          "TESTS_ARE_TOUGH",
+          "TEST_HEAVY",
+          "EXTRA_CREDIT_OFFERED"
+        ];
+
+        tagData = requiredTags.map((tag) => RatingData(tag, 0)).toList();
+      
+        var tagAmountList = responseData['tagAmount'] as List<dynamic>;
+
+        for (var tagAmount in tagAmountList) {
+          String tag = tagAmount['tag'];
+          int amount = tagAmount['amount'];
+
+          if (requiredTags.contains(tag)) {
+            tagData.firstWhere((data) => data.value == tag).amount = amount;
+          }
+        }
+
+        print('Rating Data:');
+        for (var data in tagData) {
+          print('${data.value}: ${data.amount}');
+        }
+
+        //review stars
         var numberOfReviewsByQuality = responseData['numberOfReviewsByQuality'];
-        print('professor info loaded, printing review quality info:'+ responseData['numberOfReviewsByQuality'].toString());
 
         for(var quality in numberOfReviewsByQuality) {
-          print(quality['quality']);
-          print(quality['amount']);
 
           if(quality['quality'] == 1.0) {
             ratingData[0].amount = quality['amount'];
