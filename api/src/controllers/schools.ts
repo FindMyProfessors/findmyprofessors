@@ -26,13 +26,77 @@ import {
 } from "../models/schools";
 import { logger } from "../utils/logger";
 import { AuthErrorType, JWTBody, UnauthorizedError } from "../models/auth";
-import { School, UserRole } from "@prisma/client";
+import { Prisma, School, Semester, UserRole } from "@prisma/client";
+import { CourseSearchResult } from "../models/courses";
 
 const SCHOOL_SEARCH_PAGE_SIZE = 10;
+const COURSE_SEARCH_PAGE_SIZE = 50;
 
 @Route("schools")
 @Tags("Schools")
 export class SchoolsController extends Controller {
+  @SuccessResponse("200", "Courses Retrieved Successfully")
+  @Security("jwt")
+  @Get("{id}/courses")
+  public async getCourses(
+    @Path() id: number,
+    @Query() query?: string,
+    @Query() cursor?: string,
+    @Query() pageSize: number = COURSE_SEARCH_PAGE_SIZE
+  ): Promise<CourseSearchResult> {
+    const take = pageSize;
+    const skip = cursor ? 1 : 0;
+
+    let searchClause = getCourseSearchQuery(id, query);
+
+    const result = await prisma.$transaction(async (prisma) => {
+      const courses = await prisma.course.findMany({
+        where: searchClause,
+
+        orderBy: {
+          code: "desc",
+        },
+        take: take,
+        skip: skip,
+        cursor: cursor ? { id: parseInt(cursor) } : undefined,
+      });
+
+      const edges = courses.map((course) => ({
+        cursor: course.id.toString(),
+        node: course,
+      }));
+
+      const endCursor =
+        edges.length > 0 ? edges[edges.length - 1].cursor : null;
+      let hasNextPage = courses.length === take;
+      if (hasNextPage) {
+        const lastCourse = await prisma.course.findFirst({
+          orderBy: {
+            id: "asc",
+          },
+        });
+        if (lastCourse && lastCourse.id == courses[courses.length - 1].id) {
+          hasNextPage = false;
+        }
+      }
+
+      const total = await prisma.course.count({
+        where: searchClause,
+      });
+
+      return {
+        edges: edges,
+        pageInfo: {
+          hasNextPage: hasNextPage,
+          endCursor: endCursor,
+          total: total,
+        },
+      };
+    });
+
+    return result;
+  }
+
   @SuccessResponse("200", "Schools Retrieved Successfully")
   @Security("jwt")
   @Get("search")
@@ -44,7 +108,7 @@ export class SchoolsController extends Controller {
     const take = pageSize;
     const skip = cursor ? 1 : 0;
 
-    let searchQuery = getSearchQuery(name);
+    let searchQuery = getSchoolSearchQuery(name);
 
     const result = await prisma.$transaction(async (prisma) => {
       const schools = await prisma.school.findMany({
@@ -205,8 +269,27 @@ export class SchoolsController extends Controller {
 
     await getSchoolById(id);
 
+    await prisma.review.deleteMany({
+      where: { professor: { school_id: id } },
+    });
+
+    // delete professorCourses
+    await prisma.professorCourse.deleteMany({
+      where: { professor: { school_id: id } },
+    });
+
+    // Delete all professors a part of this school
+    await prisma.professor.deleteMany({
+      where: { school_id: id },
+    });
+
+    // Delete all courses
+    await prisma.course.deleteMany({
+      where: { school_id: id },
+    });
+
     await prisma.school.delete({
-      where: { id },
+      where: { id: id },
     });
   }
 }
@@ -237,7 +320,7 @@ type SchoolSearchQuery = {
   };
 };
 
-function getSearchQuery(input?: string): SchoolSearchQuery {
+function getSchoolSearchQuery(input?: string): SchoolSearchQuery {
   let query: SchoolSearchQuery = {
     where: {},
   };
@@ -262,4 +345,24 @@ async function getSchoolById(id: number): Promise<School> {
     return Promise.reject(error);
   }
   return school;
+}
+
+function getCourseSearchQuery(
+  school_id: number,
+  query?: string
+): Prisma.CourseFindManyArgs["where"] {
+  let where: Prisma.CourseFindManyArgs["where"] = {
+    school_id: school_id,
+  };
+
+  if (query) {
+    where.AND = {
+      OR: [
+        { name: { contains: query, mode: "insensitive" } },
+        { code: { contains: query, mode: "insensitive" } },
+      ],
+    };
+  }
+
+  return where;
 }
