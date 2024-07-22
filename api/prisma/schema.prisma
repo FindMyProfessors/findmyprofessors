@@ -18,6 +18,18 @@ model User {
   password         String
   role             UserRole   @default(NORMAL)
   Cart             UserCart[]
+
+  PasswordReset PasswordReset[]
+}
+
+model PasswordReset {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id])
+  token      String   @unique
+  created_at DateTime @default(now())
+  expires_at DateTime
+  used_at    DateTime?
 }
 
 model UserCart {
