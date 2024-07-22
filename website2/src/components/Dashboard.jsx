@@ -75,30 +75,48 @@ const Dashboard = () => {
     <>
       {!showTable ? (
         <>
-          <Header />
+          <Header/>
 
           <style>{'body { background-color: #121212; }'}</style>
-          <MDBContainer fluid className="d-flex justify-content-center align-items-center vh-100">
-            <div className="text-center">
-              <h1 className="display-4 fw-bold" style={{ color: 'white' }}>FIND MY PROFESSORS</h1>
-              <h2 style={{ color: 'white' }}>A better way to search for professors</h2>
+
+          <MDBContainer
+          fluid
+          className="d-flex justify-content-center align-items-center vh-100">
+
+            <div
+            className="text-center">
+
+              <h1
+              className="display-4 fw-bold"
+              style={{ color: 'white' }}>
+                FIND MY PROFESSORS
+              </h1>
+
+              <h2
+              style={{ color: 'white' }}>
+                A better way to search for professors
+              </h2>
+
               <SearchBar
                 onSearch={handleSearchClick}
                 filters={filters}
                 setFilters={setFilters}
                 preventClose={preventClose}
-
                 getYearText={getYearText}
-                getSemesterText={getSemesterText}
-              />
+                getSemesterText={getSemesterText}/>
+
             </div>
           </MDBContainer>
         </>
       ) : (
         <>
-          <DashboardHeader onSearch={handleSearchClick} />
-          <div className="my-4">
-            <ProfessorTable professors={professorsData} />
+          <DashboardHeader
+          onSearch={handleSearchClick}/>
+
+          <div
+          className="my-4">
+            <ProfessorTable
+            professors={professorsData}/>
           </div>
         </>
       )}

@@ -127,6 +127,7 @@ const Login = () => {
                   type='username'
                   size="lg"
                   name="username"
+                  contrast
                   onChange={handleChange}
                   value={formData.username}
                   labelClass="text-white"
@@ -140,6 +141,7 @@ const Login = () => {
                   type='password'
                   size="lg"
                   name="password"
+                  contrast
                   onChange={handleChange}
                   value={formData.password}
                   labelClass="text-white"
@@ -167,9 +169,9 @@ const Login = () => {
                 <p
                 className="mb-5 pb-lg-2"
                 style={{ color: 'primary' }}>
-                  Don't have an account?
+                  Don't have an account? 
                     <Link to="/Register">
-                    Register
+                     Register
                     </Link>
                 </p>
 

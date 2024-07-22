@@ -138,6 +138,7 @@ const Register = () => {
                   id='formControlLg' 
                   size="lg" 
                   name="username" 
+                  contrast
                   onChange={handleChange} 
                   value={formData.username} 
                   labelClass="text-white"
@@ -151,6 +152,7 @@ const Register = () => {
                   type='email' 
                   size="lg" 
                   name="email" 
+                  contrast
                   onChange={handleChange} 
                   value={formData.email} 
                   labelClass="text-white"
@@ -164,6 +166,7 @@ const Register = () => {
                   type='password'
                   size="lg"
                   name="password"
+                  contrast
                   onChange={handleChange}
                   value={formData.password}
                   labelClass="text-white"
@@ -177,6 +180,7 @@ const Register = () => {
                   type='password'
                   size="lg"
                   name="confirmPassword"
+                  contrast
                   onChange={handleChange}
                   value={formData.confirmPassword}
                   labelClass="text-white"

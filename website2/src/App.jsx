@@ -27,6 +27,7 @@ import ForgotPassword from './components/ForgotPassword';
 import PasswordReset from './components/PasswordReset';
 import Dashboard from './components/Dashboard';
 import Home from './components/Home';
+import Cart from './components/Cart';
 
 import logoBlack from './Logo-Black.JPG'; // Adjust path as necessary
 
@@ -44,6 +45,7 @@ function App() {
                     <Route path="/Dashboard" element={<Dashboard />} />
                     <Route path="/Home" element={<Home />} />
                     <Route path="/Login" element={<Login />} />
+                    <Route path="/Cart" element={<Cart />} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </Router>
