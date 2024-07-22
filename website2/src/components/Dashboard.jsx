@@ -211,7 +211,7 @@ const Dashboard = () => {
                 <MDBDropdown onClick={preventClose}>
                   <MDBDropdownToggle color="primary">{schoolId ? "University of Central Florida" : "Select School"}</MDBDropdownToggle>
                   <MDBDropdownMenu>
-                    <MDBDropdownItem onClick={handleSchoolClick}>
+                    <MDBDropdownItem link onClick={handleSchoolClick}>
                       University of Central Florida {schoolId && <MDBIcon icon="check" />}
                     </MDBDropdownItem>
                   </MDBDropdownMenu>
@@ -220,13 +220,13 @@ const Dashboard = () => {
                 <MDBDropdown onClick={preventClose}>
                   <MDBDropdownToggle color="primary">{getYearText()}</MDBDropdownToggle>
                   <MDBDropdownMenu>
-                    <MDBDropdownItem onClick={() => handleDropdownClick('year', 2023)}>
+                    <MDBDropdownItem link onClick={() => handleDropdownClick('year', 2023)}>
                       2023 {year === 2023 && <MDBIcon icon="check" />}
                     </MDBDropdownItem>
-                    <MDBDropdownItem onClick={() => handleDropdownClick('year', 2024)}>
+                    <MDBDropdownItem link onClick={() => handleDropdownClick('year', 2024)}>
                       2024 {year === 2024 && <MDBIcon icon="check" />}
                     </MDBDropdownItem>
-                    <MDBDropdownItem onClick={() => handleDropdownClick('year', 2025)}>
+                    <MDBDropdownItem link onClick={() => handleDropdownClick('year', 2025)}>
                       2025 {year === 2025 && <MDBIcon icon="check" />}
                     </MDBDropdownItem>
                   </MDBDropdownMenu>
@@ -235,19 +235,25 @@ const Dashboard = () => {
                 <MDBDropdown onClick={preventClose}>
                   <MDBDropdownToggle color="primary">{getSemesterText()}</MDBDropdownToggle>
                   <MDBDropdownMenu>
-                    <MDBDropdownItem onClick={() => handleDropdownClick('semester', 'FALL')}>
+                    <MDBDropdownItem link onClick={() => handleDropdownClick('semester', 'FALL')}>
                       Fall {semester === 'FALL' && <MDBIcon icon="check" />}
                     </MDBDropdownItem>
-                    <MDBDropdownItem onClick={() => handleDropdownClick('semester', 'Spring')}>
+                    <MDBDropdownItem link onClick={() => handleDropdownClick('semester', 'Spring')}>
                       Spring {semester === 'Spring' && <MDBIcon icon="check" />}
                     </MDBDropdownItem>
-                    <MDBDropdownItem onClick={() => handleDropdownClick('semester', 'Summer')}>
+                    <MDBDropdownItem link onClick={() => handleDropdownClick('semester', 'Summer')}>
                       Summer {semester === 'Summer' && <MDBIcon icon="check" />}
                     </MDBDropdownItem>
                   </MDBDropdownMenu>
                 </MDBDropdown>
 
-                <MDBInput label="Search Courses" value={query} onChange={(e) => setFilters({ ...filters, query: e.target.value })} />
+                <MDBInput
+                labelClass="text-white"
+                style={{ backgroundColor: '#3f3f3f', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)' }}
+                contrast
+                label="Search Courses"
+                value={query}
+                onChange={(e) => setFilters({ ...filters, query: e.target.value })}/>
                 <MDBBtn color="primary" onClick={handleSearchClick}>
                   <MDBIcon icon="search" />
                 </MDBBtn>
