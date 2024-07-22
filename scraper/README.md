@@ -18,6 +18,10 @@ go build
 ./scraper
 ```
 
+## Notes
+
+The scraper will assume that the FMP endpoint is `localhost:8080`. Make sure the API is online!
+
 ## Example Procedures
 
 ### Pushing to FMP using existing json with RMP data
