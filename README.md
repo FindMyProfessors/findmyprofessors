@@ -27,6 +27,10 @@ When the docker compose is running, you are able to access the database using pg
    
    ![correct table](docs/database_2.png)
 
+## Accessing Mailer for Testing
+When the docker compose is running, you are able to access the mailer at http://localhost:1080.
+![alt text](docs/mailer.png)
+
 ## FAQ
 
 ### Setting a user to admin

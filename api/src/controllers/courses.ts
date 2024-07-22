@@ -126,10 +126,15 @@ export class CoursesController extends Controller {
     }
 
     const course_lookup = await prisma.course.findFirst({
-      where: { code: body.code },
+      where: {
+        AND: [{ code: body.code }, { school_id: body.school_id }],
+      },
     });
 
-    if (course_lookup) {
+    // Print course_lookup
+    logger.info("course_lookup=" + JSON.stringify(course_lookup));
+
+    if (course_lookup != null) {
       const error: CourseAlreadyExistsError = {
         message: "Course already exists",
         type: CourseErrorType.COURSE_ALREADY_EXISTS,
@@ -215,6 +220,11 @@ export class CoursesController extends Controller {
     }
 
     await getCourseById(id);
+
+    // delete professorCourses
+    await prisma.professorCourse.deleteMany({
+      where: { course: { id: id } },
+    });
 
     await prisma.course.delete({
       where: { id },

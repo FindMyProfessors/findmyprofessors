@@ -25,6 +25,9 @@ export enum UserErrorType {
   USER_DELETE_FAILED = "USER_DELETE_FAILED",
   INVALID_USER_ID = "INVALID_USER_ID",
   UNKNOWN_ERROR = "UNKNOWN_ERROR",
+  EMAIL_ALREADY_CONFIRMED = "EMAIL_ALREADY_CONFIRMED", // Added new error type
+  EMAIL_NOT_CONFIRMED = "EMAIL_NOT_CONFIRMED",
+  PASSWORD_RESET_EXPIRED = "PASSWORD_RESET_EXPIRED",
 }
 
 export const UserErrorHttpStatus = {
@@ -33,6 +36,9 @@ export const UserErrorHttpStatus = {
   [UserErrorType.USER_DELETE_FAILED]: 500,
   [UserErrorType.INVALID_USER_ID]: 400,
   [UserErrorType.UNKNOWN_ERROR]: 500,
+  [UserErrorType.EMAIL_ALREADY_CONFIRMED]: 400,
+  [UserErrorType.EMAIL_NOT_CONFIRMED]: 400,
+  [UserErrorType.PASSWORD_RESET_EXPIRED]: 400,
 };
 
 export type UserError = {
@@ -68,4 +74,25 @@ export type InvalidUserIdError = Pick<UserError, "message" | "type"> & {
 
 export type UnknownUserError = Pick<UserError, "message" | "type"> & {
   type: UserErrorType.UNKNOWN_ERROR;
+};
+
+export type EmailAlreadyConfirmedError = Pick<UserError, "message" | "type"> & {
+  type: UserErrorType.EMAIL_ALREADY_CONFIRMED;
+};
+
+export type EmailNotConfirmedError = Pick<UserError, "message" | "type"> & {
+  type: UserErrorType.EMAIL_NOT_CONFIRMED;
+};
+
+export type PasswordResetExpiredError = Pick<UserError, "message" | "type"> & {
+  type: UserErrorType.PASSWORD_RESET_EXPIRED;
+};
+
+export type ResetPasswordParams = {
+  password: string;
+  token: string;
+};
+
+export type ConfirmEmailParams = {
+  token: string;
 };

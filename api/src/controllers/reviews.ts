@@ -4,6 +4,7 @@ import {
   NewReview,
   ReviewErrorType,
   ReviewNotFoundError,
+  ReviewResponse,
   UpdatedReview,
 } from "../models/reviews";
 import {
@@ -34,7 +35,7 @@ export class ReviewsController extends Controller {
   public async createReview(
     @Request() request: any,
     @Body() body: NewReview
-  ): Promise<Review> {
+  ): Promise<ReviewResponse> {
     const jwt_body = request.user as JWTBody;
 
     if (jwt_body.user_role !== UserRole.ADMIN) {
@@ -51,13 +52,13 @@ export class ReviewsController extends Controller {
       data: body,
     });
 
-    return review;
+    return review as ReviewResponse;
   }
   @SuccessResponse("200", "Review Retrieved Successfully")
   @Response<ReviewNotFoundError>("404", "Review not found")
   @Security("jwt")
-  @Get("reviews/{review_id}")
-  public async getReview(review_id: number): Promise<Review> {
+  @Get("{review_id}")
+  public async getReview(review_id: number): Promise<ReviewResponse> {
     const review = await prisma.review.findUnique({ where: { id: review_id } });
 
     if (!review) {
@@ -68,19 +69,19 @@ export class ReviewsController extends Controller {
       return Promise.reject(error);
     }
 
-    return review;
+    return review as ReviewResponse;
   }
 
   @SuccessResponse("200", "Review Updated Successfully")
   @Response<ReviewNotFoundError>("404", "Review not found")
   @Security("jwt")
-  @Put("reviews/{review_id}")
+  @Put("{review_id}")
   public async updateReview(
     @Request() request: any,
 
     review_id: number,
     @Body() body: UpdatedReview
-  ): Promise<Review> {
+  ): Promise<ReviewResponse> {
     const jwt_body = request.user as JWTBody;
     if (jwt_body.user_role !== UserRole.ADMIN) {
       const error: UnauthorizedError = {
@@ -102,18 +103,16 @@ export class ReviewsController extends Controller {
 
     const updatedReview = await prisma.review.update({
       where: { id: review_id },
-      data: {
-        ...body,
-      },
+      data: { ...body },
     });
 
-    return updatedReview;
+    return updatedReview as ReviewResponse;
   }
 
   @SuccessResponse("200", "Review Deleted Successfully")
   @Response<ReviewNotFoundError>("404", "Review not found")
   @Security("jwt")
-  @Delete("reviews/{review_id}")
+  @Delete("{review_id}")
   public async deleteReview(
     @Request() request: any,
 
