@@ -163,7 +163,7 @@ const SearchBar = ({ onSearch, filters, setFilters, preventClose, getYearText, g
             onClick={() => handleDropdownClick('semester', 'Summer')}>
               Summer {semester === 'Summer' && <MDBIcon icon="check" />}
             </MDBDropdownItem>
-            
+
           </MDBDropdownMenu>
         </MDBDropdown>
 
@@ -171,6 +171,7 @@ const SearchBar = ({ onSearch, filters, setFilters, preventClose, getYearText, g
         label="Search Courses"
         style={{ backgroundColor: '#3f3f3f', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)' }}
         labelClass="text-white"
+        contrast
         value={query}
         onChange={(e) => setFilters({ ...filters, query: e.target.value })}/>
 
