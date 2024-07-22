@@ -45,7 +45,7 @@ function Header()
                         <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
 
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='/'>Home</MDBNavbarLink>
+                                <MDBNavbarLink href='./Home'>Home</MDBNavbarLink>
                             </MDBNavbarItem>
 
                             <MDBNavbarItem>

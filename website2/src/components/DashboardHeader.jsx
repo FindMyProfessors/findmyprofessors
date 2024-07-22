@@ -1,22 +1,36 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import SearchBar from './SearchBar';
+
 import {
+  MDBBtn,
   MDBContainer,
+  MDBCard,
+  MDBCardBody,
+  MDBCardImage,
+  MDBRow,
+  MDBCol,
+  MDBIcon,
+  MDBInput,
+  MDBNavbar,
+  MDBNavbarBrand,
+  MDBNavbarNav,
+  MDBNavbarItem,
+  MDBNavbarLink,
+  MDBNavbarToggler,
+  MDBCollapse,
   MDBDropdown,
-  MDBDropdownItem,
   MDBDropdownMenu,
   MDBDropdownToggle,
-  MDBNavbar,
-  MDBNavbarNav,
-  MDBNavbarToggler,
-  MDBNavbarLink,
-  MDBInputGroup,
-  MDBBtn,
-  MDBIcon,
+  MDBDropdownItem,
+  MDBInputGroup
+
 } from 'mdb-react-ui-kit';
 
+
 const DashboardHeader = ({ onSearch }) => {
+
+  const [openNavCentred, setOpenNavCentred] = useState(false);
   const headerRef = useRef();
 
   const [filters, setFilters] = useState({
@@ -26,21 +40,9 @@ const DashboardHeader = ({ onSearch }) => {
     query: ''
   });
 
-  const { schoolId, year, semester, query } = filters;
-
-  const handleDropdownClick = (type, value) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [type]: value,
-    }));
+  const handleSearchClick = () => {
+    onSearch();
   };
-
-  useEffect(() => {
-    document.addEventListener('scroll', () => {
-      headerRef.current &&
-        headerRef.current.classList.toggle('shadow-sm', document.documentElement.scrollTop > 0);
-    });
-  }, []);
 
   const preventClose = (e) => {
     e.stopPropagation();
@@ -48,7 +50,7 @@ const DashboardHeader = ({ onSearch }) => {
   };
 
   const getSchoolText = () => {
-    switch (schoolId) {
+    switch (filters.schoolId) {
       case 1:
         return 'UCF';
       case 2:
@@ -61,7 +63,7 @@ const DashboardHeader = ({ onSearch }) => {
   };
 
   const getYearText = () => {
-    switch (year) {
+    switch (filters.year) {
       case 2023:
         return '2023';
       case 2024:
@@ -74,7 +76,7 @@ const DashboardHeader = ({ onSearch }) => {
   };
 
   const getSemesterText = () => {
-    switch (semester) {
+    switch (filters.semester) {
       case 'Fall':
         return 'Fall';
       case 'Spring':
@@ -87,92 +89,85 @@ const DashboardHeader = ({ onSearch }) => {
   };
 
   return (
+    <>
+    {/* Header/Navbar */}
+    <MDBNavbar expand='lg' light bgColor='light'>
+      <MDBContainer fluid>
 
+        <MDBNavbarToggler
+          type='button'
+          data-target='#navbarCenteredExample'
+          aria-controls='navbarCenteredExample'
+          aria-expanded='false'
+          aria-label='Toggle navigation'
+          onClick={() => setOpenNavCentred(!openNavCentred)}
+        >
+          <MDBIcon icon='bars' fas />
+        </MDBNavbarToggler>
 
-    
-    <MDBNavbar sticky="top" className="mb-4 p-0" ref={headerRef}>
-      <MDBContainer className="border-bottom px-4" fluid>
+        {/* Left Side */}
+        <div className="d-flex justify-content-start w-100">
 
-          <MDBIcon icon="bars" size="lg" />
+          <MDBNavbarBrand href='/'>
+              <MDBIcon icon="search fa-1x me-3" style={{ color: '#000000' }} />
+              Find My Professors
+          </MDBNavbarBrand>
 
-        <MDBNavbarNav className="d-none d-md-flex">
-          <MDBNavbarLink tag={NavLink} to="/dashboard">
-            Dashboard
-          </MDBNavbarLink>
-        </MDBNavbarNav>
-
-        <div className="flex-grow-1 d-flex justify-content-center">
-          <MDBInputGroup className="w-auto">
-
-            <MDBDropdown onClick={preventClose}>
-              <MDBDropdownToggle color="primary">{getSchoolText()}</MDBDropdownToggle>
-              <MDBDropdownMenu>
-                <MDBDropdownItem onClick={() => handleDropdownClick('schoolId', 1)}>
-                  UCF {schoolId === 1 && <MDBIcon icon="check" />}
-                </MDBDropdownItem>
-                <MDBDropdownItem onClick={() => handleDropdownClick('schoolId', 2)}>
-                  Valencia {schoolId === 2 && <MDBIcon icon="check" />}
-                </MDBDropdownItem>
-                <MDBDropdownItem onClick={() => handleDropdownClick('schoolId', 3)}>
-                  Other {schoolId === 3 && <MDBIcon icon="check" />}
-                </MDBDropdownItem>
-              </MDBDropdownMenu>
-            </MDBDropdown>
-
-            <MDBDropdown onClick={preventClose}>
-              <MDBDropdownToggle color="primary">{getYearText()}</MDBDropdownToggle>
-              <MDBDropdownMenu>
-                <MDBDropdownItem onClick={() => handleDropdownClick('year', 2023)}>
-                  2023 {year === 2023 && <MDBIcon icon="check" />}
-                </MDBDropdownItem>
-                <MDBDropdownItem onClick={() => handleDropdownClick('year', 2024)}>
-                  2024 {year === 2024 && <MDBIcon icon="check" />}
-                </MDBDropdownItem>
-                <MDBDropdownItem onClick={() => handleDropdownClick('year', 2025)}>
-                  2025 {year === 2025 && <MDBIcon icon="check" />}
-                </MDBDropdownItem>
-              </MDBDropdownMenu>
-            </MDBDropdown>
-
-            <MDBDropdown onClick={preventClose}>
-              <MDBDropdownToggle color="primary">{getSemesterText()}</MDBDropdownToggle>
-              <MDBDropdownMenu>
-                <MDBDropdownItem onClick={() => handleDropdownClick('semester', 'Fall')}>
-                  Fall {semester === 'Fall' && <MDBIcon icon="check" />}
-                </MDBDropdownItem>
-                <MDBDropdownItem onClick={() => handleDropdownClick('semester', 'Spring')}>
-                  Spring {semester === 'Spring' && <MDBIcon icon="check" />}
-                </MDBDropdownItem>
-                <MDBDropdownItem onClick={() => handleDropdownClick('semester', 'Summer')}>
-                  Summer {semester === 'Summer' && <MDBIcon icon="check" />}
-                </MDBDropdownItem>
-              </MDBDropdownMenu>
-            </MDBDropdown>
-
-            <form className="d-flex input-group w-auto">
-              <input
-                className="form-control"
-                type="search"
-                placeholder="Search Courses"
-                value={query}
-                onChange={(e) => setFilters({ ...filters, query: e.target.value })}
-              />
-              <MDBBtn color="primary" onClick={onSearch}>
-                <MDBIcon icon="search" />
-              </MDBBtn>
-            </form>
-          </MDBInputGroup>
+          <MDBCollapse navbar>
+            <MDBNavbarNav>
+              <MDBNavbarItem>
+                <MDBNavbarLink href='/'>Home</MDBNavbarLink>
+              </MDBNavbarItem>
+              <MDBNavbarItem>
+                <MDBNavbarLink href='./About'>About</MDBNavbarLink>
+              </MDBNavbarItem>
+              <MDBNavbarItem>
+                <MDBNavbarLink href='./ContactUs'>Contact</MDBNavbarLink>
+              </MDBNavbarItem>
+            </MDBNavbarNav>
+          </MDBCollapse>
         </div>
 
-        <MDBNavbarNav className="ms-auto">
-          <MDBNavbarLink href="#">
-            <MDBIcon icon="shopping-cart" size="lg" />
-          </MDBNavbarLink>
-        </MDBNavbarNav>
-        
+        {/* Center */}
+        <div className="d-flex justify-content-center w-100">
+          <MDBCollapse navbar open={openNavCentred} center id='navbarCenteredExample'>
+            <MDBNavbarNav fullWidth={false} className='mb-2 mb-lg-0 d-flex align-items-center' style={{ width: 'fit-content' }}>
+              
+            <SearchBar
+                onSearch={handleSearchClick}
+                filters={filters}
+                setFilters={setFilters}
+                preventClose={preventClose}
+                getSchoolText={getSchoolText}
+                getYearText={getYearText}
+                getSemesterText={getSemesterText}
+              />
+
+            </MDBNavbarNav>
+          </MDBCollapse>
+        </div>
+
+        {/* Right Side */}
+        <div className="d-flex justify-content-end">
+          <MDBCollapse navbar>
+            <MDBNavbarNav>
+
+              <MDBNavbarItem>
+                <MDBNavbarLink href='/'>Cart</MDBNavbarLink>
+              </MDBNavbarItem>
+
+              <MDBNavbarItem>
+                <MDBNavbarLink href='./About'>Profile</MDBNavbarLink>
+              </MDBNavbarItem>
+
+            </MDBNavbarNav>
+          </MDBCollapse>
+        </div>
+
       </MDBContainer>
     </MDBNavbar>
-  );
+  </>
+);
 };
 
 export default DashboardHeader;
