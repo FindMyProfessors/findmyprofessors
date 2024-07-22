@@ -1,13 +1,13 @@
-import { Professor, Review } from "@prisma/client";
+import { Professor, Review, ReviewTag } from "@prisma/client";
 
 export type NewReview = Pick<
   Review,
-  "quality" | "difficult" | "time" | "tags" | "grade" | "professor_id"
+  "quality" | "difficulty" | "time" | "tags" | "grade" | "professor_id"
 >;
 
 export type UpdatedReview = Pick<
   Review,
-  "quality" | "difficult" | "time" | "tags" | "grade"
+  "quality" | "difficulty" | "time" | "tags" | "grade"
 >;
 
 export type ReviewError = {
@@ -41,3 +41,50 @@ export function isReviewError(error: any): error is ReviewError {
     Object.values(ReviewErrorType).includes(error.type as ReviewErrorType)
   );
 }
+
+export enum Grade {
+  A_PLUS,
+  A,
+  A_MINUS,
+  B_PLUS,
+  B,
+  B_MINUS,
+  C_PLUS,
+  C,
+  C_MINUS,
+  D_PLUS,
+  D,
+  D_MINUS,
+  F_PLUS,
+  F,
+  F_MINUS,
+  INCOMPLETE,
+  WITHDRAWN,
+  NOT_SURE,
+  OTHER,
+}
+
+export type Rating = {
+  ratingAmount: number;
+  totalQualityAverage: number;
+  topKMostRecentQualityAverage: number;
+  totalDifficultyAverage: number;
+  topKMostRecentDifficultyAverage: number;
+  averageGrade: string; // Assuming Grade is a string, adjust if it's an enum or another type
+};
+
+export type TagAmount = {
+  tag: ReviewTag;
+  amount: number;
+};
+
+export type ChartValue = {
+  value: number;
+  month: string;
+  year: number;
+};
+
+export type ProfessorAnalysis = {
+  tagAmount: TagAmount[];
+  averageRatingValues: ChartValue[];
+};
