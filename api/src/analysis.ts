@@ -1,5 +1,10 @@
 import { Review, ReviewTag } from "@prisma/client";
-import { ChartValue, ProfessorAnalysis, TagAmount } from "./models/reviews";
+import {
+  ChartValue,
+  ProfessorAnalysis,
+  ReviewsByQuality,
+  TagAmount,
+} from "./models/reviews";
 
 const OptimisticNumberOfChartPoints = 7;
 
@@ -34,6 +39,7 @@ async function beginAnalysis(reviews: Review[]): Promise<ProfessorAnalysis> {
   return {
     tagAmount: getTags(reviews),
     averageRatingValues: values,
+    numberOfReviewsByQuality: getNumberOfReviewsByQuality(reviews),
   };
 }
 
@@ -163,3 +169,22 @@ function calculate(reviews: Review[], numberOfPoints: number): ChartValue[] {
 }
 
 export { beginAnalysis };
+
+function getNumberOfReviewsByQuality(reviews: Review[]): ReviewsByQuality[] {
+  const qualityMap: { [key: number]: number } = Object.values(reviews).reduce(
+    (acc, review) => {
+      acc[Math.ceil(review.quality)] =
+        (acc[Math.ceil(review.quality)] || 0) + 1;
+      return acc;
+    },
+    {} as { [key: number]: number }
+  );
+
+  return Object.entries(qualityMap).map(
+    ([quality, amount]) =>
+      ({
+        quality: parseInt(quality),
+        amount,
+      } as ReviewsByQuality)
+  );
+}
