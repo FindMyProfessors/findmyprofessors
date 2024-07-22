@@ -31,12 +31,10 @@ function Header()
     return(
         <>
             {/* Header/Navbar */}
-            <MDBNavbar expand='lg' light bgColor='light'>
+            <MDBNavbar expand='lg' dark style={{ backgroundColor: '#3f3f3f' }}>
                 <MDBContainer fluid>
-
-
                     <MDBNavbarBrand href='/'>
-                    <MDBIcon icon="search fa-1x me-3" style={{ color: '#000000' }}/>
+                    <MDBIcon icon="search fa-1x me-3" style={{ color: '#FFFFFF' }}/>
                         Find My Professors
                     </MDBNavbarBrand>
 
@@ -45,15 +43,15 @@ function Header()
                         <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
 
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='/'>Home</MDBNavbarLink>
+                                <MDBNavbarLink href='/' style={{ color: '#BBBBBB' }}>Home</MDBNavbarLink>
                             </MDBNavbarItem>
 
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='./About'>About</MDBNavbarLink>
+                                <MDBNavbarLink href='./About' style={{ color: '#BBBBBB' }}>About</MDBNavbarLink>
                             </MDBNavbarItem>
 
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='./ContactUs'>Contact</MDBNavbarLink>
+                                <MDBNavbarLink href='./ContactUs' style={{ color: '#BBBBBB' }}>Contact</MDBNavbarLink>
                             </MDBNavbarItem>
 
                         </MDBNavbarNav>

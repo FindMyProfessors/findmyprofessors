@@ -36,19 +36,31 @@ const ForgotPassword = () => {
     return (
     <>  
         <Header />
+
+        <style>{'body { background-color: #121212; }'}</style>
         <MDBContainer style={containerStyle}>
-          <MDBCard style={{ maxWidth: '500px', margin: '0 auto' }}>
+          <MDBCard style={{ maxWidth: '500px', margin: '0 auto', backgroundColor: '#282828', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)' }}>
             <MDBRow className='g-0'>
               <MDBCol md='0' style={{ backgroundColor: 'black' }}></MDBCol>
               <MDBCol md='12'>
                 <MDBCardBody className='d-flex flex-column'>
                   <div className='d-flex flex-row mt-2'>
-                    <MDBIcon icon="search fa-3x me-3" style={{ color: '#000000' }}/>
-                    <span className="h1 fw-bold mb-0">Find My Professors</span>
+                    <MDBIcon icon="search fa-3x me-3" style={{ color: 'white' }}/>
+                    <span className="h1 fw-bold mb-0"style={{color:'white'}}>Find My Professors</span>
                   </div>
-                  <h5 className="fw-normal my-4 pb-3" style={{letterSpacing: '1px'}}>Forgot your password?</h5>
-                  <MDBInput wrapperClass='mb-4' label='Email address' id='formControlLg' type='email' size="lg"/>
-                  <MDBBtn onClick={handleResetPassword} className="mb-4 px-5" color='dark' size='lg'>Reset Password</MDBBtn>
+                  <h5 className="fw-normal my-4 pb-3" style={{letterSpacing: '1px', color:'white'}}>Forgot your password?</h5>
+
+                  <MDBInput
+                  wrapperClass='mb-4'
+                  label='Email address'
+                  id='formControlLg'
+                  type='email'
+                  size="lg"
+                  labelClass="text-white"
+                  style={{ backgroundColor: '#3f3f3f', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)' }}
+                  />
+
+                  <MDBBtn onClick={handleResetPassword} className="mb-4 px-5" color='dark' size='lg' style={{ backgroundColor: '#0082ca', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)' }}>Reset Password</MDBBtn>
                   <div className='d-flex flex-row justify-content-start'>
                     <a href="#!" className="small text-muted me-1">Terms of use.</a>
                     <a href="#!" className="small text-muted">Privacy policy</a>
