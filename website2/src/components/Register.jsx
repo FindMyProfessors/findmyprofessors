@@ -203,11 +203,7 @@ const Register = () => {
                 <p
                   className="mb-5 pb-lg-2"
                   style={{ color: 'primary' }}>
-                    Already have an account?
-                    <Link to="/Login"
-                    style={{ color: '#0082ca' }}>
-                      Login
-                    </Link>
+                    Already have an account? <Link to="/Login" style={{ color: '#0082ca' }}>Login</Link>
                 </p>
 
                 <div className='d-flex flex-row justify-content-start'>
