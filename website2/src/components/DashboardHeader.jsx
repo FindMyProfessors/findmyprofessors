@@ -96,7 +96,7 @@ const DashboardHeader = ({ onSearch }) => {
         <div className="d-flex justify-content-start w-100">
 
           <MDBNavbarBrand href='/'>
-              <MDBIcon icon="search fa-1x me-3" style={{ color: '#000000' }} />
+              <MDBIcon icon="search fa-1x me-3" style={{ color: '#3d3d3d' }} />
               Find My Professors
           </MDBNavbarBrand>
 

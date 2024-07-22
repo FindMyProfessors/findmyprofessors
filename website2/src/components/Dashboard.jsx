@@ -177,6 +177,7 @@ const Dashboard = () => {
   const handleSearchClick = () => {
     if (schoolId) {
       setHeadersVisible(false);
+      setSearchResults([]);  // Hide the suggested courses
       fetchCourses(schoolId, year, semester, query);
     } else {
       console.error('No school selected');
@@ -187,7 +188,7 @@ const Dashboard = () => {
     <>
       <Header />
 
-      <style>{'body { background-color: #121212; }'}</style>
+      <style>{'body { background-color: #FFFFFF; }'}</style>
 
       <MDBContainer fluid className="d-flex justify-content-center align-items-center">
 
@@ -195,11 +196,11 @@ const Dashboard = () => {
 
           {headersVisible && (
             <>
-              <h1 className="display-4 fw-bold" style={{ color: 'white' }}>
+              <h1 className="display-4 fw-bold" style={{ color: 'black' }}>
                 FIND MY PROFESSORS
               </h1>
 
-              <h2 style={{ color: 'white' }}>
+              <h2 style={{ color: 'black' }}>
                 A better way to search for professors
               </h2>
             </>
@@ -248,12 +249,13 @@ const Dashboard = () => {
                 </MDBDropdown>
 
                 <MDBInput
-                labelClass="text-white"
-                style={{ backgroundColor: '#3f3f3f', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)' }}
-                contrast
-                label="Search Courses"
-                value={query}
-                onChange={(e) => setFilters({ ...filters, query: e.target.value })}/>
+  labelClass="text-black"
+  style={{ backgroundColor: '#FFFFFF', color: 'black', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)' }}
+  contrast
+  label="Search Courses"
+  value={query}
+  onChange={(e) => setFilters({ ...filters, query: e.target.value })}
+/>
                 <MDBBtn color="primary" onClick={handleSearchClick}>
                   <MDBIcon icon="search" />
                 </MDBBtn>

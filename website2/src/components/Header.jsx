@@ -75,7 +75,7 @@ function Header()
                             <MDBNavbarItem>
                                 <MDBNavbarLink
                                 href='./Home'
-                                style={{ color: '#BBBBBB' }}>
+                                style={{ color: '#FFFFFF' }}>
                                     Home
                                 </MDBNavbarLink>
                             </MDBNavbarItem>
@@ -83,7 +83,7 @@ function Header()
                             <MDBNavbarItem>
                                 <MDBNavbarLink
                                 href='./About'
-                                style={{ color: '#BBBBBB' }}>
+                                style={{ color: '#FFFFFF' }}>
                                     About
                                 </MDBNavbarLink>
                             </MDBNavbarItem>
@@ -91,7 +91,7 @@ function Header()
                             <MDBNavbarItem>
                                 <MDBNavbarLink
                                 href='./ContactUs'
-                                style={{ color: '#BBBBBB' }}>
+                                style={{ color: '#FFFFFF' }}>
                                     Contact
                                 </MDBNavbarLink>
                             </MDBNavbarItem>
@@ -115,7 +115,7 @@ function Header()
 
                                 <MDBDropdown>
                                     <MDBDropdownToggle
-                                    style={{ backgroundColor: '#3f3f3f', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0)'}}>
+                                    style={{ backgroundColor: '#3d3d3d', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0)'}}>
 
                                         <MDBIcon
                                         className=''
@@ -127,8 +127,6 @@ function Header()
                                     </MDBDropdownToggle>
                                     <MDBDropdownMenu>
                                         <MDBDropdownItem link>Profile</MDBDropdownItem>
-                                        <MDBDropdownItem link>Settings</MDBDropdownItem>
-
                                         <MDBDropdownItem
                                         link
                                         onClick={toggleOpen}>

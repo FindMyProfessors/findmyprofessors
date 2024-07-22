@@ -76,7 +76,7 @@ const Login = () => {
     <>
       <Header />
       
-      <style>{'body { background-color: #121212; }'}</style>
+      <style>{'body { background-color: #FFFFFF; }'}</style>
 
       <MDBContainer
       style={containerStyle}>

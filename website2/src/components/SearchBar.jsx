@@ -180,7 +180,7 @@ const SearchBar = ({ onSearch, filters, setFilters, preventClose, getYearText, g
           </MDBDropdown>
 
           <MDBInput
-          labelClass="text-white"
+          labelClass="text-black"
           style={{ backgroundColor: '#3f3f3f', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)' }}
           contrast
           label="Search Courses"
