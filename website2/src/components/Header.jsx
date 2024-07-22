@@ -42,7 +42,8 @@ function Header()
     const navigate = useNavigate();
 
     const handleLogout = () => {
-      navigate('/Login');
+        toggleOpen();
+        navigate('/Login');
     };
 
     return(
