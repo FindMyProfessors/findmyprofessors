@@ -88,8 +88,8 @@ const VerifyEmail = () => {
                   <MDBInput
                   wrapperClass='mb-4'
                   label='Verification code'
-                  id='typeNumber'
-                  type='number'
+                  id='typePhone'
+                  type='tel'
                   size="lg"
                   labelClass="text-white"
                   contrast
