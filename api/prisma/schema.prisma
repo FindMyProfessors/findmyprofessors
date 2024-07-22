@@ -1,3 +1,4 @@
+
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["relationJoins"]
@@ -174,3 +175,4 @@ enum Semester {
   SUMMER
   FALL
 }
+

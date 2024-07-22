@@ -1,3 +1,4 @@
+
 import dotenv from "dotenv";
 import { Secret } from "jsonwebtoken";
 dotenv.config();
@@ -71,3 +72,4 @@ export function formatPasswordResetUrl(token: string): string {
 export function formatEmailConfirmationUrl(token: string): string {
   return `${config.EMAIL_CONFIRMATION_URL}?token=${token}`;
 }
+

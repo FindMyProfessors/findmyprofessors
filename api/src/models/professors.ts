@@ -1,3 +1,4 @@
+
 import {
   Course,
   Grade,
@@ -112,3 +113,4 @@ export function getGradeFromIndex(index: number): Grade {
   ];
   return (grades[index] || "OTHER") as Grade;
 }
+
