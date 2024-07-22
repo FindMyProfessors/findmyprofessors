@@ -16,61 +16,68 @@ import {
     MDBCardText,
     MDBCardHeader
     
-  } from 'mdb-react-ui-kit';
+} from 'mdb-react-ui-kit';
+
+const containerStyle = {
+  maxWidth: '85%',
+  margin: '0 auto',
+  marginTop: '40px'
+}
 
 const Home = () => {
-
-
 
     return (
     <>
         <Header />
 
-        <MDBContainer fluid className="p-5 bg-dark text-white text-center">
-        <h2 className="display-4 fw-bold">
-        Find My Professors
-        </h2>
-      <p className="lead my-4">
-        Find My Professors is a site that allows students to search for the professors by the course that they want to take, instead of by the professor. This will enable students to save time manually searching for the best professor by using our site which runs an in-depth rating analysis on each professor and presents all the relevant data to you. No more copy-pasting names into RateMyProfessors; use FindMyProfessors to find the best professors.
-      </p>
-      <div className="d-flex justify-content-center">
+        <style>{'body { background-color: #121212; }'}</style>
 
-        <MDBBtn color="primary" className="me-2" href='/'Register>
-          Register
-        </MDBBtn>
-        <MDBBtn color="primary" className="me-2"href='/'Login>
-          Sign In
-        </MDBBtn>
-      </div>
-    </MDBContainer>
-    
-    <MDBContainer className="py-5">
-      <MDBRow>
-        <MDBCol md="4" className="mb-4 text-center">
-          <MDBIcon icon="fas fa-magnifying-glass" size="3x" className="mb-3 text-primary"/>
-          <h5 className="fw-bold">Search by course</h5>
-          <p>
-            Search courses straight from your university. No more using inefficient school websites from 2004. 
-          </p>
-        </MDBCol>
+        <MDBContainer style={containerStyle}>
+          <MDBCard style={{ maxWidth: '1800px', margin: '0 auto', backgroundColor: '#282828', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)' }}>
+            <MDBRow className='g-0'>
+              <MDBCol md='0' style={{ backgroundColor: 'black' }}></MDBCol>
+              <MDBCol md='12'>
+                <MDBCardBody className='d-flex flex-column'>
+
+                  <div className='d-flex flex-row mt-2 justify-content-center'>
+                    <MDBIcon icon="search fa-4x me-4" style={{ color: 'white' }}/>
+                    <span className="h1 fw-bold mb-4" style={{ fontSize: '4rem', color:'white' }}>Find My Professors</span>
+                  </div>
+
+                  <h5 className="fw-normal my-3 pb-0 text-center" style={{letterSpacing: '1px', color: '#DDDDDD'}}>
+                    No more copy-pasting names into RateMyProfessors</h5>
+
+                  <h5 className="fw-normal pb-5 text-center" style={{letterSpacing: '1px', color: '#DDDDDD'}}>
+                    Use Find My Professors to find the best professors for you</h5>
+
+                  <div className="d-flex justify-content-center">
+
+                      <MDBBtn
+                      color="primary"
+                      size="lg"
+                      className="me-5"
+                      href='./Login'Login>
+                          Get Started Now
+                      </MDBBtn>
+
+                      <MDBBtn
+                      outline color ='primary'
+                      style={{ backgroundColor: '#282828', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)' }}
+                      size="lg"
+                      className="me-5"
+                      href='./About'About>
+                          Learn more
+                      </MDBBtn>
+
+                  </div>
+
+                </MDBCardBody>
+              </MDBCol>
+            </MDBRow>
+          </MDBCard>
+        </MDBContainer>
         
-        <MDBCol md="4" className="mb-4 text-center">
-          <MDBIcon icon="fa fa-chart-bar" size="3x" className="mb-3 text-primary"/>
-          <h5 className="fw-bold">Compare Professors</h5>
-          <p>
-            Compare professors using filters such as average grade, difficulty, quality, and more.
-          </p>
-        </MDBCol>
         
-        <MDBCol md="4" className="mb-4 text-center">
-          <MDBIcon icon="fas fa-chart-line" size="3x" className="mb-3 text-primary"/>
-          <h5 className="fw-bold">See Data</h5>
-          <p>
-            See the data about professors searched such as rating over time and professor feedback from former students. 
-          </p>
-        </MDBCol>
-      </MDBRow>
-    </MDBContainer>
     </>
     );
 };

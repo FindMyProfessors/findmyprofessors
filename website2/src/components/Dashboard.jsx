@@ -76,10 +76,12 @@ const Dashboard = () => {
       {!showTable ? (
         <>
           <Header />
+
+          <style>{'body { background-color: #121212; }'}</style>
           <MDBContainer fluid className="d-flex justify-content-center align-items-center vh-100">
             <div className="text-center">
-              <h1 className="display-4 fw-bold">FIND MY PROFESSORS</h1>
-              <h2>A better way to search for professors</h2>
+              <h1 className="display-4 fw-bold" style={{ color: 'white' }}>FIND MY PROFESSORS</h1>
+              <h2 style={{ color: 'white' }}>A better way to search for professors</h2>
               <SearchBar
                 onSearch={handleSearchClick}
                 filters={filters}
