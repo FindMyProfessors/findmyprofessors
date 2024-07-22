@@ -14,6 +14,7 @@ const Dashboard = () => {
   });
   const [searchResults, setSearchResults] = useState([]);
   const [professorsData, setProfessorsData] = useState([]);
+  const [headersVisible, setHeadersVisible] = useState(true);
 
   const preventClose = (e) => {
     e.stopPropagation();
@@ -175,6 +176,7 @@ const Dashboard = () => {
 
   const handleSearchClick = () => {
     if (schoolId) {
+      setHeadersVisible(false);
       fetchCourses(schoolId, year, semester, query);
     } else {
       console.error('No school selected');
@@ -187,17 +189,21 @@ const Dashboard = () => {
 
       <style>{'body { background-color: #121212; }'}</style>
 
-      <MDBContainer fluid className="d-flex justify-content-center align-items-center vh-100">
+      <MDBContainer fluid className="d-flex justify-content-center align-items-center">
 
         <div className="text-center">
 
-          <h1 className="display-4 fw-bold" style={{ color: 'white' }}>
-            FIND MY PROFESSORS
-          </h1>
+          {headersVisible && (
+            <>
+              <h1 className="display-4 fw-bold" style={{ color: 'white' }}>
+                FIND MY PROFESSORS
+              </h1>
 
-          <h2 style={{ color: 'white' }}>
-            A better way to search for professors
-          </h2>
+              <h2 style={{ color: 'white' }}>
+                A better way to search for professors
+              </h2>
+            </>
+          )}
 
           <div className="text-center my-5">
             <div className="search-container position-relative d-inline-block">
@@ -259,7 +265,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {professorsData.length > 0 && (
+          {!headersVisible && professorsData.length > 0 && (
             <div className="my-4">
               <ProfessorTable professors={professorsData} />
             </div>
@@ -332,7 +338,12 @@ const ProfessorTable = ({ professors }) => {
                   <MDBIcon icon={isExpanded && selectedProfessor === professor ? 'angle-up' : 'angle-down'} />
                 </td>
                 <td>{professor.first_name + ' ' + professor.last_name}</td>
-
+                <td>{professor.average_grade}</td>
+                <td>{professor.average_quality}</td>
+                <td>{professor.average_difficulty}</td>
+                <td>{professor.recent_quality_average}</td>
+                <td>{professor.recent_difficulty_average}</td>
+                <td>{professor.ratings_count}</td>
                 <td>
                   <MDBBtn style={{ backgroundColor: 'rgb(0, 102, 0)', color: 'white' }} size="sm">Add</MDBBtn>
                 </td>
