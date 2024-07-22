@@ -26,6 +26,7 @@ import Register from './components/Register';
 import ForgotPassword from './components/ForgotPassword';
 import PasswordReset from './components/PasswordReset';
 import Dashboard from './components/Dashboard';
+import Home from './components/Home';
 
 import logoBlack from './Logo-Black.JPG'; // Adjust path as necessary
 
@@ -41,6 +42,7 @@ function App() {
                     <Route path="/PasswordReset" element={<PasswordReset />} />
                     <Route path="/Register" element={<Register />} />
                     <Route path="/Dashboard" element={<Dashboard />} />
+                    <Route path="/Home" element={<Home />} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </Router>
