@@ -47,23 +47,8 @@ const Dashboard = () => {
     e.preventDefault();
   };
 
-  const getSchoolText = () => {
-    switch (filters.schoolId) {
-      case 1:
-        return 'UCF';
-      case 2:
-        return 'Valencia';
-      case 3:
-        return 'Other';
-      default:
-        return 'Select School';
-    }
-  };
-
   const getYearText = () => {
     switch (filters.year) {
-      case 2023:
-        return '2023';
       case 2024:
         return '2024';
       case 2025:
@@ -75,12 +60,12 @@ const Dashboard = () => {
 
   const getSemesterText = () => {
     switch (filters.semester) {
-      case 'Fall':
-        return 'Fall';
-      case 'Spring':
-        return 'Spring';
-      case 'Summer':
-        return 'Summer';
+      case 'FALL':
+        return 'FALL';
+      case 'SPRING':
+        return 'SPRING';
+      case 'SUMMER':
+        return 'SUMMER';
       default:
         return 'Select Semester';
     }
@@ -100,7 +85,7 @@ const Dashboard = () => {
                 filters={filters}
                 setFilters={setFilters}
                 preventClose={preventClose}
-                getSchoolText={getSchoolText}
+
                 getYearText={getYearText}
                 getSemesterText={getSemesterText}
               />

@@ -50,6 +50,10 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         console.log('Login successful:', data); // Debugging log
+        
+        // Store the JWT token in localStorage
+        localStorage.setItem('token', data.token);
+        
         navigate('/Dashboard'); // Redirect to Dashboard page after successful login
       } else {
         const errorMessage = await response.text();
