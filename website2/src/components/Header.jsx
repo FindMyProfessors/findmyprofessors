@@ -31,35 +31,55 @@ function Header()
     return(
         <>
             {/* Header/Navbar */}
-            <MDBNavbar expand='lg' dark style={{ backgroundColor: '#3f3f3f' }}>
-                <MDBContainer fluid>
-                    <MDBNavbarBrand href='./Home'>
-                    <MDBIcon icon="search fa-1x me-3" style={{ color: '#FFFFFF' }}/>
+            <MDBNavbar
+            expand='lg'
+            dark
+            style={{ backgroundColor: '#3f3f3f' }}>
+
+                <MDBContainer
+                fluid>
+
+                    <MDBNavbarBrand
+                    href='./Home'>
+
+                    <MDBIcon
+                    icon="search fa-1x me-3"
+                    style={{ color: '#FFFFFF' }}/>
                         Find My Professors
                     </MDBNavbarBrand>
 
-                    <MDBCollapse navbar>
+                    <MDBCollapse
+                    navbar>
                         
-                        <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
+                        <MDBNavbarNav
+                        className='mr-auto mb-2 mb-lg-0'>
 
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='./Home' style={{ color: '#BBBBBB' }}>Home</MDBNavbarLink>
+                                <MDBNavbarLink
+                                href='./Home'
+                                style={{ color: '#BBBBBB' }}>
+                                    Home
+                                </MDBNavbarLink>
                             </MDBNavbarItem>
 
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='./About' style={{ color: '#BBBBBB' }}>About</MDBNavbarLink>
+                                <MDBNavbarLink
+                                href='./About'
+                                style={{ color: '#BBBBBB' }}>
+                                    About
+                                </MDBNavbarLink>
                             </MDBNavbarItem>
 
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='./ContactUs' style={{ color: '#BBBBBB' }}>Contact</MDBNavbarLink>
+                                <MDBNavbarLink
+                                href='./ContactUs'
+                                style={{ color: '#BBBBBB' }}>
+                                    Contact
+                                </MDBNavbarLink>
                             </MDBNavbarItem>
-
                         </MDBNavbarNav>
-                        
                     </MDBCollapse>
-
                 </MDBContainer>
-
             </MDBNavbar>
         </>
     );

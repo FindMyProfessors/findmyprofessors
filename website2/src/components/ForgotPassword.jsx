@@ -60,7 +60,7 @@ const ForgotPassword = () => {
                   style={{ backgroundColor: '#3f3f3f', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)' }}
                   />
 
-                  <MDBBtn onClick={handleResetPassword} className="mb-4 px-5" color='dark' size='lg' style={{ backgroundColor: 'primary', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)' }}>Reset Password</MDBBtn>
+                  <MDBBtn onClick={handleResetPassword} className="mb-4 px-5" size='lg' style={{ backgroundColor: 'primary', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)' }}>Reset Password</MDBBtn>
                   <div className='d-flex flex-row justify-content-start'>
                     <a href="#!" className="small text-muted me-1">Terms of use.</a>
                     <a href="#!" className="small text-muted">Privacy policy</a>

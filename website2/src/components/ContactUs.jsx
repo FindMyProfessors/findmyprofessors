@@ -32,18 +32,39 @@ const ContactUs = () => {
         <Header />
 
         <style>{'body { background-color: #121212; }'}</style>
+
         <h1 style={headingStyle} >Contact Us</h1>
+
         <section className="pt-0 pb-5" style={sectionStyle}>
-        <div className="center" style={centerStyle}>
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-10 mx-auto">
-                        <div id="carouselExampleIndicators2" className="carousel slide" data-ride="carousel" >
-                            <div className="carousel-inner" >
-                                <div className="carousel-item active" >
-                                    <div className="row" style={customCarouselStyle}>
-                                      {renderCards()}
+
+        <div
+        className="center" style={centerStyle}>
+
+            <div
+            className="container-fluid">
+
+                <div
+                className="row">
+
+                    <div
+                    className="col-10 mx-auto">
+
+                        <div
+                        id="carouselExampleIndicators2"
+                        className="carousel slide"
+                        data-ride="carousel">
+
+                            <div
+                            className="carousel-inner" >
+
+                                <div
+                                className="carousel-item active" >
+
+                                    <div
+                                    className="row" style={customCarouselStyle}>
+                                        {renderCards()}
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -91,15 +112,37 @@ const renderCards = () => {
     ];
 
 return cardData.map((card, index) => (
-    <div key={index} className="col" style={customCardStyle}>
-        <div className="card" style={{backgroundColor: '#282828'}}>
-        <a href={card.link} target="_blank" rel="noopener noreferrer">
-        <img className="img-fluid" alt="100%x280" src={card.imgSrc} />
+    <div
+    key={index}
+    className="col"
+    style={customCardStyle}>
+
+        <div
+        className="card"
+        style={{backgroundColor: '#282828'}}>
+
+        <a
+        href={card.link}
+        target="_blank" rel="noopener noreferrer">
+
+            <img
+            className="img-fluid"
+            alt="100%x280"
+            src={card.imgSrc}
+            />
+
         </a>
-        <div className="card-body">
-            <h4 className="card-title">{card.title}</h4>
+
+        <div
+        className="card-body">
+
+            <h4
+            className="card-title">{card.title}</h4>
+
             <p className="card-text">{card.text}</p>
+            
         </div>
+
         </div>
     </div>
     ));
