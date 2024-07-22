@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MDBInputGroup, MDBBtn, MDBIcon, MDBInput, MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle } from 'mdb-react-ui-kit';
 import debounce from 'lodash.debounce';
+import { API_URL } from '../constants';
 
 const SearchBar = ({ onSearch, filters, setFilters, preventClose, getYearText, getSemesterText }) => {
   const { year, semester, query, schoolId } = filters;
@@ -19,7 +20,7 @@ const SearchBar = ({ onSearch, filters, setFilters, preventClose, getYearText, g
 
     if (token) {
       try {
-        const response = await fetch('http://localhost:8080/schools/search?name=University of Central Florida', {
+        const response = await fetch(`${API_URL}/schools/search?name=University of Central Florida`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -57,7 +58,7 @@ const SearchBar = ({ onSearch, filters, setFilters, preventClose, getYearText, g
 
     if (token) {
       try {
-        const response = await fetch(`http://localhost:8080/courses/${courseId}/professors?year=${year}&semester=${semester}`, {
+        const response = await fetch(`${API_URL}/courses/${courseId}/professors?year=${year}&semester=${semester}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -84,7 +85,7 @@ const SearchBar = ({ onSearch, filters, setFilters, preventClose, getYearText, g
 
     if (token) {
       try {
-        const response = await fetch(`http://localhost:8080/courses/search?school_id=${schoolId}&year=${year}&semester=${semester}&query=${query}`, {
+        const response = await fetch(`${API_URL}/courses/search?school_id=${schoolId}&year=${year}&semester=${semester}&query=${query}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
