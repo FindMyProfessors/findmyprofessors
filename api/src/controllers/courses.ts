@@ -51,15 +51,10 @@ export class CoursesController extends Controller {
     let searchClause = getSearchQuery(school_id, query, semester, year);
 
     const result = await prisma.$transaction(async (prisma) => {
-      const courses = await prisma.professorCourse.findMany({
+      const courses = await prisma.course.findMany({
         where: searchClause,
-        include: {
-          course: true,
-        },
         orderBy: {
-          course: {
-            id: "asc",
-          },
+          id: "asc",
         },
         take: take,
         skip: skip,
@@ -67,8 +62,8 @@ export class CoursesController extends Controller {
       });
 
       const edges = courses.map((course) => ({
-        cursor: course.course.id.toString(),
-        node: course.course,
+        cursor: course.id.toString(),
+        node: course,
       }));
 
       const endCursor =
@@ -85,7 +80,7 @@ export class CoursesController extends Controller {
         }
       }
 
-      const total = await prisma.professorCourse.count({
+      const total = await prisma.course.count({
         where: searchClause,
       });
 
@@ -295,28 +290,25 @@ function getSearchQuery(
   query?: string,
   semester?: Semester,
   year?: number
-): Prisma.ProfessorCourseFindManyArgs["where"] {
-  let where: Prisma.ProfessorCourseFindManyArgs["where"] = {
-    course: {
-      school_id: school_id,
-    },
+): Prisma.CourseFindManyArgs["where"] {
+  let where: Prisma.CourseFindManyArgs["where"] = {
+    school_id: school_id,
   };
 
-  if (semester) {
-    where.semester = semester;
-  }
-
-  if (year) {
-    where.year = year;
+  if (semester || year) {
+    where.professors = {
+      some: {
+        semester: semester,
+        year: year,
+      },
+    };
   }
 
   if (query) {
-    where.AND = {
-      OR: [
-        { course: { name: { contains: query, mode: "insensitive" } } },
-        { course: { code: { contains: query, mode: "insensitive" } } },
-      ],
-    };
+    where.OR = [
+      { name: { contains: query, mode: "insensitive" } },
+      { code: { contains: query, mode: "insensitive" } },
+    ];
   }
 
   return where;
