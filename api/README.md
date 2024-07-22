@@ -1,3 +1,4 @@
+
 # API
 
 ## Setup
@@ -36,5 +37,3 @@ Make sure the database is running. See `../README.md` for instructions.
 npm run build # first time only
 npm run dev
 ```
-
-

@@ -1,3 +1,4 @@
+
 import express, {
   json,
   urlencoded,
@@ -144,3 +145,4 @@ app.use(function notFoundHandler(_req, res: ExResponse) {
 app.listen(config.PORT, () =>
   console.log(`App listening at http://localhost:${config.PORT}`)
 );
+
