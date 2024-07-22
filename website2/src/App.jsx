@@ -29,6 +29,7 @@ import Dashboard from './components/Dashboard';
 import Home from './components/Home';
 import Cart from './components/Cart';
 import VerifyEmail from './components/VerifyEmail';
+import ResetPassword from './components/ResetPassword';
 
 import logoBlack from './Logo-Black.JPG'; // Adjust path as necessary
 
@@ -48,6 +49,7 @@ function App() {
                     <Route path="/Login" element={<Login />} />
                     <Route path="/Cart" element={<Cart />} />
                     <Route path="/VerifyEmail" element={<VerifyEmail />} />
+                    <Route path="/ResetPassword" element={<ResetPassword />} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </Router>

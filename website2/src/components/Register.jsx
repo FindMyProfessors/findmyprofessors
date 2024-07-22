@@ -76,7 +76,7 @@ const Register = () => {
       });
 
       if (response.ok) {
-        setSuccess('Registration successful! Redirecting to login...');
+        setSuccess('Registration successful! Redirecting to email verification...');
         setError('');
         console.log('Registration successful'); // Debugging log
         setTimeout(() => {
