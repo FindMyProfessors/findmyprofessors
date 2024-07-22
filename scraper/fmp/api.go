@@ -4,7 +4,10 @@ import (
 	"context"
 	"fmt"
 	"strconv"
+	"sync"
 	"time"
+
+	"golang.org/x/sync/semaphore"
 
 	"github.com/FindMyProfessors/scraper/model"
 )
@@ -201,16 +204,39 @@ func (a *Api) InsertNewReviews(ctx context.Context, scrapedProfessor *model.Prof
 		return -1, err
 	}
 
+	var wg sync.WaitGroup
+	sem := semaphore.NewWeighted(10) // limit to 10 concurrent goroutines
+	errChan := make(chan error, indexUntil)
+
 	for i := 0; i < indexUntil; i++ {
 		review := scrapedProfessor.Reviews[i]
-		err := CreateReview(a.JwtToken, NewReview{
-			Quality:     review.Quality,
-			Difficulty:  review.Difficulty,
-			Time:        review.Date.Format(time.RFC3339),
-			Tags:        review.Tags,
-			Grade:       review.Grade,
-			ProfessorID: professorId,
-		})
+		wg.Add(1)
+		go func(review *model.Review) {
+			defer wg.Done()
+			if err := sem.Acquire(ctx, 1); err != nil {
+				errChan <- err
+				return
+			}
+			defer sem.Release(1)
+
+			err := CreateReview(a.JwtToken, NewReview{
+				Quality:     review.Quality,
+				Difficulty:  review.Difficulty,
+				Time:        review.Date.Format(time.RFC3339),
+				Tags:        review.Tags,
+				Grade:       review.Grade,
+				ProfessorID: professorId,
+			})
+			if err != nil {
+				errChan <- err
+			}
+		}(review)
+	}
+
+	wg.Wait()
+	close(errChan)
+
+	for err := range errChan {
 		if err != nil {
 			return -1, err
 		}
@@ -237,6 +263,7 @@ func (a *Api) GetAllProfessors(ctx context.Context, school *model.School, term T
 		}
 
 		for _, elem := range resp.Edges {
+			professorKey := elem.Node.FirstName + elem.Node.LastName
 			professor := model.Professor{
 				ID:        strconv.Itoa(elem.Node.ID),
 				FirstName: elem.Node.FirstName,
@@ -277,7 +304,7 @@ func (a *Api) GetAllProfessors(ctx context.Context, school *model.School, term T
 				}
 			}
 
-			professorMap[professor.FirstName+professor.LastName] = &professor
+			professorMap[professorKey] = &professor
 		}
 
 		after = resp.PageInfo.EndCursor

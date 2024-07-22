@@ -12,6 +12,7 @@ import (
 
 	"github.com/FindMyProfessors/scraper/fmp"
 	"github.com/FindMyProfessors/scraper/model"
+	"github.com/FindMyProfessors/scraper/rmp"
 	"github.com/FindMyProfessors/scraper/schools"
 	"github.com/FindMyProfessors/scraper/schools/ucf"
 	"golang.org/x/text/cases"
@@ -29,6 +30,62 @@ func main() {
 		school, err := GetSchoolFromFile()
 		if err != nil {
 			panic(err)
+		}
+
+		// ask if they want to link RMP
+		for {
+			fmt.Printf("Would you like to link RMP (y/n)? ")
+			var choice string
+			_, err := fmt.Scanf("%s", &choice)
+			if err != nil {
+				fmt.Printf("Unable to scan choice: %v\n", err)
+				continue
+			}
+			if strings.ToLower(choice) == "y" {
+				api := rmp.NewApi("dGVzdDp0ZXN0")
+				err = api.StartScrape(context.Background(), school, ucf.UCF_RMP_IDS...)
+				if err != nil {
+					panic(err)
+				}
+				// ask if they would like to save the file
+				fmt.Printf("Would you like to save the file (y/n)? ")
+				var saveChoice string
+				_, err := fmt.Scanf("%s", &saveChoice)
+				if err != nil {
+					fmt.Printf("Unable to scan choice: %v\n", err)
+					continue
+				}
+				if strings.ToLower(saveChoice) == "y" {
+					// save the file
+					// Ask for the name of the file
+					fmt.Printf("Enter the name of the file: ")
+					var fileName string
+					_, err := fmt.Scanf("%s", &fileName)
+					if err != nil {
+						fmt.Printf("Unable to scan choice: %v\n", err)
+						continue
+					}
+					fileName = strings.TrimSuffix(fileName, "\n")
+					fileName = strings.TrimSuffix(fileName, "\r")
+					fileName = strings.TrimSpace(fileName)
+					if !strings.HasSuffix(fileName, ".json") {
+						fileName = fmt.Sprintf("%s.json", fileName)
+					}
+					marshal, err := json.Marshal(*school)
+					if err != nil {
+						panic(err)
+					}
+
+					err = os.WriteFile(fileName, marshal, 0644)
+					if err != nil {
+						panic(err)
+					}
+					fmt.Printf("Wrote %s to %s\n", school.Name, fileName)
+				}
+				break
+			} else if strings.ToLower(choice) == "n" {
+				break
+			}
 		}
 
 		for _, scraper := range SchoolScraperMap {
@@ -60,6 +117,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	scraper.PrintStats()
 
 	if ShouldWriteToFile() {
 		fileName := fmt.Sprintf("%s-%d-%s.json", school.Name, term.Year, term.Semester)

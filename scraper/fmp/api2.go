@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/FindMyProfessors/scraper/model"
 )
@@ -174,37 +175,46 @@ func CreateSchool(jwtToken string, school NewSchool) (int, error) {
 	fmt.Printf("Created school with ID: %d\n", createdSchool.ID)
 	return createdSchool.ID, nil
 }
-
 func PostRequestWithResponse(jwtToken string, url string, payload interface{}, response interface{}) error {
-	jsonData, err := json.Marshal(payload)
-	if err != nil {
-		return fmt.Errorf("failed to marshal payload: %v", err)
+	const maxRetries = 3
+	var backoff = 5 * time.Second
+
+	for i := 0; i < maxRetries; i++ {
+		jsonData, err := json.Marshal(payload)
+		if err != nil {
+			return fmt.Errorf("failed to marshal payload: %v", err)
+		}
+
+		req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+		if err != nil {
+			return fmt.Errorf("failed to create request: %v", err)
+		}
+
+		req.Header.Set("Content-Type", "application/json")
+		req.Header.Set("Authorization", "Bearer "+jwtToken)
+
+		client := &http.Client{}
+		resp, err := client.Do(req)
+		if err != nil {
+			log.Printf("Request failed: %v. Retrying in %v...", err, backoff)
+			time.Sleep(backoff)
+			backoff *= 2
+			continue
+		}
+		defer resp.Body.Close()
+
+		if resp.StatusCode != http.StatusCreated {
+			return fmt.Errorf("unexpected status code: %d", resp.StatusCode)
+		}
+
+		if err := json.NewDecoder(resp.Body).Decode(response); err != nil {
+			return fmt.Errorf("failed to decode response: %v", err)
+		}
+
+		return nil
 	}
 
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
-	if err != nil {
-		return fmt.Errorf("failed to create request: %v", err)
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+jwtToken)
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		return fmt.Errorf("failed to execute request: %v", err)
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusCreated {
-		return fmt.Errorf("unexpected status code: %d", resp.StatusCode)
-	}
-
-	if err := json.NewDecoder(resp.Body).Decode(response); err != nil {
-		return fmt.Errorf("failed to decode response: %v", err)
-	}
-
-	return nil
+	return fmt.Errorf("failed to execute request after %d retries", maxRetries)
 }
 
 // Return professor id
@@ -224,33 +234,42 @@ func CreateReview(jwtToken string, review NewReview) error {
 }
 
 func PostRequest(jwtToken string, url string, payload interface{}) error {
-	jsonData, err := json.Marshal(payload)
-	if err != nil {
-		return fmt.Errorf("failed to marshal payload: %v", err)
+	const maxRetries = 3
+	var backoff = 5 * time.Second
+
+	for i := 0; i < maxRetries; i++ {
+		jsonData, err := json.Marshal(payload)
+		if err != nil {
+			return fmt.Errorf("failed to marshal payload: %v", err)
+		}
+
+		req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+		if err != nil {
+			return fmt.Errorf("failed to create request: %v", err)
+		}
+
+		req.Header.Set("Content-Type", "application/json")
+		req.Header.Set("Authorization", "Bearer "+jwtToken)
+
+		client := &http.Client{}
+		resp, err := client.Do(req)
+		if err != nil {
+			log.Printf("Request failed: %v. Retrying in %v...", err, backoff)
+			time.Sleep(backoff)
+			backoff *= 2
+			continue
+		}
+		defer resp.Body.Close()
+
+		if resp.StatusCode != http.StatusCreated {
+			return fmt.Errorf("unexpected status code: %d", resp.StatusCode)
+		}
+
+		return nil
 	}
 
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
-	if err != nil {
-		return fmt.Errorf("failed to create request: %v", err)
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+jwtToken)
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		return fmt.Errorf("failed to execute request: %v", err)
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusCreated {
-		return fmt.Errorf("unexpected status code: %d", resp.StatusCode)
-	}
-
-	return nil
+	return fmt.Errorf("failed to execute request after %d retries", maxRetries)
 }
-
 func Login(username, password string) (string, error) {
 	url := "http://localhost:8080/auth/login"
 	loginParams := LoginParams{

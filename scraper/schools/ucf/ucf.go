@@ -1,6 +1,7 @@
 package ucf
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -13,6 +14,7 @@ import (
 	"time"
 
 	"github.com/FindMyProfessors/scraper/model"
+	"github.com/FindMyProfessors/scraper/rmp"
 	"github.com/FindMyProfessors/scraper/util"
 )
 
@@ -92,6 +94,12 @@ func (u *Scraper) Scrape() (*model.School, error) {
 
 	log.Println("Scraping completed, starting RMP API scrape...")
 	// RMP API scrape code here...
+
+	api := rmp.NewApi("dGVzdDp0ZXN0")
+	err := api.StartScrape(context.Background(), school, UCF_RMP_IDS...)
+	if err != nil {
+		return nil, err
+	}
 
 	log.Println("Scrape process completed successfully.")
 	return school, nil
