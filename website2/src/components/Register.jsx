@@ -176,7 +176,7 @@ const Register = () => {
                   {success && <p style={{ color: 'green' }}>{success}</p>}
                   <MDBBtn type="submit" className="mb-4 px-5" size='lg' style={{ backgroundColor: '#0082ca', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)' }}>Register</MDBBtn>
                 </form>
-                <p className="mb-5 pb-lg-2" style={{ color: '#8b8b8b' }}>Already have an account? <Link to="/Login" style={{ color: '#0082ca' }}>Login</Link></p>
+                <p className="mb-5 pb-lg-2" style={{ color: 'primary' }}>Already have an account? <Link to="/Login" style={{ color: '#0082ca' }}>Login</Link></p>
                 <div className='d-flex flex-row justify-content-start'>
                   <a href="#!" className="small text-muted me-1">Terms of use.</a>
                   <a href="#!" className="small text-muted">Privacy policy</a>

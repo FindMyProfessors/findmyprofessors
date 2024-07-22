@@ -116,7 +116,7 @@ const Login = () => {
                   <MDBBtn type="submit" className="mb-4 px-5" size='lg' style={{ backgroundColor: '#0082ca', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)'}}>Login</MDBBtn>
                 </form>
                 <a className="small text-muted"><Link to="/ForgotPassword">Forgot Password?</Link></a>
-                <p className="mb-5 pb-lg-2" style={{ color: '#8b8b8b' }}>Don't have an account? <Link to="/Register">Register</Link></p>
+                <p className="mb-5 pb-lg-2" style={{ color: 'primary' }}>Don't have an account? <Link to="/Register">Register</Link></p>
                 <div className='d-flex flex-row justify-content-start'>
                   <a href="#!" className="small text-muted me-1">Terms of use.</a>
                   <a href="#!" className="small text-muted">Privacy policy</a>
