@@ -35,9 +35,6 @@ const DashboardHeader = ({ onSearch }) => {
     }));
   };
 
-  const dispatch = useDispatch();
-  const sidebarShow = useSelector((state) => state.sidebarShow);
-
   useEffect(() => {
     document.addEventListener('scroll', () => {
       headerRef.current &&
@@ -92,12 +89,9 @@ const DashboardHeader = ({ onSearch }) => {
   return (
     <MDBNavbar sticky="top" className="mb-4 p-0" ref={headerRef}>
       <MDBContainer className="border-bottom px-4" fluid>
-        <MDBNavbarToggler
-          onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}
-          style={{ marginInlineStart: '-14px' }}
-        >
+
           <MDBIcon icon="bars" size="lg" />
-        </MDBNavbarToggler>
+
         <MDBNavbarNav className="d-none d-md-flex">
           <MDBNavbarLink tag={NavLink} to="/dashboard">
             Dashboard
