@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  traefik:
+    image: traefik:v2.9
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.cloudflare.acme.dnschallenge=true"
+      - "--certificatesresolvers.cloudflare.acme.dnschallenge.provider=cloudflare"
+      - "--certificatesresolvers.cloudflare.acme.email=contact@warrensnipse.dev"
+      - "--certificatesresolvers.cloudflare.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    env_file: .cloudflare
+    restart: always
+
+  app:
+    build:
+      dockerfile: Dockerfile
+      context: ./app
+    restart: always
+    env_file:
+      - ./secrets/.env
+    volumes:
+      - "./secrets:/secrets"
+      - "./avatars:/var/www/html/avatars"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app.rule=Host(`findmyprofessors.warrensnipes.dev`)"
+      - "traefik.http.routers.app.entrypoints=websecure"
+      - "traefik.http.routers.app.tls.certresolver=cloudflare"
+
+volumes:
+  letsencrypt:
+
