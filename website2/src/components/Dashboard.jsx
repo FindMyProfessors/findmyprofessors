@@ -1,11 +1,36 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import Header from './Header';
+import DashboardHeader from './DashboardHeader';
+import ProfessorTable from './ProfessorTable';
 
 
 const Dashboard = () => {
   
-    <Header />
+    <DashboardHeader />
+
+    const professorsData = [
+        {
+          fullName: 'Arup Guha',
+          averageGrade: 'B+',
+          averageQuality: 3.72,
+          averageDifficulty: 3.81,
+          recentQualityAverage: 3.99,
+          recentDifficultyAverage: 3.58,
+          ratingsCount: 309,
+          course: 'UCF'
+        },
+        {
+          fullName: 'Matthew Gerber',
+          averageGrade: 'A',
+          averageQuality: 4.74,
+          averageDifficulty: 3.06,
+          recentQualityAverage: 4.58,
+          recentDifficultyAverage: 3.10,
+          ratingsCount: 140,
+          course: 'UCF'
+        },
+        // Add more professors as needed
+      ];
     
     const imageStyle = {marginTop: '-55px'};
     const captionStyle = {marginBottom: '140px'};
@@ -24,14 +49,17 @@ const Dashboard = () => {
 
     return (
         <>
-        <Header />
+        <DashboardHeader />
+        <div>
+            <ProfessorTable professors={professorsData} />
+        </div>
         <h1 style={headingStyle}>Dashboard</h1>
         <section className="pt-0 pb-5" style={sectionStyle}>
         <div className="center" style={centerStyle}>
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-10 mx-auto">
-                        <h2 style={headingStyle}>Some awesome stuff will be in here when we merge our branches :D</h2>
+                        <h2 style={headingStyle}>No classes have been added. Use the search bar to search for courses.</h2>
                     </div>
                 </div>
             </div>
