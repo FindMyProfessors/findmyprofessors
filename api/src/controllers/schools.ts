@@ -269,10 +269,20 @@ export class SchoolsController extends Controller {
 
     await getSchoolById(id);
 
+    await prisma.review.deleteMany({
+      where: { professor: { school_id: id } },
+    });
+
+    // delete professorCourses
+    await prisma.professorCourse.deleteMany({
+      where: { professor: { school_id: id } },
+    });
+
     // Delete all professors a part of this school
     await prisma.professor.deleteMany({
       where: { school_id: id },
     });
+
     // Delete all courses
     await prisma.course.deleteMany({
       where: { school_id: id },
