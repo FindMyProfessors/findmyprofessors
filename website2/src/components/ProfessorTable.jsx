@@ -10,13 +10,11 @@ import {
   MDBPagination,
   MDBPaginationItem,
   MDBPaginationLink,
-
   MDBBtn,
   MDBIcon
 } from 'mdb-react-ui-kit';
 import { Line, Radar } from 'react-chartjs-2';
 import 'chart.js/auto';
-
 
 const ProfessorTable = ({ professors }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -68,6 +66,7 @@ const ProfessorTable = ({ professors }) => {
             <th>Recent Quality Average</th>
             <th>Recent Difficulty Average</th>
             <th>Ratings Count</th>
+            <th>Add</th>
           </tr>
         </MDBTableHead>
         <MDBTableBody>
@@ -77,7 +76,6 @@ const ProfessorTable = ({ professors }) => {
                 <td>
                   <MDBIcon icon={isExpanded && selectedProfessor === professor ? 'angle-up' : 'angle-down'} />
                 </td>
-
                 <td>{professor.fullName}</td>
                 <td>{professor.averageGrade}</td>
                 <td>{professor.averageQuality}</td>
@@ -85,10 +83,13 @@ const ProfessorTable = ({ professors }) => {
                 <td>{professor.recentQualityAverage}</td>
                 <td>{professor.recentDifficultyAverage}</td>
                 <td>{professor.ratingsCount}</td>
+                <td>
+                  <MDBBtn style={{ backgroundColor: 'rgb(0, 102, 0)', color: 'white' }} size="sm">Add</MDBBtn>
+                </td>
               </tr>
               {selectedProfessor === professor && isExpanded && (
                 <tr>
-                  <td colSpan="8">
+                  <td colSpan="9">
                     <ProfessorDetails professor={professor} />
                   </td>
                 </tr>
@@ -148,7 +149,7 @@ const ProfessorDetails = ({ professor }) => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
       <div style={{ width: '45%', marginRight: '5%' }}>
         <Line data={lineData} />
       </div>
