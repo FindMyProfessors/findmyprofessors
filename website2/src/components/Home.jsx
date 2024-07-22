@@ -26,6 +26,32 @@ const containerStyle = {
 
 const Home = () => {
 
+  const sectionStyle = {
+    paddingTop: '35px',
+    paddingBottom: '0',
+    marginTop: '0px'
+};
+
+const sectionStyle2 = {
+    paddingTop: '0px',
+    paddingBottom: '0',
+    marginTop: '0px',
+    width: '100%',
+    height: '100%',
+    margin: '0 auto'
+};
+
+const textStyle ={
+    textAlign: 'center',
+    marginTop: '30px'
+}
+
+const containerStyle = {
+    maxWidth: '85%',
+    margin: '0 auto',
+    marginTop: '10px'
+}
+
     return (
     <>
         <Header />
@@ -104,6 +130,195 @@ const Home = () => {
               </MDBCol>
             </MDBRow>
           </MDBCard>
+
+          <MDBCol md='12'>
+
+              <MDBCardBody
+              className='d-flex flex-column'>
+
+                  <MDBRow
+                  className ="mb-0">
+
+                      <MDBCol
+                      md="2"
+                      style={sectionStyle}>
+
+                          <MDBCard
+                          className='h-100'
+                          style={{backgroundColor: '#3f3f3f', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)'}}>
+
+                              <MDBCardImage
+                              src='https://i.imgur.com/j4QoUgR.png'
+                              position='top'
+                              alt='...'
+                              />
+
+                              <MDBCardBody>
+
+                                  <MDBCardTitle
+                                  style={{ color: 'white' }}>
+                                      Overall Quality
+                                  </MDBCardTitle>
+
+                                  <MDBCardText
+                                  style={{ color: 'white' }}>
+                                      See the average rating students give to each professor
+                                  </MDBCardText>
+
+                              </MDBCardBody>
+
+                          </MDBCard>
+
+                      </MDBCol>
+
+                      <MDBCol
+                      md="2"
+                      style={sectionStyle}>
+
+                          <MDBCard className='h-100' style={{backgroundColor: '#3f3f3f', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)'  }}>
+
+                              <MDBCardImage
+                              src='https://i.imgur.com/YYboB11.png'
+                              position='top'
+                              alt='...'/>
+
+                              <MDBCardBody>
+
+                                  <MDBCardTitle
+                                  style={{ color: 'white' }}>
+                                      Average Grade
+                                  </MDBCardTitle>
+
+                                  <MDBCardText
+                                  style={{ color: 'white' }}>
+                                      See the average Grade students received by each professor
+                                  </MDBCardText>
+                              </MDBCardBody>
+                          </MDBCard>
+                      </MDBCol>
+
+                      <MDBCol
+                      md="2"
+                      style={sectionStyle}>
+
+                          <MDBCard
+                          className='h-100'
+                          style={{backgroundColor: '#3f3f3f', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)'}}>
+
+                              <MDBCardImage
+                              src='https://i.imgur.com/2sNQteW.png'
+                              position='top'
+                              alt='...'/>
+
+                              <MDBCardBody>
+
+                                      <MDBCardTitle
+                                      style={{ color: 'white' }}>
+                                          Difficulty
+                                      </MDBCardTitle>
+
+                                      <MDBCardText
+                                      style={{ color: 'white' }}>
+                                          See the average difficulty students rated each professor
+                                      </MDBCardText>
+
+                              </MDBCardBody>
+                          </MDBCard>
+                      </MDBCol>
+
+                      <MDBCol
+                      md="2"
+                      style={sectionStyle}>
+
+                          <MDBCard
+                          className='h-100'
+                          style={{backgroundColor: '#3f3f3f', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)'}}>
+
+                              <MDBCardImage
+                              src='https://i.imgur.com/TOYrhFO.png'
+                              position='top'
+                              alt='...' />
+
+                              <MDBCardBody>
+
+                                  <MDBCardTitle
+                                  style={{ color: 'white' }}>
+                                      Would take again
+                                  </MDBCardTitle>
+
+                                  <MDBCardText
+                                  style={{ color: 'white' }}>
+                                      See the percentage of students who would take each professor again
+                                  </MDBCardText>
+
+                              </MDBCardBody>
+                          </MDBCard>
+                      </MDBCol>
+
+                      <MDBCol
+                      md="2"
+                      style={sectionStyle}>
+
+                          <MDBCard
+                          className='h-100'
+                          style={{backgroundColor: '#3f3f3f', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)'}}>
+
+                              <MDBCardImage
+                              src='https://i.imgur.com/lMi72st.png'
+                              position='top'
+                              alt='...'/>
+
+                              <MDBCardBody>
+                                  <MDBCardTitle
+                                  style={{ color: 'white' }}>
+                                      Attendance
+                                  </MDBCardTitle>
+                                  <MDBCardText
+                                  style={{ color: 'white' }}>
+                                      See the percentage of students who reported attendance as mandatory for each professor
+                                  </MDBCardText>
+                              
+                              </MDBCardBody>
+                          </MDBCard>
+                      </MDBCol>
+
+                      <MDBCol
+                      md="2"
+                      style={sectionStyle}>
+
+                          <MDBCard
+                          className='h-100'
+                          style={{backgroundColor: '#3f3f3f', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)'}}>
+
+                              <MDBCardImage
+                              src='https://i.imgur.com/ju9c2zL.png'
+                              position='top'
+                              alt='...' />
+
+                                  <MDBCardBody>
+
+                                      <MDBCardTitle
+                                      style={{ color: 'white' }}>
+                                          Top tags
+                                      </MDBCardTitle>
+
+                                      <MDBCardText
+                                      style={{ color: 'white' }}>
+                                          See the most common tags given by students for each professor
+                                      </MDBCardText>
+
+                                  </MDBCardBody>
+                          </MDBCard>
+                      </MDBCol>
+                      </MDBRow>
+              </MDBCardBody>
+          </MDBCol>
+
+
+
+
+        
+
         </MDBContainer>
     </>
     );
