@@ -102,20 +102,28 @@ export class UsersController extends Controller {
 
   @Security("jwt")
   @Get("{id}/cart")
-  public async getUserCart(@Path() id: number): Promise<UserResponse> {
-    const user = await getUserById(id);
+  public async getUserCart(@Path() id: number): Promise<UserResponse | null> {
+    // Start transaction
+    await prisma.$transaction(async (tx) => {
+      const user = await tx.user.findUnique({ where: { id }, include: { Cart: true } });
+    
+      if (!user) {
+        throw new Error("User not found");
+      }
 
-    const userResponse: UserResponse = {
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      signup_time: user.signup_time,
-      last_login_time: user.last_login_time,
-      account_verified: user.account_verified,
-      role: user.role,
-    };
+      const cart = user.Cart;
+ 
+      if (!cart) {
+        throw new Error("User cart not found");
+      }
 
-    return userResponse;
+
+    });
+
+
+    return null;
+
+    //return userResponse;
   }
 }
 

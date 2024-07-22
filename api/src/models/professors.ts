@@ -1,4 +1,4 @@
-import { Course, Professor, ProfessorCourse } from "@prisma/client";
+import { Course, Grade, Professor, ProfessorCourse } from "@prisma/client";
 
 export type NewProfessor = Pick<
   Professor,
@@ -15,14 +15,13 @@ export type ProfessorSearchResult = {
   pageInfo: { hasNextPage: boolean; endCursor: string | null; total: number };
 };
 
-
 export type ProfessorCourses = {
-  courses: (Omit<ProfessorCourse, "professor_id" | "id" | "course_id"> & Course)[];
+  courses: (Omit<ProfessorCourse, "professor_id" | "id" | "course_id"> &
+    Course)[];
   total: number;
 };
 
 export type CourseEnrollment = Omit<ProfessorCourse, "professor_id" | "id">;
-
 
 export type CourseEnrollmentResult = ProfessorCourse;
 
@@ -63,4 +62,48 @@ export function isProfessorError(error: any): error is ProfessorError {
     typeof error.type === "string" &&
     Object.values(ProfessorErrorType).includes(error.type as ProfessorErrorType)
   );
+}
+
+export function getGradeIndex(grade: Grade): number {
+  const gradeMap: { [key in Grade]: number } = {
+    A_PLUS: 12,
+    A: 11,
+    A_MINUS: 10,
+    B_PLUS: 9,
+    B: 8,
+    B_MINUS: 7,
+    C_PLUS: 6,
+    C: 5,
+    C_MINUS: 4,
+    D_PLUS: 3,
+    D: 2,
+    D_MINUS: 1,
+    F_PLUS: 0,
+    F: 0,
+    F_MINUS: 0,
+    INCOMPLETE: -1,
+    WITHDRAWN: -1,
+    NOT_SURE: -1,
+    OTHER: -1,
+  };
+  return gradeMap[grade] || -1;
+}
+
+export function getGradeFromIndex(index: number): Grade {
+  const grades = [
+    "F",
+    "D_MINUS",
+    "D",
+    "D_PLUS",
+    "C_MINUS",
+    "C",
+    "C_PLUS",
+    "B_MINUS",
+    "B",
+    "B_PLUS",
+    "A_MINUS",
+    "A",
+    "A_PLUS",
+  ];
+  return (grades[index] || "OTHER") as Grade;
 }
