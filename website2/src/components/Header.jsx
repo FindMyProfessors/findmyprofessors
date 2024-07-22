@@ -79,6 +79,45 @@ function Header()
                             </MDBNavbarItem>
                         </MDBNavbarNav>
                     </MDBCollapse>
+
+                    {/* Right Side */}
+                    <div
+                    className="d-flex justify-content-end"
+                    style={{ marginRight: '225px' }}>
+                        <MDBCollapse
+                        navbar>
+                            <MDBNavbarNav>
+
+                                <MDBNavbarItem>
+                                    <MDBNavbarLink
+                                    href='./Cart'>
+                                        Cart
+                                    </MDBNavbarLink>
+                                </MDBNavbarItem>
+
+                                <MDBDropdown>
+                                    <MDBDropdownToggle
+                                    style={{ backgroundColor: '#3f3f3f', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0)'}}>
+
+                                        <MDBIcon
+                                        className=''
+                                        fas
+                                        icon="user"
+                                        size="2x"
+                                        style={{ color: '#FFFFFF' }}/>
+                                        
+                                    </MDBDropdownToggle>
+                                    <MDBDropdownMenu>
+                                        <MDBDropdownItem link>Profile</MDBDropdownItem>
+                                        <MDBDropdownItem link>Settings</MDBDropdownItem>
+                                        <MDBDropdownItem link>Logout</MDBDropdownItem>
+                                    </MDBDropdownMenu>
+                                </MDBDropdown>
+
+                            </MDBNavbarNav>
+                        </MDBCollapse>
+                    </div>
+
                 </MDBContainer>
             </MDBNavbar>
         </>
