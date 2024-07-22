@@ -3,6 +3,27 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flip_card/flip_card.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+
+class RatingData {
+  RatingData(this.rating, this.percentage);
+
+  final String rating;
+  final double percentage;
+
+}
+
+List<RatingData> getRatingData() {
+    return [
+      RatingData('1 ★', 10),
+      RatingData('2 ★', 20),
+      RatingData('3 ★', 60),
+      RatingData('4 ★', 25),
+      RatingData('5 ★', 15),
+    ];
+  }
 
 class Professor extends StatelessWidget {
   final String name;
@@ -18,7 +39,7 @@ class Professor extends StatelessWidget {
     print('professor name: $name rating: $rating id: $id'); 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Professor "+name),
+        //title: Text(name),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -26,44 +47,22 @@ class Professor extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
                 
-            Text(
-              'Details for professor $name',
-              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-            ),
-
-            SizedBox(height: 20.0),
-
             Row(
               children: [
-                // Text(
-                //    "Rating: ",
-                //    style: TextStyle(
-                //      fontSize: 20.0,
-                //      fontWeight: FontWeight.bold,
-                //      color: Colors.black
-                //     )
-                // ),
-                //SizedBox(width: 10.0),
-
-                RatingBar.builder(
-                  ignoreGestures: true,
-                  itemSize: 30.0,
-                  initialRating: rating.toDouble(),
-                  minRating: 1,
-                  direction: Axis.horizontal,
-                  allowHalfRating: true,
-                  itemCount: 5,
-                  itemPadding: EdgeInsets.symmetric(horizontal: 0.0),
-                  itemBuilder: (context, _) => Icon(
-                    Icons.star,
-                    color: Colors.amber,
+                Icon(Icons.school, color: Colors.black, size: 50),
+                SizedBox(width: 10),
+                Text(
+                  '$name',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
-                  onRatingUpdate: (rating) {
-                    print(rating);
-                  },
                 ),
               ],
             ),
+
+            SizedBox(height: 20.0),
             
             Expanded(
               child: ListView.builder(
@@ -73,77 +72,298 @@ class Professor extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 20.0),
-                      Text(
-                        'Parameters: ',
-                        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 20.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            alignment: Alignment.center,
-                            height: 250,
-                            width: 250,
-                            child: RadarChart(
-                              RadarChartData(
-                                titlePositionPercentageOffset: 0.2,
-                                radarBackgroundColor: Colors.transparent,
-                                radarShape: RadarShape.polygon,
-                                radarBorderData: BorderSide(
-                                  color: Colors.grey,
-                                  width: 0.5,
-                                ),
-                                tickCount: 5,
-                                tickBorderData: BorderSide(
-                                  color: Colors.grey,
-                                  width: 0.5,
-                                ),
-                                ticksTextStyle: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 9,
-                                ),
-                                gridBorderData: BorderSide(
-                                  color: Colors.grey,
-                                  width: 1,
-                                ),
-                                titleTextStyle: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 11,
-                                ),
-                                getTitle: (index, angle) {
-                                  final usedAngle = angle;
-                                  return RadarChartTitle(
-                                    text: 'Parameter ' + index.toString(),
-                                    angle: usedAngle,
-                                    positionPercentageOffset: .05,
-                                  );
-                                },
-                                dataSets: [
-                                  RadarDataSet(
-                                    fillColor: Colors.black.withOpacity(0.3),
-                                    borderColor: Colors.black,
-                                    borderWidth: 2,
-                                    entryRadius: 5,
-                                    dataEntries: [
-                                      RadarEntry(value: random.nextDouble() * 5),
-                                      RadarEntry(value: random.nextDouble() * 5),
-                                      RadarEntry(value: random.nextDouble() * 5),
-                                      RadarEntry(value: random.nextDouble() * 5),
-                                      RadarEntry(value: random.nextDouble() * 5),
-                                      RadarEntry(value: random.nextDouble() * 5),
-                                      RadarEntry(value: random.nextDouble() * 5),
-                                      RadarEntry(value: random.nextDouble() * 5),
-                                    ],
+                          FlipCard(
+                            direction: FlipDirection.HORIZONTAL,
+                            side: CardSide.FRONT,
+                            speed: 600,
+                            onFlipDone: (status) {
+                              print(status);
+                            },
+
+                            back: Container(
+                              //shadowColor: Colors.black,
+                              alignment: Alignment.center,
+                              height: 350,
+                              width: 350,
+                              decoration: BoxDecoration(
+                                boxShadow:  [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: Offset(0, 3), // changes position of shadow
                                   ),
                                 ],
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                              ),
+
+
+                              child: Container(
+                                
+                                alignment: Alignment.center,
+                                height: 300,
+                                width: 300,
+
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                    'Parameters: ',
+                                    style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                                    ),
+
+                                    SizedBox(height: 20.0),
+
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        
+                                        Container(
+                                          alignment: Alignment.center,
+                                          height: 230,
+                                          width: 250,
+                                          child: RadarChart(
+                                            RadarChartData(
+                                              titlePositionPercentageOffset: 0.2,
+                                              radarBackgroundColor: Colors.transparent,
+                                              radarShape: RadarShape.polygon,
+                                              radarBorderData: BorderSide(
+                                                color: Colors.grey,
+                                                width: 0.5,
+                                              ),
+                                              tickCount: 5,
+                                              tickBorderData: BorderSide(
+                                                color: Colors.grey,
+                                                width: 0.5,
+                                              ),
+                                              ticksTextStyle: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 9,
+                                              ),
+                                              gridBorderData: BorderSide(
+                                                color: Colors.grey,
+                                                width: 1,
+                                              ),
+                                              titleTextStyle: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 11,
+                                              ),
+                                              getTitle: (index, angle) {
+                                                final usedAngle = angle;
+                                                return RadarChartTitle(
+                                                  text: 'Parameter ' + index.toString(),
+                                                  angle: usedAngle,
+                                                  positionPercentageOffset: .05,
+                                                );
+                                              },
+                                              dataSets: [
+                                                RadarDataSet(
+                                                  fillColor: Colors.black.withOpacity(0.3),
+                                                  borderColor: Colors.black,
+                                                  borderWidth: 2,
+                                                  entryRadius: 5,
+                                                  dataEntries: [
+                                                    RadarEntry(value: random.nextDouble() * 5),
+                                                    RadarEntry(value: random.nextDouble() * 5),
+                                                    RadarEntry(value: random.nextDouble() * 5),
+                                                    RadarEntry(value: random.nextDouble() * 5),
+                                                    RadarEntry(value: random.nextDouble() * 5),
+                                                    RadarEntry(value: random.nextDouble() * 5),
+                                                    RadarEntry(value: random.nextDouble() * 5),
+                                                    RadarEntry(value: random.nextDouble() * 5),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+
+                                    Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      
+                                        Icon(
+                                          size: 20.0,
+                                          Icons.touch_app_outlined, 
+                                          color: Colors.black,
+                                        ),
+                                    ],
+                                    )
+                                     
+                                  ],
+                                ),
+                              ),
+                            ),
+
+
+                            front: Container(
+                              alignment: Alignment.center,
+                              height: 350,
+                              width: 350,
+                              decoration: BoxDecoration(
+                                boxShadow:  [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: Offset(0, 3), // changes position of shadow
+                                  ),
+                                ],
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                              ),
+
+                              child: Container(
+                                
+                                alignment: Alignment.center,
+                                height: 300,
+                                width: 300,
+
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Rating: ",
+                                          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                                        ),
+                                        RatingBar.builder(
+                                          ignoreGestures: true,
+                                          itemSize: 25.0,
+                                          initialRating: rating.toDouble(),
+                                          minRating: 1,
+                                          direction: Axis.horizontal,
+                                          allowHalfRating: true,
+                                          itemCount: 5,
+                                          itemPadding: EdgeInsets.symmetric(horizontal: 0.0),
+                                          itemBuilder: (context, _) => Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          onRatingUpdate: (rating) {
+                                            print(rating);
+                                          },
+                                        ),
+
+                                        // SizedBox(width: 95.0),
+                                        //   Icon(
+                                        //     size: 20.0,
+                                        //     Icons.menu, 
+                                        //     color: Colors.black,
+                                        //   ),
+                                      ],
+                                    ),
+
+                                    SizedBox(height: 20.0),
+                                    
+                                     Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        
+                                        Container(
+                                          alignment: Alignment.center,
+                                          height: 231,
+                                          width: 250,
+                                          child: 
+                                          SfCartesianChart(
+                                            //enableSideBySideSeriesPlacement: false,
+                                            //plotAreaBorderWidth: 0,
+                                            plotAreaBorderWidth: 0,
+                                            margin: EdgeInsets.all(0.0),
+                                            
+                                            primaryXAxis: CategoryAxis(
+                                              majorGridLines: MajorGridLines(width: 0),
+                                              majorTickLines: MajorTickLines(width: 0),
+                                              axisLine: AxisLine(width: 0),
+                                              labelStyle: TextStyle(
+                                                fontSize: 18,  
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black
+                                              ),
+                                              
+                                            ),
+                                            primaryYAxis: NumericAxis(
+                                              isVisible: false,
+                                              minimum: 0,
+                                              maximum: 100,
+                                              interval: 20,
+                                              majorGridLines: MajorGridLines(width: 0),
+                                              minorGridLines: MinorGridLines(width: 0),
+                                            ),
+
+                                            series: <CartesianSeries>[
+                                              BarSeries<RatingData, String>(
+                                                dataSource: getRatingData(),
+                                                xValueMapper: (RatingData data, _) => data.rating,
+                                                yValueMapper: (RatingData data, _) => data.percentage,
+                                                //dataLabelSettings: DataLabelSettings(isVisible: true),
+                                                dataLabelSettings: DataLabelSettings(
+                                                  isVisible: true,
+                                                  textStyle: TextStyle(
+                                                    fontSize: 14,  // Set the font size for the data labels
+                                                    fontWeight: FontWeight.w900,  // Set the font weight for the data labels
+                                                    color: Colors.amber,  // Set the color for the data labels
+                                                  ),
+                                                ),
+
+                                                borderRadius: BorderRadius.all(Radius.circular(15)),
+                                                color: Colors.amber, // Set the bar color to gold
+                                                width: 0.6, // Set the bar width
+                                                spacing: 0.3, // Set the spacing between bars
+                                                //orientation: BarOrientation.horizontal,
+                                              )
+                                            ],
+                                            
+                                            // primaryXAxis: CategoryAxis(),
+                                            // primaryYAxis: NumericAxis(
+                                            //   minimum: 0,
+                                            //   maximum: 100,
+                                            //   interval: 20,
+                                            // ),
+                                            // series: <CartesianSeries>[
+                                            //   BarSeries<RatingData, String>(
+                                            //     dataSource: getRatingData(),
+                                            //     xValueMapper: (RatingData data, _) => data.rating,
+                                            //     yValueMapper: (RatingData data, _) => data.percentage,
+                                            //     dataLabelSettings: DataLabelSettings(isVisible: true),
+                                            //   )
+                                            // ],
+                                          ),
+                                        ),
+                                      ],
+                                     ),
+
+                                     Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                       
+                                          Icon(
+                                            size: 20.0,
+                                            Icons.touch_app_outlined, 
+                                            color: Colors.black,
+                                          ),
+                                      ],
+                                     )
+                                     
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ],
+                        ]
                       ),
+
                       SizedBox(height: 20.0),
 
                       Text(

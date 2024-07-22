@@ -60,6 +60,7 @@ class _SignInScreenState extends State<ForgotPasswordScreen> {
                     const Text(
                       'Forgot Password?',
                       style: TextStyle(
+                        color:  Color.fromARGB(255, 65, 68, 232),
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
@@ -115,7 +116,7 @@ class _SignInScreenState extends State<ForgotPasswordScreen> {
                           )
                         ),
 
-                        SizedBox(height: 20),
+                        SizedBox(height: 30),
 
                         SizedBox(
                           width: double.infinity,
