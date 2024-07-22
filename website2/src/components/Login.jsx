@@ -167,9 +167,9 @@ const Login = () => {
                 <p
                 className="mb-5 pb-lg-2"
                 style={{ color: 'primary' }}>
-                  Don't have an account?
+                  Don't have an account? 
                     <Link to="/Register">
-                    Register
+                     Register
                     </Link>
                 </p>
 
