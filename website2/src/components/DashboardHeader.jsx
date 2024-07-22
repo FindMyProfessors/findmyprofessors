@@ -87,6 +87,9 @@ const DashboardHeader = ({ onSearch }) => {
   };
 
   return (
+
+
+    
     <MDBNavbar sticky="top" className="mb-4 p-0" ref={headerRef}>
       <MDBContainer className="border-bottom px-4" fluid>
 
@@ -100,6 +103,7 @@ const DashboardHeader = ({ onSearch }) => {
 
         <div className="flex-grow-1 d-flex justify-content-center">
           <MDBInputGroup className="w-auto">
+
             <MDBDropdown onClick={preventClose}>
               <MDBDropdownToggle color="primary">{getSchoolText()}</MDBDropdownToggle>
               <MDBDropdownMenu>
@@ -114,6 +118,7 @@ const DashboardHeader = ({ onSearch }) => {
                 </MDBDropdownItem>
               </MDBDropdownMenu>
             </MDBDropdown>
+
             <MDBDropdown onClick={preventClose}>
               <MDBDropdownToggle color="primary">{getYearText()}</MDBDropdownToggle>
               <MDBDropdownMenu>
@@ -128,6 +133,7 @@ const DashboardHeader = ({ onSearch }) => {
                 </MDBDropdownItem>
               </MDBDropdownMenu>
             </MDBDropdown>
+
             <MDBDropdown onClick={preventClose}>
               <MDBDropdownToggle color="primary">{getSemesterText()}</MDBDropdownToggle>
               <MDBDropdownMenu>
@@ -142,6 +148,7 @@ const DashboardHeader = ({ onSearch }) => {
                 </MDBDropdownItem>
               </MDBDropdownMenu>
             </MDBDropdown>
+
             <form className="d-flex input-group w-auto">
               <input
                 className="form-control"
@@ -162,6 +169,7 @@ const DashboardHeader = ({ onSearch }) => {
             <MDBIcon icon="shopping-cart" size="lg" />
           </MDBNavbarLink>
         </MDBNavbarNav>
+        
       </MDBContainer>
     </MDBNavbar>
   );

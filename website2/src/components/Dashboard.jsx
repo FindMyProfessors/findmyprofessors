@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import DashboardHeader from './DashboardHeader';
+import HeaderDashboard from './HeaderDashboard';
 import ProfessorTable from './ProfessorTable';
 
 
 const Dashboard = () => {
   
-    <DashboardHeader />
+    <HeaderDashboard />
 
     const professorsData = [
         {
@@ -49,7 +49,7 @@ const Dashboard = () => {
 
     return (
         <>
-        <DashboardHeader />
+        <HeaderDashboard />
         <div>
             <ProfessorTable professors={professorsData} />
         </div>
