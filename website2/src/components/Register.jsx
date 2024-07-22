@@ -80,7 +80,7 @@ const Register = () => {
         setError('');
         console.log('Registration successful'); // Debugging log
         setTimeout(() => {
-          navigate('/Login'); // Redirect to login page after successful registration
+          navigate('/VerifyEmail'); // Redirect to login page after successful registration
         }, 2000); // Wait for 2 seconds before redirecting
       } else {
         const errorMessage = await response.text();
