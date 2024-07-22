@@ -148,7 +148,7 @@ const Dashboard = () => {
           } else {
             console.error('No courses found');
           }
-          setSearchResults(data.edges.map(edge => edge.node));
+          setSearchResults(data.edges.slice(0, 5).map(edge => edge.node)); // Only show top 5 results
         } else {
           console.error('Failed to fetch courses data:', response.statusText);
         }
@@ -221,16 +221,13 @@ const Dashboard = () => {
                 <MDBDropdown onClick={preventClose}>
                   <MDBDropdownToggle color="primary">{getYearText()}</MDBDropdownToggle>
                   <MDBDropdownMenu>
-                    <MDBDropdownItem link onClick={() => handleDropdownClick('year', 2023)}>
-                      2023 {year === 2023 && <MDBIcon icon="check" />}
-                    </MDBDropdownItem>
                     <MDBDropdownItem link onClick={() => handleDropdownClick('year', 2024)}>
                       2024 {year === 2024 && <MDBIcon icon="check" />}
                     </MDBDropdownItem>
                     <MDBDropdownItem link onClick={() => handleDropdownClick('year', 2025)}>
                       2025 {year === 2025 && <MDBIcon icon="check" />}
                     </MDBDropdownItem>
-                  </MDBDropdownMenu>
+                    </MDBDropdownMenu>
                 </MDBDropdown>
 
                 <MDBDropdown onClick={preventClose}>
@@ -239,23 +236,20 @@ const Dashboard = () => {
                     <MDBDropdownItem link onClick={() => handleDropdownClick('semester', 'FALL')}>
                       Fall {semester === 'FALL' && <MDBIcon icon="check" />}
                     </MDBDropdownItem>
-                    <MDBDropdownItem link onClick={() => handleDropdownClick('semester', 'Spring')}>
-                      Spring {semester === 'Spring' && <MDBIcon icon="check" />}
+                    <MDBDropdownItem link onClick={() => handleDropdownClick('semester', 'SPRING')}>
+                      Spring {semester === 'SPRING' && <MDBIcon icon="check" />}
                     </MDBDropdownItem>
-                    <MDBDropdownItem link onClick={() => handleDropdownClick('semester', 'Summer')}>
-                      Summer {semester === 'Summer' && <MDBIcon icon="check" />}
-                    </MDBDropdownItem>
-                  </MDBDropdownMenu>
+                    </MDBDropdownMenu>
                 </MDBDropdown>
 
                 <MDBInput
-  labelClass="text-black"
-  style={{ backgroundColor: '#FFFFFF', color: 'black', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)' }}
-  contrast
-  label="Search Courses"
-  value={query}
-  onChange={(e) => setFilters({ ...filters, query: e.target.value })}
-/>
+                  labelClass="text-black"
+                  style={{ backgroundColor: '#FFFFFF', color: 'black', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)' }}
+                  contrast
+                  label="Search Courses"
+                  value={query}
+                  onChange={(e) => setFilters({ ...filters, query: e.target.value })}
+                />
                 <MDBBtn color="primary" onClick={handleSearchClick}>
                   <MDBIcon icon="search" />
                 </MDBBtn>
@@ -263,7 +257,7 @@ const Dashboard = () => {
 
               {searchResults.length > 0 && (
                 <div className="dropdown-menu show w-100 position-absolute">
-                  {searchResults.map(course => (
+                  {searchResults.slice(0, 5).map(course => (
                     <div key={course.id} className="dropdown-item">
                       {course.code}
                     </div>
