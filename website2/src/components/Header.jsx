@@ -43,7 +43,7 @@ function Header()
                         <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
 
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='/' style={{ color: '#BBBBBB' }}>Home</MDBNavbarLink>
+                                <MDBNavbarLink href='./Home' style={{ color: '#BBBBBB' }}>Home</MDBNavbarLink>
                             </MDBNavbarItem>
 
                             <MDBNavbarItem>
