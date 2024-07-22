@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 import {
   MDBBtn,
@@ -23,10 +24,27 @@ import {
   MDBDropdownMenu,
   MDBDropdownToggle,
   MDBDropdownItem,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter,
 } from 'mdb-react-ui-kit';
 
 function Header() 
 {
+
+    const [staticModal, setStaticModal] = useState(false);
+    const toggleOpen = () => setStaticModal(!staticModal);
+
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        toggleOpen();
+        navigate('/Login');
+    };
 
     return(
         <>
@@ -110,10 +128,46 @@ function Header()
                                     <MDBDropdownMenu>
                                         <MDBDropdownItem link>Profile</MDBDropdownItem>
                                         <MDBDropdownItem link>Settings</MDBDropdownItem>
-                                        <MDBDropdownItem link>Logout</MDBDropdownItem>
+
+                                        <MDBDropdownItem
+                                        link
+                                        onClick={toggleOpen}>
+                                            Logout
+                                        </MDBDropdownItem>
                                     </MDBDropdownMenu>
                                 </MDBDropdown>
 
+                                <MDBModal staticBackdrop tabIndex='-1' open={staticModal} onClose={() => setStaticModal(false)}>
+                                    <MDBModalDialog >
+                                        <MDBModalContent style={{ backgroundColor: '#3f3f3f', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0)'}}>
+                                            
+                                            <MDBModalHeader >
+                                                <MDBModalTitle style={{ color: '#FFFFFF' }}>Are you sure you want to logout?</MDBModalTitle>
+                                                <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
+                                            </MDBModalHeader>
+
+                                            <MDBModalFooter style={{margin: '0 auto'}}>
+                                                <MDBBtn
+                                                size="lg"
+                                                className="me-5"
+                                                color='secondary'
+                                                onClick={toggleOpen}>
+                                                    Close
+                                                </MDBBtn>
+
+                                                <MDBBtn
+                                                size="lg"
+                                                className="me-5"
+                                                color='danger'
+                                                onClick={handleLogout}>
+                                                    Logout
+                                                </MDBBtn>
+
+                                            </MDBModalFooter>
+
+                                        </MDBModalContent>
+                                    </MDBModalDialog>
+                                </MDBModal>
                             </MDBNavbarNav>
                         </MDBCollapse>
                     </div>

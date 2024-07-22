@@ -76,11 +76,11 @@ const Register = () => {
       });
 
       if (response.ok) {
-        setSuccess('Registration successful! Redirecting to login...');
+        setSuccess('Registration successful! Redirecting to email verification...');
         setError('');
         console.log('Registration successful'); // Debugging log
         setTimeout(() => {
-          navigate('/Login'); // Redirect to login page after successful registration
+          navigate('/VerifyEmail'); // Redirect to login page after successful registration
         }, 2000); // Wait for 2 seconds before redirecting
       } else {
         const errorMessage = await response.text();
@@ -203,11 +203,7 @@ const Register = () => {
                 <p
                   className="mb-5 pb-lg-2"
                   style={{ color: 'primary' }}>
-                    Already have an account?
-                    <Link to="/Login"
-                    style={{ color: '#0082ca' }}>
-                      Login
-                    </Link>
+                    Already have an account? <Link to="/Login" style={{ color: '#0082ca' }}>Login</Link>
                 </p>
 
                 <div className='d-flex flex-row justify-content-start'>

@@ -71,8 +71,7 @@ const PasswordReset = () => {
                   <h5
                   className="fw-normal my-4 pb-3"
                   style={{letterSpacing: '1px', color: 'white'}}>
-                    If you entered a valid email address, a recovery code will be sent to you.
-                    <Link to="/Login">Login</Link>
+                    If you entered a valid email address, a recovery link will be sent to you. <Link to="/Login">Login</Link>
                   </h5>
 
                   <div className='d-flex flex-row justify-content-start'>
