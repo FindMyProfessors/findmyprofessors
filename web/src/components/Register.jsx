@@ -66,7 +66,6 @@ const Register = () => {
     const { email, username, password } = formData;
 
     try {
-      console.log('Sending request with data:', { email, username, password }); // Debugging log
       const response = await fetch('http://localhost:8080/auth/register', {
         method: 'POST',
         headers: {
@@ -76,20 +75,29 @@ const Register = () => {
       });
 
       if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('token', data.token);
         setSuccess('Registration successful! Redirecting to email verification...');
         setError('');
-        console.log('Registration successful'); // Debugging log
+
+        // Send email confirmation
+        await fetch(`http://localhost:8080/users/${data.user.id}/send-email-confirmation`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data.token}`
+          }
+        });
+
         setTimeout(() => {
-          navigate('/VerifyEmail'); // Redirect to login page after successful registration
+          navigate('/VerifyEmail'); // Redirect to email verification page
         }, 2000); // Wait for 2 seconds before redirecting
       } else {
         const errorMessage = await response.text();
         setError(errorMessage);
-        console.log('Registration failed:', errorMessage); // Debugging log
       }
     } catch (error) {
       setError('An error occurred');
-      console.log('An error occurred:', error); // Debugging log
     }
   }
 
@@ -98,8 +106,6 @@ const Register = () => {
     margin: '0 auto',
     marginTop: '125px'
   }
-
-  
 
   return (
     <>
