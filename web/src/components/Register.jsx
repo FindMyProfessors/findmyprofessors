@@ -12,6 +12,8 @@ import {
   MDBInput,
 } from 'mdb-react-ui-kit';
 
+import { API_URL } from '../constants';
+
 const Register = () => {
   const [formData, setFormData] = useState({
     username: '',
@@ -66,7 +68,7 @@ const Register = () => {
     const { email, username, password } = formData;
 
     try {
-      const response = await fetch('http://localhost:8080/auth/register', {
+      const response = await fetch(`${API_URL}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -81,7 +83,7 @@ const Register = () => {
         setError('');
 
         // Send email confirmation
-        await fetch(`http://localhost:8080/users/${data.user.id}/send-email-confirmation`, {
+        await fetch(`${API_URL}/users/${data.user.id}/send-email-confirmation`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -5,6 +5,8 @@ import debounce from 'lodash.debounce';
 import { Line, Radar } from 'react-chartjs-2';
 import 'chart.js/auto';
 
+import { API_URL } from '../constants';
+
 const Dashboard = () => {
   const [filters, setFilters] = useState({
     year: null,
@@ -60,7 +62,7 @@ const Dashboard = () => {
 
     if (token) {
       try {
-        const response = await fetch('http://localhost:8080/schools/search?name=University of Central Florida', {
+        const response = await fetch(`${API_URL}/schools/search?name=University of Central Florida`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -98,7 +100,7 @@ const Dashboard = () => {
 
     if (token) {
       try {
-        const response = await fetch(`http://localhost:8080/courses/${courseId}/professors?year=${year}&semester=${semester}`, {
+        const response = await fetch(`${API_URL}/courses/${courseId}/professors?year=${year}&semester=${semester}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -130,7 +132,7 @@ const Dashboard = () => {
 
     if (token) {
       try {
-        const response = await fetch(`http://localhost:8080/courses/search?school_id=${schoolId}&year=${year}&semester=${semester}&query=${query}`, {
+        const response = await fetch(`${API_URL}/courses/search?school_id=${schoolId}&year=${year}&semester=${semester}&query=${query}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'

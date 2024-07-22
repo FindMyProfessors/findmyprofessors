@@ -25,6 +25,8 @@ const containerStyle = {
     marginTop: '100px'
 }
 
+import { API_URL } from '../constants';
+
 const ResetPassword = () => {
 
     const [formData, setFormData] = useState({
@@ -68,7 +70,7 @@ const ResetPassword = () => {
     
         try {
           console.log('Sending request with data:', { password }); // Debugging log
-          const response = await fetch('http://localhost:8080/auth/resetPassword', {
+          const response = await fetch(`${API_URL}/auth/resetPassword`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
