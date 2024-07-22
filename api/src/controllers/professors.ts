@@ -209,7 +209,7 @@ export class ProfessorsController extends Controller {
   @Get("{id}/rating")
   public async getProfessorRating(
     @Path() id: number,
-    @Query() topKPercentage?: number
+    @Query() topKPercentage: number = 25
   ): Promise<Rating | null> {
     const professor = await prisma.professor.findUnique({ where: { id } });
     if (!professor) {
@@ -239,9 +239,12 @@ export class ProfessorsController extends Controller {
       return null;
     }
 
-    if (topKPercentage && (topKPercentage <= 0 || topKPercentage > 1)) {
-      throw new Error("topKPercentage must be in (0, 1]");
+    if (topKPercentage && (topKPercentage < 1 || topKPercentage > 100)) {
+      throw new Error("topKPercentage must be in [1, 100]");
     }
+
+    // conver to decimal
+    topKPercentage = topKPercentage / 100;
 
     const topKTotal = topKPercentage
       ? Math.floor(total * (1 - topKPercentage))

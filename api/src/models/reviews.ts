@@ -125,7 +125,19 @@ export type ChartValue = {
   year: number;
 };
 
+export type ReviewsByQuality = {
+  /**
+   * @isInt
+   */
+  quality: number;
+    /**
+   * @isInt
+   */
+  amount: number;
+};
+
 export type ProfessorAnalysis = {
   tagAmount: TagAmount[];
   averageRatingValues: ChartValue[];
+  numberOfReviewsByQuality: ReviewsByQuality[];
 };
