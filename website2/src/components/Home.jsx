@@ -33,7 +33,7 @@ const Home = () => {
         <style>{'body { background-color: #121212; }'}</style>
 
         <MDBContainer style={containerStyle}>
-          <MDBCard style={{ maxWidth: '1400px', margin: '0 auto', backgroundColor: '#282828', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)' }}>
+          <MDBCard style={{ maxWidth: '1800px', margin: '0 auto', backgroundColor: '#282828', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)' }}>
             <MDBRow className='g-0'>
               <MDBCol md='0' style={{ backgroundColor: 'black' }}></MDBCol>
               <MDBCol md='12'>
