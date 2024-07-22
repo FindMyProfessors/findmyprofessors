@@ -33,7 +33,7 @@ function Header()
             {/* Header/Navbar */}
             <MDBNavbar expand='lg' dark style={{ backgroundColor: '#3f3f3f' }}>
                 <MDBContainer fluid>
-                    <MDBNavbarBrand href='/'>
+                    <MDBNavbarBrand href='./Home'>
                     <MDBIcon icon="search fa-1x me-3" style={{ color: '#FFFFFF' }}/>
                         Find My Professors
                     </MDBNavbarBrand>

@@ -35,7 +35,7 @@ function App() {
     <>
         <Router>
                 <Routes>
-                    <Route exact path="/" element={<Login />} />
+                    <Route exact path="/" element={<Home />} />
                     <Route path="/About" element={<About />} />
                     <Route path="/ContactUs" element={<ContactUs />} />
                     <Route path="/ForgotPassword" element={<ForgotPassword />} />
@@ -43,6 +43,7 @@ function App() {
                     <Route path="/Register" element={<Register />} />
                     <Route path="/Dashboard" element={<Dashboard />} />
                     <Route path="/Home" element={<Home />} />
+                    <Route path="/Login" element={<Login />} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </Router>
