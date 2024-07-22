@@ -327,7 +327,7 @@ describe("hashPassword", () => {
       password: "Password123!",
     };
 
-    const hashedPassword = await hashPassword(body);
+    const hashedPassword = await hashPassword(body.password);
 
     // Check that the hashed password is not the same as the plain password
     expect(hashedPassword).not.toBe(body.password);
@@ -349,6 +349,6 @@ describe("hashPassword", () => {
       throw new Error("bcrypt error");
     });
 
-    await expect(hashPassword(body)).rejects.toThrow("bcrypt error");
+    await expect(hashPassword(body.password)).rejects.toThrow("bcrypt error");
   });
 });

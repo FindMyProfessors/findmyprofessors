@@ -118,7 +118,7 @@ export class AuthController extends Controller {
       return Promise.reject(error);
     }
 
-    const hashedPassword = await hashPassword(body);
+    const hashedPassword = await hashPassword(body.password);
 
     let user;
     try {
@@ -224,10 +224,10 @@ export class AuthController extends Controller {
   }
 }
 
-export async function hashPassword(body: RegistrationParams) {
+export async function hashPassword(password: string) {
   const saltRounds = 10;
   const salt = await bcrypt.genSalt(saltRounds);
-  const hashedPassword = await bcrypt.hash(body.password, salt);
+  const hashedPassword = await bcrypt.hash(password, salt);
   return hashedPassword;
 }
 

@@ -21,6 +21,7 @@ import cors from 'cors';
 import { SchoolErrorHttpStatus, isSchoolError } from "./models/schools";
 import { CourseErrorHttpStatus, isCourseError } from "./models/courses";
 import { ReviewErrorHttpStatus, isReviewError } from "./models/reviews";
+import { UserErrorHttpStatus, isUserError } from "./models/users";
 
 export const app = express();
 
@@ -99,6 +100,14 @@ app.use(function errorHandler(
   
   if (isReviewError(err)) {
     const statusCode = ReviewErrorHttpStatus[err.type];
+    return res.status(statusCode).json({
+      message: err.message,
+      type: err.type,
+    });
+  }
+
+  if (isUserError(err)) {
+    const statusCode = UserErrorHttpStatus[err.type];
     return res.status(statusCode).json({
       message: err.message,
       type: err.type,
