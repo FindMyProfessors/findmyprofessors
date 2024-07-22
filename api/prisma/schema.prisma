@@ -45,11 +45,14 @@ model EmailConfirmation {
 }
 
 model UserCart {
-  id        Int    @id @default(autoincrement())
-  user_id   Int
-  user      User   @relation(fields: [user_id], references: [id])
-  course_id Int
-  course    Course @relation(fields: [course_id], references: [id])
+  id           Int       @id @default(autoincrement())
+  user_id      Int
+  user         User      @relation(fields: [user_id], references: [id])
+  course_id    Int
+  course       Course    @relation(fields: [course_id], references: [id])
+  professor_id Int
+  professor    Professor @relation(fields: [professor_id], references: [id])
+  @@unique([user_id, course_id, professor_id])
 }
 
 enum UserRole {
@@ -73,6 +76,7 @@ model Professor {
   school     School            @relation(fields: [school_id], references: [id])
   courses    ProfessorCourse[]
   reviews    Review[]
+  UserCart   UserCart[]
 }
 
 enum ReviewTag {

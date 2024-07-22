@@ -11,6 +11,7 @@ import {
   Tags,
   Request,
   Post,
+  Delete,
 } from "tsoa";
 import {
   UserResponse,
@@ -22,15 +23,20 @@ import {
   EmailNotConfirmedError,
   ConfirmEmailParams,
   PasswordResetExpiredError,
+  UserCartResponse,
+  UserCartEntry,
+  AddToCartParams,
+  UserCartEntryAlreadyExistsError,
 } from "../models/users";
 import { prisma } from "../database/database";
-import { User, UserRole } from "@prisma/client";
+import { User, UserCart, UserRole } from "@prisma/client";
 import { AuthErrorType, JWTBody, UnauthorizedError } from "../models/auth";
 import { v4 as uuidv4 } from "uuid";
 import { sendEmailConfirmation, sendPasswordReset } from "../mailer";
 import { formatEmailConfirmationUrl, formatPasswordResetUrl } from "../config";
 import { logger } from "../utils/logger";
 import { hashPassword } from "./auth";
+import { use } from "chai";
 
 @Route("users")
 @Tags("Users")
@@ -202,7 +208,9 @@ export class UsersController extends Controller {
       return Promise.reject(error);
     }
 
-    logger.debug("Checking for existing valid password resets for user ID: " + id);
+    logger.debug(
+      "Checking for existing valid password resets for user ID: " + id
+    );
     let passwordReset = await prisma.passwordReset.findFirst({
       where: {
         user_id: id,
@@ -216,7 +224,9 @@ export class UsersController extends Controller {
     let token = passwordReset?.token ?? uuidv4();
 
     if (!passwordReset) {
-      logger.debug("No valid password reset found, creating new one for user ID: " + id);
+      logger.debug(
+        "No valid password reset found, creating new one for user ID: " + id
+      );
       passwordReset = await prisma.passwordReset.create({
         data: {
           user_id: id,
@@ -233,7 +243,12 @@ export class UsersController extends Controller {
       await sendPasswordReset(user.email, user.username, resetUrl);
       logger.info("Password reset email sent successfully to user ID: " + id);
     } catch (error) {
-      logger.error("Failed to send password reset email for user ID: " + id + "; Error: " + error);
+      logger.error(
+        "Failed to send password reset email for user ID: " +
+          id +
+          "; Error: " +
+          error
+      );
       throw new Error("Internal Server Error");
     }
 
@@ -305,28 +320,104 @@ export class UsersController extends Controller {
 
   @Security("jwt")
   @Get("{id}/cart")
-  public async getUserCart(@Path() id: number): Promise<UserResponse | null> {
-    // Start transaction
-    await prisma.$transaction(async (tx) => {
-      const user = await tx.user.findUnique({
-        where: { id },
-        include: { Cart: true },
-      });
-
-      if (!user) {
-        throw new Error("User not found");
-      }
-
-      const cart = user.Cart;
-
-      if (!cart) {
-        throw new Error("User cart not found");
-      }
+  public async getUserCart(@Path() id: number): Promise<UserCartResponse> {
+    const userCart = await prisma.userCart.findMany({
+      where: { user_id: id },
+      include: { course: true, professor: true },
     });
 
-    return null;
+    if (!userCart) {
+      const error: UserNotFoundError = {
+        message: "User cart not found",
+        type: UserErrorType.USER_NOT_FOUND,
+      };
+      return Promise.reject(error);
+    }
 
-    //return userResponse;
+    let response = {
+      entries: userCart.map(
+        (entry) =>
+          ({
+            course: entry.course,
+            professor: entry.professor,
+          } as UserCartEntry)
+      ),
+    } as UserCartResponse;
+
+    return response;
+  }
+
+  @Security("jwt")
+  @Post("{id}/cart")
+  public async addToCart(
+    @Request() request: any,
+    @Path() id: number,
+    @Body() body: AddToCartParams
+  ): Promise<void> {
+    const jwt_body = request.user as JWTBody;
+
+    if (jwt_body.user_id != id && jwt_body.user_role != UserRole.ADMIN) {
+      const error: UnauthorizedError = {
+        message: "You can only add to your own cart",
+        type: AuthErrorType.UNAUTHORIZED,
+      };
+      return Promise.reject(error);
+    }
+
+    const userCart = await prisma.userCart.findFirst({
+      where: {
+        user_id: id,
+        course_id: body.course_id,
+        professor_id: body.professor_id,
+      },
+    });
+    if (userCart) {
+      const error: UserCartEntryAlreadyExistsError = {
+        message: "User cart entry already exists",
+        type: UserErrorType.USER_CART_ENTRY_ALREADY_EXISTS,
+      };
+      return Promise.reject(error);
+    }
+
+    await prisma.userCart.create({
+      data: {
+        user_id: id,
+        course_id: body.course_id,
+        professor_id: body.professor_id,
+      },
+    });
+
+    this.setStatus(201);
+  }
+
+  @Security("jwt")
+  @Delete("{id}/cart")
+  public async deleteFromCart(
+    @Request() request: any,
+    @Path() id: number,
+    @Body() body: { course_id: number; professor_id: number }
+  ): Promise<void> {
+    const jwt_body = request.user as JWTBody;
+
+    if (jwt_body.user_id != id && jwt_body.user_role != UserRole.ADMIN) {
+      const error: UnauthorizedError = {
+        message: "You can only delete from your own cart",
+        type: AuthErrorType.UNAUTHORIZED,
+      };
+      return Promise.reject(error);
+    }
+
+    await prisma.userCart.deleteMany({
+      where: {
+        user_id: id,
+        AND: [
+          { course_id: body.course_id },
+          { professor_id: body.professor_id },
+        ],
+      },
+    });
+
+    this.setStatus(204);
   }
 
   @Example<UserResponse>({
