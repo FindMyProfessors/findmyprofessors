@@ -10,6 +10,81 @@ import 'package:app/screens/Professor.dart';
 final storage = new FlutterSecureStorage();
 final String apiURL = 'http://localhost:8080/';
 
+Future<void> getProfessorAnalysis(BuildContext context, int professorID) async {
+
+    print("Loading Professor analysis from DB...");
+    
+    String? JWT = await storage.read(key: 'JWT');
+    try {
+      var response = await http.get(
+        Uri.parse(apiURL+'professors/'+professorID.toString()+'/analysis'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + JWT.toString(),
+        },
+      );
+
+      print("Response status: ${response.statusCode}");
+      print("Response headers: ${response.headers}");
+      print("Response body: ${response.body}");
+
+      ratingData= [ RatingData('1 ★', 0),
+      RatingData('2 ★', 0),
+      RatingData('3 ★', 0),
+      RatingData('4 ★', 0),
+      RatingData('5 ★', 0),];
+
+      final responseData = json.decode(response.body);
+      if (response.body.isNotEmpty) {
+        var numberOfReviewsByQuality = responseData['numberOfReviewsByQuality'];
+        print('professor info loaded, printing review quality info:'+ responseData['numberOfReviewsByQuality'].toString());
+
+        for(var quality in numberOfReviewsByQuality) {
+          print(quality['quality']);
+          print(quality['amount']);
+
+          if(quality['quality'] == 1.0) {
+            ratingData[0].amount = quality['amount'];
+          }
+          if(quality['quality'] == 2.0) {
+            ratingData[1].amount = quality['amount'];
+          }
+          if(quality['quality'] == 3.0) {
+            ratingData[2].amount = quality['amount'];
+          }
+          if(quality['quality'] == 4.0) {
+            ratingData[3].amount = quality['amount'];
+          }
+          if(quality['quality'] == 5.0) {
+            ratingData[4].amount = quality['amount'];
+          }
+        }
+        
+     
+      }
+      else {
+        print('No info for professor');
+
+        totalRatings = "N/A";
+        totalQualityAverage = "N/A";
+        totalDifficultyAverage = "N/A";
+        topKMostRecentQualityAverage = "N/A";
+        topKMostRecentDifficultyAverage = "N/A";
+        averageGrade = "N/A";
+        await Future.delayed(Duration(milliseconds: 500));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('it Seems this professor has no ratings yet'),
+          ),
+        );
+        
+      }
+    } 
+    catch (e) {
+      print('ERROR occurred: $e');
+    }
+  }
+
 Future<void> getProfessorRating(BuildContext context, int professorID) async {
 
     print("Loading Professor ratings from DB...");
@@ -28,7 +103,6 @@ Future<void> getProfessorRating(BuildContext context, int professorID) async {
       print("Response headers: ${response.headers}");
       print("Response body: ${response.body}");
 
-      print('1');
       final responseData;
       if (response.body.isNotEmpty) {
 
@@ -83,8 +157,6 @@ Future<void> getProfessorRating(BuildContext context, int professorID) async {
         );
         
       }
-
-      print('2');
 
     } 
     catch (e) {

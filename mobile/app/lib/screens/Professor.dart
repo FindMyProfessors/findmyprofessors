@@ -7,23 +7,38 @@ import 'package:flip_card/flip_card.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:app/API_services/API.dart';
 
+int roundUpToReasonableNumber(int value) {
+  if (value <= 10) {
+    return ((value + 9) ~/ 10) * 10; 
+  } else if (value <= 100) {
+    return ((value + 9) ~/ 10) * 10; 
+  } else if (value <= 1000) {
+    return ((value + 99) ~/ 100) * 100;
+  } else {
+    return ((value + 999) ~/ 1000) * 1000;
+  }
+}
+
+int getGreatestRoundedAmount(List<RatingData> data) {
+  int greatestAmount = data.map((e) => e.amount).reduce((a, b) => a > b ? a : b);
+  return roundUpToReasonableNumber(greatestAmount);
+}
 class RatingData {
-  RatingData(this.rating, this.percentage);
+  RatingData(this.rating, this.amount);
 
   final String rating;
-  final double percentage;
+  int amount;
 
 }
 
-List<RatingData> getRatingData() {
-    return [
-      RatingData('1 ★', 10),
-      RatingData('2 ★', 20),
-      RatingData('3 ★', 60),
-      RatingData('4 ★', 25),
-      RatingData('5 ★', 15),
-    ];
-  }
+List<RatingData> ratingData= [ 
+      RatingData('1 ★', 0),
+      RatingData('2 ★', 0),
+      RatingData('3 ★', 0),
+      RatingData('4 ★', 0),
+      RatingData('5 ★', 0),
+  ];
+
 
 late String totalRatings= "N/A";
 late String totalQualityAverage= "N/A";
@@ -49,6 +64,12 @@ class Professor extends StatefulWidget {
 class _ProfessorState extends State<Professor> {
 
   final Random random = Random();
+
+
+   Future<void>  getProfessor(BuildContext context, int id) async {
+    await getProfessorRating(context, id);
+    await getProfessorAnalysis(context, id);
+  }
 
   @override
   // void initState() {
@@ -80,7 +101,7 @@ class _ProfessorState extends State<Professor> {
     ),
       body:
       FutureBuilder(
-      future: getProfessorRating(context, widget.id), // Replace with your async function
+      future: getProfessor(context, widget.id), // Replace with your async function
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -388,7 +409,7 @@ class _ProfessorState extends State<Professor> {
                                             primaryYAxis: NumericAxis(
                                               isVisible: false,
                                               minimum: 0,
-                                              maximum: 100,
+                                              maximum: getGreatestRoundedAmount(ratingData).toDouble(),
                                               interval: 20,
                                               majorGridLines: MajorGridLines(width: 0),
                                               minorGridLines: MinorGridLines(width: 0),
@@ -396,9 +417,9 @@ class _ProfessorState extends State<Professor> {
 
                                             series: <CartesianSeries>[
                                               BarSeries<RatingData, String>(
-                                                dataSource: getRatingData(),
+                                                dataSource: ratingData,
                                                 xValueMapper: (RatingData data, _) => data.rating,
-                                                yValueMapper: (RatingData data, _) => data.percentage,
+                                                yValueMapper: (RatingData data, _) => data.amount,
                                                 //dataLabelSettings: DataLabelSettings(isVisible: true),
                                                 dataLabelSettings: DataLabelSettings(
                                                   isVisible: true,
@@ -417,20 +438,7 @@ class _ProfessorState extends State<Professor> {
                                               )
                                             ],
                                             
-                                            // primaryXAxis: CategoryAxis(),
-                                            // primaryYAxis: NumericAxis(
-                                            //   minimum: 0,
-                                            //   maximum: 100,
-                                            //   interval: 20,
-                                            // ),
-                                            // series: <CartesianSeries>[
-                                            //   BarSeries<RatingData, String>(
-                                            //     dataSource: getRatingData(),
-                                            //     xValueMapper: (RatingData data, _) => data.rating,
-                                            //     yValueMapper: (RatingData data, _) => data.percentage,
-                                            //     dataLabelSettings: DataLabelSettings(isVisible: true),
-                                            //   )
-                                            // ],
+                                      
                                           ),
                                         ),
                                       ],
