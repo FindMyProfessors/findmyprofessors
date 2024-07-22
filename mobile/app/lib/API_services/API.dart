@@ -5,9 +5,91 @@ import 'dart:convert';
 import 'package:http/http.dart' as http; 
 import 'package:app/screens/signin_screen.dart';
 import 'package:app/screens/signup_screen.dart';
-
+import 'package:app/screens/Professor.dart';
 
 final storage = new FlutterSecureStorage();
+
+Future<void> getProfessorRating(BuildContext context, int professorID) async {
+
+    print("Loading Professor ratings from DB...");
+    
+    String? JWT = await storage.read(key: 'JWT');
+    try {
+      var response = await http.get(
+        Uri.parse('http://localhost:8080/professors/'+professorID.toString()+'/rating'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + JWT.toString(),
+        },
+      );
+
+      print("Response status: ${response.statusCode}");
+      print("Response headers: ${response.headers}");
+      print("Response body: ${response.body}");
+
+      print('1');
+      final responseData;
+      if (response.body.isNotEmpty) {
+
+        responseData = json.decode(response.body);
+        if (response.statusCode == 200) {
+
+        print("successfully got professor ratings");
+
+        totalRatings = responseData['ratingAmount'].toString();
+        print(totalRatings);
+
+        totalQualityAverage = responseData['totalQualityAverage'].toStringAsFixed(2);
+        print(totalQualityAverage);
+
+        totalDifficultyAverage = responseData['totalDifficultyAverage'].toStringAsFixed(2);
+        print(totalDifficultyAverage);
+
+        topKMostRecentQualityAverage = responseData['topKMostRecentQualityAverage'].toStringAsFixed(2);
+        print(topKMostRecentQualityAverage);
+
+        topKMostRecentDifficultyAverage = responseData['topKMostRecentDifficultyAverage'].toStringAsFixed(2);
+        print(topKMostRecentDifficultyAverage);
+
+        averageGrade = responseData['averageGrade'].toString();
+        print(averageGrade);
+
+        await Future.delayed(Duration(milliseconds: 500));
+      } 
+      else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(responseData['message']),
+          ),
+        );
+        print('Failed to Load Professors bad status coad: ${response.body[0]}');
+      }
+      }
+      else {
+        print('No info for professor');
+
+        totalRatings = "N/A";
+        totalQualityAverage = "N/A";
+        totalDifficultyAverage = "N/A";
+        topKMostRecentQualityAverage = "N/A";
+        topKMostRecentDifficultyAverage = "N/A";
+        averageGrade = "N/A";
+        await Future.delayed(Duration(milliseconds: 500));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('it Seems this professor has no ratings yet'),
+          ),
+        );
+        
+      }
+
+      print('2');
+
+    } 
+    catch (e) {
+      print('ERROR occurred: $e');
+    }
+  }
 
 Future<void> getProfessors(BuildContext context) async {
 
