@@ -27,6 +27,7 @@ import {
   UserCartEntry,
   AddToCartParams,
   UserCartEntryAlreadyExistsError,
+  SendPasswordResetParams,
 } from "../models/users";
 import { prisma } from "../database/database";
 import { User, UserCart, UserRole } from "@prisma/client";
@@ -120,41 +121,21 @@ export class UsersController extends Controller {
 
   // Add password reset endpoint
   @Security("jwt")
-  @Post("{id}/confirm-email")
+  @Post("confirm-email")
   public async confirmEmail(
     @Request() request: any,
-    @Path() id: number,
     @Body() body: ConfirmEmailParams
   ): Promise<void> {
-    const jwt_body = request.user as JWTBody;
-
-    if (jwt_body.user_id != id && jwt_body.user_role != UserRole.ADMIN) {
-      const error: UnauthorizedError = {
-        message: "You can only confirm your own email",
-        type: AuthErrorType.UNAUTHORIZED,
-      };
-      return Promise.reject(error);
-    }
-
-    // make sure user exists
-    const user = await getUserById(id);
-
-    if (user.account_verified) {
-      const error: EmailAlreadyConfirmedError = {
-        message: "User email already confirmed",
-        type: UserErrorType.EMAIL_ALREADY_CONFIRMED,
-      };
-      return Promise.reject(error);
-    }
+ 
 
     // check token
     const emailConfirmation = await prisma.emailConfirmation.findUnique({
-      where: { user_id: id, token: body.token, confirmed_at: null },
+      where: { token: body.token, confirmed_at: null },
     });
 
     if (!emailConfirmation) {
       const error: EmailNotConfirmedError = {
-        message: "Email confirmation token is invalid",
+        message: "Email confirmation token is not valid",
         type: UserErrorType.EMAIL_NOT_CONFIRMED,
       };
       return Promise.reject(error);
@@ -168,7 +149,7 @@ export class UsersController extends Controller {
 
     // set account to verified
     await prisma.user.update({
-      where: { id: id },
+      where: { id: emailConfirmation.user_id },
       data: { account_verified: true },
     });
 
@@ -176,31 +157,18 @@ export class UsersController extends Controller {
   }
 
   // add send password reset email endpoint
-  @Security("jwt")
-  @Post("{id}/send-password-reset")
+  @Post("send-password-reset")
   public async sendPasswordResetEmail(
-    @Request() request: any,
-    @Path() id: number
+    @Body() body: SendPasswordResetParams
   ): Promise<void> {
-    logger.debug("Attempting to send password reset email for user ID: " + id);
-    const jwt_body = request.user as JWTBody;
-
-    if (jwt_body.user_id != id && jwt_body.user_role != UserRole.ADMIN) {
-      logger.warn("Unauthorized attempt to reset password for user ID: " + id);
-      const error: UnauthorizedError = {
-        message: "You can only reset the password for your own user",
-        type: AuthErrorType.UNAUTHORIZED,
-      };
-      return Promise.reject(error);
-    }
 
     const user = await prisma.user.findUnique({
-      where: { id: id },
-      select: { email: true, username: true },
+      where: { email: body.email },
+      select: { email: true, username: true, id: true },
     });
 
-    if (!user) {
-      logger.error("User not found for ID: " + id);
+    if (!user) {  
+      logger.error("User not found for email: " + body.email);
       const error: UserNotFoundError = {
         message: "User not found",
         type: UserErrorType.USER_NOT_FOUND,
@@ -209,11 +177,11 @@ export class UsersController extends Controller {
     }
 
     logger.debug(
-      "Checking for existing valid password resets for user ID: " + id
+      "Checking for existing valid password resets idfor user ID: " + user.id
     );
     let passwordReset = await prisma.passwordReset.findFirst({
       where: {
-        user_id: id,
+        user_id: user.id,
         used_at: null,
         expires_at: {
           gt: new Date(), // Checks if the expiration date is greater than the current date
@@ -225,11 +193,11 @@ export class UsersController extends Controller {
 
     if (!passwordReset) {
       logger.debug(
-        "No valid password reset found, creating new one for user ID: " + id
+        "No valid password reset found, creating new one for user ID: " + user.id
       );
       passwordReset = await prisma.passwordReset.create({
         data: {
-          user_id: id,
+          user_id: user.id,
           token: token,
           expires_at: new Date(Date.now() + 3600000), // 1 hour from now
         },
@@ -237,15 +205,15 @@ export class UsersController extends Controller {
     }
 
     const resetUrl = formatPasswordResetUrl(token);
-    logger.debug("Password reset URL generated for user ID: " + id);
+    logger.debug("Password reset URL generated for user ID: " + user.id);
 
     try {
       await sendPasswordReset(user.email, user.username, resetUrl);
-      logger.info("Password reset email sent successfully to user ID: " + id);
+      logger.info("Password reset email sent successfully to user ID: " + user.id);
     } catch (error) {
       logger.error(
         "Failed to send password reset email for user ID: " +
-          id +
+          user.id +
           "; Error: " +
           error
       );
@@ -256,30 +224,13 @@ export class UsersController extends Controller {
   }
 
   // Add password reset endpoint
-  @Security("jwt")
-  @Post("{id}/reset-password")
+  @Post("reset-password")
   public async resetPassword(
-    @Request() request: any,
-
-    @Path() id: number,
     @Body() body: ResetPasswordParams
   ): Promise<void> {
-    const jwt_body = request.user as JWTBody;
-
-    if (jwt_body.user_id != id && jwt_body.user_role != UserRole.ADMIN) {
-      const error: UnauthorizedError = {
-        message: "You can only reset the password for your own user",
-        type: AuthErrorType.UNAUTHORIZED,
-      };
-      return Promise.reject(error);
-    }
-    // make sure user exists
-    await getUserById(id);
-
     let passwordReset = await prisma.passwordReset.findUnique({
       where: {
         token: body.token,
-        user_id: id,
         used_at: null,
         expires_at: {
           gt: new Date(), // Checks if the expiration date is greater than the current date
@@ -299,7 +250,7 @@ export class UsersController extends Controller {
 
     // update password for user
     await prisma.user.update({
-      where: { id: id },
+      where: { id: passwordReset.user_id },
       data: { password: hashedPassword },
     });
 
@@ -311,7 +262,7 @@ export class UsersController extends Controller {
 
     // Make all other password resets for this user invalid
     await prisma.passwordReset.updateMany({
-      where: { user_id: id, used_at: null },
+      where: { user_id: passwordReset.user_id, used_at: null },
       data: { expires_at: new Date() },
     });
 

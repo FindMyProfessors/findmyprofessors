@@ -124,3 +124,7 @@ export type AddToCartParams = {
    */
   professor_id: number;
 }
+
+export type SendPasswordResetParams = {
+  email: string;
+}
