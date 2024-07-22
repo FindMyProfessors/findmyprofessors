@@ -131,7 +131,15 @@ export class UsersController extends Controller {
     }
 
     // make sure user exists
-    await getUserById(id);
+    const user = await getUserById(id);
+
+    if (user.account_verified) {
+      const error: EmailAlreadyConfirmedError = {
+        message: "User email already confirmed",
+        type: UserErrorType.EMAIL_ALREADY_CONFIRMED,
+      };
+      return Promise.reject(error);
+    }
 
     // check token
     const emailConfirmation = await prisma.emailConfirmation.findUnique({
