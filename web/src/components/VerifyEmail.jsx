@@ -29,10 +29,6 @@ const VerifyEmail = () => {
 
     const navigate = useNavigate();
 
-    const handleVerifyEmail = () => {
-      navigate('./Login');
-    };
-
     return (
     <>  
         <Header />
@@ -70,39 +66,15 @@ const VerifyEmail = () => {
                     style={{color:'white'}}>
                       Find My Professors
                     </span>
-
                   </div>
 
                   <h5
                   className="fw-normal my-4 pb-0"
                   style={{letterSpacing: '1px', color:'white'}}>
-                    Please enter the verification code sent to: 
+                    An email was sent to you. Check your email to verify your account.
                   </h5>
 
-                  <h5
-                  className="fw-normal my-4 pb-1"
-                  style={{letterSpacing: '1px', color:'white'}}>
-                    insert email here 
-                  </h5>
-
-                  <MDBInput
-                  wrapperClass='mb-4'
-                  label='Verification code'
-                  id='typePhone'
-                  type='tel'
-                  size="lg"
-                  labelClass="text-white"
-                  contrast
-                  style={{ backgroundColor: '#3f3f3f', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)' }}/>
-
-                  <MDBBtn
-                  onClick={handleVerifyEmail}
-                  className="mb-4 px-5"
-                  size='lg'
-                  style={{ backgroundColor: 'primary', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)' }}>
-                    Verify Email
-                  </MDBBtn>
-
+                
                   <div
                   className='d-flex flex-row justify-content-start'>
 
