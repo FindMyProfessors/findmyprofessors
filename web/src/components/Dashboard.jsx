@@ -168,7 +168,7 @@ const Dashboard = () => {
 
     if (token) {
       try {
-        const response = await fetch(`http://localhost:8080/professors/${professorId}/rating?topKPercentage=${topKPercentage}`, {
+        const response = await fetch(`${API_URL}/professors/${professorId}/rating?topKPercentage=${topKPercentage}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -198,7 +198,7 @@ const Dashboard = () => {
 
     if (token) {
       try {
-        const response = await fetch(`http://localhost:8080/professors/${professorId}/analysis`, {
+        const response = await fetch(`${API_URL}/professors/${professorId}/analysis`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
