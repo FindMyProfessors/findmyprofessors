@@ -24,6 +24,7 @@ const Register = () => {
 
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [token, setToken] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -90,7 +91,6 @@ const Register = () => {
             'Authorization': `Bearer ${data.token}`
           }
         });
-
         setTimeout(() => {
           navigate('/VerifyEmail'); // Redirect to email verification page
         }, 2000); // Wait for 2 seconds before redirecting
