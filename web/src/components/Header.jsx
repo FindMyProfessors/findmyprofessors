@@ -108,13 +108,15 @@ function Header()
 
                                 <MDBNavbarItem>
                                     <MDBNavbarLink
-                                    href='./Cart'>
+                                    href='./Cart'
+                                    style={{ color: '#FFFFFF' }}>
                                         Cart
                                     </MDBNavbarLink>
                                 </MDBNavbarItem>
 
                                 <MDBDropdown>
                                     <MDBDropdownToggle
+                                    aria-label="Search Button"
                                     style={{ backgroundColor: '#3d3d3d', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0)'}}>
 
                                         <MDBIcon

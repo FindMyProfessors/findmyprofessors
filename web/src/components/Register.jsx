@@ -211,14 +211,10 @@ const Register = () => {
 
                 <p
                   className="mb-5 pb-lg-2"
-                  style={{ color: 'primary' }}>
+                  style={{ color: 'white' }}>
                     Already have an account? <Link to="/Login" style={{ color: '#0082ca' }}>Login</Link>
                 </p>
 
-                <div className='d-flex flex-row justify-content-start'>
-                  <a href="#!" className="small text-muted me-1">Terms of use.</a>
-                  <a href="#!" className="small text-muted">Privacy policy</a>
-                </div>
 
               </MDBCardBody>
 
