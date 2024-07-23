@@ -8,6 +8,7 @@ import 'package:app/widgets/professor_cards.dart';
 
 final storage = new FlutterSecureStorage();
 
+
  class Name_ID<int, String> {
   int ID;
   String Name;
@@ -18,12 +19,12 @@ final storage = new FlutterSecureStorage();
 class professorObject {
   int id;
   String name;
-  double rating;
+  String rmp_id;
 
   professorObject({
     required this.id,
     required this.name,
-    required this.rating,
+    required this.rmp_id,
   });
 }
 
@@ -45,7 +46,7 @@ class professorObject {
   //each list has both the name and the ID
   List<Name_ID>? schoolNames= [];
   List<Name_ID> courseCodes = [];
-  List<Name_ID>? Professors= [];
+  List<professorObject>? Professors= [];
 
 class Dashboard extends StatefulWidget {
   const Dashboard({ Key? key }) : super(key: key);

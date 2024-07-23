@@ -7,6 +7,44 @@ import 'package:flip_card/flip_card.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:app/API_services/API.dart';
 
+String formatGrade(String grade) {
+  // Convert the string to uppercase and split by underscore
+  List<String> parts = grade.toUpperCase().split('_');
+  
+  // Handle different cases based on the parts
+  if (parts.length == 1) {
+    // Single part, likely no underscores
+    switch (parts[0]) {
+      case 'INCOMPLETE':
+        return 'Incomplete';
+      case 'WITHDRAWN':
+        return 'Withdrawn';
+      case 'NOT_SURE':
+        return 'Not Sure';
+      case 'OTHER':
+        return 'Other';
+      default:
+        // For other grades like A, B, C, etc.
+        return parts[0];
+    }
+  } else if (parts.length == 2) {
+    // Handle cases with underscores
+    String letter = parts[0];
+    String modifier = parts[1];
+    
+    if (modifier == 'PLUS') {
+      return '$letter+';
+    } else if (modifier == 'MINUS') {
+      return '$letter-';
+    } else {
+      // If no modifier, just return the letter
+      return letter;
+    }
+  } else {
+    // Return the original string if it doesn't match any expected format
+    return grade;
+  }
+}
 
 String formatTagName(String tag) {
   // Convert to lowercase and replace underscores with spaces
@@ -79,12 +117,11 @@ late String averageGrade= "N/A";
 
 class Professor extends StatefulWidget {
   final String name;
-  final int rating;
   final int id;
 
   final Random random = Random();
 
-  Professor({required this.name, required this.rating, required this.id});
+  Professor({required this.name, required this.id});
 
    @override
   _ProfessorState createState() => _ProfessorState();
@@ -256,7 +293,7 @@ class _ProfessorState extends State<Professor> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                    'Parameters: ',
+                                    'Tags: ',
                                     style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                                     ),
 
@@ -469,11 +506,12 @@ class _ProfessorState extends State<Professor> {
                                                 yValueMapper: (RatingData data, _) => data.amount,
                                                 //dataLabelSettings: DataLabelSettings(isVisible: true),
                                                 dataLabelSettings: DataLabelSettings(
+                                                  labelPosition: ChartDataLabelPosition.inside,
                                                   isVisible: true,
                                                   textStyle: TextStyle(
                                                     fontSize: 14,  // Set the font size for the data labels
                                                     fontWeight: FontWeight.w900,  // Set the font weight for the data labels
-                                                    color: Colors.amber,  // Set the color for the data labels
+                                                    color: Colors.black,  // Set the color for the data labels
                                                   ),
                                                 ),
 

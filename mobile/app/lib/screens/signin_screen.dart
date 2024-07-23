@@ -134,27 +134,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     const SizedBox(height: 20), 
               
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Row(
-                        //   children: [
-                        //     Checkbox(
-                        //       value: rememberPassword,
-                        //       onChanged: (bool? value) {
-                        //         setState(() {
-                        //           rememberPassword = value!;
-                        //         });
-                        //       },
-                        //       activeColor: lightColorScheme.primary,
-                        //     ),
-                        //     const Text(
-                        //       'Remember me',
-                        //       style: TextStyle(
-                        //         color: Colors.black
-                        //       ),
-                        //     )
-                        //   ],
-                        // ),
               
                         GestureDetector(
                           onTap: () {

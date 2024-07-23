@@ -1,3 +1,4 @@
+import 'package:app/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../screens/dashboard.dart';
@@ -6,9 +7,56 @@ import 'package:http/http.dart' as http;
 import 'package:app/screens/signin_screen.dart';
 import 'package:app/screens/signup_screen.dart';
 import 'package:app/screens/Professor.dart';
+import 'package:app/screens/forgot_password_screen.dart';
 
 final storage = new FlutterSecureStorage();
-final String apiURL = 'http://localhost:8080/';
+final String apiURL = 'https://findmyprofessors.warrensnipes.dev/';
+
+Future<void> frogotPassword(BuildContext context) async {
+
+    print("sednig password reset email... " + emailController.text);
+
+    try {
+      var response = await http.post(
+        Uri.parse(apiURL+'users/send-password-reset'),
+        headers: {
+          'accept': '*/*',
+          'Content-Type': 'application/json',
+          //'Authorization': 'Bearer ' + JWT.toString(),
+        },
+        body: jsonEncode({
+          'email': emailController.text
+        }),
+      );
+
+      print("Response status: ${response.statusCode}");
+      print("Response headers: ${response.headers}");
+      // print("Response body: ${response.body}");
+
+      //final responseData = json.decode(response.body);
+
+      if (response.statusCode == 200) {
+        print("successfull reset password");
+
+        ScaffoldMessenger.of(context).showSnackBar( 
+          SnackBar(
+            content: Text("Password reset email sent"),
+          ),
+        );
+      } 
+      else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Password reset email failed"),
+          ),
+        );
+        print('send password reset email failed');
+      }
+    } 
+    catch (e) {
+      print('ERROR occurred: $e');
+    }
+  }
 
 Future<void> getProfessorAnalysis(BuildContext context, int professorID) async {
 
@@ -160,7 +208,7 @@ Future<void> getProfessorRating(BuildContext context, int professorID) async {
         topKMostRecentDifficultyAverage = responseData['topKMostRecentDifficultyAverage'].toStringAsFixed(2);
         print(topKMostRecentDifficultyAverage);
 
-        averageGrade = responseData['averageGrade'].toString();
+        averageGrade = formatGrade(responseData['averageGrade'].toString());
         print(averageGrade);
 
         await Future.delayed(Duration(milliseconds: 500));
@@ -226,12 +274,14 @@ Future<void> getProfessors(BuildContext context) async {
         for (var professor in professors_list) {
           final String professorName = professor['first_name'] + ' ' + professor['last_name'];
           final int professorID = professor['id'];
-          Professors?.add(new Name_ID(professorID, professorName));
+          final String rmp_id = professor['rmp_id'];
+
+          Professors?.add(new professorObject(id: professorID, name: professorName, rmp_id:  rmp_id));
         }
 
         if (Professors != null) {
           for (var professor in Professors!) {
-            print('Professor Name: ${professor.Name}, ID: ${professor.ID}');
+            print('Professor Name: ${professor.name}, ID: ${professor.id} RMP ID: ${professor.rmp_id}');
           }
         } else {
           print('No Professor names found.');
@@ -409,6 +459,7 @@ Future<void> registerUser(BuildContext context) async {
       var response = await http.post(
         Uri.parse(apiURL+'auth/register'),
         headers: {
+          'accept': 'application/json',
           'Content-Type': 'application/json',
         },
         body: jsonEncode({
@@ -428,21 +479,28 @@ Future<void> registerUser(BuildContext context) async {
         final String username = responseData['user']['username'];
         final int id = responseData['user']['id'];
 
-        await storage.write(key: 'JWT', value: responseData['token']);
-        await storage.write(key: 'userName', value: username);
-        await storage.write(key: 'id', value: id.toString());  //saved as a string NOT an int
+        // await storage.write(key: 'JWT', value: responseData['token']);
+        // await storage.write(key: 'userName', value: username);
+        // await storage.write(key: 'id', value: id.toString());  //saved as a string NOT an int
 
         print('User registered: '+ username + ' ID: ' + id.toString());
 
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Dashboard()));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Sucessfully registered.'),
+          ),
+        );
+        //print('Failed to register user: ${response.body[0]}');
+
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignInScreen()));
       } 
       else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(responseData['message']),
+            content: Text( responseData['message']),
           ),
         );
-        print('Failed to register user: ${response.body[0]}');
+        //print('Failed to register user: ${response.body[0]}');
       }
     } 
     catch (e) {

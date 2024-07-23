@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:app/widgets/custom_scaffold.dart';
+import 'package:app/aPI_services/API.dart';
 
+final TextEditingController emailController = TextEditingController(); // Added controller for email
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -12,8 +14,6 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _SignInScreenState extends State<ForgotPasswordScreen> {
 
   final _formSignUpKey = GlobalKey<FormState>();
-
-  final TextEditingController _emailController = TextEditingController(); // Added controller for email
 
   bool validateEmail(String email) {
     // Regular expression for a basic email validation
@@ -87,7 +87,7 @@ class _SignInScreenState extends State<ForgotPasswordScreen> {
                       Column(
                         children: [
                           TextFormField(
-                          controller: _emailController, // Assigning controller
+                          controller: emailController, // Assigning controller
                           validator: (value) {
                             if (!validateEmail(value!)) {
                               return 'Please enter a valid Email';
@@ -124,13 +124,13 @@ class _SignInScreenState extends State<ForgotPasswordScreen> {
                           child: ElevatedButton(
                             onPressed: () {
                               if (_formSignUpKey.currentState!.validate()) {
-                                // Send email to user
-                                print("Email: " + _emailController.text);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('Email sent'),
-                                  ),
-                                );
+                                frogotPassword(context);
+                                print("Email: " + emailController.text);
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //   SnackBar(
+                                //     content: Text('Email sent'),
+                                //   ),
+                                //);
                               } else {
                                 print("Email not valid");
                               }
