@@ -2,24 +2,8 @@ import Email from "email-templates";
 import nodemailer from "nodemailer";
 import { config } from "./config";
 
-
-const transporter = nodemailer.createTransport({
-    host: config.SMTP_HOST,
-    port: config.SMTP_PORT,
-    secure: config.SMTP_SECURE, // upgrade later with STARTTLS
-    auth: {
-      user: config.SMTP_AUTH_USER,
-      pass: config.SMTP_AUTH_PASSWORD,
-    },
-});
-
-const email = new Email({
-  message: {
-    from: `${config.SMTP_FROM_NAME} <${config.SMTP_FROM_EMAIL}>`,
-  },
-  send: true,
-  transport: transporter,
-});
+import { google } from "googleapis";
+const OAuth2 = google.auth.OAuth2;
 
 // Create functions for email confirmation
 export async function sendEmailConfirmation(
@@ -49,6 +33,62 @@ async function sendEmail(
   to: string,
   locals: { [key: string]: string }
 ) {
+  let transporter: any;
+  if (
+    config.OAUTH_CLIENT_ID != undefined &&
+    config.OAUTH_CLIENT_ID != null &&
+    config.OAUTH_CLIENT_ID != ""
+  ) {
+    // setup later
+    const OAuth2Client = new OAuth2(
+      config.OAUTH_CLIENT_ID,
+      config.OAUTH_CLIENT_SECRET
+    );
+
+    OAuth2Client.setCredentials({
+      refresh_token: config.OAUTH_REFRESH_TOKEN,
+    });
+
+    const accessToken = (await OAuth2Client.getAccessToken()).token;
+
+    if (!accessToken) {
+      console.error("Failed to obtain access token.");
+      return;
+    }
+
+    transporter = nodemailer.createTransport({
+      host: config.SMTP_HOST,
+      port: config.SMTP_PORT,
+      secure: true, // upgrade later with STARTTLS
+      auth: {
+        type: "OAuth2",
+        user: config.SMTP_AUTH_USER!,
+        clientId: config.OAUTH_CLIENT_ID!,
+        clientSecret: config.OAUTH_CLIENT_SECRET!,
+        refreshToken: config.OAUTH_REFRESH_TOKEN!,
+        accessToken: accessToken,
+      },
+    });
+  } else {
+    transporter = nodemailer.createTransport({
+      host: config.SMTP_HOST,
+      port: config.SMTP_PORT,
+      secure: config.SMTP_SECURE, // upgrade later with STARTTLS
+      auth: {
+        user: config.SMTP_AUTH_USER,
+        pass: config.SMTP_AUTH_PASSWORD,
+      },
+    });
+  }
+
+  const email = new Email({
+    message: {
+      from: `${config.SMTP_FROM_NAME} <${config.SMTP_FROM_EMAIL}>`,
+    },
+    send: true,
+    transport: transporter,
+  });
+
   await email.send({
     template: template,
     message: {
