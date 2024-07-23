@@ -18,6 +18,10 @@ const Dashboard = () => {
   const [professorsData, setProfessorsData] = useState([]);
   const [headersVisible, setHeadersVisible] = useState(true);
   const [showSuggestions, setShowSuggestions] = useState(true);
+  const [courseId, setCourseId] = useState('');
+  const [cartVisible, setCartVisible] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [addClassMessage, setAddClassMessage] = useState('');
 
   const preventClose = (e) => {
     e.stopPropagation();
@@ -98,6 +102,7 @@ const Dashboard = () => {
 
   const fetchProfessors = async (courseId, year, semester) => {
     const token = localStorage.getItem('token');
+    localStorage.setItem('course_id', courseId);
 
     if (token) {
       try {
@@ -106,6 +111,7 @@ const Dashboard = () => {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
           }
+          
         });
 
         if (response.ok) {
@@ -127,6 +133,7 @@ const Dashboard = () => {
       console.error('No token found');
     }
   };
+
 
   const fetchCourses = async (schoolId, year, semester, query) => {
     const token = localStorage.getItem('token');
@@ -248,6 +255,71 @@ const Dashboard = () => {
     }
   };
 
+  const handleCartClick = async () => {
+    setCartVisible(!cartVisible);
+    if (!cartVisible) {
+      const userId = localStorage.getItem('user_id');
+      if (userId) {
+        try {
+          const response = await fetch(`${API_URL}/users/${userId}/cart`, {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`,
+              'Content-Type': 'application/json'
+            }
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            setCartItems(data.entries.map(entry => ({
+              firstName: entry.professor.first_name,
+              lastName: entry.professor.last_name,
+              code: entry.course.code,
+              courseName: entry.course.name,
+              professorId: entry.professor.id,
+              courseId: entry.course.id
+            })));
+          } else {
+            console.error('Failed to fetch cart data:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Error fetching cart data:', error);
+        }
+      } else {
+        console.error('No user ID found');
+      }
+    }
+  };
+
+  const handleDeleteClick = async (professorId, courseId) => {
+    if (window.confirm('Are you sure you want to delete this entry?')) {
+      const userId = localStorage.getItem('user_id');
+      const token = localStorage.getItem('token');
+
+      if (userId && token) {
+        try {
+          const response = await fetch(`${API_URL}/users/${userId}/cart`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ professor_id: professorId, course_id: courseId })
+          });
+
+          if (response.ok) {
+            setCartItems((prevItems) => prevItems.filter(item => !(item.professorId === professorId && item.courseId === courseId)));
+          } else {
+            console.error('Failed to delete item from cart:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Error deleting item from cart:', error);
+        }
+      } else {
+        console.error('No user ID or token found');
+      }
+    }
+  };
+
   return (
     <>
       <Header />
@@ -255,7 +327,6 @@ const Dashboard = () => {
       <style>{'body { background-color: #FFFFFF; }'}</style>
 
       <MDBContainer fluid className="d-flex justify-content-center align-items-center">
-
         <div className="text-center">
 
           {headersVisible && (
@@ -289,9 +360,8 @@ const Dashboard = () => {
                       2024 {year === 2024 && <MDBIcon icon="check" />}
                     </MDBDropdownItem>
                     <MDBDropdownItem link onClick={() => handleDropdownClick('year', 2025)}>
-                      2025 {year === 2025 && <MDBIcon icon="check" />}
-                    </MDBDropdownItem>
-                  </MDBDropdownMenu>
+                      2025 {year === 2025 && <MDBIcon icon="check" />}</MDBDropdownItem>
+                    </MDBDropdownMenu>
                 </MDBDropdown>
 
                 <MDBDropdown onClick={preventClose}>
@@ -317,6 +387,9 @@ const Dashboard = () => {
                 <MDBBtn color="primary" onClick={handleSearchClick}>
                   <MDBIcon icon="search" />
                 </MDBBtn>
+                <MDBBtn color="primary" onClick={handleCartClick}>
+                  <MDBIcon icon="shopping-cart" /> Cart
+                </MDBBtn>
               </MDBInputGroup>
 
               {showSuggestions && searchResults.length > 0 && (
@@ -331,19 +404,38 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {!headersVisible && professorsData.length > 0 && (
-            <div className="my-4">
-              <ProfessorTable professors={professorsData} fetchProfessorRatings={fetchProfessorRatings} fetchProfessorAnalysis={fetchProfessorAnalysis} />
+          {addClassMessage && (
+            <div className="alert alert-success" role="alert">
+              {addClassMessage}
             </div>
           )}
 
+          {cartVisible && (
+            <div className="my-4">
+              <MDBBtn color="secondary" onClick={() => setCartVisible(false)}>
+                Go Back to Professors
+              </MDBBtn>
+              <CartTable cartItems={cartItems} handleDeleteClick={handleDeleteClick} />
+            </div>
+          )}
+
+          {!headersVisible && professorsData.length > 0 && !cartVisible && (
+            <div className="my-4">
+              <ProfessorTable
+                professors={professorsData}
+                fetchProfessorRatings={fetchProfessorRatings}
+                fetchProfessorAnalysis={fetchProfessorAnalysis}
+                setAddClassMessage={setAddClassMessage}
+              />
+            </div>
+          )}
         </div>
       </MDBContainer>
     </>
   );
 };
 
-const ProfessorTable = ({ professors, fetchProfessorRatings, fetchProfessorAnalysis }) => {
+const ProfessorTable = ({ professors, fetchProfessorRatings, fetchProfessorAnalysis, setAddClassMessage }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedProfessor, setSelectedProfessor] = useState(null);
@@ -381,24 +473,27 @@ const ProfessorTable = ({ professors, fetchProfessorRatings, fetchProfessorAnaly
     }));
   };
 
-  const handleAddClick = async (event, professorId, courseId) => {
+  const handleAddClick = async (event, professor) => {
     event.stopPropagation(); // Prevent the event from propagating to the row click
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('user_id');
+    const courseId = localStorage.getItem('course_id');
 
     if (token && userId) {
       try {
-        console.log('Sending request with data:', { professorId, courseId }); // Debugging log
+        console.log('Sending request with data:', { professorId: professor.id, courseId }); // Debugging log
         const response = await fetch(`${API_URL}/users/${userId}/cart`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ professor_id: professorId, course_id: courseId})
+          body: JSON.stringify({ professor_id: professor.id, course_id: courseId })
         });
 
         if (response.ok) {
+          setAddClassMessage(`Class added: ${professor.first_name} ${professor.last_name}`);
+          setTimeout(() => setAddClassMessage(''), 3000);
           console.log('Professor added to cart successfully');
         } else {
           console.error('Failed to add professor to cart:', response.statusText);
@@ -447,7 +542,7 @@ const ProfessorTable = ({ professors, fetchProfessorRatings, fetchProfessorAnaly
                 <td>{ratingsData[professor.id] ? roundToTenth(ratingsData[professor.id].totalQualityAverage) : '-'}</td>
                 <td>{ratingsData[professor.id]?.ratingAmount || '-'}</td>
                 <td>
-                  <MDBBtn style={{ backgroundColor: 'rgb(0, 102, 0)', color: 'white' }} size="sm" onClick={(event) => handleAddClick(event, professor.id)}>Add</MDBBtn>
+                  <MDBBtn style={{ backgroundColor: 'rgb(0, 102, 0)', color: 'white' }} size="sm" onClick={(event) => handleAddClick(event, professor)}>Add</MDBBtn>
                 </td>
               </tr>
               {selectedProfessor === professor && (
@@ -484,13 +579,44 @@ const ProfessorTable = ({ professors, fetchProfessorRatings, fetchProfessorAnaly
   );
 };
 
+const CartTable = ({ cartItems, handleDeleteClick }) => {
+  return (
+    <MDBTable responsive>
+      <MDBTableHead dark>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Code</th>
+          <th>Course Name</th>
+          <th>Delete</th>
+        </tr>
+      </MDBTableHead>
+      <MDBTableBody>
+        {cartItems.map((item, index) => (
+          <tr key={index}>
+            <td>{item.firstName}</td>
+            <td>{item.lastName}</td>
+            <td>{item.code}</td>
+            <td>{item.courseName}</td>
+            <td>
+              <MDBBtn color="danger" size="sm" onClick={() => handleDeleteClick(item.professorId, item.courseId)}>
+                Delete
+              </MDBBtn>
+            </td>
+          </tr>
+        ))}
+      </MDBTableBody>
+    </MDBTable>
+  );
+};
+
 const ProfessorDetails = ({ professor, analysisData }) => {
   const lineData = {
-    labels: analysisData ? analysisData.averageRatingValues.map(item => `${item.month} ${item.year}`) : [],
+    labels: analysisData ? analysisData.averageRatingValues.map(item => `${item.month} ${item.year}`).reverse() : [],
     datasets: [
       {
         label: 'Rating Over Time',
-        data: analysisData ? analysisData.averageRatingValues.map(item => item.value) : [],
+        data: analysisData ? analysisData.averageRatingValues.map(item => item.value).reverse() : [],
         fill: false,
         backgroundColor: 'rgb(75, 192, 192)',
         borderColor: 'rgba(75, 192, 192, 0.2)',

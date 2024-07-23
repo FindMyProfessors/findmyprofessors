@@ -59,10 +59,6 @@ const EmailConfirmation = () => {
                 <h5 className="fw-normal my-4 pb-0" style={{ letterSpacing: '1px', color: 'white' }}>
                   Your email has been confirmed. Redirecting to login ...
                 </h5>
-                <div className='d-flex flex-row justify-content-start'>
-                  <a href="#!" className="small text-muted me-1">Terms of use.</a>
-                  <a href="#!" className="small text-muted">Privacy policy</a>
-                </div>
               </MDBCardBody>
             </MDBCol>
           </MDBRow>

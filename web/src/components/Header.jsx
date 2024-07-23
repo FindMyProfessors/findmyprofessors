@@ -41,7 +41,11 @@ function Header()
 
     const navigate = useNavigate();
 
+    const userId = localStorage.getItem('user_id');
+
     const handleLogout = () => {
+        localStorage.removeItem('user_id');
+        console.log("userID is now " + userId);
         toggleOpen();
         navigate('/Login');
     };
@@ -108,13 +112,15 @@ function Header()
 
                                 <MDBNavbarItem>
                                     <MDBNavbarLink
-                                    href='./Cart'>
+                                    href='./Cart'
+                                    style={{ color: '#FFFFFF' }}>
                                         Cart
                                     </MDBNavbarLink>
                                 </MDBNavbarItem>
 
                                 <MDBDropdown>
                                     <MDBDropdownToggle
+                                    aria-label="Search Button"
                                     style={{ backgroundColor: '#3d3d3d', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0)'}}>
 
                                         <MDBIcon
