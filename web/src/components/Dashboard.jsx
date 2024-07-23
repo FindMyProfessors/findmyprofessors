@@ -18,6 +18,7 @@ const Dashboard = () => {
   const [professorsData, setProfessorsData] = useState([]);
   const [headersVisible, setHeadersVisible] = useState(true);
   const [showSuggestions, setShowSuggestions] = useState(true);
+  const [courseId, setCourseId] = useState('');
 
   const preventClose = (e) => {
     e.stopPropagation();
@@ -98,6 +99,7 @@ const Dashboard = () => {
 
   const fetchProfessors = async (courseId, year, semester) => {
     const token = localStorage.getItem('token');
+    localStorage.setItem('course_id', courseId);
 
     if (token) {
       try {
@@ -106,6 +108,7 @@ const Dashboard = () => {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
           }
+          
         });
 
         if (response.ok) {
@@ -127,6 +130,7 @@ const Dashboard = () => {
       console.error('No token found');
     }
   };
+
 
   const fetchCourses = async (schoolId, year, semester, query) => {
     const token = localStorage.getItem('token');
@@ -168,7 +172,7 @@ const Dashboard = () => {
 
     if (token) {
       try {
-        const response = await fetch(`http://localhost:8080/professors/${professorId}/rating?topKPercentage=${topKPercentage}`, {
+        const response = await fetch(`${API_URL}/professors/${professorId}/rating?topKPercentage=${topKPercentage}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -198,7 +202,7 @@ const Dashboard = () => {
 
     if (token) {
       try {
-        const response = await fetch(`http://localhost:8080/professors/${professorId}/analysis`, {
+        const response = await fetch(`${API_URL}{professorId}/analysis`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -381,10 +385,11 @@ const ProfessorTable = ({ professors, fetchProfessorRatings, fetchProfessorAnaly
     }));
   };
 
-  const handleAddClick = async (event, professorId, courseId) => {
+  const handleAddClick = async (event, professorId) => {
     event.stopPropagation(); // Prevent the event from propagating to the row click
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('user_id');
+    const courseId = localStorage.getItem('course_id')
 
     if (token && userId) {
       try {
