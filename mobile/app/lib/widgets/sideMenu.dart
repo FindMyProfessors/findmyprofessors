@@ -62,7 +62,7 @@ Future<void> _loadUserValues() async {
           ListTile(
             leading: Icon(Icons.dashboard_customize_rounded, color: Colors.white,),
             title: Text('DashBoard', style: TextStyle(color: Colors.white),),
-            onTap: () =>  {Navigator.of(context).push(MaterialPageRoute(builder: (context) => Dashboard()))},
+            onTap: () =>   {Navigator.of(context).pop()},
           ),
 
           Divider(color: Colors.black, thickness: 1.0),
