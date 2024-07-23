@@ -21,6 +21,7 @@ const Dashboard = () => {
   const [courseId, setCourseId] = useState('');
   const [cartVisible, setCartVisible] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [addClassMessage, setAddClassMessage] = useState('');
 
   const preventClose = (e) => {
     e.stopPropagation();
@@ -290,30 +291,32 @@ const Dashboard = () => {
   };
 
   const handleDeleteClick = async (professorId, courseId) => {
-    const userId = localStorage.getItem('user_id');
-    const token = localStorage.getItem('token');
+    if (window.confirm('Are you sure you want to delete this entry?')) {
+      const userId = localStorage.getItem('user_id');
+      const token = localStorage.getItem('token');
 
-    if (userId && token) {
-      try {
-        const response = await fetch(`${API_URL}/users/${userId}/cart`, {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ professor_id: professorId, course_id: courseId })
-        });
+      if (userId && token) {
+        try {
+          const response = await fetch(`${API_URL}/users/${userId}/cart`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ professor_id: professorId, course_id: courseId })
+          });
 
-        if (response.ok) {
-          setCartItems((prevItems) => prevItems.filter(item => !(item.professorId === professorId && item.courseId === courseId)));
-        } else {
-          console.error('Failed to delete item from cart:', response.statusText);
+          if (response.ok) {
+            setCartItems((prevItems) => prevItems.filter(item => !(item.professorId === professorId && item.courseId === courseId)));
+          } else {
+            console.error('Failed to delete item from cart:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Error deleting item from cart:', error);
         }
-      } catch (error) {
-        console.error('Error deleting item from cart:', error);
+      } else {
+        console.error('No user ID or token found');
       }
-    } else {
-      console.error('No user ID or token found');
     }
   };
 
@@ -384,6 +387,9 @@ const Dashboard = () => {
                 <MDBBtn color="primary" onClick={handleSearchClick}>
                   <MDBIcon icon="search" />
                 </MDBBtn>
+                <MDBBtn color="primary" onClick={handleCartClick}>
+                  <MDBIcon icon="shopping-cart" /> Cart
+                </MDBBtn>
               </MDBInputGroup>
 
               {showSuggestions && searchResults.length > 0 && (
@@ -398,22 +404,28 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <MDBBtn color="primary" onClick={handleCartClick}>
-            <MDBIcon icon="shopping-cart" /> Cart
-          </MDBBtn>
+          {addClassMessage && (
+            <div className="alert alert-success" role="alert">
+              {addClassMessage}
+            </div>
+          )}
 
           {cartVisible && (
             <div className="my-4">
+              <MDBBtn color="secondary" onClick={() => setCartVisible(false)}>
+                Go Back to Professors
+              </MDBBtn>
               <CartTable cartItems={cartItems} handleDeleteClick={handleDeleteClick} />
             </div>
           )}
 
-          {!headersVisible && professorsData.length > 0 && (
+          {!headersVisible && professorsData.length > 0 && !cartVisible && (
             <div className="my-4">
               <ProfessorTable
                 professors={professorsData}
                 fetchProfessorRatings={fetchProfessorRatings}
                 fetchProfessorAnalysis={fetchProfessorAnalysis}
+                setAddClassMessage={setAddClassMessage}
               />
             </div>
           )}
@@ -423,7 +435,7 @@ const Dashboard = () => {
   );
 };
 
-const ProfessorTable = ({ professors, fetchProfessorRatings, fetchProfessorAnalysis }) => {
+const ProfessorTable = ({ professors, fetchProfessorRatings, fetchProfessorAnalysis, setAddClassMessage }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedProfessor, setSelectedProfessor] = useState(null);
@@ -480,6 +492,8 @@ const ProfessorTable = ({ professors, fetchProfessorRatings, fetchProfessorAnaly
         });
 
         if (response.ok) {
+          setAddClassMessage(`Class added: ${professor.first_name} ${professor.last_name}`);
+          setTimeout(() => setAddClassMessage(''), 3000);
           console.log('Professor added to cart successfully');
         } else {
           console.error('Failed to add professor to cart:', response.statusText);
