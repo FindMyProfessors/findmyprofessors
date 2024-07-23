@@ -193,6 +193,36 @@ const Dashboard = () => {
     }
   };
 
+  const fetchProfessorAnalysis = async (professorId) => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      try {
+        const response = await fetch(`http://localhost:8080/professors/${professorId}/analysis`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Professor analysis received:', data);
+          return data;
+        } else {
+          console.error('Failed to fetch professor analysis:', response.statusText);
+          return null;
+        }
+      } catch (error) {
+        console.error('Error fetching professor analysis:', error);
+        return null;
+      }
+    } else {
+      console.error('No token found');
+      return null;
+    }
+  };
+
   const debouncedFetchCourses = debounce((query) => {
     if (schoolId) {
       fetchCourses(schoolId, year, semester, query);
@@ -260,8 +290,8 @@ const Dashboard = () => {
                     </MDBDropdownItem>
                     <MDBDropdownItem link onClick={() => handleDropdownClick('year', 2025)}>
                       2025 {year === 2025 && <MDBIcon icon="check" />}
-                    </MDBDropdownItem>
-                  </MDBDropdownMenu>
+                      </MDBDropdownItem>
+                    </MDBDropdownMenu>
                 </MDBDropdown>
 
                 <MDBDropdown onClick={preventClose}>
@@ -272,8 +302,8 @@ const Dashboard = () => {
                     </MDBDropdownItem>
                     <MDBDropdownItem link onClick={() => handleDropdownClick('semester', 'SPRING')}>
                       Spring {semester === 'SPRING' && <MDBIcon icon="check" />}
-                    </MDBDropdownItem>
-                  </MDBDropdownMenu>
+                      </MDBDropdownItem>
+                    </MDBDropdownMenu>
                 </MDBDropdown>
 
                 <MDBInput
@@ -303,7 +333,7 @@ const Dashboard = () => {
 
           {!headersVisible && professorsData.length > 0 && (
             <div className="my-4">
-              <ProfessorTable professors={professorsData} fetchProfessorRatings={fetchProfessorRatings} />
+              <ProfessorTable professors={professorsData} fetchProfessorRatings={fetchProfessorRatings} fetchProfessorAnalysis={fetchProfessorAnalysis} />
             </div>
           )}
 
@@ -313,11 +343,12 @@ const Dashboard = () => {
   );
 };
 
-const ProfessorTable = ({ professors, fetchProfessorRatings }) => {
+const ProfessorTable = ({ professors, fetchProfessorRatings, fetchProfessorAnalysis }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedProfessor, setSelectedProfessor] = useState(null);
   const [ratingsData, setRatingsData] = useState({});
+  const [analysisData, setAnalysisData] = useState({});
   const itemsPerPage = 10;
 
   const handleSearch = (event) => {
@@ -339,9 +370,14 @@ const ProfessorTable = ({ professors, fetchProfessorRatings }) => {
   const handleRowClick = async (professor) => {
     setSelectedProfessor(professor);
     const ratings = await fetchProfessorRatings(professor.id, 30); // Fetch ratings for the selected professor
+    const analysis = await fetchProfessorAnalysis(professor.id); // Fetch analysis for the selected professor
     setRatingsData((prevRatingsData) => ({
       ...prevRatingsData,
       [professor.id]: ratings,
+    }));
+    setAnalysisData((prevAnalysisData) => ({
+      ...prevAnalysisData,
+      [professor.id]: analysis,
     }));
   };
 
@@ -387,7 +423,7 @@ const ProfessorTable = ({ professors, fetchProfessorRatings }) => {
               {selectedProfessor === professor && (
                 <tr>
                   <td colSpan="9">
-                    <ProfessorDetails professor={professor} />
+                    <ProfessorDetails professor={professor} analysisData={analysisData[professor.id]} />
                   </td>
                 </tr>
               )}
@@ -418,13 +454,13 @@ const ProfessorTable = ({ professors, fetchProfessorRatings }) => {
   );
 };
 
-const ProfessorDetails = ({ professor }) => {
+const ProfessorDetails = ({ professor, analysisData }) => {
   const lineData = {
     labels: ['21 Jan', '18 Jun', '16 Feb', '13 Jan', '09 Mar', '10 May', '03 Aug'],
     datasets: [
       {
         label: 'Rating Over Time',
-        data: [3, 3.5, 4, 4.5, 4, 4.2, 4.5],
+        data: analysisData ? analysisData.ratingOverTime : [],
         fill: false,
         backgroundColor: 'rgb(75, 192, 192)',
         borderColor: 'rgba(75, 192, 192, 0.2)',
@@ -433,11 +469,11 @@ const ProfessorDetails = ({ professor }) => {
   };
 
   const radarData = {
-    labels: ['Clear Grading Criteria', 'Tests Are Tough', 'So Many Papers', 'Graded by Few Things', 'Inspirational', 'Extra Credit', 'Participation Matters', 'Would Take Again'],
+    labels: analysisData ? analysisData.tagAmount.map(tag => tag.tag) : [],
     datasets: [
       {
         label: 'Professor Feedback',
-        data: [4, 3, 2, 5, 4, 3, 5, 4],
+        data: analysisData ? analysisData.tagAmount.map(tag => tag.amount) : [],
         backgroundColor: 'rgba(111, 162, 242, 0.2)',
         borderColor: 'rgba(111, 162, 242, 1)',
         borderWidth: 1,
