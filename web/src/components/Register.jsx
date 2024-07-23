@@ -80,6 +80,7 @@ const Register = () => {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('token', data.token);
+        localStorage.setItem('user_id', data.user.id);
         setSuccess('Registration successful! Redirecting to email verification...');
         setError('');
 
