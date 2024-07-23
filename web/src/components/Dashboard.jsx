@@ -19,6 +19,8 @@ const Dashboard = () => {
   const [headersVisible, setHeadersVisible] = useState(true);
   const [showSuggestions, setShowSuggestions] = useState(true);
   const [courseId, setCourseId] = useState('');
+  const [cartVisible, setCartVisible] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
 
   const preventClose = (e) => {
     e.stopPropagation();
@@ -252,6 +254,39 @@ const Dashboard = () => {
     }
   };
 
+  const handleCartClick = async () => {
+    setCartVisible(!cartVisible);
+    if (!cartVisible) {
+      const userId = localStorage.getItem('user_id');
+      if (userId) {
+        try {
+          const response = await fetch(`${API_URL}/users/${userId}/cart`, {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`,
+              'Content-Type': 'application/json'
+            }
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            setCartItems(data.entries.map(entry => ({
+              firstName: entry.professor.first_name,
+              lastName: entry.professor.last_name,
+              code: entry.course.code,
+              courseName: entry.course.name,
+            })));
+          } else {
+            console.error('Failed to fetch cart data:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Error fetching cart data:', error);
+        }
+      } else {
+        console.error('No user ID found');
+      }
+    }
+  };
+
   return (
     <>
       <Header />
@@ -259,7 +294,6 @@ const Dashboard = () => {
       <style>{'body { background-color: #FFFFFF; }'}</style>
 
       <MDBContainer fluid className="d-flex justify-content-center align-items-center">
-
         <div className="text-center">
 
           {headersVisible && (
@@ -293,9 +327,8 @@ const Dashboard = () => {
                       2024 {year === 2024 && <MDBIcon icon="check" />}
                     </MDBDropdownItem>
                     <MDBDropdownItem link onClick={() => handleDropdownClick('year', 2025)}>
-                      2025 {year === 2025 && <MDBIcon icon="check" />}
-                    </MDBDropdownItem>
-                  </MDBDropdownMenu>
+                      2025 {year === 2025 && <MDBIcon icon="check" />}</MDBDropdownItem>
+                    </MDBDropdownMenu>
                 </MDBDropdown>
 
                 <MDBDropdown onClick={preventClose}>
@@ -335,12 +368,25 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {!headersVisible && professorsData.length > 0 && (
+          <MDBBtn color="primary" onClick={handleCartClick}>
+            <MDBIcon icon="shopping-cart" /> Cart
+          </MDBBtn>
+
+          {cartVisible && (
             <div className="my-4">
-              <ProfessorTable professors={professorsData} fetchProfessorRatings={fetchProfessorRatings} fetchProfessorAnalysis={fetchProfessorAnalysis} />
+              <CartTable cartItems={cartItems} />
             </div>
           )}
 
+          {!headersVisible && professorsData.length > 0 && (
+            <div className="my-4">
+              <ProfessorTable
+                professors={professorsData}
+                fetchProfessorRatings={fetchProfessorRatings}
+                fetchProfessorAnalysis={fetchProfessorAnalysis}
+              />
+            </div>
+          )}
         </div>
       </MDBContainer>
     </>
@@ -385,22 +431,22 @@ const ProfessorTable = ({ professors, fetchProfessorRatings, fetchProfessorAnaly
     }));
   };
 
-  const handleAddClick = async (event, professorId) => {
+  const handleAddClick = async (event, professor) => {
     event.stopPropagation(); // Prevent the event from propagating to the row click
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('user_id');
-    const courseId = localStorage.getItem('course_id')
+    const courseId = localStorage.getItem('course_id');
 
     if (token && userId) {
       try {
-        console.log('Sending request with data:', { professorId, courseId }); // Debugging log
+        console.log('Sending request with data:', { professorId: professor.id, courseId }); // Debugging log
         const response = await fetch(`${API_URL}/users/${userId}/cart`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ professor_id: professorId, course_id: courseId})
+          body: JSON.stringify({ professor_id: professor.id, course_id: courseId })
         });
 
         if (response.ok) {
@@ -452,7 +498,7 @@ const ProfessorTable = ({ professors, fetchProfessorRatings, fetchProfessorAnaly
                 <td>{ratingsData[professor.id] ? roundToTenth(ratingsData[professor.id].totalQualityAverage) : '-'}</td>
                 <td>{ratingsData[professor.id]?.ratingAmount || '-'}</td>
                 <td>
-                  <MDBBtn style={{ backgroundColor: 'rgb(0, 102, 0)', color: 'white' }} size="sm" onClick={(event) => handleAddClick(event, professor.id)}>Add</MDBBtn>
+                  <MDBBtn style={{ backgroundColor: 'rgb(0, 102, 0)', color: 'white' }} size="sm" onClick={(event) => handleAddClick(event, professor)}>Add</MDBBtn>
                 </td>
               </tr>
               {selectedProfessor === professor && (
@@ -486,6 +532,31 @@ const ProfessorTable = ({ professors, fetchProfessorRatings, fetchProfessorAnaly
         </MDBPaginationItem>
       </MDBPagination>
     </MDBContainer>
+  );
+};
+
+const CartTable = ({ cartItems }) => {
+  return (
+    <MDBTable responsive>
+      <MDBTableHead dark>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Code</th>
+          <th>Course Name</th>
+        </tr>
+      </MDBTableHead>
+      <MDBTableBody>
+        {cartItems.map((item, index) => (
+          <tr key={index}>
+            <td>{item.firstName}</td>
+            <td>{item.lastName}</td>
+            <td>{item.code}</td>
+            <td>{item.courseName}</td>
+          </tr>
+        ))}
+      </MDBTableBody>
+    </MDBTable>
   );
 };
 
