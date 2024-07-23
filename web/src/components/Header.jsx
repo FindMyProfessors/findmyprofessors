@@ -41,7 +41,11 @@ function Header()
 
     const navigate = useNavigate();
 
+    const userId = localStorage.getItem('user_id');
+
     const handleLogout = () => {
+        localStorage.removeItem('user_id');
+        console.log("userID is now " + userId);
         toggleOpen();
         navigate('/Login');
     };
