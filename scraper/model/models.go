@@ -273,7 +273,7 @@ func GetGradeByString(gradeString string) Grade {
 	case "Not sure yet":
 		return GradeNotSure
 	default:
-		fmt.Printf("%s is passed in but unable to be parsed as a Grade\n", gradeString)
+		//fmt.Printf("%s is passed in but unable to be parsed as a Grade\n", gradeString)
 		return GradeOther
 	}
 }

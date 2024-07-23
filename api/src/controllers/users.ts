@@ -1,4 +1,3 @@
-
 import {
   Body,
   Controller,
@@ -31,14 +30,18 @@ import {
   SendPasswordResetParams,
 } from "../models/users";
 import { prisma } from "../database/database";
-import { User, UserCart, UserRole } from "@prisma/client";
+import { User, UserRole } from "@prisma/client";
 import { AuthErrorType, JWTBody, UnauthorizedError } from "../models/auth";
 import { v4 as uuidv4 } from "uuid";
 import { sendEmailConfirmation, sendPasswordReset } from "../mailer";
 import { formatEmailConfirmationUrl, formatPasswordResetUrl } from "../config";
 import { logger } from "../utils/logger";
 import { hashPassword } from "./auth";
-import { use } from "chai";
+import { CourseErrorType, CourseNotFoundError } from "../models/courses";
+import {
+  ProfessorErrorType,
+  ProfessorNotFoundError,
+} from "../models/professors";
 
 @Route("users")
 @Tags("Users")
@@ -127,8 +130,6 @@ export class UsersController extends Controller {
     @Request() request: any,
     @Body() body: ConfirmEmailParams
   ): Promise<void> {
- 
-
     // check token
     const emailConfirmation = await prisma.emailConfirmation.findUnique({
       where: { token: body.token, confirmed_at: null },
@@ -162,13 +163,12 @@ export class UsersController extends Controller {
   public async sendPasswordResetEmail(
     @Body() body: SendPasswordResetParams
   ): Promise<void> {
-
     const user = await prisma.user.findUnique({
       where: { email: body.email },
       select: { email: true, username: true, id: true },
     });
 
-    if (!user) {  
+    if (!user) {
       logger.error("User not found for email: " + body.email);
       const error: UserNotFoundError = {
         message: "User not found",
@@ -194,7 +194,8 @@ export class UsersController extends Controller {
 
     if (!passwordReset) {
       logger.debug(
-        "No valid password reset found, creating new one for user ID: " + user.id
+        "No valid password reset found, creating new one for user ID: " +
+          user.id
       );
       passwordReset = await prisma.passwordReset.create({
         data: {
@@ -210,7 +211,9 @@ export class UsersController extends Controller {
 
     try {
       await sendPasswordReset(user.email, user.username, resetUrl);
-      logger.info("Password reset email sent successfully to user ID: " + user.id);
+      logger.info(
+        "Password reset email sent successfully to user ID: " + user.id
+      );
     } catch (error) {
       logger.error(
         "Failed to send password reset email for user ID: " +
@@ -226,9 +229,7 @@ export class UsersController extends Controller {
 
   // Add password reset endpoint
   @Post("reset-password")
-  public async resetPassword(
-    @Body() body: ResetPasswordParams
-  ): Promise<void> {
+  public async resetPassword(@Body() body: ResetPasswordParams): Promise<void> {
     let passwordReset = await prisma.passwordReset.findUnique({
       where: {
         token: body.token,
@@ -316,6 +317,31 @@ export class UsersController extends Controller {
       return Promise.reject(error);
     }
 
+    // Check if course exists
+    const course = await prisma.course.findUnique({
+      where: { id: body.course_id },
+    });
+    if (!course) {
+      const error: CourseNotFoundError = {
+        message: "Course not found",
+        type: CourseErrorType.COURSE_NOT_FOUND,
+      };
+      return Promise.reject(error);
+    }
+
+    // Check if professor exists
+    const professor = await prisma.professor.findUnique({
+      where: { id: body.professor_id },
+    });
+    if (!professor) {
+      const error: ProfessorNotFoundError = {
+        message: "Professor not found",
+        type: ProfessorErrorType.PROFESSOR_NOT_FOUND,
+      };
+      return Promise.reject(error);
+    }
+
+    // Check if user cart entry already exists
     const userCart = await prisma.userCart.findFirst({
       where: {
         user_id: id,
@@ -323,6 +349,7 @@ export class UsersController extends Controller {
         professor_id: body.professor_id,
       },
     });
+
     if (userCart) {
       const error: UserCartEntryAlreadyExistsError = {
         message: "User cart entry already exists",
@@ -331,6 +358,7 @@ export class UsersController extends Controller {
       return Promise.reject(error);
     }
 
+    // Create user cart entry
     await prisma.userCart.create({
       data: {
         user_id: id,
@@ -359,6 +387,31 @@ export class UsersController extends Controller {
       return Promise.reject(error);
     }
 
+    // Check if course exists
+    const course = await prisma.course.findUnique({
+      where: { id: body.course_id },
+    });
+    if (!course) {
+      const error: CourseNotFoundError = {
+        message: "Course not found",
+        type: CourseErrorType.COURSE_NOT_FOUND,
+      };
+      return Promise.reject(error);
+    }
+
+    // Check if professor exists
+    const professor = await prisma.professor.findUnique({
+      where: { id: body.professor_id },
+    });
+    if (!professor) {
+      const error: ProfessorNotFoundError = {
+        message: "Professor not found",
+        type: ProfessorErrorType.PROFESSOR_NOT_FOUND,
+      };
+      return Promise.reject(error);
+    }
+
+    // Delete user cart entry
     await prisma.userCart.deleteMany({
       where: {
         user_id: id,

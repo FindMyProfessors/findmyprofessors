@@ -35,10 +35,9 @@ app.use(
 app.use(json());
 app.use(requestIdMiddleware());
 
-// Add support for cors
 app.use(cors({
   credentials: true,
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Add all necessary methods
   allowedHeaders: ['Content-Type', 'Authorization'],
   origin: config.CORS_ALLOWED_ORIGINS
 }));

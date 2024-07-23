@@ -202,7 +202,7 @@ const Dashboard = () => {
 
     if (token) {
       try {
-        const response = await fetch(`${API_URL}{professorId}/analysis`, {
+        const response = await fetch(`${API_URL}/professors/${professorId}/analysis`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
