@@ -381,6 +381,36 @@ const ProfessorTable = ({ professors, fetchProfessorRatings, fetchProfessorAnaly
     }));
   };
 
+  const handleAddClick = async (event, professorId, courseId) => {
+    event.stopPropagation(); // Prevent the event from propagating to the row click
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('user_id');
+
+    if (token && userId) {
+      try {
+        console.log('Sending request with data:', { professorId, courseId }); // Debugging log
+        const response = await fetch(`${API_URL}/users/${userId}/cart`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ professor_id: professorId, course_id: courseId})
+        });
+
+        if (response.ok) {
+          console.log('Professor added to cart successfully');
+        } else {
+          console.error('Failed to add professor to cart:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error adding professor to cart:', error);
+      }
+    } else {
+      console.error('No token or user ID found');
+    }
+  };
+
   return (
     <MDBContainer>
       <MDBRow className="my-4">
@@ -417,7 +447,7 @@ const ProfessorTable = ({ professors, fetchProfessorRatings, fetchProfessorAnaly
                 <td>{ratingsData[professor.id] ? roundToTenth(ratingsData[professor.id].totalQualityAverage) : '-'}</td>
                 <td>{ratingsData[professor.id]?.ratingAmount || '-'}</td>
                 <td>
-                  <MDBBtn style={{ backgroundColor: 'rgb(0, 102, 0)', color: 'white' }} size="sm">Add</MDBBtn>
+                  <MDBBtn style={{ backgroundColor: 'rgb(0, 102, 0)', color: 'white' }} size="sm" onClick={(event) => handleAddClick(event, professor.id)}>Add</MDBBtn>
                 </td>
               </tr>
               {selectedProfessor === professor && (
