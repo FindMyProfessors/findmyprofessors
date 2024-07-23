@@ -274,6 +274,8 @@ const Dashboard = () => {
               lastName: entry.professor.last_name,
               code: entry.course.code,
               courseName: entry.course.name,
+              professorId: entry.professor.id,
+              courseId: entry.course.id
             })));
           } else {
             console.error('Failed to fetch cart data:', response.statusText);
@@ -284,6 +286,34 @@ const Dashboard = () => {
       } else {
         console.error('No user ID found');
       }
+    }
+  };
+
+  const handleDeleteClick = async (professorId, courseId) => {
+    const userId = localStorage.getItem('user_id');
+    const token = localStorage.getItem('token');
+
+    if (userId && token) {
+      try {
+        const response = await fetch(`${API_URL}/users/${userId}/cart`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ professor_id: professorId, course_id: courseId })
+        });
+
+        if (response.ok) {
+          setCartItems((prevItems) => prevItems.filter(item => !(item.professorId === professorId && item.courseId === courseId)));
+        } else {
+          console.error('Failed to delete item from cart:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error deleting item from cart:', error);
+      }
+    } else {
+      console.error('No user ID or token found');
     }
   };
 
@@ -347,15 +377,11 @@ const Dashboard = () => {
                   labelClass="text-black"
                   style={{ backgroundColor: '#FFFFFF', color: 'black', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)' }}
                   contrast
-                  aria-label="Search Courses"
                   label="Search Courses"
                   value={query}
                   onChange={(e) => setFilters({ ...filters, query: e.target.value })}
                 />
-                <MDBBtn
-                color="primary"
-                aria-label="Search Button"
-                onClick={handleSearchClick}>
+                <MDBBtn color="primary" onClick={handleSearchClick}>
                   <MDBIcon icon="search" />
                 </MDBBtn>
               </MDBInputGroup>
@@ -378,7 +404,7 @@ const Dashboard = () => {
 
           {cartVisible && (
             <div className="my-4">
-              <CartTable cartItems={cartItems} />
+              <CartTable cartItems={cartItems} handleDeleteClick={handleDeleteClick} />
             </div>
           )}
 
@@ -539,7 +565,7 @@ const ProfessorTable = ({ professors, fetchProfessorRatings, fetchProfessorAnaly
   );
 };
 
-const CartTable = ({ cartItems }) => {
+const CartTable = ({ cartItems, handleDeleteClick }) => {
   return (
     <MDBTable responsive>
       <MDBTableHead dark>
@@ -548,6 +574,7 @@ const CartTable = ({ cartItems }) => {
           <th>Last Name</th>
           <th>Code</th>
           <th>Course Name</th>
+          <th>Delete</th>
         </tr>
       </MDBTableHead>
       <MDBTableBody>
@@ -557,6 +584,11 @@ const CartTable = ({ cartItems }) => {
             <td>{item.lastName}</td>
             <td>{item.code}</td>
             <td>{item.courseName}</td>
+            <td>
+              <MDBBtn color="danger" size="sm" onClick={() => handleDeleteClick(item.professorId, item.courseId)}>
+                Delete
+              </MDBBtn>
+            </td>
           </tr>
         ))}
       </MDBTableBody>
