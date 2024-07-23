@@ -184,11 +184,15 @@ const SearchBar = ({ onSearch, filters, setFilters, preventClose, getYearText, g
           labelClass="text-black"
           style={{ backgroundColor: '#3f3f3f', boxShadow: '3px 3px 12px rgba(0, 0, 0, 0.75)' }}
           contrast
+          aria-label="Search Courses"
           label="Search Courses"
           value={query}
           onChange={(e) => setFilters({ ...filters, query: e.target.value })}/>
           
-          <MDBBtn color="primary" onClick={handleSearchClick}>
+          <MDBBtn
+          color="primary"
+          aria-label="Search Button"
+          onClick={handleSearchClick}>
             <MDBIcon icon="search" />
           </MDBBtn>
         </MDBInputGroup>

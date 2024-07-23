@@ -139,7 +139,9 @@ const DashboardHeader = ({ onSearch }) => {
             <MDBNavbarNav>
 
               <MDBNavbarItem>
-                <MDBNavbarLink href='/'>Cart</MDBNavbarLink>
+                <MDBNavbarLink
+                href='/'
+                style={{ color: '#FFFFFF' }}>Cart</MDBNavbarLink>
               </MDBNavbarItem>
 
               <MDBNavbarItem>

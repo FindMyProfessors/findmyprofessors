@@ -118,7 +118,7 @@ const containerStyle = {
 
                       <MDBBtn
                       outline color ='primary'
-                      style={{ backgroundColor: '#282828', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)' }}
+                      style={{ backgroundColor: '#282828', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)', color:'white' }}
                       size="lg"
                       className="me-5"
                       href='./About'About>
