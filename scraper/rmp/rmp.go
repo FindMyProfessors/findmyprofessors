@@ -64,6 +64,7 @@ func (a *Api) StartScrape(ctx context.Context, school *model.School, schoolIDs .
 func isSameProfessor(professor *model.Professor, rmpProfessor *model.Professor) bool {
 	//fmt.Printf("professor=%v\n", professor)
 	//fmt.Printf("rmpProfessor=%v\n", rmpProfessor)
+	//log.Printf("Comparing professor: %s %s with rmpProfessor: %s %s\n", professor.FirstName, professor.LastName, rmpProfessor.FirstName, rmpProfessor.LastName)
 
 	if professor.FirstName == rmpProfessor.FirstName {
 		if professor.LastName == rmpProfessor.LastName {
@@ -97,20 +98,23 @@ func crossReference(school *model.School, rmpProfessors []*model.Professor) {
 	var wg sync.WaitGroup
 	wg.Add(len(rmpProfessors))
 	for _, rmpProfessor := range rmpProfessors {
-		go func(rmpProfessor *model.Professor) {
+		if rmpProfessor.LastName == "Leinecker" {
+			log.Printf("Found Leinecker!!!\n")
+		}
+		rmpProfessor := rmpProfessor // create a new variable for the goroutine
+		go func(p *model.Professor) {
+			defer wg.Done()
 			for _, professor := range school.Professors {
-				if isSameProfessor(professor, rmpProfessor) {
-					professor.Reviews = rmpProfessor.Reviews
-					professor.RMPId = rmpProfessor.RMPId
+				if isSameProfessor(professor, p) {
+					professor.Reviews = p.Reviews
+					professor.RMPId = p.RMPId
 					log.Printf("found match for %s %s\n", professor.FirstName, professor.LastName)
 					break
 				}
 			}
-			wg.Done()
 		}(rmpProfessor)
 	}
 	wg.Wait()
-
 }
 
 func (a *Api) scrape(ctx context.Context, professors []*model.Professor, cursor string, schoolId string) ([]*model.Professor, error) {
@@ -121,11 +125,14 @@ func (a *Api) scrape(ctx context.Context, professors []*model.Professor, cursor 
 
 	for _, prof := range response.NewSearch.Teachers.Edges {
 		rmpProfessor := prof.Node
+		if rmpProfessor.LastName != nil && *rmpProfessor.LastName == "Leinecker" {
+			log.Printf("Found Leinecker!!! HERE\n")
+		}
 
 		var reviews = make([]*model.Review, len(rmpProfessor.Ratings.Edges), len(rmpProfessor.Ratings.Edges))
 
 		for i, elem := range rmpProfessor.Ratings.Edges {
-			fmt.Printf("elem.Rating=%v\n", elem)
+			//fmt.Printf("elem.Rating=%v\n", elem)
 			rmpRating := elem.Node
 			t, err := time.Parse(model.RMPTimeConstant, *rmpRating.Date)
 			if err != nil {
@@ -170,12 +177,14 @@ func (a *Api) scrape(ctx context.Context, professors []*model.Professor, cursor 
 			Reviews:   reviews,
 		})
 
-		fmt.Printf("reviews=%v\n", reviews)
+		log.Printf("Added professor: %s %s with %d reviews\n", *rmpProfessor.FirstName, *rmpProfessor.LastName, len(reviews))
 	}
 
 	pageInfo := response.NewSearch.Teachers.PageInfo
 
-	log.Println("EndCursor=", pageInfo.EndCursor)
+	if pageInfo.EndCursor != nil {
+		log.Println("EndCursor=", *pageInfo.EndCursor)
+	}
 	log.Println("HasNextPage=", pageInfo.HasNextPage)
 
 	if pageInfo.HasNextPage {
