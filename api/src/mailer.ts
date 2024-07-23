@@ -42,14 +42,19 @@ async function sendEmail(
     // setup later
     const OAuth2Client = new OAuth2(
       config.OAUTH_CLIENT_ID,
-      config.SMTP_SERVICE_CLIENT
+      config.OAUTH_CLIENT_SECRET
     );
 
     OAuth2Client.setCredentials({
       refresh_token: config.OAUTH_REFRESH_TOKEN,
     });
 
-    const accessToken = (await OAuth2Client.getAccessToken()).token!;
+    const accessToken = (await OAuth2Client.getAccessToken()).token;
+
+    if (!accessToken) {
+      console.error("Failed to obtain access token.");
+      return;
+    }
 
     transporter = nodemailer.createTransport({
       host: config.SMTP_HOST,
