@@ -1,4 +1,3 @@
-
 import { Review, ReviewTag } from "@prisma/client";
 import {
   ChartValue,
@@ -45,12 +44,7 @@ async function beginAnalysis(reviews: Review[]): Promise<ProfessorAnalysis> {
 }
 
 function getTags(reviews: Review[]): TagAmount[] {
-  const tagMap: { [key in ReviewTag]: number } = Object.values(
-    ReviewTag
-  ).reduce((acc, tag) => {
-    acc[tag] = 0;
-    return acc;
-  }, {} as { [key in ReviewTag]: number });
+  const tagMap: { [key: string]: number } = {};
 
   reviews.forEach((review) => {
     review.tags.forEach((tag) => {
