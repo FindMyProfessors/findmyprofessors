@@ -612,11 +612,11 @@ const CartTable = ({ cartItems, handleDeleteClick }) => {
 
 const ProfessorDetails = ({ professor, analysisData }) => {
   const lineData = {
-    labels: analysisData ? analysisData.averageRatingValues.map(item => `${item.month} ${item.year}`) : [],
+    labels: analysisData ? analysisData.averageRatingValues.map(item => `${item.month} ${item.year}`).reverse() : [],
     datasets: [
       {
         label: 'Rating Over Time',
-        data: analysisData ? analysisData.averageRatingValues.map(item => item.value) : [],
+        data: analysisData ? analysisData.averageRatingValues.map(item => item.value).reverse() : [],
         fill: false,
         backgroundColor: 'rgb(75, 192, 192)',
         borderColor: 'rgba(75, 192, 192, 0.2)',
