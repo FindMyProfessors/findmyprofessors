@@ -290,8 +290,8 @@ const Dashboard = () => {
                     </MDBDropdownItem>
                     <MDBDropdownItem link onClick={() => handleDropdownClick('year', 2025)}>
                       2025 {year === 2025 && <MDBIcon icon="check" />}
-                      </MDBDropdownItem>
-                    </MDBDropdownMenu>
+                    </MDBDropdownItem>
+                  </MDBDropdownMenu>
                 </MDBDropdown>
 
                 <MDBDropdown onClick={preventClose}>
@@ -302,8 +302,8 @@ const Dashboard = () => {
                     </MDBDropdownItem>
                     <MDBDropdownItem link onClick={() => handleDropdownClick('semester', 'SPRING')}>
                       Spring {semester === 'SPRING' && <MDBIcon icon="check" />}
-                      </MDBDropdownItem>
-                    </MDBDropdownMenu>
+                    </MDBDropdownItem>
+                  </MDBDropdownMenu>
                 </MDBDropdown>
 
                 <MDBInput
@@ -456,16 +456,28 @@ const ProfessorTable = ({ professors, fetchProfessorRatings, fetchProfessorAnaly
 
 const ProfessorDetails = ({ professor, analysisData }) => {
   const lineData = {
-    labels: ['21 Jan', '18 Jun', '16 Feb', '13 Jan', '09 Mar', '10 May', '03 Aug'],
+    labels: analysisData ? analysisData.averageRatingValues.map(item => `${item.month} ${item.year}`) : [],
     datasets: [
       {
         label: 'Rating Over Time',
-        data: analysisData ? analysisData.ratingOverTime : [],
+        data: analysisData ? analysisData.averageRatingValues.map(item => item.value) : [],
         fill: false,
         backgroundColor: 'rgb(75, 192, 192)',
         borderColor: 'rgba(75, 192, 192, 0.2)',
       },
     ],
+  };
+
+  const lineOptions = {
+    scales: {
+      y: {
+        min: 0,
+        max: 5,
+        ticks: {
+          stepSize: 0.5,
+        },
+      },
+    },
   };
 
   const radarData = {
@@ -484,7 +496,7 @@ const ProfessorDetails = ({ professor, analysisData }) => {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
       <div style={{ width: '45%', marginRight: '5%' }}>
-        <Line data={lineData} />
+        <Line data={lineData} options={lineOptions} />
       </div>
       <div style={{ width: '45%' }}>
         <Radar data={radarData} />
