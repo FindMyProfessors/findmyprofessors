@@ -56,7 +56,7 @@ const containerStyle = {
     <>
         <Header />
 
-        <style>{'body { background-color: #FFFFFF; }'}</style>
+        <style>{'body { background-color: #121212; }'}</style>
 
         <MDBContainer
         style={containerStyle}>

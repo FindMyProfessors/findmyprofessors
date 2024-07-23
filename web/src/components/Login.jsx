@@ -77,7 +77,7 @@ const Login = () => {
     <>
       <Header />
       
-      <style>{'body { background-color: #FFFFFF; }'}</style>
+      <style>{'body { background-color: #121212; }'}</style>
 
       <MDBContainer
       style={containerStyle}>
@@ -169,24 +169,12 @@ const Login = () => {
 
                 <p
                 className="mb-5 pb-lg-2"
-                style={{ color: 'primary' }}>
-                  Don't have an account? <Link to="/Register">Register</Link>
+                style={{ color: 'white' }}>
+                  Don't have an account? <Link to="/Register" style={{ color: 'primary' }}>Register</Link>
                 </p>
 
-                <div className='d-flex flex-row justify-content-start'>
-                  <a
-                  href="#!"
-                  className="small text-muted me-1">
-                    Terms of use.
-                  </a>
-
-                  <a
-                  href="#!"
-                  className="small text-muted">
-                    Privacy policy
-                  </a>
                   
-                </div>
+
 
               </MDBCardBody>
             </MDBCol>
