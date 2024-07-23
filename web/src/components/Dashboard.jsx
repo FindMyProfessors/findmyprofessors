@@ -15,6 +15,7 @@ const Dashboard = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [professorsData, setProfessorsData] = useState([]);
   const [headersVisible, setHeadersVisible] = useState(true);
+  const [showSuggestions, setShowSuggestions] = useState(true);
 
   const preventClose = (e) => {
     e.stopPropagation();
@@ -160,9 +161,40 @@ const Dashboard = () => {
     }
   };
 
+  const fetchProfessorRatings = async (professorId, topKPercentage) => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      try {
+        const response = await fetch(`http://localhost:8080/professors/${professorId}/rating?topKPercentage=${topKPercentage}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Professor ratings received:', data);
+          return data;
+        } else {
+          console.error('Failed to fetch professor ratings:', response.statusText);
+          return null;
+        }
+      } catch (error) {
+        console.error('Error fetching professor ratings:', error);
+        return null;
+      }
+    } else {
+      console.error('No token found');
+      return null;
+    }
+  };
+
   const debouncedFetchCourses = debounce((query) => {
     if (schoolId) {
       fetchCourses(schoolId, year, semester, query);
+      setShowSuggestions(true);
     }
   }, 300);
 
@@ -177,7 +209,7 @@ const Dashboard = () => {
   const handleSearchClick = () => {
     if (schoolId) {
       setHeadersVisible(false);
-      setSearchResults([]);  // Hide the suggested courses
+      setShowSuggestions(false); // Hide the suggested courses
       fetchCourses(schoolId, year, semester, query);
     } else {
       console.error('No school selected');
@@ -227,7 +259,7 @@ const Dashboard = () => {
                     <MDBDropdownItem link onClick={() => handleDropdownClick('year', 2025)}>
                       2025 {year === 2025 && <MDBIcon icon="check" />}
                     </MDBDropdownItem>
-                    </MDBDropdownMenu>
+                  </MDBDropdownMenu>
                 </MDBDropdown>
 
                 <MDBDropdown onClick={preventClose}>
@@ -239,7 +271,7 @@ const Dashboard = () => {
                     <MDBDropdownItem link onClick={() => handleDropdownClick('semester', 'SPRING')}>
                       Spring {semester === 'SPRING' && <MDBIcon icon="check" />}
                     </MDBDropdownItem>
-                    </MDBDropdownMenu>
+                  </MDBDropdownMenu>
                 </MDBDropdown>
 
                 <MDBInput
@@ -255,9 +287,9 @@ const Dashboard = () => {
                 </MDBBtn>
               </MDBInputGroup>
 
-              {searchResults.length > 0 && (
+              {showSuggestions && searchResults.length > 0 && (
                 <div className="dropdown-menu show w-100 position-absolute">
-                  {searchResults.slice(0, 5).map(course => (
+                  {searchResults.map(course => (
                     <div key={course.id} className="dropdown-item">
                       {course.code}
                     </div>
@@ -269,7 +301,7 @@ const Dashboard = () => {
 
           {!headersVisible && professorsData.length > 0 && (
             <div className="my-4">
-              <ProfessorTable professors={professorsData} />
+              <ProfessorTable professors={professorsData} fetchProfessorRatings={fetchProfessorRatings} />
             </div>
           )}
 
@@ -279,11 +311,11 @@ const Dashboard = () => {
   );
 };
 
-const ProfessorTable = ({ professors }) => {
+const ProfessorTable = ({ professors, fetchProfessorRatings }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedProfessor, setSelectedProfessor] = useState(null);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [ratingsData, setRatingsData] = useState({});
   const itemsPerPage = 10;
 
   const handleSearch = (event) => {
@@ -302,13 +334,13 @@ const ProfessorTable = ({ professors }) => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const handleRowClick = (professor) => {
-    if (selectedProfessor === professor) {
-      setIsExpanded(!isExpanded);
-    } else {
-      setSelectedProfessor(professor);
-      setIsExpanded(true);
-    }
+  const handleRowClick = async (professor) => {
+    setSelectedProfessor(professor);
+    const ratings = await fetchProfessorRatings(professor.id, 30); // Fetch ratings for the selected professor
+    setRatingsData((prevRatingsData) => ({
+      ...prevRatingsData,
+      [professor.id]: ratings,
+    }));
   };
 
   return (
@@ -324,10 +356,10 @@ const ProfessorTable = ({ professors }) => {
             <th></th>
             <th>Full Name</th>
             <th>Average Grade</th>
-            <th>Average Quality</th>
-            <th>Average Difficulty</th>
-            <th>Recent Quality Average</th>
-            <th>Recent Difficulty Average</th>
+            <th>Recent Average Difficulty</th>
+            <th>Recent Average Quality</th>
+            <th>Total Difficulty Average</th>
+            <th>Total Quality Average</th>
             <th>Ratings Count</th>
             <th>Add</th>
           </tr>
@@ -337,20 +369,20 @@ const ProfessorTable = ({ professors }) => {
             <React.Fragment key={index}>
               <tr onClick={() => handleRowClick(professor)}>
                 <td>
-                  <MDBIcon icon={isExpanded && selectedProfessor === professor ? 'angle-up' : 'angle-down'} />
+                  <MDBIcon icon={selectedProfessor === professor ? 'angle-up' : 'angle-down'} />
                 </td>
                 <td>{professor.first_name + ' ' + professor.last_name}</td>
-                <td>{professor.average_grade}</td>
-                <td>{professor.average_quality}</td>
-                <td>{professor.average_difficulty}</td>
-                <td>{professor.recent_quality_average}</td>
-                <td>{professor.recent_difficulty_average}</td>
-                <td>{professor.ratings_count}</td>
+                <td>{ratingsData[professor.id] ? ratingsData[professor.id].averageGrade : '-'}</td>
+                <td>{ratingsData[professor.id] ? roundToTenth(ratingsData[professor.id].topKMostRecentDifficultyAverage) : '-'}</td>
+                <td>{ratingsData[professor.id] ? roundToTenth(ratingsData[professor.id].topKMostRecentQualityAverage) : '-'}</td>
+                <td>{ratingsData[professor.id] ? roundToTenth(ratingsData[professor.id].totalDifficultyAverage) : '-'}</td>
+                <td>{ratingsData[professor.id] ? roundToTenth(ratingsData[professor.id].totalQualityAverage) : '-'}</td>
+                <td>{ratingsData[professor.id]?.ratingAmount || '-'}</td>
                 <td>
                   <MDBBtn style={{ backgroundColor: 'rgb(0, 102, 0)', color: 'white' }} size="sm">Add</MDBBtn>
                 </td>
               </tr>
-              {selectedProfessor === professor && isExpanded && (
+              {selectedProfessor === professor && (
                 <tr>
                   <td colSpan="9">
                     <ProfessorDetails professor={professor} />
@@ -421,6 +453,10 @@ const ProfessorDetails = ({ professor }) => {
       </div>
     </div>
   );
+};
+
+const roundToTenth = (num) => {
+  return num ? Math.round(num * 10) / 10 : 'N/A';
 };
 
 export default Dashboard;
