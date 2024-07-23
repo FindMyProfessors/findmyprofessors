@@ -59,28 +59,29 @@ func main() {
 					// save the file
 					// Ask for the name of the file
 					fmt.Printf("Enter the name of the file: ")
-					var fileName string
-					_, err := fmt.Scanf("%s", &fileName)
+					reader := bufio.NewReader(os.Stdin)
+					fmt.Printf("Enter file path: ")
+					scanner := bufio.NewScanner(reader)
+					scanner.Scan()
+					path := scanner.Text()
+
+					pwd, _ := os.Getwd()
+					path, err = filepath.Abs(filepath.Join(pwd, path))
 					if err != nil {
-						fmt.Printf("Unable to scan choice: %v\n", err)
+						fmt.Printf("Unable to get the absolute path: %v\n", err)
 						continue
 					}
-					fileName = strings.TrimSuffix(fileName, "\n")
-					fileName = strings.TrimSuffix(fileName, "\r")
-					fileName = strings.TrimSpace(fileName)
-					if !strings.HasSuffix(fileName, ".json") {
-						fileName = fmt.Sprintf("%s.json", fileName)
-					}
+
 					marshal, err := json.Marshal(*school)
 					if err != nil {
 						panic(err)
 					}
 
-					err = os.WriteFile(fileName, marshal, 0644)
+					err = os.WriteFile(path, marshal, 0644)
 					if err != nil {
 						panic(err)
 					}
-					fmt.Printf("Wrote %s to %s\n", school.Name, fileName)
+					fmt.Printf("Wrote %s to %s\n", school.Name, path)
 				}
 				break
 			} else if strings.ToLower(choice) == "n" {
@@ -268,34 +269,26 @@ func GetSchoolFromFile() (*model.School, error) {
 	for {
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Printf("Enter file path: ")
-		var path string
-		path, err := reader.ReadString('\n')
-		if err != nil {
-			fmt.Printf("Unable to scan choice: %v\n", err)
-			continue
-		}
+		scanner := bufio.NewScanner(reader)
+		scanner.Scan()
+		path := scanner.Text()
 
 		pwd, _ := os.Getwd()
-		path, err = filepath.Abs(filepath.Join(pwd, path))
+		path, err := filepath.Abs(filepath.Join(pwd, path))
 		if err != nil {
 			fmt.Printf("Unable to get the absolute path: %v\n", err)
 			continue
 		}
 
-		path = strings.TrimSuffix(path, "\n")
-
-		fmt.Printf("path=%s\n", path)
-
-		//path = strings.ReplaceAll(path, " ", "\\ ")
 		jsonFile, err := os.ReadFile(path)
 		if err != nil {
-			fmt.Printf("Unable read json: %v\n", err)
+			fmt.Printf("Unable to read json: %v\n", err)
 			continue
 		}
 
 		err = json.Unmarshal(jsonFile, &school)
 		if err != nil {
-			fmt.Printf("Unable unmarshall json: %v\n", err)
+			fmt.Printf("Unable to unmarshal json: %v\n", err)
 			continue
 		}
 		break
