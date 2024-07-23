@@ -95,6 +95,8 @@ Future<void> _loadUserValues() async {
             leading: Icon(Icons.exit_to_app , color: Colors.white),
             title: Text('Logout' , style: TextStyle(color: Colors.white)),
             onTap: () async => {
+              //clerar storage of proffessors
+              Professors = [],
               //delete user info
               await storage.deleteAll(),
 

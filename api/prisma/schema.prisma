@@ -1,5 +1,7 @@
+
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
 }
 
 datasource db {
@@ -8,13 +10,55 @@ datasource db {
 }
 
 model User {
-  id               Int      @id @default(autoincrement())
-  email            String   @unique
-  username         String   @unique
-  signup_time      DateTime @default(now())
-  last_login_time  DateTime @default(now())
-  account_verified Boolean  @default(false)
+  id               Int        @id @default(autoincrement())
+  email            String     @unique
+  username         String     @unique
+  signup_time      DateTime   @default(now())
+  last_login_time  DateTime   @default(now())
+  account_verified Boolean    @default(false)
   password         String
+  role             UserRole   @default(NORMAL)
+  Cart             UserCart[]
+
+  PasswordReset PasswordReset[]
+
+  EmailConfirmation EmailConfirmation?
+}
+
+model PasswordReset {
+  id         Int       @id @default(autoincrement())
+  user_id    Int
+  user       User      @relation(fields: [user_id], references: [id])
+  token      String    @unique
+  created_at DateTime  @default(now())
+  expires_at DateTime
+  used_at    DateTime?
+}
+
+model EmailConfirmation {
+  id           Int       @id @default(autoincrement())
+  user_id      Int       @unique
+  user         User      @relation(fields: [user_id], references: [id])
+  token        String    @unique
+  created_at   DateTime  @default(now())
+  expires_at   DateTime
+  confirmed_at DateTime?
+}
+
+model UserCart {
+  id           Int       @id @default(autoincrement())
+  user_id      Int
+  user         User      @relation(fields: [user_id], references: [id])
+  course_id    Int
+  course       Course    @relation(fields: [course_id], references: [id])
+  professor_id Int
+  professor    Professor @relation(fields: [professor_id], references: [id])
+  @@unique([user_id, course_id, professor_id])
+}
+
+enum UserRole {
+  ADMIN
+  NORMAL
 }
 
 model School {
@@ -33,17 +77,75 @@ model Professor {
   school     School            @relation(fields: [school_id], references: [id])
   courses    ProfessorCourse[]
   reviews    Review[]
+  UserCart   UserCart[]
+}
+
+enum ReviewTag {
+  TOUGH_GRADER
+  GET_READY_TO_READ
+  PARTICIPATION_MATTERS
+  EXTRA_CREDIT
+  GROUP_PROJECTS
+  AMAZING_LECTURES
+  CLEAR_GRADING_CRITERIA
+  GIVES_GOOD_FEEDBACK
+  INSPIRATIONAL
+  LOTS_OF_HOMEWORK
+  HILARIOUS
+  BEWARE_OF_POP_QUIZZES
+  SO_MANY_PAPERS
+  CARING
+  RESPECTED
+  LECTURE_HEAVY
+  GRADED_BY_FEW_THINGS
+  ACCESSIBLE_OUTSIDE_CLASS
+  ONLINE_SAVVY
+  TESTS_ARE_TOUGH
+  TEST_HEAVY
+  WOULD_TAKE_AGAIN
+  TESTS_NOT_MANY
+  SKIP_CLASS_YOU_WONT_PASS
+  CARES_ABOUT_STUDENTS
+  RESPECTED_BY_STUDENTS
+  EXTRA_CREDIT_OFFERED
+}
+
+enum Grade {
+  A_PLUS
+  A
+  A_MINUS
+
+  B_PLUS
+  B
+  B_MINUS
+
+  C_PLUS
+  C
+  C_MINUS
+
+  D_PLUS
+  D
+  D_MINUS
+
+  F_PLUS
+  F
+  F_MINUS
+
+  INCOMPLETE
+  WITHDRAWN
+  NOT_SURE
+  OTHER
 }
 
 model Review {
-  id           Int       @id @default(autoincrement())
+  id           Int         @id @default(autoincrement())
   quality      Float
-  difficult    Float?
+  difficulty   Float?
   time         DateTime
-  tags         String[]
-  grade        String?
+  tags         ReviewTag[]
+  grade        Grade?
   professor_id Int
-  professor    Professor @relation(fields: [professor_id], references: [id])
+  professor    Professor   @relation(fields: [professor_id], references: [id])
 }
 
 model Course {
@@ -53,6 +155,7 @@ model Course {
   school_id  Int
   school     School            @relation(fields: [school_id], references: [id])
   professors ProfessorCourse[]
+  UserCart   UserCart[]
 }
 
 model ProfessorCourse {
@@ -63,6 +166,8 @@ model ProfessorCourse {
   semester     Semester
   course       Course    @relation(fields: [course_id], references: [id])
   professor    Professor @relation(fields: [professor_id], references: [id])
+
+  @@unique([professor_id, course_id, year, semester])
 }
 
 enum Semester {
@@ -70,3 +175,4 @@ enum Semester {
   SUMMER
   FALL
 }
+

@@ -1,5 +1,5 @@
 import { AuthController } from "./auth";
-import { AuthErrorType } from "../models/auth";
+import { AuthErrorType, LoginResponse } from "../models/auth";
 import { describe, expect, test } from "@jest/globals";
 import { prisma } from "../database/database"; // Import prisma
 import {
@@ -77,16 +77,13 @@ describe("AuthController", () => {
       signup_time: new Date(),
       last_login_time: new Date(),
       account_verified: true,
+      role: UserRole.NORMAL,
     });
 
-    const userResponse: UserResponse = await authController.register(body);
+    const loginResponse: LoginResponse = await authController.register(body);
 
-    expect(userResponse).toHaveProperty("id");
-    expect(userResponse).toHaveProperty("username", body.username);
-    expect(userResponse).toHaveProperty("email", body.email);
-    expect(userResponse).toHaveProperty("signup_time");
-    expect(userResponse).toHaveProperty("last_login_time");
-    expect(userResponse).toHaveProperty("account_verified", true);
+    expect(loginResponse).toHaveProperty("user");
+    expect(loginResponse).toHaveProperty("token");
   });
 
   test("should log an error and throw an error if user creation fails", async () => {
@@ -126,6 +123,7 @@ describe("AuthController", () => {
       signup_time: new Date(),
       last_login_time: new Date(),
       account_verified: true,
+      role: UserRole.NORMAL,
     });
 
     await expect(authController.register(body)).rejects.toHaveProperty(
@@ -215,6 +213,7 @@ describe("AuthController", () => {
       signup_time: new Date(),
       last_login_time: new Date(),
       account_verified: true,
+      role: UserRole.NORMAL,
     });
 
     await expect(authController.register(body)).rejects.toHaveProperty(
@@ -238,6 +237,7 @@ describe("AuthController", () => {
       signup_time: new Date(),
       last_login_time: new Date(),
       account_verified: true,
+      role: UserRole.NORMAL,
     });
 
     const response = await authController.login(body);
@@ -277,6 +277,7 @@ describe("AuthController", () => {
       signup_time: new Date(),
       last_login_time: new Date(),
       account_verified: true,
+      role: UserRole.NORMAL,
     });
 
     await expect(authController.login(body)).rejects.toHaveProperty(
@@ -299,6 +300,7 @@ describe("AuthController", () => {
       signup_time: new Date(),
       last_login_time: new Date(),
       account_verified: true,
+      role: UserRole.NORMAL,
     });
 
     (jwt.sign as jest.Mock).mockImplementationOnce(() => {
@@ -315,6 +317,7 @@ describe("AuthController", () => {
 import { hashPassword } from "./auth"; // Import hashPassword
 import { logger } from "../utils/logger";
 import { UserResponse } from "../models/users";
+import { UserRole } from "@prisma/client";
 
 describe("hashPassword", () => {
   test("should hash the password correctly", async () => {
@@ -324,7 +327,7 @@ describe("hashPassword", () => {
       password: "Password123!",
     };
 
-    const hashedPassword = await hashPassword(body);
+    const hashedPassword = await hashPassword(body.password);
 
     // Check that the hashed password is not the same as the plain password
     expect(hashedPassword).not.toBe(body.password);
@@ -346,6 +349,6 @@ describe("hashPassword", () => {
       throw new Error("bcrypt error");
     });
 
-    await expect(hashPassword(body)).rejects.toThrow("bcrypt error");
+    await expect(hashPassword(body.password)).rejects.toThrow("bcrypt error");
   });
 });

@@ -1,1 +1,4 @@
 .server
+.cloudflare
+.env
+node_modules

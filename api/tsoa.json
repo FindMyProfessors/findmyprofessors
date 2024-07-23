@@ -2,6 +2,7 @@
   "entryFile": "src/index.ts",
   "noImplicitAdditionalProperties": "throw-on-extras",
   "controllerPathGlobs": ["src/controllers/*.ts"],
+  "defaultNumberType": "integer",
   "spec": {
     "outputDirectory": "build",
     "specVersion": 3,

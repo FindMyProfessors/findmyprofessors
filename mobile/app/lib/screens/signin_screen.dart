@@ -5,11 +5,14 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:app/screens/signup_screen.dart';
 import 'package:app/screens/forgot_password_screen.dart';
 import 'package:app/screens/dashboard.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:app/API_services/API.dart';
 
 final storage = new FlutterSecureStorage();
+
+final TextEditingController nameController = TextEditingController();
+final TextEditingController passwordController = TextEditingController();
+
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -21,58 +24,7 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
 
   final _formSignInKey = GlobalKey<FormState>();
-  bool rememberPassword = true;
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-
-  Future<void> _signInUser() async {
-   print('Registering new user... ' + _nameController.text + ' ' + _passwordController.text);
-    
-  try {
-    var response = await http.post(
-      Uri.parse('http://localhost:8080/auth/login'),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({
-        'username': _nameController.text,
-        'password': _passwordController.text,
-      }),
-    );
-
-    print("Response status: ${response.statusCode}");
-    print("Response headers: ${response.headers}");
-    print("Response body: ${response.body}");
-
-    final responseData = json.decode(response.body);
-
-    if (response.statusCode == 200) {
-
-      final String username = responseData['user']['username'];
-      final int id = responseData['user']['id'];
-
-      await storage.write(key: 'JWT', value: responseData['token']);
-      await storage.write(key: 'userName', value: username);
-      await storage.write(key: 'id', value: id.toString());  //saved as a string NOT an int
-
-      print('User registered: '+ username + ' ID: ' + id.toString());
-
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Dashboard()));
-    } 
-    else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(responseData['message']),
-        ),
-      );
-      print('Failed to Sign user: ${response.body[0]}');
-    }
-  } 
-  catch (e) {
-    print('ERROR occurred: $e');
-  }
-  }
+  //bool rememberPassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +67,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     const SizedBox(height: 30), 
                     
                     TextFormField(
-                        controller: _nameController,
+                        controller: nameController,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter Username';
@@ -147,7 +99,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     const SizedBox(height: 20), 
               
                     TextFormField(
-                        controller: _passwordController,
+                        controller: passwordController,
                         obscureText: true,
                         obscuringCharacter: '*',
                         validator: (value) {
@@ -184,25 +136,25 @@ class _SignInScreenState extends State<SignInScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            Checkbox(
-                              value: rememberPassword,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  rememberPassword = value!;
-                                });
-                              },
-                              activeColor: lightColorScheme.primary,
-                            ),
-                            const Text(
-                              'Remember me',
-                              style: TextStyle(
-                                color: Colors.black
-                              ),
-                            )
-                          ],
-                        ),
+                        // Row(
+                        //   children: [
+                        //     Checkbox(
+                        //       value: rememberPassword,
+                        //       onChanged: (bool? value) {
+                        //         setState(() {
+                        //           rememberPassword = value!;
+                        //         });
+                        //       },
+                        //       activeColor: lightColorScheme.primary,
+                        //     ),
+                        //     const Text(
+                        //       'Remember me',
+                        //       style: TextStyle(
+                        //         color: Colors.black
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
               
                         GestureDetector(
                           onTap: () {
@@ -232,7 +184,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formSignInKey.currentState!.validate()) {
-                            _signInUser();
+                            signInUser(context);
                           }
                         },
                         child: const Text('Sign In'),
