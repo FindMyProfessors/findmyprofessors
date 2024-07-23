@@ -2,6 +2,7 @@ import 'package:app/screens/dashboard.dart';
 import 'package:app/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:app/screens/cart_screen.dart';
 
 final storage = new FlutterSecureStorage();
 
@@ -67,11 +68,18 @@ Future<void> _loadUserValues() async {
 
           Divider(color: Colors.black, thickness: 1.0),
 
-          ListTile(
-            leading: Icon(Icons.shopping_cart, color: Colors.white),
-            title: Text('Course Cart' , style: TextStyle(color: Colors.white)),
-            onTap: () => {Navigator.of(context).pop()},
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.shopping_cart, color: Colors.white),
+          //   title: Text('Course Cart' , style: TextStyle(color: Colors.white)),
+          //   onTap: () {
+          //                   Navigator.push(
+          //                     context,
+          //                     MaterialPageRoute(
+          //                       builder: (e) => const CartScreen(),
+          //                     ),
+          //                     );
+          //                   },
+          // ),
 
           Divider(color: Colors.black, thickness: 1.0),
 
@@ -96,7 +104,7 @@ Future<void> _loadUserValues() async {
             title: Text('Logout' , style: TextStyle(color: Colors.white)),
             onTap: () async => {
               //clerar storage of proffessors
-              Professors = [],
+              //Professors = [],
               //delete user info
               await storage.deleteAll(),
 
