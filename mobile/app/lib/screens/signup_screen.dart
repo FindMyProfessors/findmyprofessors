@@ -129,6 +129,14 @@ class _SignInScreenState extends State<SignUpScreen> {
   }
 
   @override
+
+  void initState() {
+    super.initState();
+    sighnUpUsernameController.text = '';
+    sighnUpemailController.text = '';
+    sighnUppasswordController.text = '';
+
+  }
   Widget build(BuildContext context) {
     return CustomScaffold(showAppBar: true,
 

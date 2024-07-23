@@ -27,6 +27,13 @@ class _SignInScreenState extends State<SignInScreen> {
   //bool rememberPassword = true;
 
   @override
+
+   void initState() {
+    super.initState();
+    nameController.text = '';
+    passwordController.text = '';
+  }
+  
   Widget build(BuildContext context) {
     return  CustomScaffold(showAppBar: true,
 

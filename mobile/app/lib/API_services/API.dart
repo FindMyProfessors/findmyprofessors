@@ -10,7 +10,7 @@ import 'package:app/screens/Professor.dart';
 import 'package:app/screens/forgot_password_screen.dart';
 
 final storage = new FlutterSecureStorage();
-final String apiURL = 'https://findmyprofessors.warrensnipes.dev/';
+final String apiURL = 'https://findmyprofessors-api.warrensnipes.dev/';
 
 Future<void> frogotPassword(BuildContext context) async {
 
@@ -85,6 +85,7 @@ Future<void> getProfessorAnalysis(BuildContext context, int professorID) async {
       ];
 
       tagData = [];
+      //aver = [];
 
       final responseData = json.decode(response.body);
 
@@ -94,12 +95,12 @@ Future<void> getProfessorAnalysis(BuildContext context, int professorID) async {
         final List<String> requiredTags = [
           "TOUGH_GRADER",
           "EXTRA_CREDIT",
-          "GROUP_PROJECTS",
           "AMAZING_LECTURES",
+          "GROUP_PROJECTS",
           "LOTS_OF_HOMEWORK",
           "TESTS_ARE_TOUGH",
           "TEST_HEAVY",
-          "EXTRA_CREDIT_OFFERED"
+          "WOULD_TAKE_AGAIN"
         ];
 
         tagData = requiredTags.map((tag) => RatingData(tag, 0)).toList();
@@ -142,7 +143,24 @@ Future<void> getProfessorAnalysis(BuildContext context, int professorID) async {
           }
         }
         
-     
+        print('Average Rating over time:');
+        averageRatingValues = [];
+        var averageRatingValuesList = responseData['averageRatingValues'] as List<dynamic>;
+
+        for (var ratingValue in averageRatingValuesList) {
+          var value = ratingValue['value'];
+          var month = ratingValue['month'];
+          var year = ratingValue['year'];
+          averageRatingValues.add(AverageRatingValue(value: double.parse(value.toStringAsFixed(1)), month: month, year: year));
+        }
+
+        averageRatingValues= averageRatingValues.reversed.toList();
+
+        print('Average Rating Values:');
+        for (var rating in averageRatingValues) {
+          print('${rating.value} in ${rating.month} ${rating.year}');
+        }
+          
       }
       else {
         print('No info for professor');
@@ -210,6 +228,18 @@ Future<void> getProfessorRating(BuildContext context, int professorID) async {
 
         averageGrade = formatGrade(responseData['averageGrade'].toString());
         print(averageGrade);
+        
+        if (averageGrade == 'A+' || averageGrade == 'A' || averageGrade == 'A-') {
+          gradeColor = Colors.green;
+        } else if (averageGrade == 'B+' || averageGrade == 'B' || averageGrade == 'B-') {
+          gradeColor = Colors.blue; 
+        } else if (averageGrade == 'C+' || averageGrade == 'C' || averageGrade == 'C-') {
+          gradeColor = Colors.orange; 
+        } else {
+          gradeColor = Colors.black;
+        }
+
+    print('Grade Color: $gradeColor');
 
         await Future.delayed(Duration(milliseconds: 500));
       } 
@@ -459,7 +489,6 @@ Future<void> registerUser(BuildContext context) async {
       var response = await http.post(
         Uri.parse(apiURL+'auth/register'),
         headers: {
-          'accept': 'application/json',
           'Content-Type': 'application/json',
         },
         body: jsonEncode({
@@ -502,8 +531,53 @@ Future<void> registerUser(BuildContext context) async {
         );
         //print('Failed to register user: ${response.body[0]}');
       }
+
+      await confirmEmail(context, responseData['user']['id'], responseData['token']);
     } 
     catch (e) {
       print('ERROR occurred: $e');
     }
+    
   }
+
+Future<void> confirmEmail(BuildContext context, int userID, String JWT) async {
+
+  print("sednig email confirmation... " + emailController.text);
+
+  try {
+    var response = await http.post(
+      Uri.parse(apiURL+'users/'+userID.toString()+'/send-email-confirmation'),
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer ' + JWT.toString(),
+      },
+      body: jsonEncode({
+        'email': emailController.text
+      }),
+    );
+
+    print("Response status: ${response.statusCode}");
+    print("Response headers: ${response.headers}");
+  
+    if (response.statusCode == 200) {
+      print("successfully sent email confirmation");
+
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Email Confirmation sent.'),
+          ),
+        );
+    } 
+    else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Password reset email failed"),
+        ),
+      );
+      print('send password reset email failed');
+    }
+  } 
+  catch (e) {
+    print('ERROR occurred: $e');
+  }
+}
