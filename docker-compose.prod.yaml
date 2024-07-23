@@ -45,7 +45,9 @@ services:
     #ports:
     #  - 8080:8080
     env_file:
-      - .prod.env
+      - api/.prod.env
+    environment:
+      NODE_ENV: production
     depends_on:
       - db
     labels:
@@ -59,8 +61,8 @@ services:
     build:
       context: ./web
       dockerfile: Dockerfile
-    env_file:
-      - .prod.env
+    environment:
+      NODE_ENV: production
     depends_on:
       - db
     labels:
