@@ -9,3 +9,19 @@ updates:
     directory: "scraper" # Location of package manifests
     schedule:
       interval: "weekly"
+  - package-ecosystem: "npm" # See documentation for possible values
+    directory: "api" # Location of package manifests
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "docker" # See documentation for possible values
+    directory: "api" # Location of package manifests
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm" # See documentation for possible values
+    directory: "web" # Location of package manifests
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "docker" # See documentation for possible values
+    directory: "web" # Location of package manifests
+    schedule:
+      interval: "weekly"
