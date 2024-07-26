@@ -230,7 +230,8 @@ func (u *Scraper) Terms() (terms []model.Term) {
 	currentYear := time.Now().Year() + 1
 	// TODO: Only add next semester after, determine current semester and next
 
-	for i := 0; i < 2; i++ {
+	const AMOUNT_OF_YEARS = 15
+	for i := 0; i < AMOUNT_OF_YEARS; i++ {
 		year := currentYear - i
 		yearDifference := year - 1963
 
